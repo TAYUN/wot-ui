@@ -24,7 +24,9 @@ export default {
   // #ifdef H5
   name: 'wd-skeleton',
   // #endif
+  // #ifndef MP-TOUTIAO
   options: { virtualHost: true, addGlobalClass: true, styleIsolation: 'shared' }
+  // #endif
 }
 </script>
 

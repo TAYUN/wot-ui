@@ -8,9 +8,7 @@
       color: $-dark-color;
     }
 
-    :deep(.wd-calendar__arrow),
-    :deep(.wd-calendar__close),
-    :deep(.wd-calendar__clear) {
+    :deep(.wd-calendar__close) {
       color: $-dark-color;
     }
 
@@ -24,12 +22,6 @@
 
     @include e(range-sperator) {
       color: $-dark-color-gray;
-    }
-
-    :deep(.wd-calendar__cell--placeholder) {
-      .wd-cell__value {
-        color: $-dark-color-gray;
-      }
     }
   }
 }
@@ -77,7 +69,7 @@
   @include e(view) {
     @include when(show-confirm) {
       height: 394px;
-
+      
       @include when(range) {
         height: 384px;
       }
@@ -118,47 +110,5 @@
 
   @include e(confirm-btn-wrapper) {
     flex-grow: 1;
-  }
-
-  @include edeep(cell) {
-    @include when(disabled) {
-      .wd-cell__value {
-        color: $-input-disabled-color;
-        cursor: not-allowed;
-      }
-    }
-    @include when(error) {
-      .wd-cell__value {
-        color: $-input-error-color;
-      }
-      :deep(.wd-calendar__arrow) {
-        color: $-input-error-color;
-      }
-    }
-    @include when(large) {
-      .wd-calendar__arrow {
-        font-size: $-cell-icon-size-large;
-      }
-    }
-
-    @include m(placeholder) {
-      .wd-cell__value {
-        color: $-input-placeholder-color;
-      }
-    }
-  }
-  
-  @include edeep(arrow) {
-    display: block;
-    font-size: $-cell-icon-size;
-    color: $-cell-arrow-color;
-    line-height: $-cell-line-height;
-  }
-
-  @include edeep(clear) {
-    display: block;
-    font-size: $-cell-icon-size;
-    color: $-cell-clear-color;
-    line-height: $-cell-line-height;
   }
 }

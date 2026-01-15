@@ -13,10 +13,6 @@
       color: $-dark-color-gray;
     }
 
-    :deep(.wd-col-picker__arrow) {
-      color: $-dark-color;
-    }
-
     @include e(list) {
       color: $-dark-color;
     }
@@ -24,52 +20,10 @@
     @include e(selected) {
       color: $-dark-color;
     }
-
-    :deep(.wd-col-picker__cell--placeholder) {
-      .wd-cell__value {
-        color: $-dark-color-gray;
-      }
-    }
   }
 }
 
 @include b(col-picker) {
-  @include edeep(cell) {
-    @include when(disabled) {
-      .wd-cell__value {
-        color: $-input-disabled-color;
-        cursor: not-allowed;
-      }
-    }
-    @include when(error) {
-      .wd-cell__value {
-        color: $-input-error-color;
-      }
-      .wd-col-picker__arrow {
-        color: $-input-error-color;
-      }
-    }
-    @include when(large) {
-      .wd-col-picker__arrow {
-        font-size: $-cell-icon-size-large;
-      }
-    }
-
-    @include m(placeholder) {
-      .wd-cell__value {
-        color: $-input-placeholder-color;
-      }
-    }
-  
-  }
-  
-  @include edeep(arrow) {
-    display: block;
-    font-size: $-cell-icon-size;
-    color: $-cell-arrow-color;
-    line-height: $-cell-line-height;
-  }
-
   @include e(selected) {
     height: $-col-picker-selected-height;
     font-size: $-col-picker-selected-fs;

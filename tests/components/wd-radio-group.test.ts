@@ -11,30 +11,6 @@ describe('单选框组组件', () => {
     expect(wrapper.classes()).toContain('wd-radio-group')
   })
 
-  // 测试按钮模式
-  test('应用按钮模式', () => {
-    const wrapper = mount(WdRadioGroup, {
-      props: {
-        shape: 'button' as RadioShape,
-        cell: true
-      }
-    })
-
-    expect(wrapper.classes()).toContain('is-button')
-  })
-
-  // 测试非按钮模式
-  test('非按钮形状不应用按钮模式', () => {
-    const wrapper = mount(WdRadioGroup, {
-      props: {
-        shape: 'check' as RadioShape,
-        cell: true
-      }
-    })
-
-    expect(wrapper.classes()).not.toContain('is-button')
-  })
-
   // 测试无效的形状
   test('处理无效的形状', () => {
     // 模拟 console.error

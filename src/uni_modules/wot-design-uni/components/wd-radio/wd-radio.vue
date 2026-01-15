@@ -1,23 +1,26 @@
 <template>
   <view
-    :class="`wd-radio ${cellValue ? 'is-cell-radio' : ''} ${cellValue && shapeValue == 'button' ? 'is-button-radio' : ''} ${
-      sizeValue ? 'is-' + sizeValue : ''
-    } ${inlineValue ? 'is-inline' : ''} ${isChecked ? 'is-checked' : ''} ${shapeValue !== 'check' ? 'is-' + shapeValue : ''} ${
+    :class="`wd-radio wd-radio--${placementValue}  ${isButton ? 'is-button' : 'wd-radio--' + directionValue} ${isChecked ? 'is-checked' : ''} ${
       disabledValue ? 'is-disabled' : ''
-    } icon-placement-${iconPlacement} ${customClass}`"
+    } ${customClass}`"
     :style="customStyle"
     @click="handleClick"
   >
-    <view
-      class="wd-radio__label"
-      :style="`${maxWidth ? 'max-width:' + maxWidth : ''};  ${
-        isChecked && shapeValue === 'button' && !disabledValue ? 'color :' + checkedColorValue : ''
-      }`"
-    >
+    <view class="wd-radio__label" v-if="$slots.default">
       <slot></slot>
     </view>
-    <view class="wd-radio__shape" :style="isChecked && !disabledValue ? 'color: ' + checkedColorValue : ''">
-      <wd-icon v-if="shapeValue === 'check'" :style="isChecked && !disabledValue ? 'color: ' + checkedColorValue : ''" name="check"></wd-icon>
+
+    <template v-if="isButton">
+      <slot name="icon" :is-checked="isChecked">
+        <view v-if="isChecked" class="wd-radio__shape">
+          <wd-icon custom-class="wd-radio__icon" :custom-style="iconStyle" :name="iconValue"></wd-icon>
+        </view>
+      </slot>
+    </template>
+    <view v-else class="wd-radio__shape">
+      <slot name="icon" :is-checked="isChecked">
+        <wd-icon custom-class="wd-radio__icon" :custom-style="iconStyle" :name="iconValue"></wd-icon>
+      </slot>
     </view>
   </view>
 </template>
@@ -36,7 +39,7 @@ import wdIcon from '../wd-icon/wd-icon.vue'
 import { computed, watch } from 'vue'
 import { useParent } from '../composables/useParent'
 import { RADIO_GROUP_KEY } from '../wd-radio-group/types'
-import { radioProps, type RadioIconPlacement } from './types'
+import { type RadioDirection, type RadioPlacement, radioProps, type RadioType } from './types'
 import { getPropByPath, isDef } from '../common/util'
 
 const props = defineProps(radioProps)
@@ -51,12 +54,60 @@ const isChecked = computed(() => {
   }
 })
 
-const shapeValue = computed(() => {
-  return props.shape || getPropByPath(radioGroup, 'props.shape')
+const typeValue = computed(() => {
+  return props.type || (getPropByPath(radioGroup, 'props.type') as RadioType)
+})
+
+const iconValue = computed(() => {
+  let icon = ''
+  switch (typeValue.value) {
+    case 'circle':
+      icon = isChecked.value ? 'check-circle-fill' : 'uncheck-circle'
+      break
+    case 'square':
+      icon = isChecked.value ? 'check-square-fill' : 'uncheck-square'
+      break
+    case 'dot':
+      icon = isChecked.value ? 'check-circle-radio-fill' : 'uncheck-circle'
+      break
+    case 'button':
+      icon = isChecked.value ? 'selector-check' : ''
+      break
+    default:
+      break
+  }
+  return icon
 })
 
 const checkedColorValue = computed(() => {
   return props.checkedColor || getPropByPath(radioGroup, 'props.checkedColor')
+})
+
+const uncheckedColorValue = computed(() => {
+  return props.uncheckedColor || getPropByPath(radioGroup, 'props.uncheckedColor')
+})
+
+const readonlyValue = computed(() => {
+  if (isDef(props.readonly)) {
+    return props.readonly
+  } else {
+    return getPropByPath(radioGroup, 'props.readonly')
+  }
+})
+
+const iconStyle = computed(() => {
+  if (isButton.value) return ''
+  if (isChecked.value && checkedColorValue.value) {
+    return `color: ${checkedColorValue.value}`
+  }
+  if (!isChecked.value && uncheckedColorValue.value) {
+    return `color: ${uncheckedColorValue.value}`
+  }
+  return ''
+})
+
+const isButton = computed(() => {
+  return typeValue.value === 'button'
 })
 
 const disabledValue = computed(() => {
@@ -67,39 +118,27 @@ const disabledValue = computed(() => {
   }
 })
 
-const inlineValue = computed(() => {
-  if (isDef(props.inline)) {
-    return props.inline
+const directionValue = computed(() => {
+  if (isDef(props.direction)) {
+    return props.direction
   } else {
-    return getPropByPath(radioGroup, 'props.inline')
+    return getPropByPath(radioGroup, 'props.direction') as RadioDirection
   }
 })
 
-const sizeValue = computed(() => {
-  return props.size || getPropByPath(radioGroup, 'props.size')
-})
-
-const cellValue = computed(() => {
-  if (isDef(props.cell)) {
-    return props.cell
+const placementValue = computed<RadioPlacement>(() => {
+  if (isDef(props.placement)) {
+    return props.placement
   } else {
-    return getPropByPath(radioGroup, 'props.cell')
-  }
-})
-
-const iconPlacement = computed<RadioIconPlacement>(() => {
-  if (isDef(props.iconPlacement)) {
-    return props.iconPlacement
-  } else {
-    return getPropByPath(radioGroup, 'props.iconPlacement')
+    return getPropByPath(radioGroup, 'props.placement')
   }
 })
 
 watch(
-  () => props.shape,
+  () => props.type,
   (newValue) => {
-    const type = ['check', 'dot', 'button']
-    if (!newValue || type.indexOf(newValue) === -1) console.error(`shape must be one of ${type.toString()}`)
+    const type = ['check', 'dot', 'button', 'square']
+    if (!newValue || type.indexOf(newValue) === -1) console.error(`type must be one of ${type.toString()}`)
   }
 )
 
@@ -108,11 +147,16 @@ watch(
  */
 function handleClick() {
   const { value } = props
-  if (!disabledValue.value && radioGroup && isDef(value)) {
-    radioGroup.updateValue(value)
+  if (!disabledValue.value && !readonlyValue.value && radioGroup && isDef(value)) {
+    const allowUncheck = radioGroup.props.allowUncheck
+    if (allowUncheck && isChecked.value) {
+      radioGroup.updateValue(null)
+    } else {
+      radioGroup.updateValue(value)
+    }
   }
 }
 </script>
 <style lang="scss" scoped>
-@import './index.scss';
+@use './index.scss';
 </style>

@@ -258,7 +258,7 @@ export const uploadProps = {
    * 类型：string
    * 默认值：'ring'
    */
-  loadingType: makeStringProp<LoadingType>('ring'),
+  loadingType: makeStringProp<LoadingType>('circular'),
   /**
    * 加载中图标颜色
    * 类型：string

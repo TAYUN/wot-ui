@@ -4,11 +4,9 @@
       v-if="!$slots.default"
       :title="label"
       :value="showValue || placeholder || translate('placeholder')"
-      :required="required"
+      :required="isRequired"
       :size="size"
       :title-width="labelWidth"
-      :prop="prop"
-      :rules="rules"
       :clickable="!disabled && !readonly"
       :value-align="alignRight ? 'right' : 'left'"
       :center="center"
@@ -19,6 +17,7 @@
       :ellipsis="ellipsis"
       :use-title-slot="!!$slots.label"
       :marker-side="markerSide"
+      :error-message="errorMessage"
       @click="open"
     >
       <template v-if="$slots.label" #title>
@@ -130,12 +129,37 @@ import wdCell from '../wd-cell/wd-cell.vue'
 import { getCurrentInstance, onBeforeMount, ref, watch, nextTick, computed } from 'vue'
 import { getRect, isArray, isDef, isFunction, pause } from '../common/util'
 import { useTranslate } from '../composables/useTranslate'
+import { useParent } from '../composables/useParent'
+import { FORM_KEY } from '../wd-form/types'
 import { selectPickerProps, type SelectPickerExpose } from './types'
 
 const { translate } = useTranslate('select-picker')
 
 const props = defineProps(selectPickerProps)
 const emit = defineEmits(['change', 'cancel', 'confirm', 'clear', 'update:modelValue', 'open', 'close'])
+
+const { parent: form } = useParent(FORM_KEY)
+
+const errorMessage = computed(() => {
+  if (form && props.prop && form.errorMessages && form.errorMessages[props.prop]) {
+    return form.errorMessages[props.prop]
+  } else {
+    return ''
+  }
+})
+
+const isRequired = computed(() => {
+  let formRequired = false
+  if (form && form.props.rules) {
+    const rules = form.props.rules
+    for (const key in rules) {
+      if (Object.prototype.hasOwnProperty.call(rules, key) && key === props.prop && Array.isArray(rules[key])) {
+        formRequired = rules[key].some((rule) => rule.required)
+      }
+    }
+  }
+  return props.required || (props.rules && props.rules.some((rule) => rule.required)) || formRequired
+})
 
 const pickerShow = ref<boolean>(false)
 const selectList = ref<Array<number | boolean | string> | number | boolean | string>([])

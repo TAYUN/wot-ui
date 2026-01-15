@@ -1,6 +1,5 @@
 import type { ComponentPublicInstance, ExtractPropTypes, PropType } from 'vue'
 import { baseProps, makeArrayProp, makeBooleanProp, makeNumberProp, makeRequiredProp, makeStringProp, numericProp } from '../common/props'
-import type { FormItemRule } from '../wd-form/types'
 
 export const colPickerProps = {
   ...baseProps,
@@ -13,34 +12,6 @@ export const colPickerProps = {
    */
   columns: makeArrayProp<Record<string, any>[]>(),
   /**
-   * 选择器左侧文案
-   */
-  label: String,
-  /**
-   * 设置左侧标题宽度
-   */
-  labelWidth: makeStringProp('33%'),
-  /**
-   * 使用 label 插槽时设置该选项
-   */
-  useLabelSlot: makeBooleanProp(false),
-  /**
-   * 使用默认插槽时设置该选项
-   */
-  useDefaultSlot: makeBooleanProp(false),
-  /**
-   * 禁用
-   */
-  disabled: makeBooleanProp(false),
-  /**
-   * 只读
-   */
-  readonly: makeBooleanProp(false),
-  /**
-   * 选择器占位符
-   */
-  placeholder: String,
-  /**
    * 弹出层标题
    */
   title: String,
@@ -49,29 +20,9 @@ export const colPickerProps = {
    */
   columnChange: Function as PropType<ColPickerColumnChange>,
   /**
-   * 自定义展示文案的格式化函数，返回一个字符串
-   */
-  displayFormat: Function as PropType<ColPickerDisplayFormat>,
-  /**
    * 确定前校验函数，接收 (value, resolve) 参数，通过 resolve 继续执行 picker，resolve 接收 1 个 boolean 参数
    */
   beforeConfirm: Function as PropType<ColPickerBeforeConfirm>,
-  /**
-   * 选择器的值靠右展示
-   */
-  alignRight: makeBooleanProp(false),
-  /**
-   * 是否为错误状态，错误状态时右侧内容为红色
-   */
-  error: makeBooleanProp(false),
-  /**
-   * 是否必填
-   */
-  required: makeBooleanProp(false),
-  /**
-   * 设置选择器大小，可选值：large
-   */
-  size: String,
   /**
    * 选项对象中，value 对应的 key
    */
@@ -109,14 +60,6 @@ export const colPickerProps = {
    */
   ellipsis: makeBooleanProp(false),
   /**
-   * 表单域 model 字段名，在使用表单校验功能的情况下，该属性是必填的
-   */
-  prop: String,
-  /**
-   * 表单验证规则，结合wd-form组件使用
-   */
-  rules: makeArrayProp<FormItemRule>(),
-  /**
    * 底部条宽度，单位像素
    */
   lineWidth: numericProp,
@@ -125,22 +68,13 @@ export const colPickerProps = {
    */
   lineHeight: numericProp,
   /**
-   * label 外部自定义样式
-   */
-  customViewClass: makeStringProp(''),
-  /**
-   * value 外部自定义样式
-   */
-  customLabelClass: makeStringProp(''),
-  customValueClass: makeStringProp(''),
-  /**
    * 是否从页面中脱离出来，用于解决各种 fixed 失效问题 (H5: teleport, APP: renderjs, 小程序: root-portal)
    */
   rootPortal: makeBooleanProp(false),
   /**
-   * 必填标记位置，可选值：before、after
+   * 弹窗是否显示
    */
-  markerSide: makeStringProp<'before' | 'after'>('before')
+  visible: makeBooleanProp(false)
 }
 
 export type ColPickerProps = ExtractPropTypes<typeof colPickerProps>

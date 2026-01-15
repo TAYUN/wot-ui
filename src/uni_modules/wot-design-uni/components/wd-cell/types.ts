@@ -1,9 +1,13 @@
 import type { ExtractPropTypes } from 'vue'
-import { baseProps, makeArrayProp, makeBooleanProp, makeStringProp, makeNumericProp, numericProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeStringProp, makeNumericProp, numericProp } from '../common/props'
 
-import { type FormItemRule } from '../wd-form/types'
+export type CellAsteriskPosition = 'start' | 'end'
 
-type CellArrowDirection = 'left' | 'up' | 'down' | 'right'
+export type CellLayout = 'horizontal' | 'vertical'
+
+export type CellValueAlign = 'left' | 'right' | 'center'
+
+export type CellArrowDirection = 'left' | 'up' | 'down' | 'right'
 
 export const cellProps = {
   ...baseProps,
@@ -16,6 +20,10 @@ export const cellProps = {
    */
   value: makeNumericProp(''),
   /**
+   * 占位符
+   */
+  placeholder: String,
+  /**
    * 图标类名
    */
   icon: String,
@@ -24,13 +32,13 @@ export const cellProps = {
    */
   iconSize: numericProp,
   /**
+   * 类名前缀，用于使用自定义图标
+   */
+  iconPrefix: makeStringProp('wd-icon'),
+  /**
    * 描述信息
    */
   label: String,
-  /**
-   * 是否为跳转链接
-   */
-  isLink: makeBooleanProp(false),
   /**
    * 跳转地址
    */
@@ -40,9 +48,13 @@ export const cellProps = {
    */
   replace: makeBooleanProp(false),
   /**
-   * 开启点击反馈，is-link 默认开启
+   * 是否开启点击反馈
    */
   clickable: makeBooleanProp(false),
+  /**
+   * 是否展示右侧箭头并开启点击反馈
+   */
+  isLink: makeBooleanProp(false),
   /**
    * 设置单元格大小，可选值：large
    */
@@ -56,7 +68,7 @@ export const cellProps = {
    */
   titleWidth: String,
   /**
-   * 是否垂直居中，默认顶部居中
+   * 是否使内容垂直居中，默认顶部居中
    */
   center: makeBooleanProp(false),
   /**
@@ -64,17 +76,34 @@ export const cellProps = {
    */
   required: makeBooleanProp(false),
   /**
-   * 表单属性，上下结构
+   * 表单布局方式，可选值：horizontal、vertical
    */
-  vertical: makeBooleanProp(false),
+  layout: makeStringProp<CellLayout>('horizontal'),
   /**
-   * 表单域 model 字段名，在使用表单校验功能的情况下，该属性是必填的
+   * value 文字对齐方式，可选值：left、right、center
    */
-  prop: String,
+  valueAlign: makeStringProp<CellValueAlign>('right'),
   /**
-   * 表单验证规则，结合wd-form组件使用
+   * 是否超出隐藏，显示省略号
    */
-  rules: makeArrayProp<FormItemRule>(),
+  ellipsis: makeBooleanProp(false),
+  /**
+   * 是否启用title插槽，默认启用，用来解决插槽传递时v-slot和v-if冲突问题。
+   * 问题见：https://github.com/dcloudio/uni-app/issues/4847
+   */
+  useTitleSlot: makeBooleanProp(true),
+  /**
+   * 必填星号位置，可选值：start（title前）、end（title后）
+   */
+  asteriskPosition: makeStringProp<CellAsteriskPosition>('start'),
+  /**
+   * 是否隐藏必填星号
+   */
+  hideAsterisk: makeBooleanProp(false),
+  /**
+   * 箭头方向,可选值:left、up、down、right,只在 is-link 为 true 时生效
+   */
+  arrowDirection: makeStringProp<CellArrowDirection>('right'),
   /**
    * icon 使用 slot 时的自定义样式
    */
@@ -90,28 +119,7 @@ export const cellProps = {
   /**
    * title 使用 slot 时的自定义样式
    */
-  customTitleClass: makeStringProp(''),
-  /**
-   * value 文字对齐方式，可选值：left、right、center
-   */
-  valueAlign: makeStringProp<'left' | 'right'>('right'),
-  /**
-   * 是否超出隐藏，显示省略号
-   */
-  ellipsis: makeBooleanProp(false),
-  /**
-   * 是否启用title插槽，默认启用，用来解决插槽传递时v-slot和v-if冲突问题。
-   * 问题见：https://github.com/dcloudio/uni-app/issues/4847
-   */
-  useTitleSlot: makeBooleanProp(true),
-  /**
-   * 必填标记位置,可选值:before(标签前)、after(标签后)
-   */
-  markerSide: makeStringProp<'before' | 'after'>('before'),
-  /**
-   * 箭头方向,可选值:left、up、down、right,只在 is-link 为 true 时生效
-   */
-  arrowDirection: makeStringProp<CellArrowDirection>('right')
+  customTitleClass: makeStringProp('')
 }
 
 export type CellProps = ExtractPropTypes<typeof cellProps>

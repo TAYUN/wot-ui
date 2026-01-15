@@ -1,35 +1,5 @@
 <template>
   <view :class="`wd-col-picker ${customClass}`" :style="customStyle">
-    <wd-cell
-      v-if="!$slots.default"
-      :title="label"
-      :value="showValue || placeholder || translate('placeholder')"
-      :required="required"
-      :size="size"
-      :title-width="labelWidth"
-      :prop="prop"
-      :rules="rules"
-      :clickable="!disabled && !readonly"
-      :value-align="alignRight ? 'right' : 'left'"
-      :custom-class="cellClass"
-      :custom-style="customStyle"
-      :custom-title-class="customLabelClass"
-      :custom-value-class="customValueClass"
-      :ellipsis="ellipsis"
-      :use-title-slot="!!$slots.label"
-      :marker-side="markerSide"
-      @click="showPicker"
-    >
-      <template v-if="$slots.label" #title>
-        <slot name="label"></slot>
-      </template>
-      <template #right-icon>
-        <wd-icon v-if="showArrow" custom-class="wd-col-picker__arrow" name="arrow-right" />
-      </template>
-    </wd-cell>
-    <view v-else @click="showPicker">
-      <slot></slot>
-    </view>
     <wd-action-sheet
       v-model="pickerShow"
       :duration="250"
@@ -101,8 +71,7 @@ export default {
 import wdIcon from '../wd-icon/wd-icon.vue'
 import wdLoading from '../wd-loading/wd-loading.vue'
 import wdActionSheet from '../wd-action-sheet/wd-action-sheet.vue'
-import wdCell from '../wd-cell/wd-cell.vue'
-import { computed, getCurrentInstance, onMounted, ref, watch, type CSSProperties, reactive } from 'vue'
+import { getCurrentInstance, onMounted, ref, watch, type CSSProperties, reactive } from 'vue'
 import { addUnit, debounce, getRect, isArray, isBoolean, isDef, isFunction, objToStyle } from '../common/util'
 import { useTranslate } from '../composables/useTranslate'
 import { colPickerProps, type ColPickerExpose } from './types'
@@ -113,7 +82,7 @@ const $container = '.wd-col-picker__selected-container'
 const $item = '.wd-col-picker__selected-item'
 
 const props = defineProps(colPickerProps)
-const emit = defineEmits(['close', 'update:modelValue', 'confirm'])
+const emit = defineEmits(['close', 'update:modelValue', 'confirm', 'update:visible'])
 
 const pickerShow = ref<boolean>(false)
 const currentCol = ref<number>(0)
@@ -138,31 +107,6 @@ const updateLineAndScroll = debounce(function (animation = true) {
   setLineStyle(animation)
   lineScrollIntoView()
 }, 50)
-
-const showValue = computed(() => {
-  const selectedItems = (props.modelValue || []).map((item, colIndex) => {
-    return getSelectedItem(item, colIndex, selectList.value)
-  })
-
-  if (props.displayFormat) {
-    return props.displayFormat(selectedItems)
-  } else {
-    return selectedItems
-      .map((item) => {
-        return item[props.labelKey]
-      })
-      .join('')
-  }
-})
-
-const cellClass = computed(() => {
-  const classes = ['wd-col-picker__cell']
-  if (props.disabled) classes.push('is-disabled')
-  if (props.readonly) classes.push('is-readonly')
-  if (props.error) classes.push('is-error')
-  if (!showValue.value) classes.push('wd-col-picker__cell--placeholder')
-  return classes.join(' ')
-})
 
 watch(
   () => props.modelValue,
@@ -222,19 +166,6 @@ watch(
 )
 
 watch(
-  () => props.displayFormat,
-  (fn) => {
-    if (fn && !isFunction(fn)) {
-      console.error('The type of displayFormat must be Function')
-    }
-  },
-  {
-    deep: true,
-    immediate: true
-  }
-)
-
-watch(
   () => props.beforeConfirm,
   (fn) => {
     if (fn && !isFunction(fn)) {
@@ -247,9 +178,23 @@ watch(
   }
 )
 
-// 是否展示箭头
-const showArrow = computed(() => {
-  return !props.disabled && !props.readonly
+watch(
+  () => props.visible,
+  (val) => {
+    if (val) {
+      showPicker()
+    } else {
+      close()
+    }
+  },
+  {
+    deep: true,
+    immediate: true
+  }
+)
+
+watch(pickerShow, (val) => {
+  emit('update:visible', val)
 })
 
 onMounted(() => {
@@ -262,6 +207,7 @@ function open() {
 }
 // 关闭弹框
 function close() {
+  pickerShow.value = false
   handlePickerClose()
 }
 function handlePickerOpend() {
@@ -269,7 +215,6 @@ function handlePickerOpend() {
 }
 
 function handlePickerClose() {
-  pickerShow.value = false
   emit('close')
 }
 
@@ -288,9 +233,6 @@ function handlePickerClosed() {
 }
 
 function showPicker() {
-  const { disabled, readonly } = props
-
-  if (disabled || readonly) return
   pickerShow.value = true
   lastPickerColSelected.value = pickerColSelected.value.slice(0)
   lastSelectList.value = selectList.value.slice(0)

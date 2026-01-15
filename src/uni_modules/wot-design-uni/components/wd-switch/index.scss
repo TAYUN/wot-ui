@@ -1,58 +1,158 @@
-@import '../common/abstracts/variable';
-@import '../common/abstracts/mixin';
+@use '../styles/mixin/mixin.scss'as *;
+@use '../styles/variable.scss'as *;
+/* ================================ 组件SCSS变量 ================================ */
+/* 颜色变量 */
+$switch-color-action-bg: var(--wot-switch-color-action-bg, $base-white) !default;
+$switch-color-action-icon: var(--wot-switch-color-action-icon, $primary-6) !default;
+$switch-color-active-bg: var(--wot-switch-color-active-bg, $primary-6) !default;
+$switch-color-inner-active-text: var(--wot-switch-color-inner-active-text, $text-white) !default;
+$switch-color-inner-inactive-text: var(--wot-switch-color-inner-inactive-text, $text-auxiliary) !default;
+$switch-color-active-icon: var(--wot-switch-color-active-icon, $icon-white) !default;
+$switch-color-inactive-bg: var(--wot-switch-color-inactive-bg, $filled-strong) !default;
+$switch-color-inactive-icon: var(--wot-switch-color-inactive-icon, $icon-auxiliary) !default;
+
+/* 间距变量 */
+$switch-left-right-padding: var(--wot-switch-left-right-padding, $padding-tight) !default;
+$switch-top-bottom-padding: var(--wot-switch-top-bottom-padding, $padding-ultra-tight) !default;
+
+/* 尺寸变量 */
+$switch-size: var(--wot-switch-size, $n26) !default; // switch 尺寸
+$switch-size-icon: var(--wot-switch-size-icon-height, 0.5em) !default;
+$switch-size-action-height: var(--wot-switch-size-action-height, 1em) !default;
+$switch-size-action-width: var(--wot-switch-size-action-width, 1em) !default;
+$switch-size-action-icon: var(--wot-switch-size-action-icon-size, 0.5em) !default;
+$switch-size-inner-height: var(--wot-switch-size-inner-height, calc($switch-size-action-height + $switch-top-bottom-padding * 2)) !default;
+$switch-size-inner-min-width: var(--wot-switch-size-inner-min-width, calc(1.8em + $switch-top-bottom-padding * 2)) !default;
+
+/* 字体变量 */
+$switch-inner-fs: var(--wot-switch-inner-fs, $typography-body-size-main) !default;
+
+/* 圆角变量 */
+$switch-radius: var(--wot-switch-radius, $radius-main) !default;
+$switch-radius-full: var(--wot-switch-radius-full, $radius-radius-full) !default;
+
+$switch-radius-action: var(--wot-switch-radius-action, $radius-small) !default;
+$switch-radius-action-full: var(--wot-switch-radius-action-full, $radius-radius-full) !default;
+
+/* 其他变量 */
+$switch-spaceing: var(--wot-switch-spaceing, $spacing-super-tight) !default;
+$switch-transition-duration: var(--wot-switch-transition-duration, 0.3s) !default;
+$switch-disabled: var(--wot-switch-disabled, $opacity-disabled) !default;
 
 @include b(switch) {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   position: relative;
-  width: $-switch-width;
-  height: $-switch-height;
-  border-radius: $-switch-circle-size;
-  background: $-switch-inactive-color;
-  font-size: $-switch-size;
-  transition: all .3s;
+  font-size: $switch-size;
 
-  @include e(checkbox) {
-    position: absolute;
-    width: 0;
-    height: 0;
-    opacity: 0;
-    margin: 0;
-  }
-  @include e(circle) {
-    box-sizing: border-box;
-    position: absolute;
-    display: inline-block;
-    width: $-switch-circle-size;
-    height: $-switch-circle-size;
-    top: 2px;
-    left: 2px;
-    background: #fff;
-    border-radius: 50%;
-    transition: left .3s ease-out;
-    box-shadow: 0 2px 4px 0 $-switch-inactive-shadow-color;
-
-    &::after {
-      position: absolute;
-      content: '';
-      width: calc(200% - 2px);
-      height: calc(200% - 2px);
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0.5);
-      border: 1px solid $-switch-border-color;
-      border-radius: 50%;
-    }
-  }
-  @include when(checked) {
-    background: $-switch-active-color;
-    border-color: $-switch-active-color;
-
-    .wd-switch__circle {
-      left: calc($-switch-width - $-switch-circle-size - 2px);
-      box-shadow: 0 2px 4px 0 $-switch-active-shadow-color
-    }
-  }
   @include when(disabled) {
-    opacity: 0.5;
+    opacity: $switch-disabled;
+  }
+
+  @include when(loading) {
+    opacity: $opacity-oveylay;
+  }
+
+  @include e(inner) {
+    box-sizing: border-box;
+    font-size: inherit;
+    display: flex;
+    align-items: center;
+    min-width: $switch-size-inner-min-width;
+    height: $switch-size-inner-height;
+    transition: all $switch-transition-duration ease;
+    border-radius: $switch-radius-full;
+    padding: $switch-top-bottom-padding $switch-left-right-padding;
+  }
+
+  @include e(action) {
+    position: absolute;
+    box-sizing: border-box;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: inherit;
+    width: $switch-size-action-width;
+    height: $switch-size-action-height;
+    background: $switch-color-action-bg;
+    border-radius: $switch-radius-action-full;
+    transition: all $switch-transition-duration ease;
+    left: $switch-top-bottom-padding;
+  }
+
+  @include m(round) {
+    .wd-switch__inner {
+      border-radius: $switch-radius-full;
+    }
+    .wd-switch__action {
+      border-radius: $switch-radius-action-full;
+    }
+  }
+
+  @include m(square) {
+    .wd-switch__inner {
+      border-radius: $switch-radius;
+    }
+    .wd-switch__action {
+      border-radius: $switch-radius-action;
+    }
+  }
+
+  @include edeep(action-loading) {
+    font-size: $switch-size-action-icon;
+  }
+
+  @include e(action-text) {}
+
+  @include e(inner-text) {
+    font-size: $switch-inner-fs;
+  }
+
+  @include edeep(inner-icon) {
+    font-size: $switch-size-icon;
+  }
+
+    @include edeep(action-icon) {
+    font-size: $switch-size-action-icon;
+    color: $switch-color-action-icon;
+  }
+
+
+  @include when(active) {
+    .wd-switch__inner {
+      background: $switch-color-active-bg;
+      padding-right: calc($switch-size-action-width + $switch-top-bottom-padding);
+    }
+
+    :deep(.wd-switch__inner-icon) {
+      color: $switch-color-active-icon;
+      margin-right: $switch-spaceing;
+    }
+
+    .wd-switch__inner-text {
+      color: $switch-color-inner-active-text;
+      margin-right: $switch-spaceing;
+    }
+
+    .wd-switch__action {
+      left: calc(100% - $switch-size-action-width - $switch-top-bottom-padding);
+    }
+  }
+
+  @include when(inactive) {
+    .wd-switch__inner {
+      background: $switch-color-inactive-bg;
+      padding-left: calc($switch-size-action-width + $switch-top-bottom-padding);
+    }
+
+    :deep(.wd-switch__inner-icon) {
+      color: $switch-color-inactive-icon;
+      margin-left: $switch-spaceing;
+    }
+
+    .wd-switch__inner-text {
+      color: $switch-color-inner-inactive-text;
+      margin-left: $switch-spaceing;
+    }
   }
 }

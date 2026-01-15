@@ -84,6 +84,7 @@ declare module 'vue' {
     WdGap: typeof import('./components/wd-gap/wd-gap.vue')['default']
     WdPasswordInput: typeof import('./components/wd-password-input/wd-password-input.vue')['default']
     WdForm: typeof import('./components/wd-form/wd-form.vue')['default']
+    WdFormItem: typeof import('./components/wd-form-item/wd-form-item.vue')['default']
     WdTextarea: typeof import('./components/wd-textarea/wd-textarea.vue')['default']
     WdVideoPreview: typeof import('./components/wd-video-preview/wd-video-preview.vue')['default']
     WdBacktop: typeof import('./components/wd-backtop/wd-backtop.vue')['default']

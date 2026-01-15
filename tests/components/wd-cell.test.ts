@@ -348,29 +348,6 @@ describe('WdCell', () => {
     expect(wrapper.find('.wd-cell__wrapper').classes()).toContain('is-vertical')
   })
 
-  // 测试表单验证规则
-  test('应用表单验证规则', () => {
-    const rules = [{ required: true, message: '必填字段' }]
-
-    const wrapper = mount(WdCell, {
-      props: {
-        title: '标题',
-        prop: 'name',
-        rules
-      },
-      global: {
-        components: {
-          WdIcon
-        }
-      }
-    })
-
-    expect(wrapper.props('rules')).toEqual(rules)
-    // 检查必填星号存在（默认在前面）
-    expect(wrapper.find('.wd-cell__required--left').exists()).toBe(true)
-    expect(wrapper.find('.wd-cell__required--left').text()).toBe('*')
-  })
-
   // 测试插槽
   test('渲染插槽', () => {
     const wrapper = mount(WdCell, {

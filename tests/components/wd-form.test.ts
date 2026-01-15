@@ -547,7 +547,9 @@ describe('WdForm 和 WdFormItem', () => {
       {
         template: `
         <wd-form ref="form" :rules="rules" :model="formData">
-          <wd-col-picker prop="area" label="地区" v-model="formData.area" :columns="columns" />
+          <wd-form-item prop="area" label="地区">
+            <wd-col-picker v-model="formData.area" :columns="columns" />
+          </wd-form-item>
         </wd-form>
       `,
         data() {

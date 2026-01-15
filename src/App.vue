@@ -1,7 +1,7 @@
 <!--
  * @Author: weisheng
  * @Date: 2024-10-12 13:07:08
- * @LastEditTime: 2025-10-31 13:47:04
+ * @LastEditTime: 2026-01-09 16:23:31
  * @LastEditors: weisheng
  * @Description: 
  * @FilePath: /wot-design-uni/src/App.vue
@@ -44,7 +44,9 @@ onHide(() => {
 })
 </script>
 <style lang="scss">
-@import '@/iconfont/index.css';
+@use '@/iconfont/index.css';
+
+@use './uni_modules/wot-design-uni/components/styles/theme/index.scss' as *;
 
 ::-webkit-scrollbar {
   width: 0;
@@ -59,5 +61,15 @@ page {
   -moz-osx-font-smoothing: grayscale;
   font-size: 13px;
   background: #f8f9fa;
+  --wot-blue-1: #e6f4ff;
+  --wot-blue-2: #bae0ff;
+  --wot-blue-3: #91caff;
+  --wot-blue-4: #69b1ff;
+  --wot-blue-5: #4096ff;
+  --wot-blue-6: #1677ff;
+  --wot-blue-7: #0958d9;
+  --wot-blue-8: #003eb3;
+  --wot-blue-9: #002c8c;
+  --wot-blue-10: #001d66;
 }
 </style>

@@ -1,5 +1,8 @@
 import type { ExtractPropTypes, PropType } from 'vue'
-import { baseProps, makeBooleanProp, makeNumberProp, makeNumericProp, numericProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeStringProp, numericProp } from '../common/props'
+import { type LoadingProps } from '../wd-loading/types'
+
+export type SwitchShape = 'round' | 'square'
 
 export type SwitchBeforeChangeOption = {
   value: number | string | boolean
@@ -14,8 +17,7 @@ export const switchProps = {
    * 绑定值
    */
   modelValue: {
-    type: [Boolean, String, Number],
-    required: true,
+    type: [Boolean, String, Number] as PropType<boolean | string | number>,
     default: false
   },
   /**
@@ -23,17 +25,41 @@ export const switchProps = {
    */
   disabled: makeBooleanProp(false),
   /**
+   * 非激活状态操作按钮图标
+   */
+  inactiveActionIcon: String,
+  /**
+   * 激活状态操作按钮图标
+   */
+  activeActionIcon: String,
+  /**
+   * 激活状态图标，设置后将忽略 `activeText`
+   */
+  activeIcon: String,
+  /**
+   * 非激活状态图标，设置后将忽略 `inactiveText`
+   */
+  inactiveIcon: String,
+  /**
+   * 激活状态文本
+   */
+  activeText: makeStringProp(''),
+  /**
+   * 非激活状态文本
+   */
+  inactiveText: makeStringProp(''),
+  /**
    * 激活值
    */
   activeValue: {
-    type: [Boolean, String, Number],
+    type: [Boolean, String, Number] as PropType<boolean | string | number>,
     default: true
   },
   /**
    * 非激活值
    */
   inactiveValue: {
-    type: [Boolean, String, Number],
+    type: [Boolean, String, Number] as PropType<boolean | string | number>,
     default: false
   },
   /**
@@ -47,12 +73,26 @@ export const switchProps = {
   /**
    * 大小
    */
-  size: {
-    type: numericProp
-  },
+  size: numericProp,
+  /**
+   * 形状
+   */
+  shape: makeStringProp<SwitchShape>('round'),
+  /**
+   * 是否显示加载中
+   */
+  loading: Boolean,
+  /**
+   * 加载配置项
+   */
+  loadingProps: Object as PropType<Partial<LoadingProps>>,
   /**
    * 在改变前执行的函数
    */
-  beforeChange: Function as PropType<SwitchBeforeChange>
+  beforeChange: Function as PropType<SwitchBeforeChange>,
+  /**
+   * 自定义类名
+   */
+  classPrefix: makeStringProp('wd-icon')
 }
 export type SwitchProps = ExtractPropTypes<typeof switchProps>

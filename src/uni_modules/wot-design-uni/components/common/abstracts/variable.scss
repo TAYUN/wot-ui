@@ -512,10 +512,8 @@ $-radio-label-color: var(--wot-radio-label-color, $-checkbox-label-color) !defau
 $-radio-checked-color: var(--wot-radio-checked-color, $-checkbox-checked-color) !default; // 选中颜色
 $-radio-disabled-color: var(--wot-radio-disabled-color, $-checkbox-disabled-color) !default; // 禁用颜色
 $-radio-disabled-label-color: var(--wot-radio-disabled-label-color, $-checkbox-disabled-label-color) !default; // 禁用文字颜色
-
 $-radio-large-size: var(--wot-radio-large-size, $-checkbox-large-size) !default; // 左侧图标尺寸
 $-radio-large-label-fs: var(--wot-radio-large-label-fs, $-checkbox-large-label-fs) !default; // 右侧文字字号
-
 $-radio-button-height: var(--wot-radio-button-height, $-checkbox-button-height) !default; // 按钮模式复选框高
 $-radio-button-min-width: var(--wot-radio-button-min-width, 60px) !default; // 按钮模式最小宽
 $-radio-button-max-width: var(--wot-radio-button-max-width, 144px) !default; // 按钮模式最大宽

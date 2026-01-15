@@ -26,11 +26,19 @@
     </demo-block>
 
     <demo-block :title="$t('xiu-gai-icon-he-xuan-zhong-yan-se')">
-      <wd-rate v-model="value6" icon="dong" active-icon="dong" active-color="#4D80F0" />
+      <wd-rate v-model="value6" block icon="Fire" active-icon="Fire" active-color="var(--wot-red-6)" custom-style="margin-bottom: 10px" />
+      <wd-rate
+        v-model="value6_1"
+        block
+        icon="thumb-down-fill"
+        active-icon="thumb-up-fill"
+        active-color="var(--wot-green-6)"
+        custom-style="margin-bottom: 10px"
+      />
     </demo-block>
 
     <demo-block :title="$t('xiu-gai-sizespace')">
-      <wd-rate v-model="value7" space="10px" size="30px" />
+      <wd-rate v-model="value7" space="12px" size="36" />
     </demo-block>
 
     <demo-block :title="$t('yun-xu-ban-xuan')">
@@ -56,6 +64,8 @@ const value3 = ref<number>(2)
 const value4 = ref<number>(3)
 const value5 = ref<number>(4)
 const value6 = ref<number>(3)
+const value6_1 = ref<number>(3)
+
 const value7 = ref<number>(5)
 const value8 = ref<number>(2.5)
 const value9 = ref<number>(3)

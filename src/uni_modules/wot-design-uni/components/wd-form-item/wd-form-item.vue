@@ -1,22 +1,30 @@
-<!--
- * @Author: weisheng
- * @Date: 2023-12-14 11:21:58
- * @LastEditTime: 2024-03-15 21:29:33
- * @LastEditors: weisheng
- * @Description: 
- * @FilePath: /wot-design-uni/src/uni_modules/wot-design-uni/components/wd-form-item/wd-form-item.vue
- * 记得注释
--->
 <template>
   <wd-cell
-    custom-class="wd-form-item"
-    :required="required"
-    :title="label"
+    :custom-class="`wd-form-item ${customClass}`"
+    :custom-style="customStyle"
+    :use-title-slot="!!$slots.title"
+    :title="title"
+    :title-width="titleWidth"
+    :icon="icon"
+    :icon-size="iconSize"
+    :icon-prefix="iconPrefix"
+    :required="isRequired"
+    :size="size"
+    :value-align="valueAlign"
     :center="center"
+    :ellipsis="ellipsis"
+    :asterisk-position="asteriskPosition"
     :border="border"
-    :title-width="labelWidth"
-    :is-link="isLink"
+    :hide-asterisk="hideAsterisk"
+    :custom-icon-class="customIconClass"
+    :custom-label-class="customLabelClass"
+    :custom-title-class="customTitleClass"
+    :custom-value-class="customValueClass"
   >
+    <template #title v-if="$slots.title">
+      <slot name="title"></slot>
+    </template>
+
     <slot></slot>
     <view v-if="errorMessage" class="wd-form-item__error-message">{{ errorMessage }}</view>
   </wd-cell>
@@ -55,8 +63,22 @@ const border = computed(() => {
   if (index.value > 0 && form && form.props.border) {
     return true
   } else {
-    return false
+    return props.border
   }
+})
+
+// 是否展示必填
+const isRequired = computed(() => {
+  let formRequired = false
+  if (form && form.props.rules) {
+    const rules = form.props.rules
+    for (const key in rules) {
+      if (Object.prototype.hasOwnProperty.call(rules, key) && key === props.prop && Array.isArray(rules[key])) {
+        formRequired = rules[key].some((rule) => rule.required)
+      }
+    }
+  }
+  return props.required || (props.rules && props.rules.some((rule) => rule.required)) || formRequired
 })
 </script>
 

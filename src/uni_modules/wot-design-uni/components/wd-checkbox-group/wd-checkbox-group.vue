@@ -1,5 +1,5 @@
 <template>
-  <view :class="`wd-checkbox-group ${shape === 'button' && cell ? 'is-button' : ''} ${customClass}`" :style="customStyle">
+  <view :class="`wd-checkbox-group ${customClass}`" :style="customStyle">
     <slot />
   </view>
 </template>
@@ -16,14 +16,14 @@ export default {
 
 <script lang="ts" setup>
 import { watch } from 'vue'
-import { checkNumRange, deepClone } from '../common/util'
+import { checkNumRange, deepClone, isBoolean } from '../common/util'
 import { useChildren } from '../composables/useChildren'
-import { CHECKBOX_GROUP_KEY, checkboxGroupProps } from './types'
+import { CHECKBOX_GROUP_KEY, checkboxGroupProps, type CheckboxGroupExpose, type CheckboxGroupToggleAllOptions } from './types'
 
 const props = defineProps(checkboxGroupProps)
 const emit = defineEmits(['change', 'update:modelValue'])
 
-const { linkChildren } = useChildren(CHECKBOX_GROUP_KEY)
+const { linkChildren, children } = useChildren(CHECKBOX_GROUP_KEY)
 
 linkChildren({ props, changeSelectState })
 
@@ -43,16 +43,15 @@ watch(
       // eslint-disable-next-line quotes
       console.error("checkboxGroup's bound value's length can't be large than max")
     }
-    // 每次value变化都会触发重新匹配选中项
   },
   { deep: true, immediate: true }
 )
 
 watch(
-  () => props.shape,
+  () => props.type,
   (newValue) => {
-    const type = ['circle', 'square', 'button']
-    if (type.indexOf(newValue) === -1) console.error(`shape must be one of ${type.toString()}`)
+    const type = ['circle', 'square', 'button', 'dot']
+    if (type.indexOf(newValue) === -1) console.error(`type must be one of ${type.toString()}`)
   },
   { deep: true, immediate: true }
 )
@@ -85,6 +84,10 @@ function changeSelectState(value: string | number | boolean) {
     temp.splice(index, 1)
   } else {
     // 之前未选中，则现在把加子节点的标识符加到 value 列表中。
+    if (props.max !== 0 && temp.length >= props.max) {
+      // Limit reached
+      return
+    }
     temp.push(value)
   }
   emit('update:modelValue', temp)
@@ -93,8 +96,51 @@ function changeSelectState(value: string | number | boolean) {
     value: temp
   })
 }
+
+/**
+ * @description 切换所有复选框，传 true 为选中，false 为取消选中，不传参为取反
+ * @param options
+ */
+const toggleAll = (options: CheckboxGroupToggleAllOptions = {}) => {
+  const { modelValue } = props
+  let checked: boolean | undefined
+  let skipDisabled = false
+
+  if (isBoolean(options)) {
+    checked = options
+  } else {
+    checked = options.checked
+    skipDisabled = options.skipDisabled || false
+  }
+
+  const newModelValue: (string | number | boolean)[] = []
+
+  children.forEach((child: any) => {
+    if (skipDisabled && child.disabled) {
+      if (modelValue.includes(child.name)) {
+        newModelValue.push(child.name)
+      }
+    } else {
+      const isCurrentChecked = modelValue.includes(child.name)
+      const target = checked === undefined ? !isCurrentChecked : checked
+
+      if (target) {
+        newModelValue.push(child.name)
+      }
+    }
+  })
+
+  emit('update:modelValue', newModelValue)
+  emit('change', {
+    value: newModelValue
+  })
+}
+
+defineExpose<CheckboxGroupExpose>({
+  toggleAll
+})
 </script>
 
 <style lang="scss" scoped>
-@import './index.scss';
+@use './index.scss';
 </style>

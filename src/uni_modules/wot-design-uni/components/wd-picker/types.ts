@@ -1,38 +1,13 @@
 import type { ComponentPublicInstance, ExtractPropTypes, PropType } from 'vue'
 import { baseProps, makeArrayProp, makeBooleanProp, makeNumberProp, makeStringProp } from '../common/props'
 import type { ColumnItem, PickerViewColumnChange } from '../wd-picker-view/types'
-import type { FormItemRule } from '../wd-form/types'
 
 export const pickerProps = {
   ...baseProps,
   /**
-   * label 外部自定义样式
-   */
-  customLabelClass: makeStringProp(''),
-  /**
-   * value 外部自定义样式
-   */
-  customValueClass: makeStringProp(''),
-  /**
    * pickerView 外部自定义样式
    */
   customViewClass: makeStringProp(''),
-  /**
-   * 选择器左侧文案
-   */
-  label: String,
-  /**
-   * 选择器占位符
-   */
-  placeholder: String,
-  /**
-   * 是否禁用
-   */
-  disabled: makeBooleanProp(false),
-  /**
-   * 是否只读
-   */
-  readonly: makeBooleanProp(false),
   /**
    * 加载中
    */
@@ -55,36 +30,6 @@ export const pickerProps = {
    */
   confirmButtonText: String,
   /**
-   * 是否必填
-   */
-  required: makeBooleanProp(false),
-  /**
-   * 尺寸
-   */
-  size: String,
-  /**
-   * 设置左侧标题宽度
-   */
-  labelWidth: makeStringProp('33%'),
-  /**
-   * 使用默认插槽
-   * @deprecated 可以直接使用默认插槽，无需配置此选项
-   */
-  useDefaultSlot: makeBooleanProp(false),
-  /**
-   * 使用标签插槽
-   * @deprecated 可以直接使用标签插槽，无需配置此选项
-   */
-  useLabelSlot: makeBooleanProp(false),
-  /**
-   * 错误状态
-   */
-  error: makeBooleanProp(false),
-  /**
-   * 右对齐
-   */
-  alignRight: makeBooleanProp(false),
-  /**
    * 确定前校验函数，接收 (value, resolve, picker) 参数，通过 resolve 继续执行 picker，resolve 接收1个boolean参数
    */
   beforeConfirm: Function as PropType<PickerBeforeConfirm>,
@@ -96,10 +41,6 @@ export const pickerProps = {
    * 底部安全区域内
    */
   safeAreaInsetBottom: makeBooleanProp(true),
-  /**
-   * 文本溢出显示省略号
-   */
-  ellipsis: makeBooleanProp(false),
   /**
    * 选项总高度
    */
@@ -139,14 +80,6 @@ export const pickerProps = {
    */
   zIndex: makeNumberProp(15),
   /**
-   * 表单域 model 字段名，在使用表单校验功能的情况下，该属性是必填的
-   */
-  prop: String,
-  /**
-   * 表单验证规则，结合wd-form组件使用
-   */
-  rules: makeArrayProp<FormItemRule>(),
-  /**
    * 是否在手指松开时立即触发 change 事件。若不开启则会在滚动动画结束后触发 change 事件，1.2.25版本起提供，仅微信小程序和支付宝小程序支持。
    */
   immediateChange: makeBooleanProp(false),
@@ -155,13 +88,9 @@ export const pickerProps = {
    */
   rootPortal: makeBooleanProp(false),
   /**
-   * 显示清空按钮
+   * 控制弹窗显示
    */
-  clearable: makeBooleanProp(false),
-  /**
-   * 必填标记位置，可选值：before、after
-   */
-  markerSide: makeStringProp<'before' | 'after'>('before')
+  visible: makeBooleanProp(false)
 }
 
 export type PickerProps = ExtractPropTypes<typeof pickerProps>

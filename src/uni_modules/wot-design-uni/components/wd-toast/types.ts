@@ -1,7 +1,7 @@
 /*
  * @Author: weisheng
  * @Date: 2023-06-19 12:47:57
- * @LastEditTime: 2025-02-16 15:52:17
+ * @LastEditTime: 2025-11-23 18:34:33
  * @LastEditors: weisheng
  * @Description:
  * @FilePath: /wot-design-uni/src/uni_modules/wot-design-uni/components/wd-toast/types.ts
@@ -110,10 +110,10 @@ export const toastProps = {
   iconSize: Number,
   /**
    * 加载类型
-   * @type {'outline' | 'ring'}
-   * @default 'outline'
+   * @type {'circular' | 'spinner' | 'dots'}
+   * @default 'circular'
    */
-  loadingType: makeStringProp<ToastLoadingType>('outline'),
+  loadingType: makeStringProp<ToastLoadingType>('circular'),
   /**
    * 加载颜色
    * @type {string}

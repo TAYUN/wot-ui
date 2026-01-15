@@ -2,53 +2,74 @@
   <page-wraper>
     <view>
       <wd-cell-group border>
-        <wd-calendar :label="$t('dan-ge-ri-qi-xuan-ze')" v-model="value1" @confirm="handleConfirm1" />
-        <wd-calendar :label="$t('duo-ge-ri-qi-xuan-ze')" type="dates" v-model="value2" @confirm="handleConfirm2" />
-        <wd-calendar :label="$t('ri-qi-fan-wei-xuan-ze')" type="daterange" v-model="value3" />
-        <wd-calendar :label="$t('ri-qi-shi-jian-xuan-ze')" type="datetime" v-model="value4" />
-        <wd-calendar :label="$t('ri-qi-shi-jian-fan-wei-xuan-ze')" type="datetimerange" v-model="value5" />
-        <wd-calendar :label="$t('zhou-xuan-ze')" type="week" v-model="value6" />
-        <wd-calendar :label="$t('yue-xuan-ze')" type="month" :min-date="minDate" v-model="value7" />
-        <wd-calendar :label="$t('zhou-fan-wei-xuan-ze')" :first-day-of-week="1" type="weekrange" v-model="value8" />
-        <wd-calendar :label="$t('yue-fan-wei-xuan-ze')" type="monthrange" v-model="value9" />
-        <wd-calendar :label="$t('ri-zhou-yue-qie-huan')" :first-day-of-week="1" show-type-switch v-model="value10" />
-        <wd-calendar :label="$t('kuai-jie-cao-zuo')" v-model="value16" :show-confirm="false" />
-        <wd-calendar :label="$t('ri-qi-ge-shi-hua')" type="daterange" v-model="value11" :formatter="formatter" />
+        <wd-cell :title="$t('dan-ge-ri-qi-xuan-ze')" :value="formatValue(value1, 'date')" is-link @click="show1 = true" />
+        <wd-calendar v-model="value1" v-model:visible="show1" @confirm="handleConfirm1" />
+
+        <wd-cell :title="$t('duo-ge-ri-qi-xuan-ze')" :value="formatValue(value2, 'dates')" is-link @click="show2 = true" />
+        <wd-calendar type="dates" v-model="value2" v-model:visible="show2" @confirm="handleConfirm2" />
+
+        <wd-cell :title="$t('ri-qi-fan-wei-xuan-ze')" :value="formatValue(value3, 'daterange')" is-link @click="show3 = true" />
+        <wd-calendar type="daterange" v-model="value3" v-model:visible="show3" />
+
+        <wd-cell :title="$t('ri-qi-shi-jian-xuan-ze')" :value="formatValue(value4, 'datetime')" is-link @click="show4 = true" />
+        <wd-calendar type="datetime" v-model="value4" v-model:visible="show4" />
+
+        <wd-cell :title="$t('ri-qi-shi-jian-fan-wei-xuan-ze')" :value="formatValue(value5, 'datetimerange')" is-link @click="show5 = true" />
+        <wd-calendar type="datetimerange" v-model="value5" v-model:visible="show5" />
+
+        <wd-cell :title="$t('zhou-xuan-ze')" :value="formatValue(value6, 'week')" is-link @click="show6 = true" />
+        <wd-calendar type="week" v-model="value6" v-model:visible="show6" />
+
+        <wd-cell :title="$t('yue-xuan-ze')" :value="formatValue(value7, 'month')" is-link @click="show7 = true" />
+        <wd-calendar type="month" :min-date="minDate" v-model="value7" v-model:visible="show7" />
+
+        <wd-cell :title="$t('zhou-fan-wei-xuan-ze')" :value="formatValue(value8, 'weekrange')" is-link @click="show8 = true" />
+        <wd-calendar :first-day-of-week="1" type="weekrange" v-model="value8" v-model:visible="show8" />
+
+        <wd-cell :title="$t('yue-fan-wei-xuan-ze')" :value="formatValue(value9, 'monthrange')" is-link @click="show9 = true" />
+        <wd-calendar type="monthrange" v-model="value9" v-model:visible="show9" />
+
+        <wd-cell :title="$t('ri-zhou-yue-qie-huan')" :value="formatValue(value10, 'date')" is-link @click="show10 = true" />
+        <wd-calendar :first-day-of-week="1" show-type-switch v-model="value10" v-model:visible="show10" />
+
+        <wd-cell :title="$t('kuai-jie-cao-zuo')" :value="formatValue(value16, 'date')" is-link @click="show16 = true" />
+        <wd-calendar v-model="value16" v-model:visible="show16" :show-confirm="false" />
+
+        <wd-cell :title="$t('ri-qi-ge-shi-hua')" :value="formatValue(value11, 'daterange')" is-link @click="show11 = true" />
+        <wd-calendar type="daterange" v-model="value11" v-model:visible="show11" :formatter="formatter" />
+
+        <wd-cell :title="$t('kuai-jie-xuan-xiang')" :value="formatValue(value12, 'daterange')" is-link @click="show12 = true" />
         <wd-calendar
-          :label="$t('kuai-jie-xuan-xiang')"
           :shortcuts="shortcuts"
           :on-shortcuts-click="onShortcutsClick"
           type="daterange"
-          const
           v-model="value12"
+          v-model:visible="show12"
           @confirm="handleConfirm3"
         />
-        <wd-calendar
-          :label="$t('zi-ding-yi-zhan-shi')"
-          type="daterange"
-          const
-          v-model="value13"
-          :display-format="displayFormat"
-          :inner-display-format="innerDisplayFormat"
+
+        <wd-cell :title="$t('zi-ding-yi-zhan-shi')" :value="displayFormat(value13)" is-link @click="show13 = true" />
+        <wd-calendar type="daterange" v-model="value13" v-model:visible="show13" :inner-display-format="innerDisplayFormat" />
+
+        <wd-cell title="before-confirm" :value="formatValue(value14, 'date')" is-link @click="show14 = true" />
+        <wd-calendar v-model="value14" v-model:visible="show14" :before-confirm="beforeConfirm" />
+
+        <wd-cell :title="$t('dan-ge-ri-qi-xuan-ze-ke-qing-kong')" :value="formatValue(valueClear1, 'date')" is-link @click="showClear1 = true" />
+        <wd-calendar v-model="valueClear1" v-model:visible="showClear1" @confirm="handleConfirmClear1" />
+
+        <wd-cell
+          :title="$t('ri-qi-fan-wei-xuan-ze-ke-qing-kong')"
+          :value="formatValue(valueClear2, 'daterange')"
+          is-link
+          @click="showClear2 = true"
         />
-        <wd-calendar label="before-confirm" v-model="value14" :before-confirm="beforeConfirm" />
-        <wd-calendar
-          :label="$t('dan-ge-ri-qi-xuan-ze-ke-qing-kong')"
-          v-model="valueClear1"
-          clearable
-          @clear="handleClear1"
-          @confirm="handleConfirmClear1"
-        />
-        <wd-calendar
-          :label="$t('ri-qi-fan-wei-xuan-ze-ke-qing-kong')"
-          type="daterange"
-          v-model="valueClear2"
-          clearable
-          @clear="handleClear2"
-          @confirm="handleConfirmClear2"
-        />
-        <wd-calendar :label="$t('bi-tian-xing-hao-zai-you-ce')" v-model="value18" required marker-side="after" @confirm="handleConfirm6" />
-        <wd-calendar :label="$t('tuo-zhan-que-ding-qu-yu')" v-model="value19">
+        <wd-calendar type="daterange" v-model="valueClear2" v-model:visible="showClear2" @confirm="handleConfirmClear2" />
+
+        <wd-cell :title="$t('bi-tian-xing-hao-zai-you-ce')" :value="formatValue(value18, 'date')" required is-link @click="show18 = true" />
+        <wd-calendar v-model="value18" v-model:visible="show18" @confirm="handleConfirm6" />
+
+        <wd-cell :title="$t('tuo-zhan-que-ding-qu-yu')" :value="formatValue(value19, 'date')" is-link @click="show19 = true" />
+        <wd-calendar v-model="value19" v-model:visible="show19">
           <template #confirm-right>
             <wd-button block plain custom-style="margin-left: 10px;" @click="selectToday">{{ $t('xuan-ze-jin-tian') }}</wd-button>
           </template>
@@ -58,15 +79,14 @@
 
     <demo-block transparent :title="$t('zi-ding-yi-xuan-ze-qi')">
       <view style="margin: 0 15px">
-        <view style="margin-bottom: 10px">{{ $t('dang-qian-xuan-zhong-ri-qi-formatvalue') + formatValue }}</view>
-        <wd-calendar v-model="value15" use-default-slot @confirm="handleConfirm4">
-          <wd-button>{{ $t('xuan-ze-ri-qi') }}</wd-button>
-        </wd-calendar>
+        <view style="margin-bottom: 10px">{{ $t('dang-qian-xuan-zhong-ri-qi-formatvalue') + formatValueStr }}</view>
+        <wd-button @click="show15 = true">{{ $t('xuan-ze-ri-qi') }}</wd-button>
+        <wd-calendar v-model="value15" v-model:visible="show15" @confirm="handleConfirm4" />
       </view>
     </demo-block>
     <demo-block :title="$t('zu-jian-shi-li-shi-jian')">
-      <wd-button @click="openCalendar">{{ $t('da-kai-ri-li') }}</wd-button>
-      <wd-calendar ref="calendarRef" v-model="value17" :with-cell="false" @confirm="handleConfirm5" />
+      <wd-button @click="show17 = true">{{ $t('da-kai-ri-li') }}</wd-button>
+      <wd-calendar v-model="value17" v-model:visible="show17" @confirm="handleConfirm5" />
     </demo-block>
   </page-wraper>
   <wd-toast />
@@ -77,9 +97,12 @@
 import { useToast } from '@/uni_modules/wot-design-uni'
 import { dayjs } from '@/uni_modules/wot-design-uni'
 import type { CalendarDayItem, CalendarFormatter } from '@/uni_modules/wot-design-uni/components/wd-calendar-view/types'
-import type { CalendarInstance, CalendarOnShortcutsClickOption } from '@/uni_modules/wot-design-uni/components/wd-calendar/types'
+import type { CalendarOnShortcutsClickOption } from '@/uni_modules/wot-design-uni/components/wd-calendar/types'
 import { nextTick, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { getWeekNumber } from '@/uni_modules/wot-design-uni/components/wd-calendar-view/utils'
+import { padZero } from '@/uni_modules/wot-design-uni/components/common/util'
+
 const { t } = useI18n()
 
 const now = new Date()
@@ -107,13 +130,29 @@ const value19 = ref<number>(Date.now())
 const valueClear1 = ref<number | null>(Date.now())
 const valueClear2 = ref<number[]>([Date.now() - 24 * 60 * 60 * 1000 * 3, Date.now()])
 
-const calendarRef = ref<CalendarInstance>()
+const show1 = ref<boolean>(false)
+const show2 = ref<boolean>(false)
+const show3 = ref<boolean>(false)
+const show4 = ref<boolean>(false)
+const show5 = ref<boolean>(false)
+const show6 = ref<boolean>(false)
+const show7 = ref<boolean>(false)
+const show8 = ref<boolean>(false)
+const show9 = ref<boolean>(false)
+const show10 = ref<boolean>(false)
+const show11 = ref<boolean>(false)
+const show12 = ref<boolean>(false)
+const show13 = ref<boolean>(false)
+const show14 = ref<boolean>(false)
+const show15 = ref<boolean>(false)
+const show16 = ref<boolean>(false)
+const show17 = ref<boolean>(false)
+const show18 = ref<boolean>(false)
+const show19 = ref<boolean>(false)
+const showClear1 = ref<boolean>(false)
+const showClear2 = ref<boolean>(false)
 
-function openCalendar() {
-  calendarRef.value?.open()
-}
-
-const formatValue = ref<string>('')
+const formatValueStr = ref<string>('')
 const formatter: CalendarFormatter = (day: CalendarDayItem) => {
   const date = new Date(day.date)
   const now = new Date()
@@ -223,7 +262,7 @@ function handleConfirm3({ value }: any) {
 }
 function handleConfirm4({ value }: any) {
   console.log(new Date(value).toString())
-  formatValue.value = new Date(value).toString()
+  formatValueStr.value = new Date(value).toString()
 }
 
 function handleConfirm5({ value }: any) {
@@ -234,20 +273,53 @@ function handleConfirm6({ value }: any) {
   console.log(value)
 }
 
-function handleClear1() {
-  console.log('calendar 1 cleared')
-}
-
 function handleConfirmClear1({ value }: any) {
   console.log('calendar 1 confirmed:', value)
 }
 
-function handleClear2() {
-  console.log('calendar 2 cleared')
-}
-
 function handleConfirmClear2({ value }: any) {
   console.log('calendar 2 confirmed:', value)
+}
+
+function formatValue(value: any, type: string) {
+  if (!value) return ''
+  switch (type) {
+    case 'date':
+      return dayjs(value).format('YYYY-MM-DD')
+    case 'dates':
+      return (value || []).map((item: number) => dayjs(item).format('YYYY-MM-DD')).join(', ')
+    case 'daterange':
+      if (!Array.isArray(value)) return ''
+      return `${value[0] ? dayjs(value[0]).format('YYYY-MM-DD') : ''} - ${value[1] ? dayjs(value[1]).format('YYYY-MM-DD') : ''}`
+    case 'datetime':
+      return dayjs(value).format('YYYY-MM-DD HH:mm:ss')
+    case 'datetimerange':
+      if (!Array.isArray(value)) return ''
+      return `${value[0] ? dayjs(value[0]).format('YYYY-MM-DD HH:mm:ss') : ''} - ${value[1] ? dayjs(value[1]).format('YYYY-MM-DD HH:mm:ss') : ''}`
+    case 'week': {
+      const date = new Date(value)
+      const year = date.getFullYear()
+      const week = getWeekNumber(value)
+      return `${year} 第${padZero(week)}周`
+    }
+    case 'month':
+      return dayjs(value).format('YYYY-MM')
+    case 'weekrange': {
+      if (!Array.isArray(value)) return ''
+      const date1 = new Date(value[0])
+      const year1 = date1.getFullYear()
+      const week1 = getWeekNumber(value[0])
+      const date2 = new Date(value[1])
+      const year2 = date2.getFullYear()
+      const week2 = getWeekNumber(value[1])
+      return `${year1} 第${padZero(week1)}周 - ${year2} 第${padZero(week2)}周`
+    }
+    case 'monthrange':
+      if (!Array.isArray(value)) return ''
+      return `${value[0] ? dayjs(value[0]).format('YYYY-MM') : ''} - ${value[1] ? dayjs(value[1]).format('YYYY-MM') : ''}`
+    default:
+      return ''
+  }
 }
 </script>
 <style lang="scss" scoped></style>

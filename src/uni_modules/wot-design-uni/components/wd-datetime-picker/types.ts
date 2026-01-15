@@ -1,7 +1,6 @@
 import type { ComponentPublicInstance, ExtractPropTypes, PropType } from 'vue'
-import { baseProps, makeArrayProp, makeBooleanProp, makeNumberProp, makeRequiredProp, makeStringProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeNumberProp, makeRequiredProp, makeStringProp } from '../common/props'
 import type { DateTimeType, DatetimePickerViewFilter, DatetimePickerViewFormatter } from '../wd-datetime-picker-view/types'
-import type { FormItemRule } from '../wd-form/types'
 
 const now = new Date()
 const defaultMinDate = new Date(now.getFullYear() - 10, 0, 1).getTime()
@@ -9,22 +8,6 @@ const defaultMaxDate = new Date(now.getFullYear() + 10, 11, 31, 23, 59, 59).getT
 
 export const datetimePickerProps = {
   ...baseProps,
-  /**
-   * 选择器左侧文案，label可以不传
-   */
-  label: String,
-  /**
-   * 选择器占位符
-   */
-  placeholder: String,
-  /**
-   * 禁用
-   */
-  disabled: makeBooleanProp(false),
-  /**
-   * 只读
-   */
-  readonly: makeBooleanProp(false),
   /**
    * 加载中
    */
@@ -46,26 +29,6 @@ export const datetimePickerProps = {
    */
   confirmButtonText: String,
   /**
-   * 是否必填
-   */
-  required: makeBooleanProp(false),
-  /**
-   * 设置选择器大小，可选值：large
-   */
-  size: String,
-  /**
-   * 设置左侧标题宽度
-   */
-  labelWidth: makeStringProp('33%'),
-  /**
-   * 是否为错误状态，错误状态时右侧内容为红色
-   */
-  error: makeBooleanProp(false),
-  /**
-   * 选择器的值靠右展示
-   */
-  alignRight: makeBooleanProp(false),
-  /**
    * 点击遮罩是否关闭
    */
   closeOnClickModal: makeBooleanProp(true),
@@ -73,10 +36,6 @@ export const datetimePickerProps = {
    * 弹出面板是否设置底部安全距离（iphone X 类型的机型）
    */
   safeAreaInsetBottom: makeBooleanProp(true),
-  /**
-   * 是否超出隐藏
-   */
-  ellipsis: makeBooleanProp(false),
   /**
    * picker内部滚筒高
    */
@@ -142,10 +101,6 @@ export const datetimePickerProps = {
    */
   formatter: Function as PropType<DatetimePickerViewFormatter>,
   /**
-   * 自定义展示文案的格式化函数，返回一个字符串
-   */
-  displayFormat: Function as PropType<DatetimePickerDisplayFormat>,
-  /**
    * 确定前校验函数，接收 (value, resolve, picker) 参数，通过 resolve 继续执行 picker，resolve 接收1个boolean参数
    */
   beforeConfirm: Function as PropType<DatetimePickerBeforeConfirm>,
@@ -162,29 +117,9 @@ export const datetimePickerProps = {
    */
   zIndex: makeNumberProp(15),
   /**
-   * 表单域 model 字段名，在使用表单校验功能的情况下，该属性是必填的
-   */
-  prop: String,
-  /**
-   * 表单验证规则，结合wd-form组件使用
-   */
-  rules: makeArrayProp<FormItemRule>(),
-  /**
-   * picker cell 外部自定义样式
-   */
-  customCellClass: makeStringProp(''),
-  /**
    * pickerView 外部自定义样式
    */
   customViewClass: makeStringProp(''),
-  /**
-   * label 外部自定义样式
-   */
-  customLabelClass: makeStringProp(''),
-  /**
-   * value 外部自定义样式
-   */
-  customValueClass: makeStringProp(''),
   /**
    * 是否在手指松开时立即触发picker-view的 change 事件。若不开启则会在滚动动画结束后触发 change 事件，1.2.25版本起提供，仅微信小程序和支付宝小程序支持。
    */
@@ -194,16 +129,10 @@ export const datetimePickerProps = {
    */
   rootPortal: makeBooleanProp(false),
   /**
-   * 显示清空按钮
+   * 控制弹窗显示
    */
-  clearable: makeBooleanProp(false),
-  /**
-   * 必填标记位置，可选值：before、after
-   */
-  markerSide: makeStringProp<'before' | 'after'>('before')
+  visible: makeBooleanProp(false)
 }
-
-export type DatetimePickerDisplayFormat = (items: Record<string, any>[]) => string
 
 export type DatetimePickerBeforeConfirm = (
   value: number | string | (number | string)[],

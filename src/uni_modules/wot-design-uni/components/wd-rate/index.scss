@@ -1,5 +1,11 @@
-@import './../common/abstracts/_mixin.scss';
-@import './../common/abstracts/variable.scss';
+@use '../styles/mixin/mixin.scss'as *;
+@use '../styles/variable.scss'as *;
+
+$rate-color: var(--wd-rate-color, $filled-extra-strong);
+$rate-active-color: var(--wd-rate-active-color, $classifyapplication-Yellow-content);
+$rate-size: var(--wd-rate-size, $n24);
+$rate-disabled-opacity: var(--wd-rate-disabled-opacity, $opacity-disabled);
+$rate-item-space: var(--wd-rate-item-space, $spacing-extra-tight);
 
 @include b(rate) {
   display: inline-block;
@@ -10,16 +16,37 @@
     position: relative;
     display: inline-block;
     touch-action: none; // 禁用默认触摸行为
+
+    &:not(:last-child) {
+      margin-right: $rate-item-space;
+    }
   }
-  @include edeep(item-star) {
+
+  @include e(item-star) {
     -webkit-background-clip: text !important;
     color: transparent;
+    background: $rate-color;
+    font-size: $rate-size;
+
+    @include m(active) {
+      background: $rate-active-color;
+    }
   }
+
   @include e(item-half) {
     position: absolute;
     left: 0;
     top: 0;
     overflow: hidden;
     width: 50%;
+  }
+
+  @include when(disabled) {
+    cursor: not-allowed;
+    opacity: $opacity-disabled;
+  }
+
+  @include when(block) {
+    display: block;
   }
 }

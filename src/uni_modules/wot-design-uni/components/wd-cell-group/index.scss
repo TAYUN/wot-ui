@@ -1,34 +1,18 @@
-@import '../common/abstracts/variable.scss';
-@import '../common/abstracts/_mixin.scss';
+@use '../styles/variable.scss' as *;
+@use '../styles/mixin/mixin.scss' as *;
 
-.wot-theme-dark {
-  @include b(cell-group) {
-    background-color: $-dark-background2;
-
-    @include when(border) {
-      .wd-cell-group__title {
-        @include halfPixelBorder('bottom', 0, $-dark-border-color);
-      }
-    }
-
-    @include e(title) {
-      background: $-dark-background2;
-      color: $-dark-color;
-    }
-
-    @include e(right) {
-      color: $-dark-color3;
-    }
-
-    @include e(body) {
-      background: $-dark-background2;
-    }
-
-  }
-}
+$cell-group-bg: var(--wot-cell-group-bg, $filled-oppo) !default;
+$cell-group-padding: var(--wot-cell-group-padding, $padding-loose) !default;
+$cell-group-font-weight: var(--wot-cell-group-font-weight, $font-weight-medium) !default;
+$cell-group-title-color: var(--wot-cell-group-title-color, $text-main) !default;
+$cell-group-color-value: var(--wot-cell-group-color-value, $text-secondary) !default;
+$cell-group-value-fs: var(--wot-cell-group-value-fs, $typography-body-size-main) !default;
+$cell-group-title-fs: var(--wot-cell-group-title-fs, $typography-body-size-main) !default;
+$cell-group-insert-radius: var(--wot-cell-group-insert-radius, $radius-large) !default;
+$cell-group-insert-margin: var(--wot-cell-group-insert-margin, 0 $spacing-extra-loose) !default;
 
 @include b(cell-group) {
-  background-color: $-color-white;
+  background: $cell-group-bg;
 
   @include when(border) {
     .wd-cell-group__title {
@@ -39,23 +23,22 @@
     position: relative;
     display: flex;
     justify-content: space-between;
-    padding: $-cell-group-padding;
-    background: $-color-white;
-    font-size: $-cell-group-title-fs;
-    color: $-cell-group-title-color;
-    font-weight: $-fw-medium;
-    line-height: 1.43;
+    padding: $cell-group-padding;
+    background: $cell-group-bg;
+    font-size: $cell-group-title-fs;
+    color: $cell-group-title-color;
+    font-weight: $cell-group-font-weight;
   }
   @include e(right) {
-    color: $-cell-group-value-color;
-    font-size: $-cell-group-value-fs;
+    color: $cell-group-color-value;
+    font-size: $cell-group-value-fs;
   }
   @include e(body) {
-    background: $-color-white;
+    background: $cell-group-bg;
   }
   @include m(insert) {
-    border-radius: $-cell-group-insert-radius;
+    border-radius: $cell-group-insert-radius;
     overflow: hidden;
-    margin: $-cell-group-insert-margin;
+    margin: $cell-group-insert-margin;
   }
 }

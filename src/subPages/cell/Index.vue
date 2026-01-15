@@ -8,6 +8,15 @@
       </wd-cell-group>
     </demo-block>
 
+    <demo-block title="Placeholder" transparent>
+      <wd-cell-group>
+        <wd-cell title="用户名" placeholder="请输入用户名" />
+        <wd-cell title="手机号" value="188****8888" placeholder="请输入手机号" />
+        <wd-cell title="左对齐" placeholder="请输入内容" value-align="left" />
+        <wd-cell title="居中对齐" placeholder="请输入内容" value-align="center" />
+      </wd-cell-group>
+    </demo-block>
+
     <demo-block :title="$t('card-style')" transparent>
       <wd-cell-group insert>
         <wd-cell :title="$t('biao-ti-wen-zi')" :value="$t('nei-rong')" />
@@ -17,7 +26,7 @@
 
     <demo-block :title="$t('tu-biao')" transparent>
       <wd-cell-group>
-        <wd-cell :title="$t('biao-ti-wen-zi-1')" :value="$t('nei-rong')" icon="setting" />
+        <wd-cell :title="$t('biao-ti-wen-zi-1')" :value="$t('nei-rong')" icon="settings" />
         <wd-cell :title="$t('biao-ti-wen-zi-2')" :value="$t('nei-rong')">
           <template #icon>
             <view class="cell-icon"></view>
@@ -40,7 +49,7 @@
     <demo-block :title="$t('da-chi-cun')" transparent>
       <wd-cell-group>
         <wd-cell size="large" :title="$t('biao-ti-wen-zi-5')" :value="$t('nei-rong')" />
-        <wd-cell :title="$t('biao-ti-wen-zi-6')" :value="$t('nei-rong')" size="large" icon="setting" is-link />
+        <wd-cell :title="$t('biao-ti-wen-zi-6')" :value="$t('nei-rong')" size="large" icon="settings" is-link />
         <wd-cell size="large" :title="$t('biao-ti-wen-zi-7')" :label="$t('miaoShuXinXi-0')" :value="$t('nei-rong')" />
       </wd-cell-group>
     </demo-block>
@@ -85,12 +94,12 @@
     <demo-block :title="$t('biao-dan-shu-xing')" transparent>
       <wd-cell-group border>
         <wd-cell :title="$t('bi-tian')" required>
-          <wd-rate v-model="rate" icon="dong" active-icon="dong" @change="handleRateChange" />
+          <wd-rate v-model="rate" @change="handleRateChange" />
         </wd-cell>
-        <wd-cell :title="$t('bi-tian-xing-hao-zai-you-ce')" required marker-side="after">
-          <wd-rate v-model="rate1" icon="dong" active-icon="dong" @change="handleRateChange" />
+        <wd-cell :title="$t('bi-tian-xing-hao-zai-you-ce')" required asterisk-position="end">
+          <wd-rate v-model="rate1" @change="handleRateChange" />
         </wd-cell>
-        <wd-cell :title="$t('shang-xia-jie-gou')" vertical required marker-side="after">
+        <wd-cell :title="$t('shang-xia-jie-gou')" layout="vertical" required asterisk-position="end">
           <wd-slider v-model="slider" @change="handleSliderChange" />
         </wd-cell>
       </wd-cell-group>
@@ -188,13 +197,7 @@ function showToast() {
   background: url('https://img10.360buyimg.com/jmadvertisement/jfs/t1/71075/7/3762/1820/5d1f26d1E0d600b9e/a264c901943080ac.png') no-repeat;
   background-size: cover;
 }
-.custom-value {
-  position: absolute;
-  top: 50%;
-  right: 0;
-  transform: translate(0, -50%);
-  white-space: nowrap;
-}
+
 .custom-text {
   color: #f0883a;
 }

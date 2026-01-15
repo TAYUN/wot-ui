@@ -33,7 +33,7 @@
             v-model="model.promotion"
             :columns="promotionlist"
           />
-          <wd-cell prop="threshold" :title="$t('quan-mian-e')" required title-width="100px" custom-value-class="cell-left">
+          <wd-form-item prop="threshold" :title="$t('quan-mian-e')" required title-width="100px" custom-value-class="cell-left">
             <view style="text-align: left">
               <view class="inline-txt" style="margin-left: 0">{{ $t('man') }}</view>
               <wd-input
@@ -50,7 +50,7 @@
                 v-model="model.price"
               />
             </view>
-          </wd-cell>
+          </wd-form-item>
         </wd-cell-group>
         <wd-cell-group custom-class="group" :title="$t('shi-jian-he-di-zhi')" border>
           <wd-datetime-picker
@@ -84,16 +84,12 @@
             clearable
             prop="content"
           />
-          <wd-cell :title="$t('fa-huo-shu-liang')" title-width="100px" prop="count">
-            <view style="text-align: left">
-              <wd-input-number v-model="model.count" />
-            </view>
-          </wd-cell>
-          <wd-cell :title="$t('kai-qi-zhe-kou')" title-width="100px" prop="switchVal" center>
-            <view style="text-align: left">
-              <wd-switch v-model="model.switchVal" />
-            </view>
-          </wd-cell>
+          <wd-form-item :title="$t('fa-huo-shu-liang')" title-width="100px" prop="count" value-align="left">
+            <wd-input-number v-model="model.count" />
+          </wd-form-item>
+          <wd-form-item :title="$t('kai-qi-zhe-kou')" title-width="100px" prop="switchVal" value-align="left" center>
+            <wd-switch v-model="model.switchVal" size="20" />
+          </wd-form-item>
           <wd-input
             :label="$t('zhe-kou')"
             v-if="model.switchVal"
@@ -120,13 +116,13 @@
             clearable
             v-model="model.phone"
           />
-          <wd-cell :title="$t('huo-dong-tu-pian')" title-width="100px" prop="fileList">
+          <wd-form-item :title="$t('huo-dong-tu-pian')" title-width="100px" prop="fileList">
             <wd-upload
               :file-list="model.fileList"
               action="https://mockapi.eolink.com/zhTuw2P8c29bc981a741931bdd86eb04dc1e8fd64865cb5/upload"
               @change="handleFileChange"
             ></wd-upload>
-          </wd-cell>
+          </wd-form-item>
         </wd-cell-group>
         <view class="tip">
           <wd-checkbox v-model="model.read" prop="read" custom-label-class="label-class">

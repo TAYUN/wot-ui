@@ -1,5 +1,5 @@
 <template>
-  <view :class="`wd-radio-group  ${customClass} ${cell && shape === 'button' ? 'is-button' : ''}`" :style="customStyle">
+  <view :class="`wd-radio-group  ${customClass}`" :style="customStyle">
     <slot />
   </view>
 </template>
@@ -22,16 +22,16 @@ import { RADIO_GROUP_KEY, radioGroupProps } from './types'
 const props = defineProps(radioGroupProps)
 const emit = defineEmits(['change', 'update:modelValue'])
 
-const { linkChildren, children } = useChildren(RADIO_GROUP_KEY)
+const { linkChildren } = useChildren(RADIO_GROUP_KEY)
 
 linkChildren({ props, updateValue })
 
 watch(
-  () => props.shape,
+  () => props.type,
   (newValue) => {
-    // type: 'dot', 'button', 'check'
-    const type = ['check', 'dot', 'button']
-    if (type.indexOf(newValue) === -1) console.error(`shape must be one of ${type.toString()}`)
+    // type: 'dot', 'button', 'check', 'square'
+    const type = ['check', 'dot', 'button', 'square']
+    if (type.indexOf(newValue) === -1) console.error(`type must be one of ${type.toString()}`)
   },
   { deep: true, immediate: true }
 )
@@ -39,7 +39,7 @@ watch(
 /**
  * @description 处理radio子节点通知
  */
-function updateValue(value: string | number | boolean) {
+function updateValue(value: string | number | boolean | null) {
   emit('update:modelValue', value)
   emit('change', {
     value

@@ -19,7 +19,9 @@
 <script lang="ts">
 export default {
   name: 'wd-datetime-picker-view',
+  // #ifndef MP-TOUTIAO
   virtualHost: true,
+  // #endif
   addGlobalClass: true,
   styleIsolation: 'shared'
 }

@@ -1,66 +1,73 @@
-@import '../common/abstracts/variable.scss';
-@import '../common/abstracts/_mixin.scss';
+@use '../styles/variable.scss' as *;
+@use '../styles/mixin/mixin.scss' as *;
 
-.wot-theme-dark {
-  @include b(cell) {
-    background-color: $-dark-background2;
-    color: $-dark-color;
+/* ================================ 组件SCSS变量 ================================ */
+/* 颜色变量 */
+$cell-color-bg: var(--wot-cell-color-bg, $filled-oppo) !default;
+$cell-color-bg-active: var(--wot-cell-color-bg-active, $filled-bottom) !default;
+$cell-color-title: var(--wot-cell-color-title, $text-main) !default;
+$cell-color-label: var(--wot-cell-color-label, $text-auxiliary) !default;
+$cell-color-value: var(--wot-cell-color-value, $text-secondary) !default;
+$cell-color-icon: var(--wot-cell-color-icon, $icon-secondary) !default;
+$cell-color-theme: var(--wot-cell-color-theme, $primary-6) !default;
+$cell-color-arrow: var(--wot-cell-color-arrow, $icon-auxiliary) !default;
+$cell-color-border: var(--wot-cell-color-border, $border-main) !default;
+$cell-color-clear: var(--wot-cell-color-clear, $icon-disabled) !default;
+$cell-color-tap-bg: var(--wot-cell-color-tap-bg, $primary-1) !default;
+$cell-color-required: var(--wot-cell-color-required, $danger-main) !default;
+$cell-placeholder-color: var(--wot-cell-placeholder-color, $text-placeholder) !default; // 占位符颜色
 
-    @include e(value) {
-      color: $-dark-color;
-    }
+/* 尺寸变量 */
+$cell-size-arrow: var(--wot-cell-size-arrow, $n20) !default;
+$cell-size-icon: var(--wot-cell-size-icon-large, $n20) !default;
+$cell-line-height: var(--wot-cell-line-height, $typography-body-line--height-size-large) !default;
 
-    @include e(label) {
-      color: $-dark-color3;
-    }
+/* 字体变量 */
+$cell-fs-title: var(--wot-cell-fs-title, $typography-body-size-main) !default;
+$cell-fs-label: var(--wot-cell-fs-label, $typography-body-size-main) !default;
+$cell-fs-value: var(--wot-cell-fs-value, $typography-body-size-main) !default;
+$cell-fs-value-large: var(--wot-cell-fs-value-large, $typography-body-size-extra-large) !default;
+$cell-fs-title-large: var(--wot-cell-fs-title-large, $typography-body-size-extra-large) !default;
+$cell-fs-label-large: var(--wot-cell-fs-label-large, $typography-body-size-extra-large) !default;
+$cell-fs-required: var(--wot-cell-fs-required, $typography-body-size-main) !default;
+$cell-placeholder-font-size: var(--wot-cell-placeholder-font-size, $typography-body-size-main) !default; // 占位符字体大小
 
-    @include when(hover) {
-      background-color: $-dark-background4;
-    }
-
-    @include when(border) {
-      .wd-cell__wrapper {
-        @include halfPixelBorder('top', 0, $-dark-border-color);
-      }
-    }
-
-    :deep(.wd-cell__arrow-right) {
-      color: $-dark-color;
-    }
-  }
-}
+/* 间距变量 */
+$cell-padding: var(--wot-cell-padding, $padding-loose) !default;
+$cell-padding-large: var(--wot-cell-padding-large, $padding-loose) !default;
+$cell-padding-vertical-top: var(--wot-cell-padding-vertical-top, $padding-extra-loose) !default;
+$cell-padding-default: var(--wot-cell-padding-default, $padding-loose) !default;
+$cell-margin-required: var(--wot-cell-margin-required, $padding-super-tight) !default;
+$cell-spacing-icon-right: var(--wot-cell-spacing-icon-right, $spacing-super-tight) !default;
+$cell-margin-horizontal: var(--wot-cell-margin-horizontal, $spacing-loose) !default; // 水平布局时左右区域间距
+$cell-arrow-margin-left: var(--wot-cell-arrow-margin-left, $spacing-tight) !default; // 箭头左侧间距
+$cell-label-margin-top: var(--wot-cell-label-margin-top, $spacing-super-tight) !default; // 标签顶部间距
 
 @include b(cell) {
   position: relative;
-  padding-left: $-cell-padding;
-  background-color: $-color-white;
+  padding: $cell-padding;
+  background: $cell-color-bg;
+  line-height: $cell-line-height;
   text-decoration: none;
-  color: $-cell-title-color;
-  line-height: $-cell-line-height;
   -webkit-tap-highlight-color: transparent;
   box-sizing: border-box;
   width: 100%;
-  overflow: hidden;
 
   @include when(border) {
-    .wd-cell__wrapper {
-      @include halfPixelBorder('top');
-    }
+    @include halfPixelBorder('top',$cell-padding,$cell-color-border);
   }
 
   @include e(wrapper) {
     position: relative;
     display: flex;
-    padding: $-cell-wrapper-padding $-cell-padding $-cell-wrapper-padding 0;
     justify-content: space-between;
     align-items: flex-start;
-    overflow: hidden;
 
-    @include when(vertical) {
+    @include m(vertical) {
       display: block;
 
       .wd-cell__right {
-        margin-top: $-cell-vertical-top;
+        margin-top: $cell-padding-vertical-top;
       }
 
       .wd-cell__value {
@@ -71,10 +78,6 @@
         margin-right: 0;
       }
     }
-
-    @include when(label) {
-      padding: $-cell-wrapper-padding-with-label $-cell-padding $-cell-wrapper-padding-with-label 0;
-    }
   }
 
   @include e(left) {
@@ -82,9 +85,8 @@
     flex: 1;
     display: flex;
     text-align: left;
-    font-size: $-cell-title-fs;
+    font-size: $cell-fs-title;
     box-sizing: border-box;
-    margin-right: $-cell-padding;
   }
 
   @include e(right) {
@@ -94,33 +96,35 @@
   }
 
   @include e(title) {
-    font-size: $-cell-title-fs;
+    font-size: $cell-fs-title;
+    color: $cell-color-title;
   }
 
   @include e(required) {
-    font-size: $-cell-required-size;
-    color: $-cell-required-color;
-    margin-left: $-cell-required-margin;
+    font-size: $cell-fs-required;
+    color: $cell-color-required;
+    margin-left: $cell-margin-required;
 
     @include m(left) {
       margin-left: 0;
-      margin-right: $-cell-required-margin;
+      margin-right: $cell-margin-required;
     }
   }
 
   @include e(label) {
-    margin-top: 2px;
-    font-size: $-cell-label-fs;
-    color: $-cell-label-color;
+    margin-top: $cell-label-margin-top;
+    font-size: $cell-fs-label;
+    color: $cell-color-label;
   }
 
   @include edeep(icon) {
     display: block;
     position: relative;
-    margin-right: $-cell-icon-right;
-    font-size: $-cell-icon-size;
-    height: $-cell-line-height;
-    line-height: $-cell-line-height;
+    margin-right: $cell-spacing-icon-right;
+    font-size: $cell-size-icon;
+    line-height: $cell-line-height;
+    height: $cell-line-height;
+    color: $cell-color-icon;
   }
 
   @include e(body){
@@ -131,8 +135,8 @@
   @include e(value) {
     position: relative;
     flex: 1;
-    font-size: $-cell-value-fs;
-    color: $-cell-value-color;
+    font-size: $cell-fs-value;
+    color: $cell-color-value;
     vertical-align: middle;
     
     @include m(left) {
@@ -142,6 +146,10 @@
     @include m(right) {
       text-align: right;
     }
+
+    @include m(center) {
+      text-align: center;
+    }
     
     @include m(ellipsis) {
       @include lineEllipsis;
@@ -149,52 +157,44 @@
     }
   }
 
+  @include e(placeholder) {
+    color: $cell-placeholder-color;
+    font-size: $cell-placeholder-font-size;
+  }
+
   @include edeep(arrow-right) {
     display: block;
-    margin-left: 8px;
-    width: $-cell-arrow-size;
-    font-size: $-cell-arrow-size;
-    color: $-cell-arrow-color;
-    height: $-cell-line-height;
-    line-height: $-cell-line-height;
+    margin-left: $cell-arrow-margin-left;
+    font-size: $cell-size-arrow;
+    color: $cell-color-arrow;
+    line-height: $cell-line-height;
+    height: $cell-line-height;
   }
 
-  @include e(error-message){
-    color: $-form-item-error-message-color;
-    font-size: $-form-item-error-message-font-size;
-    line-height: $-form-item-error-message-line-height;
-    text-align: left;
-    vertical-align: middle;
-  }
 
   @include when(link) {
-    -webkit-tap-highlight-color: $-cell-tap-bg;
+    -webkit-tap-highlight-color: $cell-color-bg-active;
   }
 
   @include when(hover) {
-    background-color: $-cell-tap-bg;
+    background: $cell-color-bg-active;
   }
 
   @include when(large) {
-    .wd-cell__title {
-      font-size: $-cell-title-fs-large;
-    }
 
-    .wd-cell__wrapper {
-      padding-top: $-cell-wrapper-padding-large;
-      padding-bottom: $-cell-wrapper-padding-large;
+    .wd-cell{
+      padding: $cell-padding-large;
+    }
+    .wd-cell__title {
+      font-size: $cell-fs-title-large;
     }
 
     .wd-cell__label {
-      font-size: $-cell-label-fs-large;
+      font-size: $cell-fs-label-large;
     }
 
     .wd-cell__value {
-      font-size: $-cell-value-fs-large;
-    }
-
-    :deep(.wd-cell__icon) {
-      font-size: $-cell-icon-size-large;
+      font-size: $cell-fs-value-large;
     }
   }
 

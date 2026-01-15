@@ -4,15 +4,6 @@
 .wot-theme-dark {
   @include b(datetime-picker) {
 
-    @include e(placeholder) {
-      color: $-dark-color-gray;
-    }
-
-    :deep(.wd-datetime-picker__arrow),
-    :deep(.wd-datetime-picker__clear) {
-      color: $-dark-color;
-    }
-
     @include e(action) {
       @include m(cancel) {
         color: $-dark-color;
@@ -32,57 +23,6 @@
  
 
 @include b(datetime-picker) {
-  @include edeep(cell) {
-    @include when(disabled) {
-      .wd-cell__value {
-        color: $-input-disabled-color;
-        cursor: not-allowed;
-      }
-    }
-    @include when(error) {
-      .wd-cell__value {
-        color: $-input-error-color;
-      }
-      .wd-datetime-picker__arrow {
-        color: $-input-error-color;
-      }
-    }
-    @include when(large) {
-      .wd-datetime-picker__arrow {
-        font-size: $-cell-icon-size-large;
-      }
-    }
-    
-    .wd-cell__value--ellipsis {
-      view {
-        @include lineEllipsis;
-        width: 100%;
-      }
-      
-      text {
-        @include lineEllipsis;
-        max-width: 100%;
-      }
-    }
-  }
-
-  @include e(placeholder) {
-    color: $-input-placeholder-color;
-  }
-  
-  @include edeep(arrow) {
-    display: block;
-    font-size: $-cell-icon-size;
-    color: $-cell-arrow-color;
-    line-height: $-cell-line-height;
-  }
-
-  @include edeep(clear) {
-    display: block;
-    font-size: $-cell-icon-size;
-    color: $-cell-clear-color;
-    line-height: $-cell-line-height;
-  }
 
   @include edeep(popup) {
     border-radius: 16px 16px 0px 0px;

@@ -2,37 +2,61 @@
   <page-wraper>
     <demo-block transparent>
       <wd-cell-group border>
-        <wd-picker :label="$t('dan-lie-xuan-xiang')" v-model="value0" :columns="columns0" />
-        <wd-picker :label="$t('jinYong')" disabled v-model="value1" :columns="columns1" />
-        <wd-picker :label="$t('zhi-du')" readonly v-model="value2" :columns="columns2" />
-        <wd-picker label="loading" v-model="value3" loading :columns="columns3" />
-        <wd-picker :label="$t('duo-lie')" v-model="value4" :columns="columns4" />
-        <wd-picker :label="$t('duo-ji-lian-dong')" v-model="value5" :columns="columns5" :column-change="onChangeDistrict" />
-        <wd-picker :label="$t('fen-ge-fu')" v-model="value6" :columns="columns6" :display-format="displayFormat" />
-        <wd-picker :label="$t('biaoTi-0')" v-model="value9" :columns="columns7" :title="$t('wen-an-biao-ti')" />
-        <wd-picker label="before-confirm" :columns="columns0" v-model="value7" :before-confirm="beforeConfirm" />
-        <wd-picker :label="$t('cuo-wu')" v-model="value10" error :columns="columns0" />
-        <wd-picker :label="$t('bi-tian')" v-model="value11" :columns="columns0" required />
-        <wd-picker :label="$t('bi-tian-xing-hao-zai-you-ce')" v-model="value16" :columns="columns0" required marker-side="after" />
-        <wd-picker
-          :label="$t('duo-ji-lian-dong-ke-qing-kong')"
-          clearable
-          v-model="value15"
-          :columns="columns5"
-          :column-change="onChangeDistrict"
-          @clear="handleClear"
-          @confirm="handleConfirmClear"
-        />
+        <wd-cell :title="$t('dan-lie-xuan-xiang')" placeholder="请选择" :value="value0" is-link @click="show0 = true" />
+        <wd-picker v-model="value0" v-model:visible="show0" :columns="columns0" />
+
+        <wd-cell :title="$t('jinYong')" :value="value1" is-link disabled />
+        <wd-picker disabled v-model="value1" :columns="columns1" />
+
+        <wd-cell :title="$t('zhi-du')" :value="value2" />
+        <wd-picker readonly v-model="value2" :columns="columns2" />
+
+        <wd-cell title="loading" :value="value3" is-link @click="show3 = true" />
+        <wd-picker v-model="value3" v-model:visible="show3" loading :columns="columns3" />
+
+        <wd-cell :title="$t('duo-lie')" :value="displayValue4" is-link @click="show4 = true" />
+        <wd-picker v-model="value4" v-model:visible="show4" :columns="columns4" @confirm="handleConfirm4" />
+
+        <wd-cell :title="$t('duo-ji-lian-dong')" :value="displayValue5" is-link @click="show5 = true" />
+        <wd-picker v-model="value5" v-model:visible="show5" :columns="columns5" :column-change="onChangeDistrict" @confirm="handleConfirm5" />
+
+        <wd-cell :title="$t('fen-ge-fu')" :value="displayValue6" is-link @click="show6 = true" />
+        <wd-picker v-model="value6" v-model:visible="show6" :columns="columns6" :display-format="displayFormat" @confirm="handleConfirm6" />
+
+        <wd-cell :title="$t('biaoTi-0')" :value="value9" is-link @click="show9 = true" />
+        <wd-picker v-model="value9" v-model:visible="show9" :columns="columns7" :title="$t('wen-an-biao-ti')" />
+
+        <wd-cell title="before-confirm" :value="value7" is-link @click="show7 = true" />
+        <wd-picker :columns="columns0" v-model="value7" v-model:visible="show7" :before-confirm="beforeConfirm" />
+
+        <wd-cell :title="$t('cuo-wu')" :value="value10" is-link custom-value-class="is-error" @click="show10 = true" />
+        <wd-picker v-model="value10" v-model:visible="show10" :columns="columns0" />
+
+        <wd-cell :title="$t('bi-tian')" :value="value11" is-link required @click="show11 = true" />
+        <wd-picker v-model="value11" v-model:visible="show11" :columns="columns0" />
+
+        <wd-cell :title="$t('bi-tian-xing-hao-zai-you-ce')" :value="value16" is-link required asterisk-position="end" @click="show16 = true" />
+        <wd-picker v-model="value16" v-model:visible="show16" :columns="columns0" />
+
+        <wd-cell :title="$t('duo-ji-lian-dong-ke-qing-kong')" :value="displayValue15" is-link @click="show15 = true">
+          <template v-if="displayValue15" #right-icon>
+            <wd-icon name="error-fill" custom-class="wd-picker__clear" @click.stop="handleClear" />
+          </template>
+        </wd-cell>
+        <wd-picker v-model="value15" v-model:visible="show15" :columns="columns5" :column-change="onChangeDistrict" @confirm="handleConfirmClear" />
       </wd-cell-group>
     </demo-block>
     <demo-block :title="$t('label-bu-chuan-0')" transparent>
-      <wd-picker :columns="columns0" v-model="value12" />
+      <wd-cell :value="value12 ? value12 : '请选择'" is-link @click="show12 = true" />
+      <wd-picker :columns="columns0" v-model="value12" v-model:visible="show12" />
     </demo-block>
     <demo-block :title="$t('da-xiao')" transparent>
-      <wd-picker :label="$t('dan-lie-xuan-xiang')" v-model="value13" size="large" :columns="columns0" />
+      <wd-cell :title="$t('dan-lie-xuan-xiang')" :value="value13" size="large" is-link @click="show13 = true" />
+      <wd-picker v-model="value13" v-model:visible="show13" :columns="columns0" />
     </demo-block>
     <demo-block :title="$t('zhi-kao-you-xian-shi')" transparent>
-      <wd-picker :label="$t('dan-lie-xuan-xiang')" v-model="value14" align-right :columns="columns0" />
+      <wd-cell :title="$t('dan-lie-xuan-xiang')" :value="value14" is-link @click="show14 = true" />
+      <wd-picker v-model="value14" v-model:visible="show14" :columns="columns0" />
     </demo-block>
     <demo-block :title="$t('mo-ren-cha-cao')" transparent>
       <view class="default-slot">
@@ -40,9 +64,8 @@
           {{ $t('xuan-zhong-zhi') }}
           <text style="color: #34d19d">{{ value8 }}</text>
         </view>
-        <wd-picker :columns="columns0" v-model="value8" use-default-slot @confirm="handleConfirm">
-          <wd-button>{{ $t('cha-cao-huan-qi') }}</wd-button>
-        </wd-picker>
+        <wd-button @click="show8 = true">{{ $t('cha-cao-huan-qi') }}</wd-button>
+        <wd-picker :columns="columns0" v-model="value8" v-model:visible="show8" @confirm="handleConfirm" />
       </view>
     </demo-block>
     <wd-toast />
@@ -58,6 +81,23 @@ import { useI18n } from 'vue-i18n'
 const toast = useToast()
 
 const { t } = useI18n()
+
+// Visibility refs
+const show0 = ref(false)
+const show3 = ref(false)
+const show4 = ref(false)
+const show5 = ref(false)
+const show6 = ref(false)
+const show7 = ref(false)
+const show8 = ref(false)
+const show9 = ref(false)
+const show10 = ref(false)
+const show11 = ref(false)
+const show12 = ref(false)
+const show13 = ref(false)
+const show14 = ref(false)
+const show15 = ref(false)
+const show16 = ref(false)
 
 const district: Record<string, Array<{ label: string; value: string }>> = {
   0: [
@@ -146,16 +186,20 @@ const columns3 = ref([
 const value3 = ref(t('xuan-xiang-4'))
 
 const value4 = ref([])
+const displayValue4 = ref('')
 const columns4 = ref([
   [t('zhong-shan-da-xue'), t('zhong-nan-da-xue'), t('hua-nan-li-gong-da-xue')],
   [t('ji-suan-ji-ke-xue-yu-ji-shu'), t('ruan-jian-gong-cheng'), t('tong-xin-gong-cheng'), t('fa-xue'), t('jing-ji-xue')]
 ])
 
 const value5 = ref(['110000', '110100', '110102'])
+const displayValue5 = ref(t('bei-jing') + ' - ' + t('bei-jing') + ' - ' + t('xi-cheng-qu'))
 const value15 = ref(['110000', '110100', '110102'])
+const displayValue15 = ref(t('bei-jing') + ' - ' + t('bei-jing') + ' - ' + t('xi-cheng-qu'))
 const columns5 = ref([district[0], district[district[0][0].value], district[district[district[0][0].value][0].value]])
 
 const value6 = ref([t('zhong-nan-da-xue-0'), t('ruan-jian-gong-cheng-0')])
+const displayValue6 = ref(t('zhong-nan-da-xue-0') + '-' + t('ruan-jian-gong-cheng-0'))
 const value8 = ref(t('xuanXiang_2-0'))
 const value9 = ref(t('xuanXiang_1-0'))
 const value10 = ref(t('xuanXiang_2-0'))
@@ -219,13 +263,26 @@ function handleConfirm({ value }: any) {
   value8.value = value
 }
 
+function handleConfirm4({ value }: any) {
+  displayValue4.value = value.join(', ')
+}
+
+function handleConfirm5({ selectedItems }: any) {
+  displayValue5.value = selectedItems.map((item: any) => item.label).join(' - ')
+}
+
+function handleConfirm6({ selectedItems }: any) {
+  displayValue6.value = displayFormat(selectedItems, { valueKey: 'value', labelKey: 'label' })
+}
+
 function handleClear() {
   value15.value = []
+  displayValue15.value = ''
   toast.success(t('xuan-xiang-yi-jing-qing-kong'))
 }
 
-function handleConfirmClear({ value }: any) {
-  value15.value = value
+function handleConfirmClear({ selectedItems }: any) {
+  displayValue15.value = selectedItems.map((item: any) => item.label).join(' - ')
   toast.success(t('xuan-xiang-yi-jing-qing-kong'))
 }
 </script>
@@ -246,5 +303,18 @@ function handleConfirmClear({ value }: any) {
 .default-slot-txt {
   margin-bottom: 10px;
   color: rgba(0, 0, 0, 0.45);
+}
+.is-error {
+  color: var(--wot-input-error-color, #f56c6c);
+}
+.wd-picker__clear {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 8px;
+  font-size: 16px;
+  color: var(--wot-cell-icon-color, #c8c9cc);
+  z-index: 2;
 }
 </style>

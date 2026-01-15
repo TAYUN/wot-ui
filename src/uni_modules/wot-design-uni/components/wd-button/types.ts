@@ -1,17 +1,9 @@
-/*
- * @Author: weisheng
- * @Date: 2024-03-15 11:36:12
- * @LastEditTime: 2024-11-04 21:33:52
- * @LastEditors: weisheng
- * @Description:
- * @FilePath: \wot-design-uni\src\uni_modules\wot-design-uni\components\wd-button\types.ts
- * 记得注释
- */
 import type { ExtractPropTypes, PropType } from 'vue'
-import { baseProps, makeBooleanProp, makeStringProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeNumberProp, makeStringProp } from '../common/props'
+import { type LoadingProps } from '../wd-loading/types'
 
-export type ButtonType = 'primary' | 'success' | 'info' | 'warning' | 'error' | 'default' | 'text' | 'icon'
-export type ButtonSize = 'small' | 'medium' | 'large'
+export type ButtonType = 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text'
+export type ButtonSize = 'mini' | 'small' | 'medium' | 'large'
 export type ButtonLang = 'zh_CN' | 'zh_TW' | 'en'
 
 export type ButtonOpenType =
@@ -55,7 +47,7 @@ export const buttonProps = {
   /**
    * 圆角按钮
    */
-  round: makeBooleanProp(true),
+  round: makeBooleanProp(false),
   /**
    * 禁用按钮
    */
@@ -69,11 +61,11 @@ export const buttonProps = {
    */
   block: makeBooleanProp(false),
   /**
-   * 按钮类型，可选值：primary / success / info / warning / error / text / icon
+   * 按钮类型，可选值：primary / success / info / warning / danger / text
    */
   type: makeStringProp<ButtonType>('primary'),
   /**
-   * 按钮尺寸，可选值：small / medium / large
+   * 按钮尺寸，可选值：mini / small / medium / large
    */
   size: makeStringProp<ButtonSize>('medium'),
   /**
@@ -136,7 +128,19 @@ export const buttonProps = {
    * 支付宝小程序，当 open-type 为 getAuthorize 时有效。
    * 可选值：'phoneNumber' | 'userInfo'
    */
-  scope: String as PropType<ButtonScope>
+  scope: String as PropType<ButtonScope>,
+  /**
+   * 加载配置项
+   */
+  loadingProps: Object as PropType<Partial<LoadingProps>>,
+  /**
+   * 点击按钮后，等待多少毫秒后出现点击态，单位毫秒
+   */
+  hoverStartTime: makeNumberProp(20),
+  /**
+   * 手指松开后，等待多少毫秒后移除点击态，单位毫秒
+   */
+  hoverStayTime: makeNumberProp(70)
 }
 
 export type ButtonProps = ExtractPropTypes<typeof buttonProps>

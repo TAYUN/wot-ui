@@ -1,32 +1,26 @@
 <template>
   <view
-    :class="`wd-checkbox ${innerCell ? 'is-cell-box' : ''} ${innerShape === 'button' ? 'is-button-box' : ''} ${isChecked ? 'is-checked' : ''} ${
-      isFirst ? 'is-first-child' : ''
-    } ${isLast ? 'is-last-child' : ''} ${innerInline ? 'is-inline' : ''} ${innerShape === 'button' ? 'is-button' : ''} ${
-      innerDisabled ? 'is-disabled' : ''
-    } ${innerSize ? 'is-' + innerSize : ''} ${customClass}`"
+    :class="`wd-checkbox wd-checkbox--${placementValue} ${isButton ? 'is-button' : 'wd-checkbox--' + directionValue} ${
+      isChecked ? 'is-checked' : ''
+    } ${indeterminate ? 'is-indeterminate' : ''} ${disabledValue ? 'is-disabled' : ''} ${customClass}`"
     :style="customStyle"
     @click="toggle"
   >
-    <!--shape为button时，移除wd-checkbox__shape，只保留wd-checkbox__label-->
-    <view
-      v-if="innerShape !== 'button'"
-      :class="`wd-checkbox__shape ${innerShape === 'square' ? 'is-square' : ''} ${customShapeClass}`"
-      :style="isChecked && !innerDisabled && innerCheckedColor ? 'color :' + innerCheckedColor : ''"
-    >
-      <wd-icon custom-class="wd-checkbox__check" name="check-bold" />
+    <view class="wd-checkbox__label" v-if="$slots.default">
+      <slot></slot>
     </view>
-    <!--shape为button时只保留wd-checkbox__label-->
-    <view
-      :class="`wd-checkbox__label ${customLabelClass}`"
-      :style="isChecked && innerShape === 'button' && !innerDisabled && innerCheckedColor ? 'color:' + innerCheckedColor : ''"
-    >
-      <!--button选中时展示的icon-->
-      <wd-icon v-if="innerShape === 'button' && isChecked" custom-class="wd-checkbox__btn-check" name="check-bold" />
-      <!--文案-->
-      <view class="wd-checkbox__txt" :style="maxWidth ? 'max-width:' + maxWidth : ''">
-        <slot></slot>
-      </view>
+
+    <template v-if="isButton">
+      <slot name="icon" :is-checked="isChecked">
+        <view v-if="isChecked" class="wd-checkbox__shape">
+          <wd-icon custom-class="wd-checkbox__icon" :custom-style="iconStyle" :name="iconValue"></wd-icon>
+        </view>
+      </slot>
+    </template>
+    <view v-else class="wd-checkbox__shape">
+      <slot name="icon" :is-checked="isChecked">
+        <wd-icon custom-class="wd-checkbox__icon" :custom-style="iconStyle" :name="iconValue"></wd-icon>
+      </slot>
     </view>
   </view>
 </template>
@@ -48,7 +42,7 @@ import { computed, getCurrentInstance, onBeforeMount, watch } from 'vue'
 import { useParent } from '../composables/useParent'
 import { CHECKBOX_GROUP_KEY } from '../wd-checkbox-group/types'
 import { getPropByPath, isDef } from '../common/util'
-import { checkboxProps, type CheckboxExpose } from './types'
+import { checkboxProps, type CheckboxExpose, type CheckboxDirection, type CheckboxPlacement, type CheckboxType } from './types'
 
 const props = defineProps(checkboxProps)
 const emit = defineEmits(['change', 'update:modelValue'])
@@ -58,27 +52,105 @@ defineExpose<CheckboxExpose>({
 })
 
 const { parent: checkboxGroup, index } = useParent(CHECKBOX_GROUP_KEY)
+const { proxy } = getCurrentInstance() as any
 
 const isChecked = computed(() => {
   if (checkboxGroup) {
-    return checkboxGroup.props.modelValue.indexOf(props.modelValue) > -1
+    return checkboxGroup.props.modelValue.indexOf(props.name) > -1
   } else {
     return props.modelValue === props.trueValue
   }
-}) // 是否被选中
-
-const isFirst = computed(() => {
-  return index.value === 0
 })
 
-const isLast = computed(() => {
-  const children = isDef(checkboxGroup) ? checkboxGroup.children : []
-  return index.value === children.length - 1
+const typeValue = computed(() => {
+  return props.type || getPropByPath(checkboxGroup, 'props.type') || 'circle'
 })
-const { proxy } = getCurrentInstance() as any
+
+const isButton = computed(() => {
+  return typeValue.value === 'button'
+})
+
+const iconValue = computed(() => {
+  // indeterminate 状态下，且非 button 类型，使用 minus-circle-fill
+  if (props.indeterminate && !isButton.value) {
+    return 'minus-circle-fill'
+  }
+  let icon = ''
+  switch (typeValue.value) {
+    case 'circle':
+      icon = isChecked.value ? 'check-circle-fill' : 'uncheck-circle'
+      break
+    case 'square':
+      icon = isChecked.value ? 'check-square-fill' : 'uncheck-square'
+      break
+    case 'dot':
+      icon = isChecked.value ? 'check-circle-radio-fill' : 'uncheck-circle'
+      break
+    case 'button':
+      icon = isChecked.value ? 'selector-check' : ''
+      break
+  }
+  return icon
+})
+
+const checkedColorValue = computed(() => {
+  return props.checkedColor || getPropByPath(checkboxGroup, 'props.checkedColor')
+})
+
+const uncheckedColorValue = computed(() => {
+  return props.uncheckedColor || getPropByPath(checkboxGroup, 'props.uncheckedColor')
+})
+
+const disabledValue = computed(() => {
+  if (isDef(props.disabled)) {
+    return props.disabled
+  }
+  if (checkboxGroup) {
+    const { max, min, modelValue, disabled } = checkboxGroup.props
+    if ((max && modelValue.length >= max && !isChecked.value) || (min && modelValue.length <= min && isChecked.value) || disabled) {
+      return true
+    }
+  }
+  return false
+})
+
+const readonlyValue = computed(() => {
+  if (isDef(props.readonly)) {
+    return props.readonly
+  } else {
+    return getPropByPath(checkboxGroup, 'props.readonly')
+  }
+})
+
+const directionValue = computed(() => {
+  if (isDef(props.direction)) {
+    return props.direction
+  } else {
+    return getPropByPath(checkboxGroup, 'props.direction') as CheckboxDirection
+  }
+})
+
+const placementValue = computed<CheckboxPlacement>(() => {
+  if (isDef(props.placement)) {
+    return props.placement
+  } else {
+    return getPropByPath(checkboxGroup, 'props.placement')
+  }
+})
+
+const iconStyle = computed(() => {
+  if (isButton.value) return ''
+  if ((isChecked.value || props.indeterminate) && checkedColorValue.value) {
+    return `color: ${checkedColorValue.value}`
+  }
+  if (!isChecked.value && uncheckedColorValue.value) {
+    return `color: ${uncheckedColorValue.value}`
+  }
+  return ''
+})
 
 watch(
-  () => props.modelValue,
+  () => props.name,
   () => {
     // 组合使用走这个逻辑
     if (checkboxGroup) {
@@ -88,53 +160,20 @@ watch(
 )
 
 watch(
-  () => props.shape,
+  () => props.type,
   (newValue) => {
-    const type = ['circle', 'square', 'button']
-    if (isDef(newValue) && type.indexOf(newValue) === -1) console.error(`shape must be one of ${type.toString()}`)
+    const type = ['circle', 'square', 'button', 'dot']
+    if (isDef(newValue) && type.indexOf(newValue) === -1) console.error(`type must be one of ${type.toString()}`)
   }
 )
 
-const innerShape = computed(() => {
-  return props.shape || getPropByPath(checkboxGroup, 'props.shape') || 'circle'
-})
-
-const innerCheckedColor = computed(() => {
-  return props.checkedColor || getPropByPath(checkboxGroup, 'props.checkedColor')
-})
-
-const innerDisabled = computed(() => {
-  if (!checkboxGroup) {
-    return props.disabled
-  }
-  const { max, min, modelValue, disabled } = checkboxGroup.props
-  if (
-    (max && modelValue.length >= max && !isChecked.value) ||
-    (min && modelValue.length <= min && isChecked.value) ||
-    props.disabled === true ||
-    (disabled && props.disabled === null)
-  ) {
-    return true
-  }
-
-  return props.disabled
-})
-
-const innerInline = computed(() => {
-  return getPropByPath(checkboxGroup, 'props.inline') || false
-})
-
-const innerCell = computed(() => {
-  return getPropByPath(checkboxGroup, 'props.cell') || false
-})
-
-const innerSize = computed(() => {
-  return props.size || getPropByPath(checkboxGroup, 'props.size')
-})
-
 onBeforeMount(() => {
   // eslint-disable-next-line quotes
-  if (props.modelValue === null) console.error("checkbox's value must be set")
+  if (props.modelValue === null && !checkboxGroup) console.warn("checkbox's value must be set")
+  if (checkboxGroup && !props.name) {
+    // eslint-disable-next-line quotes
+    console.warn("checkbox's name must be set when used in checkbox-group")
+  }
 })
 
 /**
@@ -146,22 +185,20 @@ function checkName() {
   checkboxGroup &&
     checkboxGroup.children &&
     checkboxGroup.children.forEach((child: any) => {
-      if (child.$.uid !== proxy.$.uid && child.modelValue === props.modelValue) {
-        console.error(`The checkbox's bound value: ${props.modelValue} has been used`)
+      if (child.$.uid !== proxy.$.uid && child.name === props.name) {
+        console.error(`The checkbox's bound value: ${props.name} has been used`)
       }
     })
 }
+
 /**
  * @description 点击checkbox的Event handle
  */
 function toggle() {
-  if (innerDisabled.value) return
+  if (disabledValue.value || readonlyValue.value) return
   // 复选框单独使用时点击反选，并且在checkbox上触发change事件
   if (checkboxGroup) {
-    emit('change', {
-      value: !isChecked.value
-    })
-    checkboxGroup.changeSelectState(props.modelValue)
+    checkboxGroup.changeSelectState(props.name)
   } else {
     const newVal = props.modelValue === props.trueValue ? props.falseValue : props.trueValue
     emit('update:modelValue', newVal)
@@ -173,5 +210,5 @@ function toggle() {
 </script>
 
 <style lang="scss" scoped>
-@import './index.scss';
+@use './index.scss';
 </style>

@@ -1,25 +1,23 @@
 <template>
-  <view :class="`wd-rate ${customClass}`" :style="customStyle" @touchmove="onTouchMove">
+  <view :class="`wd-rate ${disabled ? 'is-disabled' : ''} ${block ? 'is-block' : ''} ${customClass}`" :style="customStyle" @touchmove="onTouchMove">
     <view
       v-for="(rate, index) in rateList"
       :key="index"
       :data-index="index"
-      :style="{ 'margin-right': index == rateList.length - 1 ? 0 : space }"
       class="wd-rate__item"
+      :style="`${isDef(space) ? `margin-right: ${index == rateList.length - 1 ? 0 : addUnit(space)}` : ''}`"
     >
       <wd-icon
-        custom-class="wd-rate__item-star"
+        :custom-class="`wd-rate__item-star ${rate === '100%' ? 'wd-rate__item-star--active' : ''}`"
         :name="isActive(rate) ? activeIcon : icon"
-        :size="size"
-        :custom-style="rate === '100%' ? iconActiveStyle : iconStyle"
+        :custom-style="`${rate === '100%' ? iconActiveStyle : iconStyle} ${iconSize}`"
         @click="handleClick(index, false)"
       />
       <view v-if="props.allowHalf" class="wd-rate__item-half" @click.stop="handleClick(index, true)">
         <wd-icon
-          custom-class="wd-rate__item-star"
+          :custom-class="`wd-rate__item-star ${rate !== '0' ? 'wd-rate__item-star--active' : ''}`"
           :name="isActive(rate) ? activeIcon : icon"
-          :size="size"
-          :custom-style="rate !== '0' ? iconActiveStyle : iconStyle"
+          :custom-style="`${rate !== '0' ? iconActiveStyle : iconStyle} ${iconSize}`"
         />
       </view>
     </view>
@@ -40,36 +38,39 @@ export default {
 import wdIcon from '../wd-icon/wd-icon.vue'
 import { computed, getCurrentInstance, ref, watch } from 'vue'
 import { rateProps } from './types'
-import { getRect } from '../common/util'
+import { addUnit, getRect, isDef } from '../common/util'
 const { proxy } = getCurrentInstance() as any
 
 const props = defineProps(rateProps)
 const emit = defineEmits(['update:modelValue', 'change'])
 
 const rateList = ref<Array<string>>([])
-const activeValue = ref<string>('')
-
 const iconStyle = computed(() => {
+  if (!props.color) return ''
   return `background:${props.color};`
 })
 
-const iconActiveStyle = computed(() => {
-  return `background:${props.disabled ? props.disabledColor : activeValue.value};`
+const iconSize = computed(() => {
+  if (isDef(props.size)) {
+    return `font-size:${addUnit(props.size)};`
+  }
+  return ''
 })
 
-watch(
-  () => props.activeColor,
-  (newVal) => {
-    if (Array.isArray(newVal) && !newVal.length) {
+const iconActiveStyle = computed(() => {
+  const { activeColor, modelValue, num } = props
+  let color = ''
+  if (Array.isArray(activeColor)) {
+    if (activeColor.length === 0) {
       console.error('activeColor cannot be an empty array')
+    } else {
+      color = Number(modelValue) <= num * 0.6 || !activeColor[1] ? activeColor[0] : activeColor[1]
     }
-    computeActiveValue()
-  },
-  {
-    immediate: true,
-    deep: true
+  } else {
+    color = activeColor as string
   }
-)
+  return `background:${color};`
+})
 
 watch(
   [() => props.num, () => props.modelValue],
@@ -110,20 +111,6 @@ function computeRateList() {
     }
   }
   rateList.value = tempRateList
-  computeActiveValue()
-}
-/**
- * @description 计算当前应当展示的rate颜色
- */
-function computeActiveValue() {
-  const { activeColor, modelValue, num } = props
-  let tempActiveValue: string = ''
-  if (Array.isArray(activeColor) && activeColor.length) {
-    tempActiveValue = Number(modelValue) <= num * 0.6 || !activeColor[1] ? activeColor[0] : activeColor[1]
-  } else {
-    tempActiveValue = activeColor as string
-  }
-  activeValue.value = tempActiveValue
 }
 
 /**
@@ -175,5 +162,5 @@ async function onTouchMove(event: TouchEvent) {
 }
 </script>
 <style lang="scss" scoped>
-@import './index.scss';
+@use './index.scss';
 </style>

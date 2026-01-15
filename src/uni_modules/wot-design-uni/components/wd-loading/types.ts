@@ -1,31 +1,52 @@
 /*
  * @Author: weisheng
  * @Date: 2024-03-15 20:40:34
- * @LastEditTime: 2024-07-18 22:09:12
+ * @LastEditTime: 2026-01-09 16:12:01
  * @LastEditors: weisheng
  * @Description:
  * @FilePath: /wot-design-uni/src/uni_modules/wot-design-uni/components/wd-loading/types.ts
  * 记得注释
  */
 import type { ExtractPropTypes } from 'vue'
-import { baseProps, makeNumericProp, makeStringProp } from '../common/props'
+import { baseProps, makeStringProp, numericProp } from '../common/props'
 
-export type LoadingType = 'outline' | 'ring' | 'spinner' // 提示信息加载状态类型
+export type LoadingType = 'circular' | 'spinner' | 'dots' // 提示信息加载状态类型
+
+export type LoadingDirection = 'horizontal' | 'vertical' // 加载指示器方向，可选值：'horizontal' | 'vertical'，默认值：'vertical'
 
 export const loadingProps = {
   ...baseProps,
   /**
-   * 加载指示器类型，可选值：'outline' | 'ring' | 'spinner'
+   * 自定义加载指示器样式类
    */
-  type: makeStringProp<LoadingType>('ring'),
+  customSpinnerClass: makeStringProp(''),
+  /**
+   * 加载指示器类型，可选值：'circular' | 'spinner' | 'dots'
+   */
+  type: makeStringProp<LoadingType>('circular'),
   /**
    * 设置加载指示器颜色
    */
-  color: makeStringProp('#4D80F0'),
+  color: String,
   /**
    * 设置加载指示器大小
    */
-  size: makeNumericProp('')
+  size: numericProp,
+  /**
+   * 加载指示器方向，可选值：'horizontal' | 'vertical'
+   * horizontal：水平方向
+   * vertical：垂直方向
+   * 默认值：'vertical'
+   */
+  direction: makeStringProp<LoadingDirection>('vertical'),
+  /**
+   * 加载指示器文字
+   */
+  text: String,
+  /**
+   * 是否继承父元素颜色
+   */
+  inheritColor: Boolean
 }
 
 export type LoadingProps = ExtractPropTypes<typeof loadingProps>

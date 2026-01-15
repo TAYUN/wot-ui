@@ -10,7 +10,6 @@
 import type { ComponentPublicInstance, ExtractPropTypes, PropType } from 'vue'
 import { baseProps, makeArrayProp, makeBooleanProp, makeNumberProp, makeRequiredProp, makeStringProp } from '../common/props'
 import type { CalendarFormatter, CalendarTimeFilter, CalendarType } from '../wd-calendar-view/types'
-import type { FormItemRule } from '../wd-form/types'
 
 const now = new Date()
 const defaultMinDate = new Date(now.getFullYear(), now.getMonth() - 6, now.getDate()).getTime()
@@ -69,49 +68,9 @@ export const calendarProps = {
    */
   hideSecond: makeBooleanProp(false),
   /**
-   * 选择器左侧文案
-   */
-  label: String,
-  /**
-   * 设置左侧标题宽度
-   */
-  labelWidth: makeStringProp('33%'),
-  /**
-   * 禁用
-   */
-  disabled: makeBooleanProp(false),
-  /**
-   * 只读
-   */
-  readonly: makeBooleanProp(false),
-  /**
-   * 选择器占位符
-   */
-  placeholder: String,
-  /**
    * 弹出层标题
    */
   title: String,
-  /**
-   * 选择器的值靠右展示
-   */
-  alignRight: makeBooleanProp(false),
-  /**
-   * 是否为错误状态，错误状态时右侧内容为红色
-   */
-  error: makeBooleanProp(false),
-  /**
-   * 是否必填
-   */
-  required: makeBooleanProp(false),
-  /**
-   * 设置选择器大小，可选值：large
-   */
-  size: String,
-  /**
-   * 是否垂直居中
-   */
-  center: makeBooleanProp(false),
   /**
    * 点击遮罩是否关闭
    */
@@ -128,10 +87,6 @@ export const calendarProps = {
    * 确定按钮文字
    */
   confirmText: String,
-  /**
-   * 自定义展示文案的格式化函数，返回一个字符串
-   */
-  displayFormat: Function as PropType<CalendarDisplayFormat>,
   /**
    * 自定义范围选择类型的面板内部回显，返回一个字符串
    */
@@ -160,47 +115,20 @@ export const calendarProps = {
    * 确定前校验函数，接收 { value, resolve } 参数，通过 resolve 继续执行，resolve 接收 1 个 boolean 参数
    */
   beforeConfirm: Function as PropType<CalendarBeforeConfirm>,
-  /**
-   * 表单域 model 字段名，在使用表单校验功能的情况下，该属性是必填的
-   */
-  prop: String,
-  /**
-   * 表单验证规则，结合wd-form组件使用
-   */
-  rules: makeArrayProp<FormItemRule>(),
   customViewClass: makeStringProp(''),
-  /**
-   * label 外部自定义样式
-   */
-  customLabelClass: makeStringProp(''),
-  /**
-   * value 外部自定义样式
-   */
-  customValueClass: makeStringProp(''),
   /**
    * 是否在手指松开时立即触发picker-view的 change 事件。若不开启则会在滚动动画结束后触发 change 事件，1.2.25版本起提供，仅微信小程序和支付宝小程序支持。
    */
   immediateChange: makeBooleanProp(false),
   /**
-   * 是否使用内置单元格
-   * 默认为 true，使用内置单元格
-   */
-  withCell: makeBooleanProp(true),
-  /**
    * 是否从页面中脱离出来，用于解决各种 fixed 失效问题 (H5: teleport, APP: renderjs, 小程序: root-portal)
    */
   rootPortal: makeBooleanProp(false),
   /**
-   * 必填标记位置，可选值：before、after
+   * 控制弹窗显示
    */
-  markerSide: makeStringProp<'before' | 'after'>('before'),
-  /**
-   * 显示清空按钮
-   */
-  clearable: makeBooleanProp(false)
+  visible: makeBooleanProp(false)
 }
-
-export type CalendarDisplayFormat = (value: number | number[], type: CalendarType) => string
 
 export type CalendarInnerDisplayFormat = (value: number, rangeType: 'start' | 'end', type: CalendarType) => string
 

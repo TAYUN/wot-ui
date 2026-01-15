@@ -1,8 +1,17 @@
+/*
+ * @Author: weisheng
+ * @Date: 2025-05-08 22:54:27
+ * @LastEditTime: 2025-11-21 18:55:35
+ * @LastEditors: weisheng
+ * @Description:
+ * @FilePath: /wot-design-uni/src/uni_modules/wot-design-uni/components/wd-fab/types.ts
+ * 记得注释
+ */
 import type { ComponentPublicInstance, ExtractPropTypes } from 'vue'
 import { baseProps, makeBooleanProp, makeNumberProp, makeStringProp } from '../common/props'
 import type { PropType } from 'vue'
 
-export type FabType = 'primary' | 'success' | 'info' | 'warning' | 'error' | 'default'
+export type FabType = 'primary' | 'success' | 'info' | 'warning' | 'danger'
 export type FabPosition = 'left-top' | 'right-top' | 'left-bottom' | 'right-bottom' | 'left-center' | 'right-center' | 'top-center' | 'bottom-center'
 export type FabDirection = 'top' | 'right' | 'bottom' | 'left'
 export type FabGap = Partial<Record<FabDirection, number>>
@@ -31,7 +40,7 @@ export const fabProps = {
   /**
    * 悬浮按钮未展开时的图标
    */
-  inactiveIcon: makeStringProp('add'),
+  inactiveIcon: makeStringProp('plus'),
   /**
    * 悬浮按钮展开时的图标
    */

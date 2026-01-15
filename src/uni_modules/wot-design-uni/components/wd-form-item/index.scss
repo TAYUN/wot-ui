@@ -1,18 +1,14 @@
-@import '../common/abstracts/variable';
-@import '../common/abstracts/mixin';
+@use '../styles/variable.scss' as *;
+@use '../styles/mixin/mixin.scss' as *;
 
-.wot-theme-dark {
-  @include b(form-item) {
-  }
-}
-
+$-form-item-error-message-color: var(--wot-form-item-error-message-color, $danger-main) !default;
+$-form-item-error-message-font-size: var(--wot-form-item-error-message-font-size, $typography-label-size-main) !default;
+$-form-item-error-message-line-height: var(--wot-form-item-error-message-line-height, $typography-label-line--height-size-small) !default;
 
 @include b(form-item) {
   @include e(error-message){
     color: $-form-item-error-message-color;
     font-size: $-form-item-error-message-font-size;
     line-height: $-form-item-error-message-line-height;
-    text-align: left;
-    vertical-align: middle;
   }
 }

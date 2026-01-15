@@ -6,9 +6,9 @@
     :hover-stay-time="70"
     @click="onClick"
   >
-    <view :class="['wd-cell__wrapper', vertical ? 'is-vertical' : '']">
+    <view :class="`wd-cell__wrapper wd-cell__wrapper--${layout}`">
       <view v-if="showLeft" class="wd-cell__left" :style="titleWidth ? 'min-width:' + titleWidth + ';max-width:' + titleWidth + ';' : ''">
-        <text v-if="isRequired && markerSide === 'before'" class="wd-cell__required wd-cell__required--left">*</text>
+        <text v-if="isRequired && !hideAsterisk && asteriskPosition === 'start'" class="wd-cell__required wd-cell__required--left">*</text>
         <!--左侧icon部位-->
         <slot name="icon">
           <wd-icon v-if="icon" :name="icon" :size="iconSize" :custom-class="`wd-cell__icon  ${customIconClass}`"></wd-icon>
@@ -27,20 +27,25 @@
           </slot>
           <!--label END-->
         </view>
-        <text v-if="isRequired && markerSide === 'after'" class="wd-cell__required">*</text>
+        <text v-if="isRequired && !hideAsterisk && asteriskPosition === 'end'" class="wd-cell__required">*</text>
       </view>
       <!--right content BEGIN-->
       <view class="wd-cell__right">
         <view class="wd-cell__body">
           <!--文案内容-->
-          <view :class="`wd-cell__value ${customValueClass} wd-cell__value--${valueAlign} ${ellipsis ? 'wd-cell__value--ellipsis' : ''}`">
-            <slot>{{ value }}</slot>
+          <view
+            :class="`wd-cell__value ${customValueClass} wd-cell__value--${valueAlign} ${ellipsis ? 'wd-cell__value--ellipsis' : ''} ${
+              showPlaceholder ? 'wd-cell__placeholder' : ''
+            }`"
+          >
+            <slot>
+              {{ showPlaceholder ? placeholder : value }}
+            </slot>
           </view>
           <!--箭头-->
-          <wd-icon v-if="isLink" custom-class="wd-cell__arrow-right" :name="`arrow-${arrowDirection || 'right'}`" />
+          <wd-icon v-if="isLink" custom-class="wd-cell__arrow-right" :name="arrowDirection" :class-prefix="iconPrefix" />
           <slot v-else name="right-icon" />
         </view>
-        <view v-if="errorMessage" class="wd-cell__error-message">{{ errorMessage }}</view>
       </view>
       <!--right content END-->
     </view>
@@ -62,8 +67,7 @@ export default {
 import wdIcon from '../wd-icon/wd-icon.vue'
 import { computed, useSlots } from 'vue'
 import { useCell } from '../composables/useCell'
-import { useParent } from '../composables/useParent'
-import { FORM_KEY } from '../wd-form/types'
+
 import { cellProps } from './types'
 import { isDef } from '../common/util'
 
@@ -79,28 +83,8 @@ const isBorder = computed(() => {
   return Boolean(isDef(props.border) ? props.border : cell.border.value)
 })
 
-const { parent: form } = useParent(FORM_KEY)
-
-const errorMessage = computed(() => {
-  if (form && props.prop && form.errorMessages && form.errorMessages[props.prop]) {
-    return form.errorMessages[props.prop]
-  } else {
-    return ''
-  }
-})
-
-// 是否展示必填
 const isRequired = computed(() => {
-  let formRequired = false
-  if (form && form.props.rules) {
-    const rules = form.props.rules
-    for (const key in rules) {
-      if (Object.prototype.hasOwnProperty.call(rules, key) && key === props.prop && Array.isArray(rules[key])) {
-        formRequired = rules[key].some((rule) => rule.required)
-      }
-    }
-  }
-  return props.required || props.rules.some((rule) => rule.required) || formRequired
+  return props.required
 })
 
 // 是否展示左侧部分
@@ -114,6 +98,10 @@ const showLeft = computed(() => {
   const hasLabel = slots.label || props.label
 
   return hasIcon || hasTitle || hasLabel
+})
+
+const showPlaceholder = computed(() => {
+  return Boolean(props.placeholder && (props.value === '' || props.value === undefined || props.value === null) && !slots.default)
 })
 
 /**
@@ -136,5 +124,5 @@ function onClick() {
 </script>
 
 <style lang="scss" scoped>
-@import './index.scss';
+@use './index.scss';
 </style>

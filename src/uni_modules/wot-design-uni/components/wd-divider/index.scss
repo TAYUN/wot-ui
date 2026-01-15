@@ -1,24 +1,42 @@
-@import '../common/abstracts/variable';
-@import '../common/abstracts/mixin';
+@use '../styles/mixin/mixin' as *;
+@use '../styles/variable.scss' as *;
 
-.wot-theme-dark {
-  @include b(divider) {
-    color: $-dark-color3;
+/* ================================ 组件SCSS变量 ================================ */
 
-    @include e(line) {
-      background: $-dark-color-gray;
-    }
-  }
-}
+/* 颜色变量 */
+$divider-color-default: var(--wot-divider-color-default, $text-auxiliary) !default;
+$divider-color-line: var(--wot-divider-color-line, $border-main) !default;
+
+/* 间距变量 */
+$divider-padding: var(--wot-divider-padding, $padding-zero $padding-extra-loose) !default; // 两边间距
+$divider-margin: var(--wot-divider-margin, $spacing-extra-loose $spacing-zero) !default; // 上下间距
+
+/* 尺寸变量 */
+$divider-line-height: var(--wot-divider-line-height, $n3) !default; // 分割线高度
+$divider-size-line-height: var(--wot-divider-size-line-height, $typography-body-line--height-size-main) !default;
+$divider-size-vertical-height: var(--wot-divider-size-vertical-height, $spacing-extra-loose) !default;
+$divider-size-vertical-line-width: var(--wot-divider-size-vertical-line-width,  $n3) !default;
+$divider-size-content-left-width: var(--wot-divider-size-content-left-width, 10%) !default;
+$divider-size-content-right-width: var(--wot-divider-size-content-right-width, 10%) !default;
+
+/* 字体变量 */
+$divider-fs-default: var(--wot-divider-fs-default, $typography-body-size-main) !default;
+
+/* 间距变量 */
+$divider-margin-default: var(--wot-divider-margin-default, $spacing-extra-loose) !default;
+$divider-margin-vertical-content: var(--wot-divider-margin-vertical-content, $spacing-tight) !default;
+$divider-margin-content-left: var(--wot-divider-margin-content-left, $spacing-loose) !default;
+$divider-margin-content-right: var(--wot-divider-margin-content-right, $spacing-loose) !default;
+$divider-padding-default: var(--wot-divider-padding-default, $spacing-zero) !default;
 
 @include b(divider) {
   position: relative;
   display: flex;
-  padding: $-divider-padding;
-  margin: $-divider-margin;
+  padding: $divider-padding;
+  margin: $divider-margin;
   align-items: center;
-  color: $-divider-color;
-  font-size: $-divider-fs;
+  color: $divider-color-default;
+  font-size: $divider-fs-default;
 
   &::after,
   &::before {
@@ -26,9 +44,11 @@
     display: block;
     box-sizing: border-box;
     border-style: solid;
-    border-color: $-divider-line-color;
-    border-width: $-divider-line-height 0 0;
+    border-color: $divider-color-line;
+    border-width: $divider-line-height 0 0;
   }
+
+
 
   &::before {
     content: '';
@@ -37,23 +57,23 @@
   @include m(center, left, right) {
     &::after {
       content: '';
-      margin-left: $-divider-content-left-margin;
+      margin-left: $divider-margin-content-left;
     }
 
     &::before {
-      margin-right: $-divider-content-right-margin;
+      margin-right: $divider-margin-content-right;
     }
   }
 
   @include m(left) {
     &::before {
-      max-width: $-divider-content-left-width;
+      max-width: $divider-size-content-left-width;
     }
   }
 
   @include m(right) {
     &::after {
-      max-width: $-divider-content-right-width;
+      max-width: $divider-size-content-right-width;
     }
   }
 
@@ -75,15 +95,15 @@
 
   @include m(vertical) {
     display: inline-block;
-    width: $-divider-vertical-line-width;
-    height: $-divider-vertical-height;
-    margin: $-divider-vertical-content-margin;
-    padding: 0;
+    width: $divider-size-vertical-line-width;
+    height: $divider-size-vertical-height;
+    margin: $spacing-zero $divider-margin-vertical-content;
+    padding: $padding-zero;
     vertical-align: middle;
 
     &::before {
       height: 100%;
-      border-width: 0 0 0 $-divider-vertical-line-width;
+      border-width: 0 0 0 $divider-size-vertical-line-width;
     }
 
     &::after {
@@ -96,5 +116,4 @@
       }
     }
   }
-
 }

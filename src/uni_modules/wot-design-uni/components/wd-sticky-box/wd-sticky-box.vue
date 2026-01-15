@@ -13,7 +13,9 @@ export default {
   name: 'wd-sticky-box',
   options: {
     addGlobalClass: true,
+    // #ifndef MP-TOUTIAO
     // virtualHost: true,
+    // #endif
     styleIsolation: 'shared'
   }
 }
