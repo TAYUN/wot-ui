@@ -40,9 +40,10 @@ $input-number-action-primary-sub-color: var(--wot-input-number-action-primary-su
 
 
 @include b(input-number) {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   user-select: none;
+  line-height: 1;
 
   @include e(action) {
     position: relative;

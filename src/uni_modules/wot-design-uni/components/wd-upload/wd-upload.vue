@@ -72,7 +72,7 @@
       <!-- 唤起项 -->
       <view v-else @click="onEvokeClick" :class="['wd-upload__evoke', disabled ? 'is-disabled' : '', customEvokeClass]">
         <!-- 唤起项图标 -->
-        <wd-icon class="wd-upload__evoke-icon" name="camera-fill"></wd-icon>
+        <wd-icon custom-class="wd-upload__evoke-icon" name="camera-fill"></wd-icon>
         <!-- 有限制个数时确认是否展示限制个数 -->
         <view v-if="limit && showLimitNum" class="wd-upload__evoke-num">（{{ uploadFiles.length }}/{{ limit }}）</view>
       </view>

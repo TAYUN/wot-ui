@@ -1,7 +1,7 @@
 /*
  * @Author: weisheng
  * @Date: 2023-12-14 11:21:58
- * @LastEditTime: 2026-01-20 21:51:47
+ * @LastEditTime: 2026-03-16 15:12:18
  * @LastEditors: weisheng
  * @Description:
  * @FilePath: /wot-design-uni/src/uni_modules/wot-design-uni/components/wd-form/types.ts
@@ -11,10 +11,27 @@ import { type ComponentPublicInstance, type ExtractPropTypes, type InjectionKey,
 import { baseProps, makeBooleanProp, makeRequiredProp, numericProp } from '../common/props'
 import type { CellLayout, CellSize, CellValueAlign, CellAsteriskPosition } from '../wd-cell/types'
 
+export type FormSchemaIssue = {
+  path: Array<string | number>
+  message: string
+}
+
+export type FormSchema = {
+  validate: (model: Record<string, any>) => FormSchemaIssue[] | Promise<FormSchemaIssue[]>
+  isRequired?: (path: string) => boolean | undefined
+}
+
+export const FORM_VALIDATE_EVENTS = ['change', 'blur', 'submit'] as const
+
+export type FormValidateEvent = (typeof FORM_VALIDATE_EVENTS)[number]
+
+export type FormValidateTrigger = FormValidateEvent
+
 export type FormProvide = {
   props: {
     model: Record<string, any>
-    rules?: FormRules
+    schema?: FormSchema
+    validateTrigger?: FormValidateTrigger | FormValidateTrigger[]
     border?: boolean
     // 公共配置属性
     center?: boolean
@@ -27,28 +44,15 @@ export type FormProvide = {
     ellipsis?: boolean
   }
   errorMessages?: Record<string, string>
+  validate?: (prop?: string | string[]) => Promise<{ valid: boolean; errors: ErrorMessage[] }>
 }
 
 export const FORM_KEY: InjectionKey<FormProvide> = Symbol('wd-form')
-
-export type FormRules = {
-  [key: string]: FormItemRule[]
-}
 
 export type ErrorMessage = {
   prop: string
   message: string
 }
-
-export interface FormItemRule {
-  [key: string]: any
-  required: boolean
-  message: string
-  pattern?: RegExp
-  validator?: (value: any, rule: FormItemRuleWithoutValidator) => boolean | Promise<string> | Promise<boolean> | Promise<void> | Promise<unknown>
-}
-
-export type FormItemRuleWithoutValidator = Omit<FormItemRule, 'validator'>
 
 export const formProps = {
   ...baseProps,
@@ -59,9 +63,13 @@ export const formProps = {
   /**
    * 表单验证规则
    */
-  rules: {
-    type: Object as PropType<FormRules>,
-    default: () => ({})
+  schema: Object as PropType<FormSchema>,
+  /**
+   * 校验触发时机
+   */
+  validateTrigger: {
+    type: [String, Array] as PropType<FormValidateTrigger | FormValidateTrigger[]>,
+    default: 'submit'
   },
   /**
    * 是否在输入时重置表单校验信息

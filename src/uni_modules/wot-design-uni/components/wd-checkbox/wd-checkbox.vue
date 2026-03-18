@@ -6,7 +6,7 @@
     :style="customStyle"
     @click="toggle"
   >
-    <view class="wd-checkbox__label" v-if="$slots.default">
+    <view :class="`wd-checkbox__label ${customLabelClass || ''}`" v-if="$slots.default">
       <slot></slot>
     </view>
 

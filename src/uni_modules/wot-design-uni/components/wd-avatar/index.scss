@@ -1,23 +1,46 @@
 @use '../styles/mixin/mixin.scss'as *;
 @use '../styles/variable.scss'as *;
 
-$avatar-size-normal: var(--wot-avatar-size-normal, $n36) !default; // 默认尺寸
-$avatar-size-large: var(--wot-avatar-size-large, $n56) !default; // 大尺寸
-$avatar-size-medium: var(--wot-avatar-size-medium, $n48) !default; // 中尺寸
-$avatar-size-small: var(--wot-avatar-size-small, $n24) !default; // 小尺寸
-$avatar-text-color: var(--wot-avatar-text-color, $text-white) !default; // 文字颜色
-$avatar-font-weight: var(--wot-avatar-font-weight, $typography-body-font-weight-strong) !default; // 字重
-$avatar-font-size: var(--wot-avatar-font-size, $n20) !default; // 默认字号
-$avatar-font-size-large: var(--wot-avatar-font-size-large, $n28) !default; // 大尺寸字号
-$avatar-font-size-medium: var(--wot-avatar-font-size-medium, $n24) !default; // 中尺寸字号
-$avatar-font-size-small: var(--wot-avatar-font-size-small, $n18) !default; // 小尺寸字号
-$avatar-line-height: var(--wot-avatar-line-height, 1.2) !default; // 行高
-$avatar-bg-color: var(--wot-avatar-bg-color, $coolgrey-3) !default; // 背景颜色
-$avatar-border-radius: var(--wot-avatar-border-radius, $radius-main) !default; // 默认圆角
-$avatar-border-radius-full: var(--wot-avatar-border-radius-full, $radius-radius-full) !default; // 全圆角
-$avatar-overlap: var(--wot-avatar-overlap) !default; // 头像重叠距离
-$avatar-icon-color: var(--wot-avatar-icon-color, $icon-auxiliary) !default; // 图标颜色
-$avatar-color: var(--wot-avatar-color, $text-auxiliary) !default; // 文字颜色
+// 默认尺寸
+$avatar-size-normal: var(--wot-avatar-size-normal, $n36) !default;
+// 大尺寸
+$avatar-size-large: var(--wot-avatar-size-large, $n56) !default;
+// 中尺寸
+$avatar-size-medium: var(--wot-avatar-size-medium, $n48) !default;
+// 小尺寸
+$avatar-size-small: var(--wot-avatar-size-small, $n24) !default;
+// 头像文字颜色
+$avatar-text-color: var(--wot-avatar-text-color, $text-white) !default;
+// 头像文字字重
+$avatar-font-weight: var(--wot-avatar-font-weight, $typography-body-font-weight-strong) !default;
+// 默认文字字号
+$avatar-font-size: var(--wot-avatar-font-size, $typography-title-size-large) !default;
+// 大尺寸文字字号
+$avatar-font-size-large: var(--wot-avatar-font-size-large, $typography-title-size-extra-large) !default;
+// 中尺寸文字字号
+$avatar-font-size-medium: var(--wot-avatar-font-size-medium, $typography-title-size-large) !default;
+// 小尺寸文字字号
+$avatar-font-size-small: var(--wot-avatar-font-size-small, $typography-title-size-main) !default;
+// 默认文字行高
+$avatar-line-height: var(--wot-avatar-line-height, $typography-title-line--height-size-large) !default;
+// 大尺寸文字行高
+$avatar-line-height-large: var(--wot-avatar-line-height-large, $typography-title-line--height-size-extra-large) !default;
+// 中尺寸文字行高
+$avatar-line-height-medium: var(--wot-avatar-line-height-medium, $typography-title-line--height-size-large) !default;
+// 小尺寸文字行高
+$avatar-line-height-small: var(--wot-avatar-line-height-small, $typography-title-line--height-size-main) !default;
+// 头像背景颜色
+$avatar-bg: var(--wot-avatar-bg, $filled-strong) !default;
+// 默认圆角
+$avatar-border-radius: var(--wot-avatar-border-radius, $radius-main) !default;
+// 全圆角
+$avatar-border-radius-full: var(--wot-avatar-border-radius-full, $radius-radius-full) !default;
+// 头像重叠距离
+$avatar-overlap: var(--wot-avatar-overlap) !default;
+// 图标颜色
+$avatar-icon-color: var(--wot-avatar-icon-color, $icon-auxiliary) !default;
+// 文本颜色
+$avatar-color: var(--wot-avatar-color, $text-auxiliary) !default;
 
 @include b(avatar) {
   display: inline-flex;
@@ -30,7 +53,7 @@ $avatar-color: var(--wot-avatar-color, $text-auxiliary) !default; // 文字颜�
   font-size: $avatar-font-size;
   line-height: $avatar-line-height;
   text-align: center;
-  background: $avatar-bg-color;
+  background: $avatar-bg;
   border-radius: $avatar-border-radius;
   overflow: hidden;
   user-select: none;
@@ -51,6 +74,7 @@ $avatar-color: var(--wot-avatar-color, $text-auxiliary) !default; // 文字颜�
     width: $avatar-size-large;
     height: $avatar-size-large;
     font-size: $avatar-font-size-large;
+    line-height: $avatar-line-height-large;
     --wot-avatar-overlap: calc(#{$avatar-size-large} * -0.25);
   }
 
@@ -58,6 +82,7 @@ $avatar-color: var(--wot-avatar-color, $text-auxiliary) !default; // 文字颜�
     width: $avatar-size-medium;
     height: $avatar-size-medium;
     font-size: $avatar-font-size-medium;
+    line-height: $avatar-line-height-medium;
     --wot-avatar-overlap: calc(#{$avatar-size-medium} * -0.25);
   }
 
@@ -65,6 +90,7 @@ $avatar-color: var(--wot-avatar-color, $text-auxiliary) !default; // 文字颜�
     width: $avatar-size-normal;
     height: $avatar-size-normal;
     font-size: $avatar-font-size;
+    line-height: $avatar-line-height;
     --wot-avatar-overlap: calc(#{$avatar-size-normal} * -0.25);
   }
 
@@ -72,6 +98,7 @@ $avatar-color: var(--wot-avatar-color, $text-auxiliary) !default; // 文字颜�
     width: $avatar-size-small;
     height: $avatar-size-small;
     font-size: $avatar-font-size-small;
+    line-height: $avatar-line-height-small;
     --wot-avatar-overlap: calc(#{$avatar-size-small} * -0.25);
   }
 

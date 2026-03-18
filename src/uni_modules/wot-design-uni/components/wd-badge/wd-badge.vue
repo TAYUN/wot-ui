@@ -5,11 +5,11 @@
       v-if="shouldShowBadge"
       :class="[
         'wd-badge__content',
+        props.border ? 'is-border' : '',
         'is-fixed',
         type ? 'wd-badge__content--' + type : '',
         isDot ? 'is-dot' : '',
-        shape ? 'is-' + shape : '',
-        props.border ? 'is-border' : ''
+        shape ? 'is-' + shape : ''
       ]"
       :style="contentStyle"
     >

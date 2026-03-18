@@ -38,8 +38,8 @@
             @change="handleChange"
           >
             <view v-for="item in filterColumns" :key="item[valueKey]" :id="'check' + item[valueKey]">
-              <wd-checkbox :name="item[valueKey]" :disabled="item.disabled">
-                <block v-if="filterable && filterVal">
+              <wd-checkbox :name="item[valueKey]" :disabled="item.disabled" custom-label-class="wd-select-picker__checkbox-label">
+                <block v-if="showHighlightText">
                   <block v-for="text in item[labelKey]" :key="text.label">
                     <text v-if="text.type === 'active'" class="wd-select-picker__text-active">{{ text.label }}</text>
                     <block v-else>{{ text.label }}</block>
@@ -64,8 +64,8 @@
             @change="handleChange"
           >
             <view v-for="(item, index) in filterColumns" :key="index" :id="'radio' + item[valueKey]">
-              <wd-radio :value="item[valueKey]" :disabled="item.disabled">
-                <block v-if="filterable && filterVal">
+              <wd-radio :value="item[valueKey]" :disabled="item.disabled" custom-label-class="wd-select-picker__radio-label">
+                <block v-if="showHighlightText">
                   <block v-for="text in item[labelKey]" :key="text.label">
                     <text :class="`${text.type === 'active' ? 'wd-select-picker__text-active' : ''}`">{{ text.label }}</text>
                   </block>
@@ -128,22 +128,54 @@ const filterVal = ref<string>('')
 const filterColumns = ref<Array<Record<string, any>>>([])
 const scrollTop = ref<number>(0) // 滚动位置
 
+const valueItemMap = computed(() => {
+  const map = new Map<string | number | boolean, Record<string, any>>()
+  const { columns, valueKey } = props
+  columns.forEach((item) => {
+    map.set(item[valueKey], item)
+  })
+  return map
+})
+
+const showHighlightText = computed(() => {
+  return props.filterable && !!filterVal.value
+})
+
+function getModelValueWatchKey(value: string | number | boolean | (string | number | boolean)[]) {
+  if (props.type === 'checkbox') {
+    return isArray(value) ? value.join('|') : ''
+  }
+  return isDef(value) ? String(value) : ''
+}
+
+function getColumnsWatchKey(columns: Record<string, any>[]) {
+  const { valueKey, labelKey } = props
+  return columns
+    .map((item) => {
+      const value = isDef(item[valueKey]) ? String(item[valueKey]) : ''
+      const label = isDef(item[labelKey]) ? String(item[labelKey]) : ''
+      return `${value}|${label}|${item.disabled ? '1' : '0'}`
+    })
+    .join('||')
+}
+
 watch(
-  () => props.modelValue,
-  (newValue) => {
+  () => getModelValueWatchKey(props.modelValue),
+  () => {
+    const newValue = props.modelValue
     if (newValue === selectList.value) return
     selectList.value = valueFormat(newValue)
     lastSelectList.value = valueFormat(newValue)
   },
   {
-    deep: true,
     immediate: true
   }
 )
 
 watch(
-  () => props.columns,
-  (newValue) => {
+  () => getColumnsWatchKey(props.columns),
+  () => {
+    const newValue = props.columns
     if (props.filterable && filterVal.value) {
       formatFilterColumns(newValue, filterVal.value)
     } else {
@@ -151,7 +183,6 @@ watch(
     }
   },
   {
-    deep: true,
     immediate: true
   }
 )
@@ -174,7 +205,6 @@ watch(
     }
   },
   {
-    deep: true,
     immediate: true
   }
 )
@@ -188,50 +218,42 @@ const { proxy } = getCurrentInstance() as any
 
 async function setScrollIntoView() {
   let wraperSelector: string = ''
-  let selectorPromise: Promise<UniApp.NodeInfo>[] = []
+  let targetSelector: string = ''
   if (isDef(selectList.value) && selectList.value !== '' && !isArray(selectList.value)) {
     wraperSelector = '#wd-radio-group'
-    selectorPromise = [getRect(`#radio${selectList.value}`, false, proxy)]
+    targetSelector = `#radio${selectList.value}`
   } else if (isArray(selectList.value) && selectList.value.length > 0) {
-    selectList.value.forEach((value) => {
-      selectorPromise.push(getRect(`#check${value}`, false, proxy))
-    })
     wraperSelector = '#wd-checkbox-group'
+    targetSelector = `#check${selectList.value[0]}`
   }
-  if (wraperSelector) {
+  if (wraperSelector && targetSelector) {
     await pause(2000 / 30)
-    Promise.all([getRect('.wd-select-picker__wrapper', false, proxy), getRect(wraperSelector, false, proxy), ...selectorPromise]).then((res) => {
-      if (isDef(res) && isArray(res)) {
-        const scrollView = res[0]
-        const wraper = res[1]
-        const target = res.slice(2) || []
-        if (isDef(wraper) && isDef(scrollView)) {
-          const index = target.findIndex((item) => {
-            return item.bottom! > scrollView.top! && item.top! < scrollView.bottom!
-          })
-          if (index < 0) {
-            scrollTop.value = -1
-            nextTick(() => {
-              scrollTop.value = Math.max(0, target[0].top! - wraper.top! - scrollView.height! / 2)
-            })
-          }
-        }
+    const [scrollView, wraper, target] = await Promise.all([
+      getRect('.wd-select-picker__wrapper', false, proxy),
+      getRect(wraperSelector, false, proxy),
+      getRect(targetSelector, false, proxy)
+    ])
+
+    if (isDef(wraper) && isDef(scrollView) && isDef(target)) {
+      const isVisible = target.bottom! > scrollView.top! && target.top! < scrollView.bottom!
+      if (!isVisible) {
+        scrollTop.value = -1
+        nextTick(() => {
+          scrollTop.value = Math.max(0, target.top! - wraper.top! - scrollView.height! / 2)
+        })
       }
-    })
+    }
   }
 }
 
 function noop() {}
 
 function getSelectedItem(value: string | number | boolean) {
-  const { valueKey, labelKey, columns } = props
+  const { valueKey, labelKey } = props
+  const selected = valueItemMap.value.get(value)
 
-  const selecteds = columns.filter((item) => {
-    return item[valueKey] === value
-  })
-
-  if (selecteds.length > 0) {
-    return selecteds[0]
+  if (selected) {
+    return selected
   }
 
   return {
@@ -309,8 +331,12 @@ function handleConfirm() {
   emit('close')
 }
 
-function getFilterText(label: string, filterVal: string) {
-  const reg = new RegExp(`(${filterVal})`, 'g')
+function escapeRegExp(text: string) {
+  return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
+function getFilterText(label: string, filterVal: string): Array<{ type: 'active' | 'normal'; label: string }> {
+  const reg = new RegExp(`(${escapeRegExp(filterVal)})`, 'g')
 
   return label.split(reg).map((text) => {
     return {
@@ -321,14 +347,10 @@ function getFilterText(label: string, filterVal: string) {
 }
 
 function handleFilterChange({ value }: { value: string }) {
+  filterVal.value = value
   if (value === '') {
-    filterColumns.value = []
-    filterVal.value = value
-    nextTick(() => {
-      filterColumns.value = props.columns
-    })
+    filterColumns.value = props.columns
   } else {
-    filterVal.value = value
     formatFilterColumns(props.columns, value)
   }
 }
@@ -344,10 +366,7 @@ function formatFilterColumns(columns: Record<string, any>[], filterVal: string) 
       [props.labelKey]: getFilterText(item[props.labelKey], filterVal)
     }
   })
-  filterColumns.value = []
-  nextTick(() => {
-    filterColumns.value = formatFilterColumns
-  })
+  filterColumns.value = formatFilterColumns
 }
 
 const showConfirm = computed(() => {

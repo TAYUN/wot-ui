@@ -44,6 +44,7 @@ $switch-disabled: var(--wot-switch-disabled, $opacity-disabled) !default;
   align-items: center;
   position: relative;
   font-size: $switch-size;
+  vertical-align: middle;
 
   @include when(disabled) {
     opacity: $switch-disabled;

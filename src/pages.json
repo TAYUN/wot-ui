@@ -913,10 +913,10 @@
               "allowsBounceVertical": "NO"
             },
             // #ifdef MP
-            "navigationBarTitleText": "失焦校验",
+            "navigationBarTitleText": "校验触发时机",
             // #endif
             // #ifndef MP
-            "navigationBarTitleText": "%form-demo2-title%"
+            "navigationBarTitleText": "校验触发时机"
             // #endif
           }
         },

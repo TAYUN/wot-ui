@@ -157,9 +157,9 @@ export const inputProps = {
   /**
    * 紧凑模式，移除内边距和背景色，在结合 cell 或 form-item 使用时建议开启
    * 类型: boolean
-   * 默认值: false
+   * 默认值: -
    */
-  compact: makeBooleanProp(false)
+  compact: makeBooleanProp(void 0)
 }
 
 export type InputProps = ExtractPropTypes<typeof inputProps>

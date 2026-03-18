@@ -31,8 +31,8 @@ linkChildren({ props, updateValue })
 watch(
   () => props.type,
   (newValue) => {
-    // type: 'dot', 'button', 'check', 'square'
-    const type = ['check', 'dot', 'button', 'square']
+    // type: 'dot', 'button', 'circle', 'square'
+    const type = ['circle', 'dot', 'button', 'square']
     if (type.indexOf(newValue) === -1) console.error(`type must be one of ${type.toString()}`)
   },
   { deep: true, immediate: true }

@@ -99,7 +99,11 @@ export const checkboxProps = {
    * 可选值: horizontal | vertical
    * 默认值: 继承自 wd-checkbox-group
    */
-  direction: String as PropType<CheckboxDirection>
+  direction: String as PropType<CheckboxDirection>,
+  /**
+   * 自定义label文本类名
+   */
+  customLabelClass: String
 }
 
 export type CheckboxProps = ExtractPropTypes<typeof checkboxProps>

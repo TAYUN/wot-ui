@@ -58,10 +58,13 @@ export default {
 <script lang="ts" setup>
 import { computed, nextTick, ref, watch } from 'vue'
 import { isDef, isEqual } from '../common/util'
+import { useParent } from '../composables/useParent'
 import { inputNumberProps, type OperationType } from './types'
 import { callInterceptor } from '../common/interceptor'
+import { FORM_ITEM_VALIDATE_KEY } from '../wd-form-item/types'
 
 const props = defineProps(inputNumberProps)
+const { parent: formItemValidate } = useParent(FORM_ITEM_VALIDATE_KEY)
 const emit = defineEmits<{
   /**
    * 数值变化事件
@@ -422,6 +425,7 @@ function handleBlur(event: any) {
   const val = event.detail.value || ''
   updateValue(val)
   emit('blur', { value: val })
+  formItemValidate.value?.validateByTrigger('blur')
 }
 
 /**

@@ -1,13 +1,13 @@
 <template>
   <page-wraper>
     <demo-block :title="$t('ji-chu-biao-dan')" transparent>
-      <wd-form ref="form1" :model="model1" :title-width="100">
-        <wd-form-item :title="$t('wai-bi-ba-bu')" prop="value1" :rules="[{ required: true, message: $t('qing-shu-ru-wai-bi-ba-bu') }]">
-          <wd-input type="text" v-model="model1.value1" :placeholder="$t('qing-shu-ru-wai-bi-ba-bu')" compact />
+      <wd-form ref="form1" :model="model1" :schema="schema1" :title-width="100">
+        <wd-form-item :title="$t('wai-bi-ba-bu')" prop="value1">
+          <wd-input type="text" v-model="model1.value1" :placeholder="$t('qing-shu-ru-wai-bi-ba-bu')" />
         </wd-form-item>
 
-        <wd-form-item :title="$t('sha-ka-la-ka')" prop="value2" :rules="[{ required: true, message: $t('qing-shu-ru-sha-ka-la-ka') }]">
-          <wd-input type="text" v-model="model1.value2" :placeholder="$t('qing-shu-ru-sha-ka-la-ka')" compact />
+        <wd-form-item :title="$t('sha-ka-la-ka')" prop="value2">
+          <wd-input type="text" v-model="model1.value2" :placeholder="$t('qing-shu-ru-sha-ka-la-ka')" />
         </wd-form-item>
         <view class="footer">
           <wd-button type="primary" size="large" @click="handleSubmit1" block>{{ $t('ti-jiao') }}</wd-button>
@@ -15,73 +15,9 @@
       </wd-form>
     </demo-block>
 
-    <demo-block :title="$t('xiao-yan-gui-ze')" transparent>
-      <wd-form ref="form2" :model="model2">
-        <wd-cell-group border>
-          <wd-input
-            :label="$t('xiao-yan')"
-            label-width="100px"
-            prop="value1"
-            clearable
-            v-model="model2.value1"
-            :placeholder="$t('zheng-ze-xiao-yan')"
-            :rules="[{ required: false, pattern: /\d{6}/, message: $t('qing-shu-ru-6-wei-zi-fu') }]"
-          />
-          <wd-input
-            :label="$t('xiao-yan')"
-            label-width="100px"
-            prop="value2"
-            clearable
-            v-model="model2.value2"
-            :placeholder="$t('han-shu-xiao-yan')"
-            :rules="[
-              {
-                required: false,
-                validator: validatorMessage,
-                message: $t('qing-shu-ru-zheng-que-de-ma-ka-ba-ka')
-              }
-            ]"
-          />
-          <wd-input
-            :label="$t('xiao-yan-1')"
-            label-width="100px"
-            prop="value3"
-            clearable
-            v-model="model2.value3"
-            :placeholder="$t('xiao-yan-han-shu-fan-hui-cuo-wu-ti-shi')"
-            :rules="[
-              {
-                required: false,
-                message: $t('qing-shu-ru-nei-rong'),
-                validator: validator
-              }
-            ]"
-          />
-          <wd-input
-            :label="$t('xiao-yan')"
-            label-width="100px"
-            prop="value4"
-            clearable
-            v-model="model2.value4"
-            :placeholder="$t('yi-bu-han-shu-xiao-yan')"
-            :rules="[{ required: false, validator: asyncValidator, message: $t('qing-shu-ru-1234') }]"
-          />
-        </wd-cell-group>
-        <view class="footer">
-          <wd-button type="primary" size="large" @click="handleSubmit2" block>{{ $t('ti-jiao') }}</wd-button>
-        </view>
-      </wd-form>
-    </demo-block>
-
     <demo-block :title="$t('dong-tai-biao-dan')" transparent>
       <view class="demo-button">
         <wd-button @click="handleClick1" :round="false" block size="large">{{ $t('dong-tai-biao-dan-0') }}</wd-button>
-      </view>
-    </demo-block>
-
-    <demo-block :title="$t('shi-jiao-xiao-yan')" transparent>
-      <view class="demo-button">
-        <wd-button @click="handleClick2" :round="false" block size="large">{{ $t('shi-jiao-xiao-yan-0') }}</wd-button>
       </view>
     </demo-block>
 
@@ -96,13 +32,19 @@
         <wd-button @click="handleClick4" :round="false" block size="large">{{ $t('xiao-yan-ti-shi-fang-shi') }}</wd-button>
       </view>
     </demo-block>
+    <demo-block title="校验触发时机" transparent>
+      <view class="demo-button">
+        <wd-button @click="handleClick2" :round="false" block size="large">校验触发时机</wd-button>
+      </view>
+    </demo-block>
   </page-wraper>
 </template>
 <script lang="ts" setup>
-import { useToast } from '@/uni_modules/wot-design-uni'
+import { useToast, zodAdapter } from '@/uni_modules/wot-design-uni'
 import type { FormInstance } from '@/uni_modules/wot-design-uni/components/wd-form/types'
 import { reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { z } from 'zod'
 
 const { t } = useI18n()
 
@@ -114,62 +56,33 @@ const model1 = reactive<{
   value2: ''
 })
 
-const model2 = reactive<{
-  value1: string
-  value2: string
-  value3: string
-  value4: string
-}>({
-  value1: '',
-  value2: '',
-  value3: '',
-  value4: ''
-})
-
 const { success: showSuccess, loading: showLoading, close: closeToast } = useToast()
 const form1 = ref<FormInstance>()
-const form2 = ref<FormInstance>()
 
-const validatorMessage = (val: string) => {
-  return /1\d{10}/.test(val)
-}
-
-const validator = (val: any) => {
-  if (String(val).length >= 4) {
-    return Promise.resolve()
-  } else {
-    return Promise.reject(new Error(t('chang-du-bu-de-xiao-yu-4')))
-  }
-}
-
-// 校验函数可以返回 Promise，实现异步校验
-const asyncValidator = (val: string) =>
-  new Promise((resolve) => {
-    showLoading(t('yan-zheng-zhong'))
-
-    setTimeout(() => {
-      closeToast()
-      resolve(val === '1234')
-    }, 1000)
-  })
+const schema1 = zodAdapter(
+  z
+    .object({
+      value1: z.string().min(1, t('qing-shu-ru-wai-bi-ba-bu')),
+      value2: z.string().min(1, t('qing-shu-ru-sha-ka-la-ka'))
+    })
+    .superRefine((data, ctx) => {
+      if (data.value1 === data.value2) return
+      const message = '两个输入框的内容必须一致'
+      ctx.addIssue({
+        code: 'custom',
+        message,
+        path: ['value1']
+      })
+      ctx.addIssue({
+        code: 'custom',
+        message,
+        path: ['value2']
+      })
+    })
+)
 
 function handleSubmit1() {
   form1
-    .value!.validate()
-    .then(({ valid, errors }) => {
-      if (valid) {
-        showSuccess({
-          msg: t('ti-jiao-cheng-gong')
-        })
-      }
-    })
-    .catch((error) => {
-      console.log(error, 'error')
-    })
-}
-
-function handleSubmit2() {
-  form2
     .value!.validate()
     .then(({ valid, errors }) => {
       if (valid) {
@@ -187,16 +100,16 @@ function handleClick1() {
   uni.navigateTo({ url: '/subPages/form/demo1' })
 }
 
-function handleClick2() {
-  uni.navigateTo({ url: '/subPages/form/demo2' })
-}
-
 function handleClick3() {
   uni.navigateTo({ url: '/subPages/form/demo3' })
 }
 
 function handleClick4() {
   uni.navigateTo({ url: '/subPages/form/demo4' })
+}
+
+function handleClick2() {
+  uni.navigateTo({ url: '/subPages/form/demo2' })
 }
 </script>
 <style lang="scss" scoped>

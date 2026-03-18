@@ -31,6 +31,8 @@ $slide-verify-button-color: var(--wot-slide-verify-button-color, $icon-secondary
 $slide-verify-button-success-color: var(--wot-slide-verify-button-success-color, $success-main) !default;
 // 滑块尺寸
 $slide-verify-button-size: var(--wot-slide-verify-button-size, $slide-verify-height) !default;
+// 滑块边框颜色
+$slide-verify-button-border-color: var(--wot-slide-verify-button-border-color, $border-light) !default;
 // 滑块图标尺寸
 $slide-verify-success-icon-size: var(--wot-slide-verify-success-icon-size, $n20) !default;
 
@@ -84,6 +86,7 @@ $slide-verify-success-icon-size: var(--wot-slide-verify-success-icon-size, $n20)
   }
 
   @include e(button) {
+    @include pixelBorderSurround($slide-verify-button-border-color);
     position: absolute;
     right: 0;
     top: 0;

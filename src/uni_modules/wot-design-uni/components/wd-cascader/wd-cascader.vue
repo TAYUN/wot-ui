@@ -7,6 +7,7 @@
       :z-index="zIndex"
       :safe-area-inset-bottom="safeAreaInsetBottom"
       :root-portal="rootPortal"
+      custom-class="wd-cascader__popup"
       @enter="handleEnter"
       @after-enter="handleAfterEnter"
       @leave="handleLeave"

@@ -14,6 +14,8 @@ export { useDialog } from './components/wd-dialog'
 export { useImagePreview } from './components/wd-image-preview'
 export * from './components/composables'
 export * from './components/wd-notify'
+export { zodAdapter } from './components/wd-form/adapters/zod'
+export type { FormSchema, FormSchemaIssue } from './components/wd-form/types'
 
 export * as CommonUtil from './components/common/util'
 export * as clickOut from './components/common/clickoutside'

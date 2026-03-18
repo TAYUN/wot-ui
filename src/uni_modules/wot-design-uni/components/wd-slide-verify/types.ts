@@ -79,6 +79,10 @@ export type SlideVerifyProps = ExtractPropTypes<typeof slideVerifyProps>
 
 export type SlideVerifyExpose = {
   /**
+   * 初始化尺寸信息
+   */
+  init: () => Promise<void>
+  /**
    * 重置验证组件到初始状态
    */
   reset: () => void

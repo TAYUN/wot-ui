@@ -58,13 +58,16 @@ export default {
 import { computed, onBeforeMount, ref, watch } from 'vue'
 import wdIcon from '../wd-icon/wd-icon.vue'
 import { isDef, pause } from '../common/util'
+import { useParent } from '../composables/useParent'
 import { useTranslate } from '../composables/useTranslate'
 import { textareaProps } from './types'
+import { FORM_ITEM_VALIDATE_KEY } from '../wd-form-item/types'
 
 const { translate } = useTranslate('textarea')
 
 const props = defineProps(textareaProps)
 const emit = defineEmits(['update:modelValue', 'clear', 'blur', 'focus', 'input', 'keyboardheightchange', 'confirm', 'linechange', 'click'])
+const { parent: formItemValidate } = useParent(FORM_ITEM_VALIDATE_KEY)
 
 const placeholderValue = computed(() => {
   return isDef(props.placeholder) ? props.placeholder : translate('placeholder')
@@ -122,8 +125,12 @@ const currentLength = computed(() => {
 
 const rootClass = computed(() => {
   return `wd-textarea ${props.error ? 'is-error' : ''} ${props.disabled ? 'is-disabled' : ''} ${props.autoHeight ? 'is-auto-height' : ''} ${
-    props.compact ? 'is-compact' : ''
+    isCompact.value ? 'is-compact' : ''
   } ${props.customClass}`
+})
+
+const isCompact = computed(() => {
+  return isDef(props.compact) ? props.compact : isDef(formItemValidate.value)
 })
 
 const inputPlaceholderClass = computed(() => {
@@ -178,6 +185,7 @@ async function handleBlur({ detail }: any) {
     value: inputValue.value,
     cursor: detail.cursor ? detail.cursor : null
   })
+  await formItemValidate.value?.validateByTrigger('blur')
 }
 function handleFocus({ detail }: any) {
   focusing.value = true

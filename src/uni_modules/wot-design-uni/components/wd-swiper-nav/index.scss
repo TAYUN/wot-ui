@@ -11,14 +11,14 @@ $swiper-nav-dots-bar-active-width: var(--wot-swiper-nav-dots-bar-active-width, $
 $swiper-nav-dot-border-radius: var(--wot-swiper-nav-dot-border-radius, $radius-radius-full) !default;
 // fraction
 $swiper-nav-fraction-color: var(--wot-swiper-nav-fraction-color, $icon-white) !default;
-$swiper-nav-fraction-bg-color: var(--wot-swiper-nav-fraction-bg-color, $opacfilled-main-cover) !default;
+$swiper-nav-fraction-bg: var(--wot-swiper-nav-fraction-bg, $opacfilled-main-cover) !default;
 $swiper-nav-fraction-line-height: var(--wot-swiper-nav-fraction-line-height, $typography-label-line--height-size-large) !default;
 $swiper-nav-fraction-font-size: var(--wot-swiper-nav-fraction-font-size, $typography-label-size-large) !default;
 $swiper-nav-fraction-padding: var(--wot-swiper-nav-fraction-padding, $padding-ultra-tight $padding-extra-tight) !default;
 $swiper-nav-fraction-border-radius: var(--wot-swiper-nav-fraction-border-radius, $radius-main) !default;
 // button
 $swiper-nav-btn-color: var(--wot-swiper-nav-btn-color, $icon-white) !default;
-$swiper-nav-btn-bg-color: var(--wot-swiper-nav-btn-bg-color, $opacfilled-main-cover) !default;
+$swiper-nav-btn-bg: var(--wot-swiper-nav-btn-bg, $opacfilled-main-cover) !default;
 $swiper-nav-btn-size: var(--wot-swiper-nav-btn-size, $n24) !default;
 $swiper-nav-btn-icon-size: var(--wot-swiper-nav-btn-icon-size, $n16) !default;
 $swiper-nav-btn-spacing: var(--wot-swiper-nav-btn-spacing, $spacing-loose) !default;
@@ -36,7 +36,7 @@ $swiper-nav-btn-border-radius: var(--wot-swiper-nav-btn-border-radius, $radius-r
     width: $swiper-nav-btn-size;
     height: $swiper-nav-btn-size;
     border-radius: $swiper-nav-btn-border-radius;
-    background: $swiper-nav-btn-bg-color;
+    background: $swiper-nav-btn-bg;
 
     @include m(prev) {
       left: $swiper-nav-btn-spacing;
@@ -62,7 +62,7 @@ $swiper-nav-btn-border-radius: var(--wot-swiper-nav-btn-border-radius, $radius-r
     padding: $swiper-nav-fraction-padding;
     line-height: $swiper-nav-fraction-line-height;
     border-radius: $swiper-nav-fraction-border-radius;
-    background: $swiper-nav-fraction-bg-color;
+    background: $swiper-nav-fraction-bg;
     color: $swiper-nav-fraction-color;
     font-size: $swiper-nav-fraction-font-size;
   }

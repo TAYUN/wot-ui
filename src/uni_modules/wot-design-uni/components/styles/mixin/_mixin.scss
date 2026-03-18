@@ -213,7 +213,7 @@ $B: null;
       width: calc(100% - #{$left} * 2);
     }
 
-    height: 1px;
+    height: variable.$stroke-main;
     left: $left;
 
     @if ($direction=="bottom") {
@@ -243,7 +243,7 @@ $B: null;
     height: 200%;
     left: 0;
     top: 0;
-    border: 1px solid $color;
+    border: variable.$stroke-main solid $color;
     transform: scale(0.5);
     box-sizing: border-box;
     transform-origin: left top;
@@ -252,7 +252,7 @@ $B: null;
 }
 
 /* 1px 边框 指定方向 */
-@mixin pixelBorder($direction: "bottom", $left: 0, $color: variable.$border-main, $width: variable.$n1) {
+@mixin pixelBorder($direction: "bottom", $left: 0, $color: variable.$border-main, $width: variable.$stroke-main) {
   position: relative;
 
   &::after {
@@ -284,7 +284,7 @@ $B: null;
 }
 
 /* 1px 边框 环绕 */
-@mixin pixelBorderSurround($color: variable.$border-main, $style: solid, $width: variable.$n1) {
+@mixin pixelBorderSurround($color: variable.$border-main, $style: solid, $width: variable.$stroke-main) {
   position: relative;
 
   &::after {

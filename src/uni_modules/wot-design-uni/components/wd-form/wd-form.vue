@@ -21,10 +21,10 @@ export default {
 <script lang="ts" setup>
 import wdToast from '../wd-toast/wd-toast.vue'
 import { reactive, watch } from 'vue'
-import { deepClone, getPropByPath, isArray, isDef, isPromise, isString } from '../common/util'
+import { isArray, isDef } from '../common/util'
 import { useChildren } from '../composables/useChildren'
 import { useToast } from '../wd-toast'
-import { type FormRules, FORM_KEY, type ErrorMessage, formProps, type FormExpose } from './types'
+import { FORM_KEY, type ErrorMessage, formProps, type FormExpose, type FormSchemaIssue } from './types'
 
 const { show: showToast } = useToast('wd-form-toast')
 const props = defineProps(formProps)
@@ -32,7 +32,7 @@ const props = defineProps(formProps)
 const { children, linkChildren } = useChildren(FORM_KEY)
 let errorMessages = reactive<Record<string, string>>({})
 
-linkChildren({ props, errorMessages })
+linkChildren({ props, errorMessages, validate })
 
 watch(
   () => props.model,
@@ -49,87 +49,23 @@ watch(
  * @param prop 指定校验字段或字段数组
  */
 async function validate(prop?: string | string[]): Promise<{ valid: boolean; errors: ErrorMessage[] }> {
-  const errors: ErrorMessage[] = []
-  let valid: boolean = true
-  const promises: Promise<void>[] = []
-  const formRules: FormRules = getMergeRules()
   const propsToValidate = isArray(prop) ? prop : isDef(prop) ? [prop] : []
-  const rulesToValidate: FormRules =
+  const rawIssues: FormSchemaIssue[] = props.schema ? await Promise.resolve(props.schema.validate(props.model)) : []
+  const errors = rawIssues
+    .filter((issue) => issue.path && issue.path.length > 0 && issue.message)
+    .map((issue) => ({
+      prop: issue.path.map((item) => String(item)).join('.'),
+      message: issue.message
+    }))
+  const filteredErrors =
     propsToValidate.length > 0
-      ? propsToValidate.reduce((acc, key) => {
-          if (formRules[key]) {
-            acc[key] = formRules[key]
-          }
-          return acc
-        }, {} as FormRules)
-      : formRules
+      ? errors.filter((error) =>
+          propsToValidate.some((target) => error.prop === target || error.prop.startsWith(`${target}.`) || target.startsWith(`${error.prop}.`))
+        )
+      : errors
+  const valid = filteredErrors.length === 0
 
-  for (const propName in rulesToValidate) {
-    const rules = rulesToValidate[propName]
-    const value = getPropByPath(props.model, propName)
-
-    if (rules && rules.length > 0) {
-      for (const rule of rules) {
-        if (rule.required && (!isDef(value) || value === '')) {
-          errors.push({
-            prop: propName,
-            message: rule.message
-          })
-          valid = false
-          break
-        }
-        if (rule.pattern && !rule.pattern.test(value)) {
-          errors.push({
-            prop: propName,
-            message: rule.message
-          })
-          valid = false
-          break
-        }
-        const { validator, ...ruleWithoutValidator } = rule
-        if (validator) {
-          const result = validator(value, ruleWithoutValidator)
-          if (isPromise(result)) {
-            promises.push(
-              result
-                .then((res) => {
-                  if (typeof res === 'string') {
-                    errors.push({
-                      prop: propName,
-                      message: res
-                    })
-                    valid = false
-                  } else if (typeof res === 'boolean' && !res) {
-                    errors.push({
-                      prop: propName,
-                      message: rule.message
-                    })
-                    valid = false
-                  }
-                })
-                .catch((error?: string | Error) => {
-                  const message = isDef(error) ? (isString(error) ? error : error.message || rule.message) : rule.message
-                  errors.push({ prop: propName, message })
-                  valid = false
-                })
-            )
-          } else {
-            if (!result) {
-              errors.push({
-                prop: propName,
-                message: rule.message
-              })
-              valid = false
-            }
-          }
-        }
-      }
-    }
-  }
-
-  await Promise.all(promises)
-
-  showMessage(errors)
+  showMessage(filteredErrors)
 
   if (valid) {
     if (propsToValidate.length) {
@@ -141,32 +77,8 @@ async function validate(prop?: string | string[]): Promise<{ valid: boolean; err
 
   return {
     valid,
-    errors
+    errors: filteredErrors
   }
-}
-
-// 合并子组件的rules到父组件的rules
-function getMergeRules() {
-  const mergedRules: FormRules = deepClone(props.rules)
-  const childrenProps = children.map((child) => child.prop)
-
-  // 过滤掉在 children 中不存在对应子组件的规则
-  Object.keys(mergedRules).forEach((key) => {
-    if (!childrenProps.includes(key)) {
-      delete mergedRules[key]
-    }
-  })
-
-  children.forEach((item) => {
-    if (isDef(item.prop) && isDef(item.rules) && item.rules.length) {
-      if (mergedRules[item.prop]) {
-        mergedRules[item.prop] = [...mergedRules[item.prop], ...item.rules]
-      } else {
-        mergedRules[item.prop] = item.rules
-      }
-    }
-  })
-  return mergedRules
 }
 
 function showMessage(errors: ErrorMessage[]) {

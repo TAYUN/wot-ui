@@ -56,5 +56,9 @@ export const radioProps = {
    * 可选值: 'left' | 'right'
    * 默认值: 继承自 radio-group
    */
-  placement: String as PropType<RadioPlacement>
+  placement: String as PropType<RadioPlacement>,
+  /**
+   * 自定义label文本类名
+   */
+  customLabelClass: String
 }

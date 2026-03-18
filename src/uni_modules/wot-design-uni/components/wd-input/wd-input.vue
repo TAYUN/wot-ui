@@ -67,8 +67,10 @@ export default {
 import { computed, ref, watch } from 'vue'
 import wdIcon from '../wd-icon/wd-icon.vue'
 import { isDef, pause, isEqual } from '../common/util'
+import { useParent } from '../composables/useParent'
 import { useTranslate } from '../composables/useTranslate'
 import { inputProps } from './types'
+import { FORM_ITEM_VALIDATE_KEY } from '../wd-form-item/types'
 
 const props = defineProps(inputProps)
 const emit = defineEmits([
@@ -84,6 +86,7 @@ const emit = defineEmits([
   'click'
 ])
 const { translate } = useTranslate('input')
+const { parent: formItemValidate } = useParent(FORM_ITEM_VALIDATE_KEY)
 
 const isPwdVisible = ref<boolean>(false)
 const clearing = ref<boolean>(false) // 是否正在清空操作，避免重复触发失焦
@@ -140,11 +143,17 @@ const currentLength = computed(() => {
 })
 
 const rootClass = computed(() => {
-  return `wd-input ${props.error ? 'is-error' : ''} ${props.disabled ? 'is-disabled' : ''}  ${props.compact ? 'is-compact' : ''} ${props.customClass}`
+  return `wd-input ${props.error ? 'is-error' : ''} ${props.disabled ? 'is-disabled' : ''}  ${isCompact.value ? 'is-compact' : ''} ${
+    props.customClass
+  }`
 })
 
 const inputPlaceholderClass = computed(() => {
   return `wd-input__placeholder  ${props.placeholderClass}`
+})
+
+const isCompact = computed(() => {
+  return isDef(props.compact) ? props.compact : isDef(formItemValidate.value)
 })
 
 // 状态初始化
@@ -193,6 +202,7 @@ async function handleBlur() {
   emit('blur', {
     value: inputValue.value
   })
+  await formItemValidate.value?.validateByTrigger('blur')
 }
 function handleFocus({ detail }: any) {
   focusing.value = true

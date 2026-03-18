@@ -22,6 +22,7 @@
           </view>
         </view>
         <wd-picker-view
+          ref="pickerViewRef"
           :custom-class="customViewClass"
           v-model="pickerValue"
           :columns="displayColumns"
@@ -59,7 +60,7 @@ import wdPopup from '../wd-popup/wd-popup.vue'
 import wdPickerView from '../wd-picker-view/wd-picker-view.vue'
 import { getCurrentInstance, onBeforeMount, ref, watch, onMounted } from 'vue'
 import { deepClone, isFunction } from '../common/util'
-import { type PickerOption } from '../wd-picker-view/types'
+import { type PickerOption, type PickerViewExpose } from '../wd-picker-view/types'
 import { useTranslate } from '../composables/useTranslate'
 import { pickerProps, type PickerExpose } from './types'
 import { type Numeric } from '../common/props'
@@ -73,6 +74,7 @@ const popupShow = ref<boolean>(false)
 
 const pickerValue = ref<Numeric[]>([])
 const pickerSelectedOptions = ref<PickerOption[]>([]) // 缓存选中的选项对象
+const pickerViewRef = ref<PickerViewExpose>()
 const displayColumns = ref<Array<PickerOption | Array<PickerOption>>>([]) // 传入 pickerView 的columns
 const isPicking = ref<boolean>(false) // 判断pickview是否还在滑动中
 const hasConfirmed = ref<boolean>(false) // 判断用户是否点击了确认按钮
@@ -179,9 +181,8 @@ function onConfirm() {
   }
 }
 function handleConfirm() {
-  // 使用 change 事件缓存的数据，避免重复调用
-  const values = pickerValue.value
-  const selects = pickerSelectedOptions.value
+  const values = pickerViewRef.value?.getSelectedValues() || pickerValue.value
+  const selects = pickerViewRef.value?.getSelectedOptions() || pickerSelectedOptions.value
 
   popupShow.value = false
   emit('update:modelValue', values)

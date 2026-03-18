@@ -105,14 +105,19 @@ const trackStyle = computed(() => {
 const containerWidth = ref<number>(0)
 const containerHeight = ref<number>(0)
 
-onMounted(async () => {
+const init = async () => {
   try {
     const rect = await getRect(`#${slideVerifyId.value}`, false, proxy)
     containerWidth.value = rect.width || 0
     containerHeight.value = rect.height || 0
   } catch (e) {
-    // 测量失败时保持 0，禁止拖动
+    containerWidth.value = 0
+    containerHeight.value = 0
   }
+}
+
+onMounted(async () => {
+  await init()
 })
 
 // 最大位置，基于实测容器宽高计算
@@ -209,7 +214,7 @@ const reset = () => {
   }, 300)
 }
 
-defineExpose<SlideVerifyExpose>({ reset })
+defineExpose<SlideVerifyExpose>({ reset, init })
 </script>
 
 <style lang="scss">

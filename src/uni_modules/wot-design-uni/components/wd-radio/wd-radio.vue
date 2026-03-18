@@ -6,7 +6,7 @@
     :style="customStyle"
     @click="handleClick"
   >
-    <view class="wd-radio__label" v-if="$slots.default">
+    <view :class="`wd-radio__label ${customLabelClass || ''}`" v-if="$slots.default">
       <slot></slot>
     </view>
 

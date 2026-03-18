@@ -26,7 +26,7 @@
 
     <demo-block :title="$t('tu-biao')" transparent>
       <wd-cell-group>
-        <wd-cell :title="$t('biao-ti-wen-zi-1')" :value="$t('nei-rong')" icon="settings" />
+        <wd-cell :title="$t('biao-ti-wen-zi-1')" :value="$t('nei-rong')" prefix-icon="settings" />
         <wd-cell :title="$t('biao-ti-wen-zi-2')" :value="$t('nei-rong')">
           <template #icon>
             <view class="cell-icon"></view>
@@ -49,7 +49,7 @@
     <demo-block :title="$t('da-chi-cun')" transparent>
       <wd-cell-group>
         <wd-cell size="large" :title="$t('biao-ti-wen-zi-5')" :value="$t('nei-rong')" />
-        <wd-cell :title="$t('biao-ti-wen-zi-6')" :value="$t('nei-rong')" size="large" icon="settings" is-link />
+        <wd-cell :title="$t('biao-ti-wen-zi-6')" :value="$t('nei-rong')" size="large" prefix-icon="settings" is-link />
         <wd-cell size="large" :title="$t('biao-ti-wen-zi-7')" :label="$t('miaoShuXinXi-0')" :value="$t('nei-rong')" />
       </wd-cell-group>
     </demo-block>

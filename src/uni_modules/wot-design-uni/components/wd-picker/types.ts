@@ -85,7 +85,7 @@ export const pickerProps = {
   childrenKey: makeStringProp('children'),
   /**
    * 选中项
-   * 类型: (string | number | boolean)[]
+   * 类型: (string | number)[]
    * 默认值: []
    */
   modelValue: makeArrayProp<Numeric>(),

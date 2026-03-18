@@ -1,7 +1,7 @@
 @use '../styles/mixin/mixin.scss'as *;
 @use '../styles/variable.scss'as *;
 
-$collapse-bg-color: var(--wot-collapse-bg-color, $filled-oppo) !default; // 背景颜色
+$collapse-bg: var(--wot-collapse-bg, $filled-oppo) !default; // 背景颜色
 $collapse-body-color: var(--wot-collapse-body-color, $text-auxiliary) !default; // 内容颜色
 $collapse-body-fs: var(--wot-collapse-body-fs, $typography-label-size-large) !default; // 内容字号
 $collapse-padding: var(--wot-collapse-padding, $padding-loose) !default; // 左右间距
@@ -16,7 +16,7 @@ $collapse-more-margin-top: var(--wot-collapse-more-margin-top, $spacing-main) !d
 $collapse-more-text-margin-right: var(--wot-collapse-more-text-margin-right, $spacing-super-tight) !default; // 更多按钮文字向右的间距
 
 @include b(collapse) {
-  background: $collapse-bg-color;
+  background: $collapse-bg;
 
   @include when(viewmore) {
     padding: $collapse-padding;

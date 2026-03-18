@@ -74,12 +74,6 @@ function handleReset() {
 </script>
 
 <style lang="scss" scoped>
-:deep() {
-  .demo-block__container {
-    background: $filled-content;
-  }
-}
-
 :deep(.wd-slide-verify) {
   margin-bottom: 20px;
 }

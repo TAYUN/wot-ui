@@ -42,7 +42,7 @@ $select-picker-footer-border-color: var(--wot-select-picker-footer-border-color,
   @include e(wrapper) {
     padding: 0 $select-picker-wrapper-padding-horizontal;
     position: relative;
-    max-height: $select-picker-wrapper-max-height;
+    height: $select-picker-wrapper-max-height;
     box-sizing: border-box;
     overflow: auto;
 
@@ -58,11 +58,14 @@ $select-picker-footer-border-color: var(--wot-select-picker-footer-border-color,
     color: $select-picker-text-active-color;
   }
 
+  @include edeep(radio-label,checkbox-label) {
+    @include lineEllipsis;
+  } 
+
   @include e(footer) {
     display: flex;
     align-items: center;
     padding: $select-picker-footer-padding;
     @include pixelBorder(top, 0, $select-picker-footer-border-color);
-
   }
 }

@@ -76,6 +76,7 @@ $input-error-color: var(--wot-input-error-color, $danger-main); // 输入框错�
     background: none;
     padding: 0;
     box-sizing: border-box;
+    min-height: $input-inner-height;
 
     &::-webkit-input-placeholder {
       color: $input-inner-placeholder-color;

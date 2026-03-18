@@ -1,7 +1,15 @@
-import type { ExtractPropTypes, PropType } from 'vue'
-import { baseProps, makeArrayProp, makeBooleanProp, makeStringProp, numericProp } from '../common/props'
-import type { FormItemRule } from '../wd-form/types'
+import type { ExtractPropTypes, InjectionKey, PropType } from 'vue'
+import { baseProps, makeBooleanProp, makeStringProp, numericProp } from '../common/props'
 import { type CellValueAlign, type CellAsteriskPosition, type CellLayout, type CellSize } from '../wd-cell/types'
+import type { FormValidateEvent, FormValidateTrigger } from '../wd-form/types'
+
+export type FormItemValidateProvide = {
+  prop?: string
+  shouldTrigger: (event: FormValidateEvent) => boolean
+  validateByTrigger: (event: FormValidateEvent) => Promise<void>
+}
+
+export const FORM_ITEM_VALIDATE_KEY: InjectionKey<FormItemValidateProvide> = Symbol('wd-form-item-validate')
 
 export const formItemProps = {
   ...baseProps,
@@ -10,13 +18,19 @@ export const formItemProps = {
    */
   prop: String,
   /**
-   * 表单验证规则，结合wd-form组件使用
-   */
-  rules: makeArrayProp<FormItemRule>(),
-  /**
    * 标题
    */
   title: String,
+  /**
+   * 右侧展示值，用于配合 placeholder 判断是否显示占位文字
+   * 类型: string | number
+   */
+  value: numericProp,
+  /**
+   * 值为空时显示的占位文字，需与 value 配合使用
+   * 类型: string
+   */
+  placeholder: String,
   /**
    * 前置图标类名
    */
@@ -67,6 +81,10 @@ export const formItemProps = {
    * 类型: boolean
    */
   required: makeBooleanProp(void 0),
+  /**
+   * 校验触发时机
+   */
+  validateTrigger: [String, Array] as PropType<FormValidateTrigger | FormValidateTrigger[]>,
   /**
    * 表单布局方式
    * 类型: CellLayout

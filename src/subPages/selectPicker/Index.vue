@@ -136,11 +136,8 @@ const show7 = ref<boolean>(false)
 const show9 = ref<boolean>(false)
 const show10 = ref<boolean>(false)
 const show13 = ref<boolean>(false)
-const show17 = ref<boolean>(false)
 const show18 = ref<boolean>(false)
 const show19 = ref<boolean>(false)
-
-const customShow = ref<string>(t('she-chi-pin'))
 
 const toast = useToast()
 

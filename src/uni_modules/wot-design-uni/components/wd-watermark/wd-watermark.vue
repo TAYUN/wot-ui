@@ -312,7 +312,6 @@ async function createCanvas(
   layout: string
 ) {
   const ctx = uni.createCanvasContext(canvasId.value)
-  console.log(ctx)
 
   if (ctx) {
     if (image) {

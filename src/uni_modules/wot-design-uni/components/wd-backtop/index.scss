@@ -1,34 +1,35 @@
 @use '../styles/mixin/mixin.scss'as *;
 @use '../styles/variable.scss'as *;
 
-/* ================================ 组件SCSS变量 ================================ */
-/* 背景与边框 */
+// 背景色
 $backtop-bg: var(--wot-backtop-bg, $filled-oppo) !default;
+// 边框颜色
 $backtop-border-color: var(--wot-backtop-border-color, $border-main) !default;
-
-/* 尺寸 */
+// s宽度
 $backtop-width: var(--wot-backtop-width, $n48) !default;
+// 高度
 $backtop-height: var(--wot-backtop-height, $n48) !default;
-
-/* 圆角 */
+// 方形模式圆角
 $backtop-radius: var(--wot-backtop-radius, $radius-main) !default;
+// 圆形模式圆角
 $backtop-radius-circle: var(--wot-backtop-radius-circle, $radius-radius-full) !default;
-
-/* 图标 */
+// 按钮图标颜色
 $backtop-color: var(--wot-backtop-color, $icon-main) !default;
+// 按钮图标尺寸
 $backtop-icon-size: var(--wot-backtop-icon-size, $n20) !default;
-
-/* 文字 */
+// 文本字号
 $backtop-text-font-size: var(--wot-backtop-text-font-size, $typography-label-size-main) !default;
+// 文本颜色
 $backtop-text-color: var(--wot-backtop-text-color, $text-main) !default;
+// 文本行高
 $backtop-text-line-height: var(--wot-backtop-text-line-height, $typography-label-line--height-size-main) !default;
-
-/* 层级 */
+// 组件层级
 $backtop-z-index: var(--wot-backtop-z-index, 100) !default;
 
 @include b(backtop) {
+  @include pixelBorderSurround($backtop-border-color);
   position: fixed;
-  background-color: $backtop-bg;
+  background: $backtop-bg;
   width: $backtop-width;
   height: $backtop-height;
   display: flex;
@@ -36,7 +37,8 @@ $backtop-z-index: var(--wot-backtop-z-index, 100) !default;
   align-items: center;
   color: $backtop-color;
   z-index: $backtop-z-index;
-  border: 1px solid $backtop-border-color;
+
+
 
   @include e(content) {
     display: flex;

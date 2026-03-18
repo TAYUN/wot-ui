@@ -13,6 +13,8 @@
     :value-align="formItemValueAlign"
     :center="formItemCenter"
     :ellipsis="formItemEllipsis"
+    :clickable="clickable"
+    :is-link="isLink"
     :asterisk-position="formItemAsteriskPosition"
     :border="formItemBorder"
     :hide-asterisk="formItemHideAsterisk"
@@ -21,12 +23,16 @@
     :custom-label-class="customLabelClass"
     :custom-title-class="customTitleClass"
     :custom-value-class="customValueClass"
+    @click="emit('click')"
   >
     <template #title v-if="$slots.title">
       <slot name="title"></slot>
     </template>
 
-    <slot></slot>
+    <slot>
+      <text v-if="showPlaceholder" class="wd-form-item__placeholder">{{ placeholder }}</text>
+      <text v-else-if="isDef(value)">{{ value }}</text>
+    </slot>
     <view v-if="errorMessage" class="wd-form-item__error-message">{{ errorMessage }}</view>
   </wd-cell>
 </template>
@@ -44,16 +50,67 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
+import { useChildren } from '../composables/useChildren'
 import { useParent } from '../composables/useParent'
 import WdCell from '../wd-cell/wd-cell.vue'
-import { FORM_KEY } from '../wd-form/types'
-import { formItemProps } from './types'
-import { isDef } from '../common/util'
+import { FORM_KEY, FORM_VALIDATE_EVENTS, type FormValidateEvent, type FormValidateTrigger } from '../wd-form/types'
+import { FORM_ITEM_VALIDATE_KEY, formItemProps } from './types'
+import { getPropByPath, isDef } from '../common/util'
 
 const props = defineProps(formItemProps)
 
 const { parent: form, index } = useParent(FORM_KEY)
+const { linkChildren } = useChildren(FORM_ITEM_VALIDATE_KEY)
+
+const emit = defineEmits(['click'])
+
+function normalizeValidateTrigger(trigger?: FormValidateTrigger | FormValidateTrigger[]): FormValidateEvent[] {
+  const triggerList = Array.isArray(trigger) ? trigger : trigger ? [trigger] : []
+  return triggerList.filter((item): item is FormValidateEvent => {
+    return FORM_VALIDATE_EVENTS.includes(item as FormValidateEvent)
+  })
+}
+
+const validateTriggerSet = computed(() => {
+  const formTrigger = form.value?.props.validateTrigger
+  const currentTrigger = isDef(props.validateTrigger) ? props.validateTrigger : formTrigger
+  return new Set(normalizeValidateTrigger(currentTrigger))
+})
+
+function shouldTrigger(event: FormValidateEvent): boolean {
+  return validateTriggerSet.value.has(event)
+}
+
+async function validateByTrigger(event: FormValidateEvent): Promise<void> {
+  if (!props.prop || !shouldTrigger(event)) {
+    return
+  }
+  await form.value?.validate?.(props.prop)
+}
+
+const propValue = computed(() => {
+  if (!props.prop) {
+    return undefined
+  }
+  return getPropByPath(form.value?.props.model, props.prop)
+})
+
+watch(
+  () => propValue.value,
+  async () => {
+    await validateByTrigger('change')
+  },
+  {
+    deep: true
+  }
+)
+
+linkChildren({
+  prop: props.prop,
+  shouldTrigger,
+  validateByTrigger
+})
 
 const errorMessage = computed(() => {
   if (form.value && props.prop && form.value.errorMessages && form.value.errorMessages[props.prop]) {
@@ -63,7 +120,6 @@ const errorMessage = computed(() => {
   }
 })
 
-// ========== 属性继承逻辑：子组件属性优先 ==========
 const formItemBorder = computed(() => {
   if (isDef(props.border)) {
     return props.border
@@ -106,18 +162,18 @@ const formItemHideAsterisk = computed(() => {
   return isDef(props.hideAsterisk) ? props.hideAsterisk : form.value?.props.hideAsterisk
 })
 
-// 是否展示必填
+const showPlaceholder = computed(() => {
+  return Boolean(props.placeholder && (props.value === '' || props.value === undefined || props.value === null))
+})
+
 const isRequired = computed(() => {
-  let formRequired = false
-  if (form.value && form.value.props.rules) {
-    const rules = form.value.props.rules
-    for (const key in rules) {
-      if (Object.prototype.hasOwnProperty.call(rules, key) && key === props.prop && Array.isArray(rules[key])) {
-        formRequired = rules[key].some((rule) => rule.required)
-      }
-    }
+  if (props.required === true) {
+    return true
   }
-  return props.required || (props.rules && props.rules.some((rule) => rule.required)) || formRequired
+  if (!props.prop || !form.value?.props.schema?.isRequired) {
+    return false
+  }
+  return !!form.value.props.schema.isRequired(props.prop)
 })
 </script>
 

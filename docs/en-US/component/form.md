@@ -2,7 +2,7 @@
 
 Used for data entry and validation, supporting input boxes, radio buttons, checkboxes, file uploads, and other types. Common form layouts are in a `cell` format, with the form title description on the left and form input on the right.
 
-Among them, `Input`, `Textarea`, `Picker`, `Calendar`, `ColPicker`, `SelectPicker`, `Cell`, and `DatetimePicker` have a `cell` display format and also support `prop` and `rules` properties. We call these `form item components`. Components like `InputNumber`, `Switch`, and `Upload` need to be wrapped in a `Cell` component for use.
+Among them, `Input`, `Textarea`, `Picker`, `Calendar`, `ColPicker`, `SelectPicker`, `Cell`, and `DatetimePicker` have a `cell` display format and also support the `prop` property. We call these `form item components`. Components like `InputNumber`, `Switch`, and `Upload` need to be wrapped in a `Cell` component for use.
 
 Combined with the `wd-form` component, rule validation can be implemented for the above components.
 
@@ -10,13 +10,13 @@ Combined with the `wd-form` component, rule validation can be implemented for th
 
 ## Basic Usage
 
-In the form, use `model` to specify the form data object. Each `form item component` represents a form item, use `prop` to specify the form item field, and use the `rules` property to define validation rules.
+In the form, use `model` to specify the form data object. Each `form item component` represents a form item, use `prop` to specify the form item field, and use the `schema` property to define validation rules.
 
 ::: details View Basic Usage Example
 ::: code-group
 
 ```html [vue]
-<wd-form ref="form" :model="model">
+<wd-form ref="form" :model="model" :schema="schema">
   <wd-cell-group border>
     <wd-input
       label="Username"
@@ -25,7 +25,6 @@ In the form, use `model` to specify the form data object. Each `form item compon
       clearable
       v-model="model.value1"
       placeholder="Please enter username"
-      :rules="[{ required: true, message: 'Please enter username' }]"
     />
     <wd-input
       label="Password"
@@ -35,7 +34,6 @@ In the form, use `model` to specify the form data object. Each `form item compon
       clearable
       v-model="model.value2"
       placeholder="Please enter password"
-      :rules="[{ required: true, message: 'Please enter password' }]"
     />
   </wd-cell-group>
   <view class="footer">
@@ -46,6 +44,8 @@ In the form, use `model` to specify the form data object. Each `form item compon
 
 ```typescript [typescript]
 <script lang="ts" setup>
+import { z } from 'zod'
+import { zodAdapter } from '@/uni_modules/wot-design-uni'
 const { success: showSuccess } = useToast()
 
 const model = reactive<{
@@ -57,6 +57,12 @@ const model = reactive<{
 })
 
 const form = ref()
+const schema = zodAdapter(
+  z.object({
+    value1: z.string().min(1, 'Please enter username'),
+    value2: z.string().min(1, 'Please enter password')
+  })
+)
 
 function handleSubmit() {
   form.value

@@ -2,7 +2,7 @@
 
 用于数据录入、校验，支持输入框、单选框、复选框、文件上传等类型，常见的 form 表单为`单元格`形式的展示，即左侧为表单的标题描述，右侧为表单的输入。
 
-其中，`Input 输入框`、`Textarea 输入框`、`Picker 选择器`、 `Calendar 日历选择器`、 `ColPicker 多列选择器`、`SelectPicker 单复选选择器`、`Cell 单元格` 和 `DatetimePicker 日期时间选择器`具有`单元格`的展示形式，同时也支持 `prop` 和 `rules` 属性，我们称之为`表单项组件`，而 `InputNumber 计数器` 、 `Switch 开关` 和 `Upload 上传` 等组件则需要使用 `Cell 单元格` 进行包裹使用。
+其中，`Input 输入框`、`Textarea 输入框`、`Picker 选择器`、 `Calendar 日历选择器`、 `ColPicker 多列选择器`、`SelectPicker 单复选选择器`、`Cell 单元格` 和 `DatetimePicker 日期时间选择器`具有`单元格`的展示形式，同时也支持 `prop` 属性，我们称之为`表单项组件`，而 `InputNumber 计数器` 、 `Switch 开关` 和 `Upload 上传` 等组件则需要使用 `Cell 单元格` 进行包裹使用。
 
 结合 `wd-form` 组件，可以实现对以上组件的规则校验。
 
@@ -10,13 +10,13 @@
 
 ## 基础用法
 
-在表单中，使用 `model` 指定表单数据对象，每个 `表单项组件` 代表一个表单项，使用 `prop` 指定表单项字段 ，使用 `rules` 属性定义校验规则。
+在表单中，使用 `model` 指定表单数据对象，每个 `表单项组件` 代表一个表单项，使用 `prop` 指定表单项字段，使用 `schema` 属性定义校验规则。
 
 ::: details 查看基础用法示例
 ::: code-group
 
 ```html [vue]
-<wd-form ref="form" :model="model">
+<wd-form ref="form" :model="model" :schema="schema">
   <wd-cell-group border>
     <wd-input
       label="用户名"
@@ -25,7 +25,6 @@
       clearable
       v-model="model.value1"
       placeholder="请输入用户名"
-      :rules="[{ required: true, message: '请填写用户名' }]"
     />
     <wd-input
       label="密码"
@@ -35,7 +34,6 @@
       clearable
       v-model="model.value2"
       placeholder="请输入密码"
-      :rules="[{ required: true, message: '请填写密码' }]"
     />
   </wd-cell-group>
   <view class="footer">
@@ -46,6 +44,8 @@
 
 ```typescript [typescript]
 <script lang="ts" setup>
+import { z } from 'zod'
+import { zodAdapter } from '@/uni_modules/wot-design-uni'
 const { success: showSuccess } = useToast()
 
 const model = reactive<{
@@ -57,6 +57,12 @@ const model = reactive<{
 })
 
 const form = ref()
+const schema = zodAdapter(
+  z.object({
+    value1: z.string().min(1, '请填写用户名'),
+    value2: z.string().min(1, '请填写密码')
+  })
+)
 
 function handleSubmit() {
   form.value
@@ -941,18 +947,16 @@ function handleIconClick() {
 | 参数          | 说明                                                                                | 类型                  | 可选值 | 默认值    | 最低版本         |
 | ------------- | ----------------------------------------------------------------------------------- | --------------------- | ------ | --------- | ---------------- |
 | model         | 表单数据对象                                                                        | `Record<string, any>` | -      | -         | 0.2.0            |
-| rules         | 表单验证规则                                                                        | `FormRules`           | -      | -         | 0.2.0            |
+| schema        | 表单校验对象                                                                        | `FormSchema`          | -      | -         | 1.16.0            |
 | resetOnChange | 表单数据变化时是否重置表单提示信息（设置为 false 时需要开发者单独对变更项进行校验） | `boolean`             | -      | `true`    | 0.2.16           |
 | errorType     | 校验错误提示方式                                                                    | `toast/message/none`  | -      | `message` | 1.3.8 |
 
-### FormItemRule 数据结构
+### FormSchema 数据结构
 
-| 键名      | 说明                                                    | 类型                                  |
-| --------- | ------------------------------------------------------- | ------------------------------------- |
-| required  | 是否为必选字段                                          | `boolean`                             |
-| message   | 错误提示文案                                            | `string`                              |
-| validator | 通过函数进行校验，可以返回一个 `Promise` 来进行异步校验 | `(value, rule) => boolean \| Promise` |
-| pattern   | 通过正则表达式进行校验，正则无法匹配表示校验不通过      | `RegExp`                              |
+| 键名       | 说明                           | 类型                                                          |
+| ---------- | ------------------------------ | ------------------------------------------------------------- |
+| validate   | 校验函数，返回问题数组         | `(model) => FormSchemaIssue[] \| Promise<FormSchemaIssue[]>` |
+| isRequired | 可选，用于推导必填星号         | `(path: string) => boolean \| undefined`                     |
 
 ## Events
 
