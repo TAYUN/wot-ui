@@ -53,8 +53,8 @@ export default {
 <script lang="ts" setup>
 import wdIcon from '../wd-icon/wd-icon.vue'
 import { type CSSProperties, computed, onMounted, ref, watch } from 'vue'
-import { objToStyle, pause } from '../common/util'
-import { useTranslate } from '../composables/useTranslate'
+import { objToStyle, pause } from '../../common/util'
+import { useTranslate } from '../../composables/useTranslate'
 import { searchProps } from './types'
 
 const props = defineProps(searchProps)

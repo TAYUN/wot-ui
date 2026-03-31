@@ -1,5 +1,5 @@
 import type { ExtractPropTypes } from 'vue'
-import { baseProps, makeBooleanProp, makeNumberProp, makeStringProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeNumberProp, makeStringProp } from '../../common/props'
 import type { DirectionType, IndicatorPositionType } from '../wd-swiper/types'
 
 /**

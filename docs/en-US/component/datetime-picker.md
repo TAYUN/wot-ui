@@ -195,11 +195,7 @@ Set the `align-right` property to display the picker's value aligned to the righ
 
 ## Validation Before Confirmation
 
-Set the `before-confirm` function, which will be executed when the user clicks the 'confirm' button. It receives `value` (string for time type, timestamp for others, array when picker is in range selection mode), `resolve`, and `picker` parameters. You can validate the `value` and use the `resolve` function to tell the component whether to confirm. `resolve` accepts a boolean value, `resolve(true)` means the option is approved, `resolve(false)` means the option is not approved, and the picker popup won't close when not approved. You can directly set properties like `loading` through the `picker` parameter.
-
-:::tip Note
-Before calling `resolve`, ensure that the `picker` parameter's `loading` state is set to `false`, otherwise the component's `@confirm` event cannot be triggered correctly.
-:::
+Set the `before-confirm` function, which will be executed when the user clicks the 'confirm' button. It receives a `value` parameter (string for time type, timestamp for others, array when picker is in range selection mode). You can return a `boolean` or `Promise<boolean>` to control whether the option passes. The picker popup won't close if it is not approved.
 
 ```html
 <wd-toast></wd-toast>
@@ -210,17 +206,17 @@ Before calling `resolve`, ensure that the `picker` parameter's `loading` state i
 const value = ref<string>('')
 
 const toast = useToast()
-const beforeConfirm = (value, resolve, picker) => {
-  picker.setLoading(true)
-  setTimeout(() => {
-    picker.setLoading(false)
-    if (value > Date.now()) {
-      resolve(false)
-      toast.error('Cannot select a date later than today')
-    } else {
-      resolve(true)
-    }
-  }, 2000)
+const beforeConfirm = (value) => {
+  return new Promise<boolean>((resolve) => {
+    setTimeout(() => {
+      if (value > Date.now()) {
+        toast.error('Cannot select a date later than today')
+        resolve(false)
+      } else {
+        resolve(true)
+      }
+    }, 2000)
+  })
 }
 
 function handleConfirm({ value }) {
@@ -307,9 +303,9 @@ const displayFormatTabLabel = (items) => {
 | label-width | Set left title width | string | - | 33% | - |
 | error | Whether in error state, right content is red in error state | boolean | - | false | - |
 | align-right | Display picker value aligned to the right | boolean | - | false | - |
-| <s>use-label-slot</s> | <s>Use label slot</s>, deprecated, use label slot directly | boolean | - | false | - |
-| <s>use-default-slot</s> | <s>Use default slot</s>, deprecated, use default slot directly | boolean | - | false | - |
-| before-confirm | Validation function before confirmation, receives (value, resolve, picker) parameters, continue picker through resolve, resolve accepts a boolean parameter | function | - | - | - |
+| ~~use-label-slot~~ | ~~Use label slot~~, deprecated, use label slot directly | boolean | - | false | - |
+| ~~use-default-slot~~ | ~~Use default slot~~, deprecated, use default slot directly | boolean | - | false | - |
+| before-confirm | Validation function before confirmation, receives (value) parameter, returns a `boolean` or `Promise<boolean>` | function | - | - | - |
 | close-on-click-modal | Whether to close when clicking mask | boolean | - | true | - |
 | z-index | Popup layer z-index | number | - | 15 | - |
 | safe-area-inset-bottom | Whether to set bottom safe area for popup panel (iPhone X type devices) | boolean | - | true | - |

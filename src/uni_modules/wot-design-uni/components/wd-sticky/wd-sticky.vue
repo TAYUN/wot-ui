@@ -26,9 +26,9 @@ export default {
 <script lang="ts" setup>
 import wdResize from '../wd-resize/wd-resize.vue'
 import { computed, getCurrentInstance, reactive, ref, type CSSProperties } from 'vue'
-import { addUnit, getRect, objToStyle, pause, uuid } from '../common/util'
+import { addUnit, getRect, objToStyle, pause, uuid } from '../../common/util'
 import { stickyProps } from './types'
-import { useParent } from '../composables/useParent'
+import { useParent } from '../../composables/useParent'
 import { STICKY_BOX_KEY } from '../wd-sticky-box/types'
 
 const props = defineProps(stickyProps)

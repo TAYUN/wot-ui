@@ -1,121 +1,121 @@
-#  自定义主题
+# 定制主题
 
-Wot UI 每个组件基本都有自定义类名 custom-class，可以在组件根节点加入你页面上的类名，进行样式修改。
+`V2` 版本，组件主题系统基于 [CSS 变量](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Guides/Cascading_variables/Using_custom_properties) 构建，通过覆盖这些 CSS 变量，可以实现定制主题、动态切换主题、局部定制和组件级覆盖等功能。
 
-## 主题介绍
+## 主题变量
+`Design Token` 是设计上承载设计决策的最小实体 ，也就是主题变量，`Design Token` 通常采用三层架构：基础变量、语义变量和组件变量，通过修改 `Design Token` 可以实现不同的组件样式，在这里 [theme](https://github.com/wot-ui/wot-ui/tree/main/src/uni_modules/wot-ui/styles/theme) 你可以看到组件库全部的 `Design Token`。
 
-### 主要变量介绍
+### 基础变量
 
-以下样式变量在多个组件中被使用，通过修改这些主要变量，可以快速定义一套自定义主题。
+基础变量是纯粹的视觉常量，无业务语义，如：
+```css
+--wot-blue-6: #1C64FDFF;
+```
 
-**主题色**为：
+### 语义变量
+语义变量是赋予设计决策业务含义的变量，它将基础变量与具体的业务场景做出了映射，如：
+```css
+--wot-primary-6: var(--wot-blue-6);
+```
 
-<div class="style-block" style="background: #4D80F0;">
-  <p>Theme Color</p>
-  <p>$-color-theme: #4D80F0</p>
-</div>
+### 组件变量
+组件变量是 `Design Token` 三层架构的最顶层，直接关联具体的 UI 组件属性，通过引用语义变量，将设计决策映射到具体组件的特定部位（如背景色、文本色、边框、图标等），从而实现组件样式的封装与管理，如：
+```css
+--wot-button-primary-bg: var(--wot-primary-6);
+```
 
-**主题品牌色-小渐变（按钮，渐变更弱）色**：
-<div class="color-wrapper">
-  <span class="style-block liner-color" style="background: linear-gradient(315deg, rgba(79,124,248,1) 0%,rgba(102,141,248,1) 100%);">
-    <span class="a-dot"></span>
-    <span class="b-dot"></span>
-  </span>
+## 全局自定义
+当你希望整个应用都使用同一品牌视觉时，推荐通过全局覆盖 [语义变量](https://github.com/wot-ui/wot-ui/tree/main/src/uni_modules/wot-ui/styles/theme/light.scss) 来实现，如果你要实现完整主题的定制，建议使用 [预设主题](#预设主题)。
 
-  <div class="demo-right">
-    <i>渐变倾斜角度45度左上角较浅，右下角较深</i>
-    <ul>
-      <li>A: <span class="color-block" style="background: #668DF8">#668DF8</span></li>
-      <li>B: <span class="color-block" style="background: #4F7CF8">#4F7CF8</span></li>
-    </ul>
-  </div>
-</div>
+```scss
+/* App.vue */
+page,
+.wd-root-portal {
+  --wot-primary-5: #4096ff;
+  --wot-primary-6: #1677ff;
+  --wot-primary-7: #0958d9;
+}
+```
 
-**品牌色-大渐变（大面积背景色/插件icon底色，渐变更强）**：
+## 局部自定义
+当你只希望主题在某个页面、某个模块或某个组件树内生效时，推荐使用 [ConfigProvider](/component/config-provider)。
 
-<div class="color-wrapper">
-  <span class="style-block liner-color liner-color1" style="background: linear-gradient(315deg, rgba(81,124,240,1) 0%,rgba(118,158,245,1) 100%);">
-    <span class="a-dot"></span>
-    <span class="b-dot"></span>
-  </span>
+```vue
+<script setup lang="ts">
+import { reactive } from 'vue'
+import type { ConfigProviderThemeVars } from '@wot-ui/ui'
 
-  <div class="demo-right">
-    <i>渐变倾斜角度45度右上角较浅，左下角较深</i>
-    <ul>
-      <li>A: <span class="color-block" style="background: #769EF5">#769EF5</span></li>
-      <li>B: <span class="color-block" style="background: #517CF0">#517CF0</span></li>
-    </ul>
-  </div>
-</div>
+const themeVars = reactive<ConfigProviderThemeVars>({
+  primary6: '#07c160',
+})
+</script>
 
-**功能色**：
+<template>
+  <wd-config-provider :theme-vars="themeVars">
+    <wd-button type="primary">提交</wd-button>
+  </wd-config-provider>
+</template>
+```
 
-<div class="style-block" style="background: #4D80F0;">
-  <p>Theme Color</p>
-  <p>$-color-theme: #4D80F0</p>
-</div>
-<div class="style-block" style="background: #34d19d;">
-  <p>Success Color</p>
-  <p>$-color-success: #34d19d</p>
-</div>
-<div class="style-block" style="background: #f0883a;">
-  <p>Warning Color</p>
-  <p>$-color-warning: #f0883a</p>
-</div>
-<div class="style-block" style="background: #fa4350;">
-  <p>Danger Color</p>
-  <p>$-color-danger: #fa4350</p>
-</div>
+### 组件级局部覆盖
 
-**辅助色**：
+如果你只想调整某个具体组件，也可以直接在类名作用域下覆盖组件变量：
 
-<div class="style-block" style="background: #8268de;">
-  <p>#8268de</p>
-</div>
-<div class="style-block" style="background: #fa4350;">
-  <p>#fa4350</p>
-</div>
-<div class="style-block" style="background: #f0883a;">
-  <p>#f0883a</p>
-</div>
-<div class="style-block" style="background: #f0cf1d;">
-  <p>#f0cf1d</p>
-</div>
-<div class="style-block" style="background: #34d19d;">
-  <p>#34d19d</p>
-</div>
-<div class="style-block" style="background: #2bb3ed;">
-  <p>#2bb3ed</p>
-</div>
+```css
+.marketing-banner {
+  --wot-button-primary-bg: #7c3aed;
+  --wot-button-primary-color: #ffffff;
+}
+```
 
-### 中性色
+## 预设主题
 
-中性色用于文本、背景和边框颜色。通过运用不同的中性色，来表现层次结构。
+如果你需要维护多套可复用主题，例如品牌 A、品牌 B，又或者想要动态切换主题，建议使用独立的 SCSS 主题文件来组织。
 
-<ul class="color-group">
-  <li class="color-group-line" style="background: rgba(0,0,0,1);color: #fff">100%<div>重要文字</div></li>
-  <li class="color-group-line" style="background: rgba(0,0,0,0.85);color: #fff">85%<div>普通文字</div></li>
-  <li class="color-group-line" style="background: rgba(0,0,0,0.65);color: #fff">65%<div>遮罩、次要文字<br/>仅在层级复杂时使用</div></li>
-  <li class="color-group-line" style="background: rgba(0,0,0,0.45);color: #fff">45%<div>辅助文字、次级按钮边框线</div></li>
-  <li class="color-group-line" style="background: rgba(0,0,0,0.25);color: rgba(0,0,0,0.65)">25%<div>失效、默认提示文字</div></li>
-  <li class="color-group-line" style="background: rgba(0,0,0,0.15);color: rgba(0,0,0,0.65)">15%<div>控件边框线</div></li>
-  <li class="color-group-line" style="background: rgba(0,0,0,0.09);color: rgba(0,0,0,0.65)">9%<div>若交叉使用则为实色#E8E8E8</div></li>
-  <li class="color-group-line" style="background: rgba(0,0,0,0.04);color: rgba(0,0,0,0.65)">4%<div>背景色、禁用填充色</div></li>
-  <li class="color-group-line" style="background: rgba(0,0,0,0.02);color: rgba(0,0,0,0.65)">2%<div>表头填充色</div></li>
-</ul>
+当前我们在 [src/theme/presets.scss](https://github.com/wot-ui/wot-ui/tree/main/src/theme/presets.scss) 中提供了多个主题的示例，包含 `shadcn`、`cartoon`、`illustration`、`nutui`、`vant`、`tdesign` 等主题。
+::: code-group
+```scss [css]
+/* src/theme/brand-a.scss */
+@mixin brand-a-theme-vars {
+  --wot-primary-1: #e8f3ff;
+  --wot-primary-2: #c7e0ff;
+  --wot-primary-6: #1677ff;
+  --wot-primary-7: #0958d9;
 
-<ul class="color-group dark">
-  <li class="color-group-line" style="background: rgba(255,255,255,1);color: rgba(0,0,0,0.65)">100%<div>重要文字</div></li>
-  <li class="color-group-line" style="background: rgba(255,255,255,0.85);color: rgba(0,0,0,0.65)">85%<div>普通文字</div></li>
-  <li class="color-group-line" style="background: rgba(255,255,255,0.65);color: rgba(0,0,0,0.65)">65%<div>遮罩、次要文字<br/>仅在层级复杂时使用</div></li>
-  <li class="color-group-line" style="background: rgba(255,255,255,0.45);color: rgba(255,255,255,0.65)">45%<div>辅助文字、次级按钮边框线</div></li>
-  <li class="color-group-line" style="background: rgba(255,255,255,0.25);color: rgba(255,255,255,0.65)">25%<div>失效、默认提示文字</div></li>
-  <li class="color-group-line" style="background: rgba(255,255,255,0.15);color: rgba(255,255,255,0.65)">15%<div>控件边框线</div></li>
-  <li class="color-group-line" style="background: rgba(255,255,255,0.09);color: rgba(255,255,255,0.65)">9%<div>若交叉使用则为实色#E8E8E8</div></li>
-  <li class="color-group-line" style="background: rgba(255,255,255,0.04);color: rgba(255,255,255,0.65)">4%<div>背景色、禁用填充色</div></li>
-  <li class="color-group-line" style="background: rgba(255,255,255,0.02);color: rgba(255,255,255,0.65)">2%<div>表头填充色</div></li>
-</ul>
+  --wot-text-main: #1d1f29;
+  --wot-text-secondary: #4e5369;
+  --wot-border-main: #e5e6eb;
+  --wot-filled-bottom: #f7f8fa;
+}
 
-## 定制主题
+.wot-theme-brand-a,
+.wot-theme-brand-a .wd-root-portal {
+  @include brand-a-theme-vars();
+}
+```
 
-我们为每个组件提供了`css 变量`，可以参考[config-provider](../component/config-provider)组件的使用介绍来定制主题。
+```scss [App.vue]
+/* App.vue */
+<!-- 在入口文件引入主题变量 -->
+@use './uni_modules/wot-design-uni/styles/theme/index.scss' as *;
+@use './theme/brand-a.scss' as *;
+```
+```html [config-provider]
+<!-- 在 `config-provider` 中配置主题变量 -->
+<template>
+  <wd-config-provider theme="brand-a">
+    <wd-button type="primary">提交</wd-button>
+  </wd-config-provider>
+</template>
+```
+:::
+
+### Skills
+如果你是 `vibe coding` 用户，我们也提供了 [Skills](https://github.com/wot-ui/wot-ui/tree/main/.agents/skills/generate-theme) 用于帮助开发者生成自定义主题，欢迎使用。
+
+
+## 相关文档
+
+- [ConfigProvider 全局配置](/component/config-provider)
+- [useConfigProvider](/component/use-config-provider)
+

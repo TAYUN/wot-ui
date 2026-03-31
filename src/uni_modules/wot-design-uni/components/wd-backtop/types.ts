@@ -1,5 +1,5 @@
 import type { ExtractPropTypes } from 'vue'
-import { baseProps, makeNumberProp, makeRequiredProp, makeStringProp } from '../common/props'
+import { baseProps, makeNumberProp, makeRequiredProp, makeStringProp } from '../../common/props'
 
 /**
  * 回到顶部按钮形状

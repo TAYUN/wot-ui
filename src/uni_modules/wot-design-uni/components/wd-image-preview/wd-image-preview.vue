@@ -62,7 +62,7 @@ import wdOverlay from '../wd-overlay/wd-overlay.vue'
 import wdSwiper from '../wd-swiper/wd-swiper.vue'
 import { imagePreviewProps, type ImagePreviewExpose, type ImagePreviewOptions } from './types'
 import { defaultOptions, getImagePreviewOptionKey, getImageUrl } from './index'
-import { isDef, isFunction } from '../common/util'
+import { isDef, isFunction } from '../../common/util'
 import { type SwiperItem } from '../wd-swiper/types'
 
 const props = defineProps(imagePreviewProps)

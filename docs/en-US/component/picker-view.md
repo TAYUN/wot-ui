@@ -162,9 +162,9 @@ const cascadeColumns = ref([
 
 | Parameter | Description | Type |
 |-----------|-------------|------|
-| selectedValues | Array of selected values from all columns | Array<string \| number> |
-| selectedOptions | Array of selected option objects from all columns | Array<PickerOption> |
-| selectedIndexes | Array of selected indexes from all columns | Array<number> |
+| selectedValues | Array of selected values from all columns | `Array<string \| number>` |
+| selectedOptions | Array of selected option objects from all columns | `Array<PickerOption>` |
+| selectedIndexes | Array of selected indexes from all columns | `Array<number>` |
 | columnIndex | Index of the column that changed (for single column, it's the selected item index) | number |
 
 ## External Classes

@@ -1,5 +1,5 @@
 import type { ComponentPublicInstance, ExtractPropTypes } from 'vue'
-import { baseProps, makeBooleanProp, makeNumberProp, makeStringProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeNumberProp, makeStringProp } from '../../common/props'
 
 /**
  * 主题类型

@@ -8,9 +8,9 @@
  * 记得注释
  */
 import type { ComponentPublicInstance, ExtractPropTypes, PropType } from 'vue'
-import { baseProps } from '../common/props'
+import { baseProps } from '../../common/props'
 
-import { makeStringProp, makeNumberProp } from '../common/props'
+import { makeStringProp, makeNumberProp } from '../../common/props'
 
 export const videoPreviewProps = {
   ...baseProps,

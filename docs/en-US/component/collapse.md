@@ -116,11 +116,11 @@ function beforeExpend(name) {
       'Q1: Seven-day no-reason return and exchange policy, all products can be returned or exchanged within 7 days (based on courier receipt) if they do not affect second-hand sales. Seven-day no-reason return and exchange policy, all products can be returned or exchanged within 7 days (based on courier receipt) if they do not affect second-hand sales. Seven-day no-reason return and exchange policy, all products can be returned or exchanged within 7 days (based on courier receipt) if they do not affect second-hand sales. Seven-day no-reason return and exchange policy, all products can be returned or exchanged within 7 days (based on courier receipt) if they do not affect second-hand sales. Seven-day no-reason return and exchange policy, all products can be returned or exchanged within 7 days (based on courier receipt) if they do not affect second-hand sales. Seven-day no-reason return and exchange policy, all products can be returned or exchanged within 7 days (based on courier receipt) if they do not affect second-hand sales.'
   }
 
-  return new Promise((reslove, reject) => {
+  return new Promise<boolean>((resolve) => {
     toast.loading('Loading')
     setTimeout(() => {
       toast.close()
-      reslove(true)
+      resolve(true)
     }, 500)
   })
 }

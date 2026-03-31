@@ -1,14 +1,14 @@
 /*
  * @Author: weisheng
  * @Date: 2024-03-18 11:22:03
- * @LastEditTime: 2026-01-19 17:26:39
+ * @LastEditTime: 2026-03-30 15:40:29
  * @LastEditors: weisheng
  * @Description:
  * @FilePath: /wot-design-uni/src/uni_modules/wot-design-uni/components/wd-popup/types.ts
  * 记得注释
  */
 import type { PropType } from 'vue'
-import { baseProps, makeBooleanProp, makeNumberProp, makeStringProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeNumberProp, makeStringProp } from '../../common/props'
 import type { TransitionName } from '../wd-transition/types'
 
 export type PopupType = 'center' | 'top' | 'right' | 'bottom' | 'left'
@@ -102,5 +102,9 @@ export const popupProps = {
    * 类型：boolean
    * 默认值：false
    */
-  rootPortal: makeBooleanProp(false)
+  rootPortal: makeBooleanProp(false),
+  /**
+   * 是否开启圆角,开启后根据弹出位置自动适配（底部弹出→上圆角，顶部弹出→下圆角，居中→四圆角）
+   */
+  round: makeBooleanProp(false)
 }

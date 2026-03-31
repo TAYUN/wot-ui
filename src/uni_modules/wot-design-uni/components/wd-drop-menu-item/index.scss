@@ -1,5 +1,5 @@
-@use '../styles/mixin/mixin.scss' as *;
-@use '../styles/variable.scss' as *;
+@use '../../styles/mixin/mixin.scss' as *;
+@use '../../styles/variable.scss' as *;
 
 // 选项内边距
 $drop-item-option-padding: var(--wot-drop-item-option-padding, $padding-loose) !default;
@@ -16,7 +16,7 @@ $drop-item-tip-line-height: var(--wot-drop-item-tip-line-height, $typography-bod
 // 提示文字间距
 $drop-item-tip-spacing: var(--wot-drop-item-tip-spacing, $spacing-tight) !default;
 // 勾选图标尺寸
-$drop-item-icon-size: var(--wot-drop-item-icon-size, $n20) !default;
+$drop-item-icon-size: var(--wot-drop-item-icon-size, $n-20) !default;
 // 勾选图标颜色
 $drop-item-icon-color: var(--wot-drop-item-icon-color, $primary-6) !default;
 // 遮罩层背景色
@@ -60,6 +60,10 @@ $drop-item-popup-border-top: var(--wot-drop-item-popup-border-top, $stroke-main 
         color: $drop-item-tip-color-active;
       }
     }
+  }
+
+  @include e(title){
+    text-align: left;
   }
 
   @include e(title-text) {

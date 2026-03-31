@@ -47,7 +47,8 @@ export default {
   cascader: {
     title: 'Sélectionner',
     placeholder: 'Sélectionner',
-    select: 'Sélectionner'
+    select: 'Sélectionner',
+    confirm: 'Confirmer'
   },
   datetimePicker: {
     start: 'Début',

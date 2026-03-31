@@ -30,54 +30,52 @@
       </view>
     </view>
 
-    <!-- 基本用法 -->
-    <demo-block title="基本用法">
-      <view class="button-group">
-        <wd-button type="primary" @click="startBasicTour">开始引导</wd-button>
-      </view>
-    </demo-block>
+    <demo-group title="组件类型">
+      <demo-group-item title="基本用法">
+        <view class="button-group">
+          <wd-button type="primary" @click="startBasicTour">开始引导</wd-button>
+        </view>
+      </demo-group-item>
+    </demo-group>
 
-    <!-- 点击蒙版继续 -->
-    <demo-block title="点击蒙版继续">
-      <view class="button-group">
-        <wd-button type="primary" @click="startMaskNextTour">点击蒙版继续</wd-button>
-      </view>
-    </demo-block>
+    <demo-group title="组件状态">
+      <demo-group-item title="点击蒙版继续">
+        <view class="button-group">
+          <wd-button type="primary" @click="startMaskNextTour">点击蒙版继续</wd-button>
+        </view>
+      </demo-group-item>
+      <demo-group-item title="关闭蒙版">
+        <view class="button-group">
+          <wd-button type="primary" @click="startNoMaskTour">关闭蒙版</wd-button>
+        </view>
+      </demo-group-item>
+    </demo-group>
 
-    <!-- 自定义蒙版 -->
-    <demo-block title="自定义蒙版">
-      <view class="button-group">
-        <wd-button type="primary" @click="startCustomMaskTour">自定义蒙版</wd-button>
-      </view>
-    </demo-block>
+    <demo-group title="组件样式">
+      <demo-group-item title="自定义蒙版">
+        <view class="button-group">
+          <wd-button type="primary" @click="startCustomMaskTour">自定义蒙版</wd-button>
+        </view>
+      </demo-group-item>
+      <demo-group-item title="自定义高亮区域">
+        <view class="button-group">
+          <wd-button type="primary" @click="startCustomHighlightTour">自定义高亮</wd-button>
+        </view>
+      </demo-group-item>
+      <demo-group-item title="自定义内容和按钮">
+        <view class="button-group">
+          <wd-button type="primary" @click="startCustomContentTour">自定义内容</wd-button>
+        </view>
+      </demo-group-item>
+    </demo-group>
 
-    <!-- 关闭蒙版 -->
-    <demo-block title="关闭蒙版">
-      <view class="button-group">
-        <wd-button type="primary" @click="startNoMaskTour">关闭蒙版</wd-button>
-      </view>
-    </demo-block>
-
-    <!-- 自定义高亮区域 -->
-    <demo-block title="自定义高亮区域">
-      <view class="button-group">
-        <wd-button type="primary" @click="startCustomHighlightTour">自定义高亮</wd-button>
-      </view>
-    </demo-block>
-
-    <!-- 自定义内容和按钮 -->
-    <demo-block title="自定义内容和按钮">
-      <view class="button-group">
-        <wd-button type="primary" @click="startCustomContentTour">自定义内容</wd-button>
-      </view>
-    </demo-block>
-
-    <!-- 控制当前步骤 -->
-    <demo-block title="控制当前步骤">
-      <view class="button-group">
-        <wd-button type="primary" @click="startControlTour">跳转到第三步开始引导</wd-button>
-      </view>
-    </demo-block>
+    <demo-group title="特殊样式">
+      <demo-group-item title="控制当前步骤">
+        <view class="button-group">
+          <wd-button type="primary" @click="startControlTour">跳转到第三步开始引导</wd-button>
+        </view>
+      </demo-group-item>
+    </demo-group>
 
     <!-- 基本用法组件 -->
     <wd-tour
@@ -177,7 +175,7 @@
 </template>
 
 <script lang="ts" setup>
-import { objToStyle } from '@/uni_modules/wot-design-uni/components/common/util'
+import { objToStyle } from '@/uni_modules/wot-design-uni/common/util'
 import { type TourChangeDetail } from '@/uni_modules/wot-design-uni/components/wd-tour/types'
 import { ref, watch, nextTick } from 'vue'
 

@@ -1,4 +1,4 @@
-import { useTranslate } from '@/uni_modules/wot-design-uni/components/composables/useTranslate'
+import { useTranslate } from '@/uni_modules/wot-design-uni/composables/useTranslate'
 import Locale from '@/uni_modules/wot-design-uni/locale'
 import enUS from '@/uni_modules/wot-design-uni/locale/lang/en-US'
 import viVN from '@/uni_modules/wot-design-uni/locale/lang/vi-VN'

@@ -1,32 +1,43 @@
 <template>
-  <wd-toast></wd-toast>
+  <wd-toast />
 
   <page-wraper>
-    <demo-block :title="$t('jiBenYongFa')" transparent>
-      <wd-cell-group border>
-        <wd-cell :title="$t('mo-ren-jian-pan')" is-link @click="showKeyBoard(1)" />
-        <wd-cell :title="$t('dai-you-ce-lan-de-jian-pan')" is-link @click="showKeyBoard(2)" />
-        <wd-cell :title="$t('shen-fen-zheng-jian-pan')" is-link @click="showKeyBoard(3)" />
-        <wd-cell :title="$t('dai-biao-ti-de-jian-pan')" is-link @click="showKeyBoard(4)" />
-        <wd-cell :title="$t('slot-zi-ding-yi-biao-ti')" is-link @click="showKeyBoard(9)" />
-        <wd-cell :title="$t('duo-geewai-an-jian')" is-link @click="showKeyBoard(5)" />
-        <wd-cell :title="$t('sui-ji-shu-zi-jian-pan')" is-link @click="showKeyBoard(6)" />
-        <wd-cell :title="$t('che-pai-hao-jian-pan-fei-shou-kong')" :value="value10" is-link @click="showKeyBoard(10)" />
-        <wd-cell :title="$t('che-pai-hao-jian-pan-shou-kong')" :value="value11" is-link @click="showKeyBoard(11)" />
-        <wd-cell :title="$t('shuang-xiang-bang-ding')" clickable :value="value1" @click="showKeyBoard(7)" />
-        <wd-cell :title="$t('zhan-shi-meng-ceng')" clickable @click="showKeyBoard(8)" />
-      </wd-cell-group>
-    </demo-block>
+    <view class="page-keyboard">
+      <demo-group title="组件类型" transparent>
+        <demo-group-item title="键盘类型" no-padding>
+          <wd-cell-group border>
+            <wd-cell :title="$t('mo-ren-jian-pan')" is-link @click="showKeyBoard(1)" />
+            <wd-cell :title="$t('dai-you-ce-lan-de-jian-pan')" is-link @click="showKeyBoard(2)" />
+            <wd-cell :title="$t('shen-fen-zheng-jian-pan')" is-link @click="showKeyBoard(3)" />
+            <wd-cell :title="$t('che-pai-hao-jian-pan-fei-shou-kong')" :value="value10" is-link @click="showKeyBoard(10)" />
+            <wd-cell :title="$t('che-pai-hao-jian-pan-shou-kong')" :value="value11" is-link @click="showKeyBoard(11)" />
+          </wd-cell-group>
+        </demo-group-item>
+      </demo-group>
 
-    <wd-keyboard v-model:visible="visible1" @input="onInput" @delete="onDelete"></wd-keyboard>
-    <wd-keyboard
-      v-model:visible="visible2"
-      mode="custom"
-      extra-key="."
-      :close-text="$t('wan-cheng')"
-      @input="onInput"
-      @delete="onDelete"
-    ></wd-keyboard>
+      <demo-group title="组件变体" transparent>
+        <demo-group-item title="标题与额外按键" no-padding>
+          <wd-cell-group border>
+            <wd-cell :title="$t('dai-biao-ti-de-jian-pan')" is-link @click="showKeyBoard(4)" />
+            <wd-cell :title="$t('slot-zi-ding-yi-biao-ti')" is-link @click="showKeyBoard(9)" />
+            <wd-cell :title="$t('duo-geewai-an-jian')" is-link @click="showKeyBoard(5)" />
+            <wd-cell :title="$t('sui-ji-shu-zi-jian-pan')" is-link @click="showKeyBoard(6)" />
+          </wd-cell-group>
+        </demo-group-item>
+      </demo-group>
+
+      <demo-group title="特殊用法" transparent>
+        <demo-group-item title="绑定与弹层" no-padding>
+          <wd-cell-group border>
+            <wd-cell :title="$t('shuang-xiang-bang-ding')" clickable :value="value1" @click="showKeyBoard(7)" />
+            <wd-cell :title="$t('zhan-shi-meng-ceng')" clickable @click="showKeyBoard(8)" />
+          </wd-cell-group>
+        </demo-group-item>
+      </demo-group>
+    </view>
+
+    <wd-keyboard v-model:visible="visible1" @input="onInput" @delete="onDelete" />
+    <wd-keyboard v-model:visible="visible2" mode="custom" extra-key="." :close-text="$t('wan-cheng')" @input="onInput" @delete="onDelete" />
     <wd-keyboard v-model:visible="visible3" extra-key="X" :close-text="$t('wan-cheng')" @input="onInput" @delete="onDelete" />
     <wd-keyboard
       v-model:visible="visible4"
@@ -35,10 +46,10 @@
       :close-text="$t('wan-cheng')"
       @input="onInput"
       @delete="onDelete"
-    ></wd-keyboard>
+    />
     <wd-keyboard v-model:visible="visible9" extra-key="." :close-text="$t('wan-cheng')" @input="onInput" @delete="onDelete">
       <template #title>
-        <text style="color: red">{{ $t('zi-ding-yi-biao-ti') }}</text>
+        <text class="page-keyboard__custom-title">{{ $t('zi-ding-yi-biao-ti') }}</text>
       </template>
     </wd-keyboard>
 
@@ -62,7 +73,7 @@
       :close-text="$t('wan-cheng')"
       @input="onInput"
       @delete="onDelete"
-    ></wd-keyboard>
+    />
 
     <wd-keyboard :modal="true" v-model:visible="visible8" @input="onInput" @delete="onDelete" />
 
@@ -101,4 +112,14 @@ function showKeyBoard(index: number) {
 const onInput = (value: string) => showToast(`${value}`)
 const onDelete = () => showToast(t('shan-chu'))
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.page-keyboard {
+  :deep(.demo-group-item__content) {
+    overflow: hidden;
+  }
+}
+
+.page-keyboard__custom-title {
+  color: #ee0a24;
+}
+</style>

@@ -1,23 +1,29 @@
 <template>
   <page-meta :page-style="`overflow:${show ? 'hidden' : 'visible'};`"></page-meta>
-  <view>
+  <view class="page-overlay">
     <page-wraper>
-      <demo-block :title="$t('ji-chu-yong-fa-0')">
-        <wd-button type="primary" @click="show = true">{{ $t('xian-shi-zhe-zhao-ceng') }}</wd-button>
-      </demo-block>
+      <demo-group title="组件类型">
+        <demo-group-item :title="$t('jiBenYongFa')">
+          <wd-button type="primary" @click="show = true">{{ $t('xian-shi-zhe-zhao-ceng') }}</wd-button>
+        </demo-group-item>
+      </demo-group>
 
-      <demo-block :title="$t('qian-ru-nei-rong')">
-        <wd-button type="primary" @click="show1 = true">{{ $t('qian-ru-nei-rong-0') }}</wd-button>
-      </demo-block>
+      <demo-group title="特殊样式">
+        <demo-group-item :title="$t('qian-ru-nei-rong-0')">
+          <wd-button type="primary" @click="show1 = true">{{ $t('qian-ru-nei-rong-0') }}</wd-button>
+        </demo-group-item>
+      </demo-group>
     </page-wraper>
+
     <wd-overlay :show="show" @click="show = false" />
 
     <wd-overlay :show="show1" @click="show1 = false" :lock-scroll="lockScroll">
       <view class="wrapper">
         <view class="content" @click.stop="">
-          <demo-block title="是否锁定背景滚动，锁定时蒙层里的内容也将无法滚动" transparent>
+          <view class="lock-scroll-row">
+            <view class="lock-scroll-text">是否锁定背景滚动，锁定时蒙层里的内容也将无法滚动</view>
             <wd-switch v-model="lockScroll" size="22px" />
-          </demo-block>
+          </view>
           <view class="scroll">
             <view class="block" v-for="i in 10" :key="i" @click.stop="">{{ i }}</view>
           </view>
@@ -45,12 +51,27 @@ const lockScroll = ref<boolean>(true)
 .content {
   background-color: #fff;
   border-radius: 12px;
+  padding: 16px;
 }
 
 .scroll {
+  margin-top: 12px;
   height: 50vh;
   overflow-y: auto;
   width: 300px;
+}
+
+.lock-scroll-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.lock-scroll-text {
+  font-size: 14px;
+  line-height: 20px;
+  color: #333;
 }
 
 .block {

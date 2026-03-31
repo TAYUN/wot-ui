@@ -1,13 +1,5 @@
-/*
- * @Author: weisheng
- * @Date: 2025-12-30
- * @LastEditTime: 2026-01-16 14:13:18
- * @LastEditors: weisheng
- * @Description: Avatar 头像组件类型定义
- * @FilePath: /wot-design-uni/src/uni_modules/wot-design-uni/components/wd-avatar/types.ts
- */
 import type { ExtractPropTypes, PropType } from 'vue'
-import { baseProps, makeStringProp } from '../common/props'
+import { baseProps, makeStringProp } from '../../common/props'
 import type { ImageMode } from '../wd-img/types'
 
 /**

@@ -1,7 +1,7 @@
 import { computed, ref } from 'vue'
-import { getType, isArray, isDef, range, isObj, deepClone } from '../common/util'
+import { getType, isArray, isDef, range, isObj, deepClone } from '../../common/util'
 import type { PickerOption } from './types'
-import { type Numeric } from '../common/props'
+import { type Numeric } from '../../common/props'
 
 /**
  * 格式化传入的列数据

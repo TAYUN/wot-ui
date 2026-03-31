@@ -2,7 +2,9 @@
 
 用来打开或关闭选项。
 
-## 基本用法
+## 组件类型
+
+### 基本用法
 
 `v-model` 为绑定值，默认为 boolean 类型。
 
@@ -10,11 +12,11 @@
 <wd-switch v-model="checked" />
 ```
 
-```typescript
+```ts
 const checked = ref<boolean>(true)
 ```
 
-## 修改值
+### 修改值
 
 通过 `active-value` 属性修改开关打开时的值，`inactive-value` 属性修改开关关闭时的值。
 
@@ -22,7 +24,27 @@ const checked = ref<boolean>(true)
 <wd-switch v-model="checked" active-value="沃特" inactive-value="商家后台" />
 ```
 
-## 修改颜色
+## 组件状态
+
+### 加载状态
+
+设置 `loading` 显示加载状态。
+
+```html
+<wd-switch v-model="checked" loading active-text="上班" inactive-text="下班" />
+```
+
+### 禁用状态
+
+设置 `disabled` 禁用开关。
+
+```html
+<wd-switch v-model="checked" disabled />
+```
+
+## 组件样式
+
+### 修改颜色
 
 通过 `active-color` 属性修改开关打开时的颜色，`inactive-color` 属性修改开关关闭时的颜色。
 
@@ -30,7 +52,40 @@ const checked = ref<boolean>(true)
 <wd-switch v-model="checked" active-color="#13ce66" inactive-color="#f00" />
 ```
 
-## 自定义大小
+### 文字描述
+
+通过 `active-text` 和 `inactive-text` 设置开关内文案。
+
+```html
+<wd-switch v-model="checked" active-text="上班" inactive-text="下班" />
+```
+
+### 自定义显示图标
+
+通过 `active-icon` 和 `inactive-icon` 自定义开关内部图标。
+
+```html
+<wd-switch v-model="checked" active-icon="check" inactive-icon="close" />
+```
+
+### 自定义动作图标
+
+通过 `active-action-icon` 和 `inactive-action-icon` 自定义按钮图标。
+
+```html
+<wd-switch v-model="checked" active-action-icon="check" inactive-action-icon="close" />
+```
+
+### 形状
+
+通过 `shape` 设置形状，可选值为 `round`、`square`。
+
+```html
+<wd-switch v-model="checked" shape="round" />
+<wd-switch v-model="checked" shape="square" />
+```
+
+### 自定义大小
 
 设置 `size` 修改开关大小。
 
@@ -38,56 +93,68 @@ const checked = ref<boolean>(true)
 <wd-switch v-model="checked" size="24px" />
 ```
 
-## 禁用
+## 特殊样式
 
-设置 `disabled` 属性。
+### 搭配表单使用
 
-## 修改前钩子
+可以放入表单项中作为右侧操作控件。
 
-设置 `before-change` 属性，修改前钩子，接收 { value, resolve } 参数，`resolve(true)` 表示修改通过，`resolve(false)` 表示不修改。
+```html
+<wd-form-item title="搭配表单使用" center>
+  <wd-switch v-model="checked" size="20" />
+</wd-form-item>
+```
+
+### 修改前钩子
+
+设置 `before-change` 属性，修改前钩子，接收目标 `value`，返回 `false` 表示不修改，支持返回 `Promise<boolean>`。
 
 ```html
 <wd-switch v-model="checked" :before-change="beforeChange" @change="handleChange" />
 ```
 
-```typescript
-import { useMessage } from '@/uni_modules/wot-design-uni'
+```ts
+import { useDialog } from '@/uni_modules/wot-design-uni'
 
-const message = useMessage()
+const message = useDialog()
 
-const beforeChange = ({ value, resolve }) => {
-  message
-    .confirm('是否切换开关')
-    .then(() => {
-      resolve(true)
-    })
-    .catch(() => {
-      resolve(false)
-    })
+const beforeChange = (value) => {
+  return message.confirm('是否切换开关').then(() => true).catch(() => false)
 }
 ```
 
 ## Attributes
 
-| 参数 | 说明 | 类型 | 可选值 | 默认值 | 最低版本 |
-|-----|------|-----|-------|-------|---------|
-| v-model |	绑定值 |	boolean / string / number | - |	-  | - |
-| disabled | 禁用 | boolean | - | false | - |
-| active-value | 打开时的值 | boolean / string / number | - | true | - |
-| inactive-value | 关闭时的值 | boolean / string / number | - | false | - |
-| active-color | 打开时的背景色 | string | - | #4D80F0 | - |
-| inactive-color | 关闭时的背景色，默认为白色，所以有灰色边框，如果设置了该值，则会自动去除灰色边框 | string | - | #fff | - |
-| size | 开关大小，可以为任何单位的字符串尺寸 | string/number | - | 28px | - |
-| before-change | 修改前钩子 | function | - | - | - |
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| model-value / v-model | 绑定值 | boolean / string / number | `false` |
+| disabled | 是否禁用 | boolean | `false` |
+| inactive-action-icon | 非激活状态操作按钮图标 | string | - |
+| active-action-icon | 激活状态操作按钮图标 | string | - |
+| active-icon | 激活状态图标，设置后会忽略 `active-text` | string | - |
+| inactive-icon | 非激活状态图标，设置后会忽略 `inactive-text` | string | - |
+| active-text | 激活状态文本 | string | `''` |
+| inactive-text | 非激活状态文本 | string | `''` |
+| active-value | 激活值 | boolean / string / number | `true` |
+| inactive-value | 非激活值 | boolean / string / number | `false` |
+| active-color | 激活颜色 | string | - |
+| inactive-color | 非激活颜色 | string | - |
+| size | 开关大小 | string / number | - |
+| shape | 形状，可选值为 `round`、`square` | `SwitchShape` | `round` |
+| loading | 是否显示加载中 | boolean | `false` |
+| loading-props | 加载配置项 | `Partial<LoadingProps>` | - |
+| before-change | 修改前钩子 | `SwitchBeforeChange` | - |
+| class-prefix | 图标类名前缀 | string | `wd-icon` |
 
 ## Events
 
-| 事件名称 | 说明 | 参数 | 最低版本 |
-|--------|------|-----|---------|
-| change | 值修改事件 | `{ value }` | - |
+| 事件名称 | 说明 | 参数 |
+| --- | --- | --- |
+| change | 值修改事件 | `{ value }` |
 
 ## 外部样式类
 
-| 类名 | 说明 | 最低版本 |
-|-----|-----|---------|
-| custom-class | 根节点样式 | - |
+| 类名 | 说明 |
+| --- | --- |
+| custom-class | 根节点样式类 |
+| custom-style | 根节点样式 |

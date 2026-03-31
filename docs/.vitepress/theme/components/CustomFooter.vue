@@ -1,7 +1,7 @@
 <!--
  * @Author: weisheng
  * @Date: 2025-05-08 22:54:27
- * @LastEditTime: 2025-08-28 13:04:43
+ * @LastEditTime: 2026-03-27 12:38:07
  * @LastEditors: weisheng
  * @Description: 
  * @FilePath: /wot-design-uni/docs/.vitepress/theme/components/CustomFooter.vue
@@ -10,10 +10,10 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import { useData} from 'vitepress'
-import { useSidebar } from 'vitepress/theme'
+import { useLayout } from 'vitepress/theme'
 
 const { theme }:any = useData()
-const { hasSidebar } = useSidebar()
+const { hasSidebar } = useLayout()
 
 const isNetlify = ref<boolean>(false)
 const isWotUiDomain = ref<boolean>(false)

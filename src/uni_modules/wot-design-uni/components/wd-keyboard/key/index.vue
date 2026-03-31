@@ -33,7 +33,7 @@ export default {
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
-import { useTouch } from '../../composables/useTouch'
+import { useTouch } from '../../../composables/useTouch'
 import { keyProps } from './types'
 
 const props = defineProps(keyProps)

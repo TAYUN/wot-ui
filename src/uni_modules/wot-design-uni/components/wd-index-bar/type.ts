@@ -1,6 +1,6 @@
 import type { InjectionKey } from 'vue'
 import type { ExtractPropTypes } from 'vue'
-import { makeBooleanProp } from '../common/props'
+import { makeBooleanProp } from '../../common/props'
 
 export type AnchorIndex = number | string
 

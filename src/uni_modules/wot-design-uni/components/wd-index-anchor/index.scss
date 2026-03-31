@@ -1,5 +1,5 @@
-@use '../styles/mixin/mixin.scss' as *;
-@use '../styles/variable.scss' as *;
+@use '../../styles/mixin/mixin.scss' as *;
+@use '../../styles/variable.scss' as *;
 
 $index-anchor-bg: var(--wot-index-anchor-bg, $filled-bottom) !default;
 $index-anchor-padding: var(--wot-index-anchor-padding, $padding-main) !default;

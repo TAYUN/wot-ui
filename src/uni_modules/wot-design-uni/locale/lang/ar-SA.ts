@@ -55,7 +55,8 @@ export default {
   cascader: {
     title: 'حدد لون',
     placeholder: 'حدد لون',
-    select: 'حدد'
+    select: 'حدد',
+    confirm: 'تأكيد'
   },
   loadmore: {
     loading: 'جارٍ التحميل...',

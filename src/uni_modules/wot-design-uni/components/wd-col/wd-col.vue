@@ -19,10 +19,10 @@ export default {
 
 <script lang="ts" setup>
 import { computed, watch } from 'vue'
-import { useParent } from '../composables/useParent'
+import { useParent } from '../../composables/useParent'
 import { ROW_KEY } from '../wd-row/types'
 import { colProps } from './types'
-import { isDef } from '../common/util'
+import { isDef } from '../../common/util'
 
 const props = defineProps(colProps)
 const { parent: row } = useParent(ROW_KEY)

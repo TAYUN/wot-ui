@@ -1,136 +1,137 @@
 <template>
   <page-wraper>
     <wd-toast />
-    <demo-block :title="$t('jiBenYongFa')" transparent>
-      <wd-tabs v-model="tab1" @change="handleChange">
-        <block v-for="item in 4" :key="item">
-          <wd-tab :title="$t('biao-qian-item') + item">
-            <view class="content">
-              {{ $t('nei-rong') }}{{ tab1 + 1 }}
-              <view>
-                <wd-button @click="tab1 < 3 ? tab1++ : (tab1 = 0)">{{ $t('xia-yi-ge') }}</wd-button>
-              </view>
-            </view>
-          </wd-tab>
-        </block>
-      </wd-tabs>
-    </demo-block>
-    <demo-block :title="$t('name-pi-pei')" transparent>
-      <wd-tabs v-model="tab" @change="handleChange">
-        <block v-for="item in tabs" :key="item">
-          <wd-tab :title="item" :name="item">
-            <view class="content">{{ $t('nei-rong') }}{{ tab }}</view>
-          </wd-tab>
-        </block>
-      </wd-tabs>
-    </demo-block>
 
-    <demo-block :title="$t('shi-yong-hui-biao')" transparent>
-      <wd-tabs v-model="tabWithBadge" @change="handleChange">
-        <wd-tab v-for="(item, index) in tabsWithBadge" :key="index" :title="item.title" :badge-props="item.badgeProps">
-          <view class="content">{{ item.title + $t('itemtitle-hui-biao') }}</view>
-        </wd-tab>
-      </wd-tabs>
-    </demo-block>
-
-    <demo-block title="底部条样式" transparent>
-      <view v-for="theme in lineThemes" :key="theme" style="margin-bottom: 20px">
-        <view style="margin-bottom: 10px; padding-left: 15px; font-size: 14px; color: #666">Theme: {{ theme }}</view>
-        <wd-tabs v-model="tabLineTheme[theme]" :line-theme="theme" @change="handleChange">
+    <demo-group transparent title="组件类型">
+      <demo-group-item no-padding :title="$t('jiBenYongFa')">
+        <wd-tabs v-model="tab1" @change="handleChange">
           <block v-for="item in 4" :key="item">
-            <wd-tab :title="`${theme} ${item}`">
-              <view class="content">{{ $t('nei-rong') }}{{ item }}</view>
+            <wd-tab :title="$t('biao-qian-item') + item">
+              <view class="content">
+                {{ $t('nei-rong') }}{{ tab1 + 1 }}
+                <view>
+                  <wd-button @click="tab1 < 3 ? tab1++ : (tab1 = 0)">{{ $t('xia-yi-ge') }}</wd-button>
+                </view>
+              </view>
             </wd-tab>
           </block>
         </wd-tabs>
-      </view>
-    </demo-block>
-
-    <demo-block :title="$t('nian-xing-bu-ju')" transparent>
-      <wd-tabs v-model="tab2" sticky @change="handleChange">
-        <block v-for="item in 4" :key="item">
-          <wd-tab :title="$t('biao-qian-item') + item">
-            <view class="content">{{ $t('nei-rong') }}{{ tab2 + 1 }}</view>
+      </demo-group-item>
+      <demo-group-item no-padding :title="$t('name-pi-pei')">
+        <wd-tabs v-model="tab" @change="handleChange">
+          <block v-for="item in tabs" :key="item">
+            <wd-tab :title="item" :name="item">
+              <view class="content">{{ $t('nei-rong') }}{{ tab }}</view>
+            </wd-tab>
+          </block>
+        </wd-tabs>
+      </demo-group-item>
+      <demo-group-item no-padding :title="$t('shi-yong-hui-biao')">
+        <wd-tabs v-model="tabWithBadge" @change="handleChange">
+          <wd-tab v-for="(item, index) in tabsWithBadge" :key="index" :title="item.title" :badge-props="item.badgeProps">
+            <view class="content">{{ item.title + $t('itemtitle-hui-biao') }}</view>
           </wd-tab>
-        </block>
-      </wd-tabs>
-    </demo-block>
+        </wd-tabs>
+      </demo-group-item>
+    </demo-group>
 
-    <demo-block :title="$t('jin-yong-tab')" transparent>
-      <wd-tabs v-model="tab3" @change="handleChange">
-        <block v-for="item in 4" :key="item">
-          <wd-tab :title="$t('biao-qian-item') + item" :disabled="item === 1">
-            <view class="content">{{ $t('nei-rong') }}{{ tab3 + 1 }}</view>
-          </wd-tab>
-        </block>
-      </wd-tabs>
-    </demo-block>
+    <demo-group transparent title="组件状态">
+      <demo-group-item no-padding :title="$t('nian-xing-bu-ju')">
+        <wd-tabs v-model="tab2" sticky @change="handleChange">
+          <block v-for="item in 4" :key="item">
+            <wd-tab :title="$t('biao-qian-item') + item">
+              <view class="content">{{ $t('nei-rong') }}{{ tab2 + 1 }}</view>
+            </wd-tab>
+          </block>
+        </wd-tabs>
+      </demo-group-item>
+      <demo-group-item no-padding :title="$t('jin-yong-tab')">
+        <wd-tabs v-model="tab3" @change="handleChange">
+          <block v-for="item in 4" :key="item">
+            <wd-tab :title="$t('biao-qian-item') + item" :disabled="item === 1">
+              <view class="content">{{ $t('nei-rong') }}{{ tab3 + 1 }}</view>
+            </wd-tab>
+          </block>
+        </wd-tabs>
+      </demo-group-item>
+    </demo-group>
 
-    <demo-block :title="$t('dian-ji-shi-jian')" transparent>
-      <wd-tabs v-model="tab4" @click="handleClick" @change="handleChange">
-        <block v-for="item in 4" :key="item">
-          <wd-tab :title="$t('biao-qian-item') + item">
-            <view class="content">{{ $t('nei-rong') }}{{ tab4 + 1 }}</view>
-          </wd-tab>
-        </block>
-      </wd-tabs>
-    </demo-block>
+    <demo-group transparent title="组件样式">
+      <demo-group-item no-padding title="底部条样式">
+        <view v-for="theme in lineThemes" :key="theme" class="tabs-theme-item">
+          <view class="tabs-theme-item__label">Theme: {{ theme }}</view>
+          <wd-tabs v-model="tabLineTheme[theme]" :line-theme="theme" @change="handleChange">
+            <block v-for="item in 4" :key="item">
+              <wd-tab :title="`${theme} ${item}`">
+                <view class="content">{{ $t('nei-rong') }}{{ item }}</view>
+              </wd-tab>
+            </block>
+          </wd-tabs>
+        </view>
+      </demo-group-item>
+    </demo-group>
 
-    <demo-block :title="$t('qie-huan-dong-hua')" transparent>
-      <wd-tabs v-model="tab8" animated @change="handleChange">
-        <block v-for="item in 4" :key="item">
-          <wd-tab :title="$t('biao-qian-item') + item">
-            <view class="content">{{ $t('nei-rong') }}{{ tab8 + 1 }}</view>
-          </wd-tab>
-        </block>
-      </wd-tabs>
-    </demo-block>
-
-    <demo-block :title="$t('shou-shi-hua-dong')" transparent>
-      <wd-tabs v-model="tab5" swipeable animated @change="handleChange">
-        <block v-for="item in 4" :key="item">
-          <wd-tab :title="$t('biao-qian-item') + item">
-            <view class="content">{{ $t('nei-rong') }}{{ tab5 + 1 }}</view>
-          </wd-tab>
-        </block>
-      </wd-tabs>
-    </demo-block>
-
-    <demo-block :title="$t('shu-liang-da-yu-6-shi-ke-gun-dong')" transparent>
-      <wd-tabs v-model="tab6" @change="handleChange">
-        <block v-for="item in 7" :key="item">
-          <wd-tab :title="$t('biao-qian-item') + item">
-            <view class="content">{{ $t('nei-rong') }}{{ tab6 + 1 }}</view>
-          </wd-tab>
-        </block>
-      </wd-tabs>
-    </demo-block>
-
-    <demo-block :title="$t('zuo-dui-qi-chao-chu-ji-ke-gun-dong')" transparent>
-      <wd-tabs v-model="tab9" slidable="always" @change="handleChange">
-        <block v-for="item in 5" :key="item">
-          <wd-tab :title="$t('chao-da-biao-qian-item') + item">
-            <view class="content">{{ $t('nei-rong') }}{{ tab9 + 1 }}</view>
-          </wd-tab>
-        </block>
-      </wd-tabs>
-    </demo-block>
-
-    <demo-block :title="$t('shu-liang-da-yu-10-shi-chu-xian-dao-hang-di-tu')" transparent>
-      <wd-tabs v-model="tab7" @change="handleChange">
-        <block v-for="item in 11" :key="item">
-          <wd-tab :title="$t('biao-qian-item') + item">
-            <view class="large">{{ $t('nei-rong') }}{{ tab7 + 1 }}</view>
-          </wd-tab>
-        </block>
-      </wd-tabs>
-    </demo-block>
-
-    <demo-block :title="$t('zai-dan-chu-kuang-zhong-shi-yong-0')">
-      <view class="section">
-        <wd-button @click="handleOpenClick">{{ $t('da-kai-dan-chuang') }}</wd-button>
-      </view>
-    </demo-block>
+    <demo-group transparent title="特殊样式">
+      <demo-group-item no-padding :title="$t('dian-ji-shi-jian')">
+        <wd-tabs v-model="tab4" @click="handleClick" @change="handleChange">
+          <block v-for="item in 4" :key="item">
+            <wd-tab :title="$t('biao-qian-item') + item">
+              <view class="content">{{ $t('nei-rong') }}{{ tab4 + 1 }}</view>
+            </wd-tab>
+          </block>
+        </wd-tabs>
+      </demo-group-item>
+      <demo-group-item no-padding :title="$t('qie-huan-dong-hua')">
+        <wd-tabs v-model="tab8" animated @change="handleChange">
+          <block v-for="item in 4" :key="item">
+            <wd-tab :title="$t('biao-qian-item') + item">
+              <view class="content">{{ $t('nei-rong') }}{{ tab8 + 1 }}</view>
+            </wd-tab>
+          </block>
+        </wd-tabs>
+      </demo-group-item>
+      <demo-group-item no-padding :title="$t('shou-shi-hua-dong')">
+        <wd-tabs v-model="tab5" swipeable animated @change="handleChange">
+          <block v-for="item in 4" :key="item">
+            <wd-tab :title="$t('biao-qian-item') + item">
+              <view class="content">{{ $t('nei-rong') }}{{ tab5 + 1 }}</view>
+            </wd-tab>
+          </block>
+        </wd-tabs>
+      </demo-group-item>
+      <demo-group-item no-padding :title="$t('shu-liang-da-yu-6-shi-ke-gun-dong')">
+        <wd-tabs v-model="tab6" @change="handleChange">
+          <block v-for="item in 7" :key="item">
+            <wd-tab :title="$t('biao-qian-item') + item">
+              <view class="content">{{ $t('nei-rong') }}{{ tab6 + 1 }}</view>
+            </wd-tab>
+          </block>
+        </wd-tabs>
+      </demo-group-item>
+      <demo-group-item no-padding :title="$t('zuo-dui-qi-chao-chu-ji-ke-gun-dong')">
+        <wd-tabs v-model="tab9" slidable="always" @change="handleChange">
+          <block v-for="item in 5" :key="item">
+            <wd-tab :title="$t('chao-da-biao-qian-item') + item">
+              <view class="content">{{ $t('nei-rong') }}{{ tab9 + 1 }}</view>
+            </wd-tab>
+          </block>
+        </wd-tabs>
+      </demo-group-item>
+      <demo-group-item no-padding :title="$t('shu-liang-da-yu-10-shi-chu-xian-dao-hang-di-tu')">
+        <wd-tabs v-model="tab7" @change="handleChange">
+          <block v-for="item in 11" :key="item">
+            <wd-tab :title="$t('biao-qian-item') + item">
+              <view class="large">{{ $t('nei-rong') }}{{ tab7 + 1 }}</view>
+            </wd-tab>
+          </block>
+        </wd-tabs>
+      </demo-group-item>
+      <demo-group-item no-padding :title="$t('zai-dan-chu-kuang-zhong-shi-yong-0')">
+        <view class="section">
+          <wd-button @click="handleOpenClick">{{ $t('da-kai-dan-chuang') }}</wd-button>
+        </view>
+      </demo-group-item>
+    </demo-group>
 
     <wd-popup v-model="showPopup" position="bottom" safe-area-inset-bottom @after-enter="handlePopupShow" closable custom-style="padding: 0 24rpx;">
       <view class="title">{{ $t('zai-dan-chu-kuang-zhong-shi-yong-0') }}</view>
@@ -227,6 +228,17 @@ function handlePopupShow() {
 }
 </script>
 <style lang="scss" scoped>
+.tabs-theme-item {
+  margin-bottom: 20px;
+
+  &__label {
+    margin-bottom: 10px;
+    padding-left: 15px;
+    font-size: 14px;
+    color: #666;
+  }
+}
+
 .content {
   height: 120px;
   text-align: center;

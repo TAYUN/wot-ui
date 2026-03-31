@@ -143,11 +143,11 @@ import wdIcon from '../wd-icon/wd-icon.vue'
 import wdSticky from '../wd-sticky/wd-sticky.vue'
 import wdStickyBox from '../wd-sticky-box/wd-sticky-box.vue'
 import { computed, getCurrentInstance, onMounted, watch, nextTick, reactive, type CSSProperties, type ComponentInstance } from 'vue'
-import { addUnit, checkNumRange, debounce, getRect, isDef, isNumber, isString, objToStyle } from '../common/util'
-import { useTouch } from '../composables/useTouch'
+import { addUnit, checkNumRange, debounce, getRect, isDef, isNumber, isString, objToStyle } from '../../common/util'
+import { useTouch } from '../../composables/useTouch'
 import { TABS_KEY, tabsProps, type TabsExpose } from './types'
-import { useChildren } from '../composables/useChildren'
-import { useTranslate } from '../composables/useTranslate'
+import { useChildren } from '../../composables/useChildren'
+import { useTranslate } from '../../composables/useTranslate'
 
 const $item = '.wd-tabs__nav-item'
 const $itemText = '.wd-tabs__nav-item-text'
@@ -297,28 +297,6 @@ const setActive = debounce(updateActive, 100, { leading: true })
 watch(
   () => props.modelValue,
   (newValue) => {
-    if (!isNumber(newValue) && !isString(newValue)) {
-      console.error('[wot ui] error(wd-tabs): the type of value should be number or string')
-    }
-    // 保证不为非空字符串，小于0的数字
-    if (newValue === '' || !isDef(newValue)) {
-      // eslint-disable-next-line quotes
-      console.error("[wot ui] error(wd-tabs): tabs's value cannot be '' null or undefined")
-    }
-    if (typeof newValue === 'number' && newValue < 0) {
-      // eslint-disable-next-line quotes
-      console.error("[wot ui] error(wd-tabs): tabs's value cannot be less than zero")
-    }
-  },
-  {
-    immediate: true,
-    deep: true
-  }
-)
-
-watch(
-  () => props.modelValue,
-  (newValue) => {
     const index = getActiveIndex(newValue)
     setActive(newValue, false, index !== state.activeIndex)
   },
@@ -328,16 +306,16 @@ watch(
   }
 )
 
-watch(
-  () => children.length,
-  () => {
-    if (state.inited) {
-      nextTick(() => {
-        // setActive(props.modelValue)
-      })
-    }
-  }
-)
+// watch(
+//   () => children.length,
+//   () => {
+//     if (state.inited) {
+//       nextTick(() => {
+//         // setActive(props.modelValue)
+//       })
+//     }
+//   }
+// )
 
 watch(
   () => props.slidableNum,

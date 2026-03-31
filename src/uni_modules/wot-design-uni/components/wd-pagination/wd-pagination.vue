@@ -61,7 +61,7 @@ export default {
 <script lang="ts" setup>
 import wdButton from '../wd-button/wd-button.vue'
 import { ref, watch } from 'vue'
-import { useTranslate } from '../composables/useTranslate'
+import { useTranslate } from '../../composables/useTranslate'
 import { paginationProps } from './types'
 
 const { translate } = useTranslate('pagination')

@@ -7,7 +7,7 @@ describe('WdOverlay', () => {
   // 测试基本渲染
   test('基本渲染', () => {
     const wrapper = mount(WdOverlay)
-    expect(wrapper.findComponent({ name: 'wd-transition' }).props('customClass')).toBe('wd-overlay')
+    expect(wrapper.findComponent({ name: 'wd-transition' }).props('customClass').trim()).toBe('wd-overlay')
   })
 
   // 测试显示和隐藏

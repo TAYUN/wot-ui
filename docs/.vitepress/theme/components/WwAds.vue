@@ -52,12 +52,12 @@ onMounted(() => {
 .wwads-container, .aside-temp {
   padding: 1px 15px 10px;
   margin-top: 20px;
-  background-color: var(--vt-c-bg-soft);
+  background-color: var(--vp-c-bg-soft);
 }
 .wwads-vertical {
   background-color: transparent !important;
 }
 .wwads-text {
-  color: var(--vt-c-text-2) !important;
+  color: var(--vp-c-text-2) !important;
 }
 </style>

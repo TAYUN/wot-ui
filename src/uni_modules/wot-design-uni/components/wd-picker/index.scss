@@ -1,8 +1,8 @@
-@use '../styles/mixin/mixin.scss' as *;
-@use '../styles/variable.scss' as *;
+@use '../../styles/mixin/mixin.scss' as *;
+@use '../../styles/variable.scss' as *;
 
 // 选择器工具栏高度
-$picker-toolbar-height: var(--wot-picker-toolbar-height, $n44) !default;
+$picker-toolbar-height: var(--wot-picker-toolbar-height, $n-44) !default;
 // 选择器背景色
 $picker-bg: var(--wot-picker-bg, $filled-oppo) !default;
 // 确认按钮文字颜色

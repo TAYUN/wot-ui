@@ -1,5 +1,5 @@
 import type { ComponentPublicInstance, ExtractPropTypes, PropType } from 'vue'
-import { baseProps, numericProp } from '../common/props'
+import { baseProps, numericProp } from '../../common/props'
 
 export const signatureProps = {
   ...baseProps,

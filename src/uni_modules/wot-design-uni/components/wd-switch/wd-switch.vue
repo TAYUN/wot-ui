@@ -25,7 +25,8 @@ export default {
 
 <script lang="ts" setup>
 import { computed, type CSSProperties, onBeforeMount } from 'vue'
-import { addUnit, isDef, isFunction, isUndefined, objToStyle, omitBy } from '../common/util'
+import { callInterceptor } from '../../common/interceptor'
+import { addUnit, isDef, isUndefined, objToStyle, omitBy } from '../../common/util'
 import { switchProps } from './types'
 import { type LoadingProps } from '../wd-loading/types'
 
@@ -79,25 +80,17 @@ const customLoadingProps = computed<Partial<LoadingProps>>(() => {
 function switchValue() {
   if (props.disabled || props.loading) return
   const newVal = isActive.value ? props.inactiveValue : props.activeValue
-
-  if (props.beforeChange && isFunction(props.beforeChange)) {
-    props.beforeChange({
-      value: newVal,
-      resolve: (pass: boolean) => {
-        if (pass) {
-          emit('update:modelValue', newVal)
-          emit('change', {
-            value: newVal
-          })
-        }
-      }
-    })
-  } else {
+  const doSwitch = () => {
     emit('update:modelValue', newVal)
     emit('change', {
       value: newVal
     })
   }
+
+  callInterceptor(props.beforeChange, {
+    args: [newVal],
+    done: doSwitch
+  })
 }
 
 onBeforeMount(() => {

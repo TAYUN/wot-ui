@@ -1,21 +1,37 @@
 <template>
   <page-wraper show-dark-mode>
-    <view class="root-portal-demo">
-      <demo-block :title="$t('ji-chu-yong-fa')">
-        <wd-button type="primary" @click="showBasic = true">{{ $t('xian-shi-ji-ben-tan-chuang') }}</wd-button>
+    <view class="page-root-portal">
+      <demo-group title="组件类型">
+        <demo-group-item :title="$t('ji-chu-yong-fa')">
+          <wd-button type="primary" @click="showBasic = true">{{ $t('xian-shi-ji-ben-tan-chuang') }}</wd-button>
+        </demo-group-item>
+      </demo-group>
 
-        <wd-select-picker v-model="value14" :columns="columns1" root-portal />
+      <demo-group title="特殊样式">
+        <demo-group-item title="与弹层组件配合使用" no-padding>
+          <wd-cell title="选择商品分类" :value="selectedLabel" is-link @click="showPicker = true" />
+          <wd-select-picker v-model="selectedValues" v-model:visible="showPicker" :columns="columns1" root-portal @confirm="handlePickerConfirm" />
+        </demo-group-item>
+      </demo-group>
 
-        <wd-root-portal v-if="showBasic">
-          <view class="basic-modal">
-            <view class="basic-modal-content">
-              <text class="basic-modal-title">{{ $t('ji-ben-tan-chuang') }}</text>
-              <text class="basic-modal-text">{{ $t('zhe-shi-yi-ge-shi-yong-root-portal-de-ji-ben-tan-chuang-shi-li') }}</text>
-              <wd-button type="primary" @click="showBasic = false">{{ $t('guan-bi') }}</wd-button>
-            </view>
+      <demo-group title="使用注意">
+        <demo-group-item title="适用场景">
+          <view class="page-root-portal__tips">
+            <text class="page-root-portal__tip">适用于弹窗、弹出层等 fixed 定位容易失效的场景。</text>
+            <text class="page-root-portal__tip">建议只在需要脱离父层级或避免被 transform、overflow 影响时开启。</text>
           </view>
-        </wd-root-portal>
-      </demo-block>
+        </demo-group-item>
+      </demo-group>
+
+      <wd-root-portal v-if="showBasic">
+        <view class="basic-modal">
+          <view class="basic-modal-content">
+            <text class="basic-modal-title">{{ $t('ji-ben-tan-chuang') }}</text>
+            <text class="basic-modal-text">{{ $t('zhe-shi-yi-ge-shi-yong-root-portal-de-ji-ben-tan-chuang-shi-li') }}</text>
+            <wd-button type="primary" @click="showBasic = false">{{ $t('guan-bi') }}</wd-button>
+          </view>
+        </view>
+      </wd-root-portal>
     </view>
   </page-wraper>
 </template>
@@ -26,7 +42,9 @@ import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 
-const value14 = ref<string[]>([])
+const selectedValues = ref<string[]>([])
+const selectedLabel = ref('')
+const showPicker = ref(false)
 const columns1 = ref<Record<string, any>[]>([
   {
     value: '101',
@@ -78,11 +96,27 @@ const columns1 = ref<Record<string, any>[]>([
   }
 ])
 const showBasic = ref(false)
+
+function handlePickerConfirm({ value }: { value: string[] }) {
+  selectedLabel.value = columns1.value
+    .filter((item) => value.includes(item.value))
+    .map((item) => item.label)
+    .join('、')
+}
 </script>
 
 <style lang="scss" scoped>
-.wd-root-portal-demo {
-  padding: 16px;
+.page-root-portal__tips {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.page-root-portal__tip {
+  display: block;
+  color: #666;
+  font-size: 14px;
+  line-height: 22px;
 }
 
 .basic-modal {

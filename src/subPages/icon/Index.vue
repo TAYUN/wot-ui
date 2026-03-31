@@ -2,6 +2,19 @@
   <view class="icon-page">
     <page-wraper>
       <view class="icon-page__container">
+        <!-- 搜索区域 -->
+        <view class="icon-page__search">
+          <wd-search
+            v-model="keyword"
+            placeholder="搜你所想"
+            variant="plain"
+            @change="handleSearch"
+            @clear="handleClear"
+            cancel-txt="取消"
+            hide-cancel
+          />
+        </view>
+
         <!-- 图标列表 -->
         <view class="icon-page__content">
           <view v-for="(cat, category) in showCategorized" :key="category" class="icon-page__category">
@@ -17,7 +30,7 @@
           </view>
 
           <!-- 空状态 -->
-          <wd-status-tip v-if="isEmpty" image="search" :tip="$t('dang-qian-wu-xiang-guan-tu-biao')" custom-class="icon-page__empty" />
+          <wd-empty v-if="isEmpty" icon="search" :tip="$t('dang-qian-wu-xiang-guan-tu-biao')" custom-class="icon-page__empty" />
         </view>
       </view>
     </page-wraper>
@@ -162,6 +175,7 @@ const categorizedIcons = ref<Record<string, { title: string; list: string[] }>>(
       'ear',
       'email',
       'empty',
+      'failpayment',
       'experiment',
       'face-frown-fill',
       'face-meh-fill',
@@ -184,6 +198,7 @@ const categorizedIcons = ref<Record<string, { title: string; list: string[] }>>(
       'language',
       'layout',
       'loading',
+      'locate',
       'location',
       'lock',
       'loop',
@@ -191,10 +206,18 @@ const categorizedIcons = ref<Record<string, { title: string; list: string[] }>>(
       'menu',
       'mind-mapping',
       'mobile',
+      'module-fill',
       'moon',
       'moon-fill',
       'mosaic',
       'nav',
+      'no-collection',
+      'no-comment',
+      'no-content',
+      'no-message',
+      'no-product',
+      'no-result',
+      'no-wifi',
       'notification',
       'notification-close',
       'old-version',
@@ -337,6 +360,7 @@ const categorizedIcons = ref<Record<string, { title: string; list: string[] }>>(
       'close-circle',
       'close-circle-fill',
       'division',
+      'doublecheck',
       'exclamation',
       'exclamation-circle',
       'exclamation-circle-fill',
@@ -436,26 +460,24 @@ $icon-list-gap: var(--wot-icon-list-gap, $spacing-tight) !default;
 }
 
 .icon-page__container {
+  position: relative;
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - var(--window-top));
-  min-height: calc(100vh - var(--window-top) - constant(safe-area-inset-bottom));
-  min-height: calc(100vh - var(--window-top) - env(safe-area-inset-bottom));
-  background-color: $icon-page-bg;
+  height: calc(100vh - var(--window-top));
+  height: calc(100vh - var(--window-top) - constant(safe-area-inset-bottom));
+  height: calc(100vh - var(--window-top) - env(safe-area-inset-bottom));
+  background: $icon-page-bg;
+  overflow-y: auto;
 }
 
-// .icon-page__search {
-//   position: sticky;
-//   top: 0;
-//   z-index: 10;
-//   padding: $padding-main;
-//   background-color: $icon-content-bg;
-//   box-shadow: 0 $n1 $n4 rgba(0, 0, 0, 0.06);
-
-//   :deep(.icon-page__search-input) {
-//     width: 100%;
-//   }
-// }
+.icon-page__search {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  :deep(.wd-search) {
+    background-color: transparent;
+  }
+}
 
 .icon-page__content {
   flex: 1;
@@ -505,8 +527,8 @@ $icon-list-gap: var(--wot-icon-list-gap, $spacing-tight) !default;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: $n48;
-  height: $n48;
+  width: $n-48;
+  height: $n-48;
   margin-bottom: $padding-main;
   border-radius: $radius-large;
   background-color: $filled-bottom;
@@ -528,7 +550,7 @@ $icon-list-gap: var(--wot-icon-list-gap, $spacing-tight) !default;
   text-align: center;
   word-break: break-word;
   transition: color 0.2s ease;
-  max-width: $n88;
+  max-width: $n-88;
   line-height: $typography-label-line--height-size-small;
 }
 
@@ -542,7 +564,7 @@ $icon-list-gap: var(--wot-icon-list-gap, $spacing-tight) !default;
 
   .icon-page__search {
     background-color: $filled-strong;
-    box-shadow: 0 $n1 $n4 rgba(255, 255, 255, 0.1);
+    box-shadow: 0 $n-1 $n-4 rgba(255, 255, 255, 0.1);
   }
 
   .icon-page__category {

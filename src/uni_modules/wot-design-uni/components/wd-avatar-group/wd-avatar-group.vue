@@ -32,8 +32,8 @@ export default {
 import { computed, useSlots, type CSSProperties } from 'vue'
 import wdAvatar from '../wd-avatar/wd-avatar.vue'
 import { avatarGroupProps, AVATAR_GROUP_KEY } from './types'
-import { useChildren } from '../composables/useChildren'
-import { objToStyle, addUnit, isString } from '../common/util'
+import { useChildren } from '../../composables/useChildren'
+import { objToStyle, addUnit, isString } from '../../common/util'
 
 const props = defineProps(avatarGroupProps)
 const slots = useSlots()

@@ -1,8 +1,8 @@
-@use '../styles/mixin/mixin.scss' as *;
-@use '../styles/variable.scss' as *;
+@use '../../styles/mixin/mixin.scss' as *;
+@use '../../styles/variable.scss' as *;
 
 // 组件级 CSS 变量定义
-$resize-container-min-size: var(--wot-resize-container-min-size, $n1) !default; // 容器最小宽高
+$resize-container-min-size: var(--wot-resize-container-min-size, $n-1) !default; // 容器最小宽高
 $resize-wrapper-z-index: var(--wot-resize-wrapper-z-index, -9999) !default; // wrapper 层级
 
 @include b(resize) {

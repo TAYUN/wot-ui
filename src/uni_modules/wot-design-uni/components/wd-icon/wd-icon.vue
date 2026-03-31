@@ -20,7 +20,7 @@ export default {
 
 <script lang="ts" setup>
 import { computed, type CSSProperties } from 'vue'
-import { addUnit, isDef, objToStyle } from '../common/util'
+import { addUnit, isDef, objToStyle } from '../../common/util'
 import { iconProps } from './types'
 
 const props = defineProps(iconProps)

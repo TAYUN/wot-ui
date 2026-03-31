@@ -1,5 +1,5 @@
-@use '../styles/variable.scss'as *;
-@use '../styles/mixin/mixin.scss'as *;
+@use '../../styles/variable.scss'as *;
+@use '../../styles/mixin/mixin.scss'as *;
 
 // 数字主体文本字号
 $count-to-text-font-size: var(--wot-count-to-text-font-size, $typography-body-size-ultra-large) !default;

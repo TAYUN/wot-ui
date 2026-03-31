@@ -1,16 +1,25 @@
 <template>
   <wd-popup
     v-model="state.visible"
-    :custom-style="customStyle"
+    :custom-style="popupStyle"
     :position="state.position"
     :z-index="state.zIndex"
-    :duration="250"
     :modal="false"
     :root-portal="state.rootPortal"
     @leave="onClosed"
     @enter="onOpened"
   >
-    <view class="wd-notify" :class="[`wd-notify--${state.type}`]" :style="{ color: state.color, background: state.background }" @click="onClick">
+    <view
+      :class="[
+        'wd-notify',
+        `wd-notify--${state.type}`,
+        `wd-notify--${state.position}`,
+        state.variant === 'floating' ? 'wd-notify--floating' : '',
+        customClass
+      ]"
+      :style="rootStyle"
+      @click="onClick"
+    >
       <slot name="prefix">
         <wd-icon v-if="iconName" :name="iconName" custom-class="wd-notify__prefix"></wd-icon>
       </slot>
@@ -40,10 +49,10 @@ export default {
 
 <script lang="ts" setup>
 import wdPopup from '../wd-popup/wd-popup.vue'
-import { inject, computed, watch, ref } from 'vue'
+import { inject, computed, watch, ref, type CSSProperties } from 'vue'
 import { notifyProps, type NotifyProps } from './types'
 import { getNotifyOptionKey } from '.'
-import { addUnit, isFunction } from '../common/util'
+import { addUnit, isFunction, objToStyle } from '../../common/util'
 
 const props = defineProps(notifyProps)
 const emits = defineEmits<{
@@ -74,20 +83,40 @@ const iconName = computed(() => {
 /**
  * 计算通知的自定义样式
  */
-const customStyle = computed(() => {
-  const { safeHeight, position } = state.value
-  let customStyle: string = ''
+const popupStyle = computed(() => {
+  const { safeHeight, position, variant } = state.value
+  const styles: CSSProperties = {
+    overflow: 'unset',
+    background: 'transparent'
+  }
   switch (position) {
     case 'top':
-      customStyle = `top: calc(var(--window-top) + ${addUnit(safeHeight || 0)})`
+      styles['top'] = `calc(var(--window-top) + ${addUnit(safeHeight || 0)})`
       break
     case 'bottom':
-      customStyle = 'bottom: var(--window-bottom)'
+      styles['bottom'] = 'var(--window-bottom)'
       break
     default:
       break
   }
-  return customStyle
+  if (variant === 'floating') {
+    styles['left'] = '12px'
+    styles['right'] = '12px'
+    styles['width'] = 'auto'
+  }
+  return objToStyle(styles)
+})
+
+const rootStyle = computed(() => {
+  const { customStyle } = props
+  const style: CSSProperties = {}
+  if (state.value.color) {
+    style.color = state.value.color
+  }
+  if (state.value.background) {
+    style.background = state.value.background
+  }
+  return `${objToStyle(style)};${customStyle}`
 })
 
 /**

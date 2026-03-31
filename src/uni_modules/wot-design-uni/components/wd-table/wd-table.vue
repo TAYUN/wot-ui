@@ -71,12 +71,12 @@ export default {
 <script lang="ts" setup>
 import wdSortButton from '../wd-sort-button/wd-sort-button.vue'
 import { type CSSProperties, computed, reactive, ref } from 'vue'
-import { addUnit, isDef, isObj, objToStyle, throttle, uuid, isFunction } from '../common/util'
+import { addUnit, isDef, isObj, objToStyle, throttle, uuid, isFunction } from '../../common/util'
 import type { SortDirection, TableColumn, TableColumnInstance, TableColumnProps } from '../wd-table-column/types'
 import { TABLE_KEY, tableProps, type SpanMethodResult, type TableProvide } from './types'
 import WdTableColumn from '../wd-table-column/wd-table-column.vue'
-import { useTranslate } from '../composables/useTranslate'
-import { useChildren } from '../composables/useChildren'
+import { useTranslate } from '../../composables/useTranslate'
+import { useChildren } from '../../composables/useChildren'
 
 const { translate } = useTranslate('tableCol')
 

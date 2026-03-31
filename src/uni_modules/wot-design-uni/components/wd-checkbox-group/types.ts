@@ -1,6 +1,6 @@
 import { type ExtractPropTypes, type InjectionKey, type PropType, type ComponentPublicInstance } from 'vue'
 import type { CheckboxDirection, CheckboxPlacement, CheckboxType } from '../wd-checkbox/types'
-import { baseProps, makeBooleanProp, makeNumberProp, makeStringProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeNumberProp, makeStringProp } from '../../common/props'
 
 export type CheckboxGroupToggleAllOptions =
   | boolean

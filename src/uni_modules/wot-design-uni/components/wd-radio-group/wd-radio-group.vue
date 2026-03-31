@@ -18,7 +18,7 @@ export default {
 
 <script lang="ts" setup>
 import { watch } from 'vue'
-import { useChildren } from '../composables/useChildren'
+import { useChildren } from '../../composables/useChildren'
 import { RADIO_GROUP_KEY, radioGroupProps } from './types'
 
 const props = defineProps(radioGroupProps)

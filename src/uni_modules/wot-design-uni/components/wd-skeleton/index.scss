@@ -1,16 +1,16 @@
-@use '../styles/mixin/mixin.scss' as *;
-@use '../styles/variable.scss' as *;
+@use '../../styles/mixin/mixin.scss' as *;
+@use '../../styles/variable.scss' as *;
 
 // 行间距
 $skeleton-row-margin-bottom: var(--wot-skeleton-row-margin-bottom, $spacing-loose) !default;
 // 占位块背景色
 $skeleton-col-bg: var(--wot-skeleton-col-bg, $filled-strong) !default;
 // 文本占位高度
-$skeleton-text-height: var(--wot-skeleton-text-height, $n16) !default;
+$skeleton-text-height: var(--wot-skeleton-text-height, $n-16) !default;
 // 矩形占位高度
-$skeleton-rect-height: var(--wot-skeleton-rect-height, $n16) !default;
+$skeleton-rect-height: var(--wot-skeleton-rect-height, $n-16) !default;
 // 圆形占位尺寸
-$skeleton-circle-height: var(--wot-skeleton-circle-height, $n48) !default;
+$skeleton-circle-height: var(--wot-skeleton-circle-height, $n-48) !default;
 // 文本占位圆角
 $skeleton-text-border-radius: var(--wot-skeleton-text-border-radius, $radius-small) !default;
 // 矩形占位圆角

@@ -1,5 +1,5 @@
 import type { PropType } from 'vue'
-import { baseProps, makeRequiredProp } from '../common/props'
+import { baseProps, makeRequiredProp } from '../../common/props'
 
 export type RadioType = 'dot' | 'circle' | 'square' | 'button'
 

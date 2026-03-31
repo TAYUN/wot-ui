@@ -159,7 +159,7 @@ function withSlot() {
 
 ## Pre-confirmation Processing
 
-Set the `beforeConfirm` function, which will be executed after the user selects an image and clicks confirm. It receives { resolve }, allowing developers to process before confirmation and inform the component whether to confirm through the `resolve` function. `resolve` accepts 1 boolean value, `resolve(true)` indicates the option is approved, `resolve(false)` indicates the option is not approved, and when not approved, the confirmation operation will not be completed.
+Set the `beforeConfirm` function to run when clicking confirm. It receives the current input `value`, returns `false` to block confirmation, and supports returning `Promise<boolean>`.
 
 ```html
 <wd-toast />
@@ -177,13 +177,15 @@ function beforeConfirm() {
     .confirm({
       msg: 'Confirm deletion',
       title: 'Prompt',
-      beforeConfirm: ({ resolve }) => {
+      beforeConfirm: () => {
         toast.loading('Deleting...')
-        setTimeout(() => {
-          toast.close()
-          resolve(true)
-          toast.success('Deleted successfully')
-        }, 2000)
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            toast.close()
+            toast.success('Deleted successfully')
+            resolve(true)
+          }, 2000)
+        })
       }
     })
     .then(() => {})
@@ -193,7 +195,7 @@ function beforeConfirm() {
 }
 ```
 
-## Custom Operation Buttons <el-tag text style="vertical-align: middle;margin-left:8px;" effect="plain">1.5.0</el-tag>
+## Custom Operation Buttons ^(1.5.0)
 
 You can customize the style of operation buttons through the button properties `cancel-button-props` and `confirm-button-props`. For specific details, refer to [Button Attributes](/component/button.html#attributes).
 
@@ -216,7 +218,7 @@ You can customize the style of operation buttons through the button properties `
 | cancel-button-props | Cancel button properties | object | - | {} | 1.5.0 |
 | confirm-button-props | Confirm button properties | object | - | {} | 1.5.0 |
 | close-on-click-modal | Whether to close when clicking modal | boolean | - | true | - |
-| before-confirm | Function executed before confirmation | function({ resolve }) | - | - | - |
+| before-confirm | Function executed before confirmation | `function(value) => boolean \| Promise<boolean>` | - | - | - |
 | selector | Component unique identifier | string | - | wd-dialog | - |
 | root-portal | Whether to detach from the page, used to solve various fixed positioning issues | boolean | - | false | 1.11.0 |
 

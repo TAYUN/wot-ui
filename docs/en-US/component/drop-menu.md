@@ -122,24 +122,24 @@ You can set the menu's right icon through `icon`, equivalent to the `name` prope
 
 ## Asynchronous Open/Close<el-tag text style="vertical-align: middle;margin-left:8px;" effect="plain">1.3.7</el-tag>
 
-Set the `before-toggle` function to execute specific logic before the dropdown menu opens or closes, achieving the purpose of state change validation and asynchronous open/close. `before-toggle` accepts { status: current operation type: true to open dropdown menu, false to close dropdown menu, resolve }, can validate the operation, and inform the component whether to confirm through the resolve function. resolve accepts a boolean value, resolve(true) means the option is approved, resolve(false) means the option is not approved, and when not approved, the close or expand operation will not be executed.
+Set the `before-toggle` function to execute specific logic before the dropdown menu opens or closes, achieving the purpose of state change validation and asynchronous open/close. `before-toggle` accepts `{ status: current operation type: true to open dropdown menu, false to close dropdown menu }`, can validate the operation, and you can inform the component whether to confirm by returning `boolean` or `Promise<boolean>`.
 
 :::warning Note
 The `before-toggle` function cannot prevent the expansion/closure operations of other `drop-menu` or other `drop-menu-item`, it is limited to the expansion/closure operation of the current `drop-menu-item`.
 :::
 
 ```html
-<wd-message-box></wd-message-box>
+<wd-dialog></wd-dialog>
 <wd-drop-menu>
   <wd-drop-menu-item v-model="value" :options="option" :before-toggle="handleBeforeToggle" />
 </wd-drop-menu>
 ```
 
 ```typescript
-import { useMessage } from '@/uni_modules/wot-design-uni'
+import { useDialog } from '@/uni_modules/wot-design-uni'
 import type { DropMenuItemBeforeToggle } from '@/uni_modules/wot-design-uni/components/wd-drop-menu-item/types'
 
-const messageBox = useMessage()
+const messageBox = useDialog()
 
 const value = ref<number>(0)
 
@@ -150,18 +150,20 @@ const option = ref<Record<string, any>[]>([
 ])
 
 // Confirm whether to open/close the dropdown menu through dialog
-const handleBeforeToggle: DropMenuItemBeforeToggle = ({ status, resolve }) => {
-  messageBox
-    .confirm({
-      title: `Asynchronous ${status ? 'Open' : 'Close'}`,
-      msg: `Are you sure you want to ${status ? 'open' : 'close'} the dropdown menu?`
-    })
-    .then(() => {
-      resolve(true)
-    })
-    .catch(() => {
-      resolve(false)
-    })
+const handleBeforeToggle: DropMenuItemBeforeToggle = ({ status }) => {
+  return new Promise<boolean>((resolve) => {
+    messageBox
+      .confirm({
+        title: `Asynchronous ${status ? 'Open' : 'Close'}`,
+        msg: `Are you sure you want to ${status ? 'open' : 'close'} the dropdown menu?`
+      })
+      .then(() => {
+        resolve(true)
+      })
+      .catch(() => {
+        resolve(false)
+      })
+  })
 }
 ```
 
@@ -204,7 +206,7 @@ Set the `direction` property value to `up`, and the menu will expand upward
 | options | Option array | array | - | - | - |
 | icon | Right icon name | string | - | arrow-down | 1.3.7 |
 | icon-size | Right icon size | string | - | 12px | 1.3.7 |
-| before-toggle | Function executed before toggle | function(status: boolean, resolve: Function) | - | - | 1.3.7 |
+| before-toggle | Function executed before toggle, returns false to block operation, supports Promise | function({ status }) | - | - | 1.3.7 |
 | value-key | Key for value in options object | string | - | value | - |
 | label-key | Key for display text in options object | string | - | label | - |
 | tip-key | Key for option description in options object | string | - | tip | - |

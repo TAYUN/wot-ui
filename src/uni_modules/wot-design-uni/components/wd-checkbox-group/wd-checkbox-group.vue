@@ -18,8 +18,8 @@ export default {
 
 <script lang="ts" setup>
 import { watch } from 'vue'
-import { checkNumRange, deepClone, isBoolean } from '../common/util'
-import { useChildren } from '../composables/useChildren'
+import { checkNumRange, deepClone, isBoolean } from '../../common/util'
+import { useChildren } from '../../composables/useChildren'
 import { CHECKBOX_GROUP_KEY, checkboxGroupProps, type CheckboxGroupExpose, type CheckboxGroupToggleAllOptions } from './types'
 
 const props = defineProps(checkboxGroupProps)

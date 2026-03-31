@@ -25,8 +25,8 @@ export default {
 
 <script lang="ts" setup>
 import { computed, onMounted, ref, watch, nextTick, type CSSProperties } from 'vue'
-import { addUnit, buildUrlWithParams, getSystemInfo, isBase64Image, isDef, objToStyle, uuid } from '../common/util'
-import { watermarkProps } from './types'
+import { addUnit, buildUrlWithParams, getSystemInfo, isBase64Image, isDef, objToStyle, uuid } from '../../common/util'
+import { watermarkProps, type WatermarkFontStyle, type WatermarkLayout } from './types'
 
 const props = defineProps(watermarkProps)
 
@@ -66,7 +66,8 @@ const rootStyle = computed(() => {
     width *= 2
   }
   const style: CSSProperties = {
-    backgroundSize: addUnit(width)
+    backgroundSize: addUnit(width),
+    zIndex: props.zIndex
   }
   if (isDef(props.opacity)) {
     style['opacity'] = props.opacity
@@ -134,7 +135,7 @@ function doInit() {
  * @param {number} height canvas高度
  * @param {string} color canvas字体颜色
  * @param {number} size canvas字体大小
- * @param {string} fontStyle canvas字体样式
+ * @param {WatermarkFontStyle} fontStyle canvas字体样式
  * @param {number | string} fontWeight canvas字体字重
  * @param {string} fontFamily canvas字体系列
  * @param {string} content canvas内容
@@ -144,7 +145,7 @@ function doInit() {
  * @param {string} image canvas图片
  * @param {number} imageHeight canvas图片高度
  * @param {number} imageWidth canvas图片宽度
- * @param {string} layout 布局模式
+ * @param {WatermarkLayout} layout 布局模式
  * @returns {Promise<void>}
  */
 async function createWaterMark(
@@ -152,7 +153,7 @@ async function createWaterMark(
   height: number,
   color: string,
   size: number,
-  fontStyle: string,
+  fontStyle: WatermarkFontStyle,
   fontWeight: number | string,
   fontFamily: string,
   content: string,
@@ -162,7 +163,7 @@ async function createWaterMark(
   image: string,
   imageHeight: number,
   imageWidth: number,
-  layout: string
+  layout: WatermarkLayout
 ) {
   const cols = layout === 'staggered' ? 2 : 1
   const rows = layout === 'staggered' ? 2 : 1

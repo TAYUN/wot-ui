@@ -163,8 +163,8 @@ defineExpose<{组件名}Expose>({
 ### 4. 创建样式文件 (`index.scss`)
 
 ```scss
-@use '../styles/mixin/mixin.scss' as *;
-@use '../styles/variable.scss' as *;
+@use '../../styles/mixin/mixin.scss' as *;
+@use '../../styles/variable.scss' as *;
 
 // 定义组件级 CSS 变量（支持主题定制）
 ${组件名}-bg: var(--wot-{组件名}-bg, $filled-oppo);

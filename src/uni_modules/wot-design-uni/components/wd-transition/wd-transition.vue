@@ -29,9 +29,9 @@ export default {
 
 <script lang="ts" setup>
 import { computed, onBeforeMount, ref, watch } from 'vue'
-import { isObj, isPromise, pause } from '../common/util'
+import { isObj, isPromise, pause } from '../../common/util'
 import { transitionProps, type TransitionName } from './types'
-import { AbortablePromise } from '../common/AbortablePromise'
+import { AbortablePromise } from '../../common/AbortablePromise'
 
 const getClassNames = (name?: TransitionName | TransitionName[]) => {
   const transitionClass = (transitionName: string, phase: string) => {

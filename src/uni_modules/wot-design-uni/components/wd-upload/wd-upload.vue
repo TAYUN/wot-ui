@@ -102,9 +102,10 @@ import wdVideoPreview from '../wd-video-preview/wd-video-preview.vue'
 import wdLoading from '../wd-loading/wd-loading.vue'
 
 import { computed, ref, watch } from 'vue'
-import { context, isEqual, isImageUrl, isVideoUrl, isFunction, isDef, deepClone, uuid } from '../common/util'
-import { useTranslate } from '../composables/useTranslate'
-import { useUpload } from '../composables/useUpload'
+import { context, isEqual, isImageUrl, isVideoUrl, isFunction, isDef, deepClone, uuid, isPromise } from '../../common/util'
+import { callInterceptor } from '../../common/interceptor'
+import { useTranslate } from '../../composables/useTranslate'
+import { useUpload } from '../../composables/useUpload'
 import {
   uploadProps,
   type UploadFileItem,
@@ -115,8 +116,7 @@ import {
   type UploadSuccessEvent,
   type UploadProgressEvent,
   type UploadOversizeEvent,
-  type UploadRemoveEvent,
-  type UploadMethod
+  type UploadRemoveEvent
 } from './types'
 import { useVideoPreview } from '../wd-video-preview'
 
@@ -180,84 +180,6 @@ watch(
   }
 )
 
-watch(
-  () => props.beforePreview,
-  (fn) => {
-    if (fn && !isFunction(fn)) {
-      console.error('The type of beforePreview must be Function')
-    }
-  },
-  {
-    deep: true,
-    immediate: true
-  }
-)
-
-watch(
-  () => props.onPreviewFail,
-  (fn) => {
-    if (fn && !isFunction(fn)) {
-      console.error('The type of onPreviewFail must be Function')
-    }
-  },
-  {
-    deep: true,
-    immediate: true
-  }
-)
-
-watch(
-  () => props.beforeRemove,
-  (fn) => {
-    if (fn && !isFunction(fn)) {
-      console.error('The type of beforeRemove must be Function')
-    }
-  },
-  {
-    deep: true,
-    immediate: true
-  }
-)
-
-watch(
-  () => props.beforeUpload,
-  (fn) => {
-    if (fn && !isFunction(fn)) {
-      console.error('The type of beforeUpload must be Function')
-    }
-  },
-  {
-    deep: true,
-    immediate: true
-  }
-)
-
-watch(
-  () => props.beforeChoose,
-  (fn) => {
-    if (fn && !isFunction(fn)) {
-      console.error('The type of beforeChoose must be Function')
-    }
-  },
-  {
-    deep: true,
-    immediate: true
-  }
-)
-
-watch(
-  () => props.buildFormData,
-  (fn) => {
-    if (fn && !isFunction(fn)) {
-      console.error('The type of buildFormData must be Function')
-    }
-  },
-  {
-    deep: true,
-    immediate: true
-  }
-)
-
 function emitFileList() {
   emit('update:fileList', uploadFiles.value)
 }
@@ -274,26 +196,42 @@ function startUploadFiles() {
     // 仅开始未上传的文件
     if (uploadFile[statusKey] === UPLOAD_STATUS.PENDING) {
       if (buildFormData) {
-        buildFormData({
-          file: uploadFile,
-          formData,
-          resolve: (formData: Record<string, any>) => {
-            formData &&
-              startUpload(uploadFile, {
-                action,
-                header,
-                name,
-                formData,
-                fileType: accept as 'image' | 'video' | 'audio',
-                statusCode,
-                statusKey,
-                uploadMethod,
-                onSuccess: handleSuccess,
-                onError: handleError,
-                onProgress: handleProgress
-              })
-          }
-        })
+        const res = buildFormData({ file: uploadFile, formData })
+        if (isPromise(res)) {
+          res
+            .then((newFormData) => {
+              if (newFormData) {
+                startUpload(uploadFile, {
+                  action,
+                  header,
+                  name,
+                  formData: newFormData,
+                  fileType: accept as 'image' | 'video' | 'audio',
+                  statusCode,
+                  statusKey,
+                  uploadMethod,
+                  onSuccess: handleSuccess,
+                  onError: handleError,
+                  onProgress: handleProgress
+                })
+              }
+            })
+            .catch(() => {})
+        } else if (res) {
+          startUpload(uploadFile, {
+            action,
+            header,
+            name,
+            formData: res,
+            fileType: accept as 'image' | 'video' | 'audio',
+            statusCode,
+            statusKey,
+            uploadMethod,
+            onSuccess: handleSuccess,
+            onError: handleError,
+            onProgress: handleProgress
+          })
+        }
       } else {
         startUpload(uploadFile, {
           action,
@@ -441,17 +379,10 @@ function onChooseFile(currentIndex?: number) {
       }
 
       // 上传前的钩子
-      if (beforeUpload) {
-        beforeUpload({
-          files,
-          fileList: uploadFiles.value,
-          resolve: (isPass: boolean) => {
-            isPass && mapFiles(files)
-          }
-        })
-      } else {
-        mapFiles(files)
-      }
+      callInterceptor(beforeUpload, {
+        args: [{ files, fileList: uploadFiles.value }],
+        done: () => mapFiles(files)
+      })
     })
     .catch((error) => {
       emit('chooseerror', { error })
@@ -473,16 +404,10 @@ function handleChoose(index?: number) {
   const { beforeChoose } = props
 
   // 选择图片前的钩子
-  if (beforeChoose) {
-    beforeChoose({
-      fileList: uploadFiles.value,
-      resolve: (isPass: boolean) => {
-        isPass && onChooseFile(index)
-      }
-    })
-  } else {
-    onChooseFile(index)
-  }
+  callInterceptor(beforeChoose, {
+    args: [{ fileList: uploadFiles.value }],
+    done: () => onChooseFile(index)
+  })
 }
 
 /**
@@ -506,18 +431,10 @@ function removeFile(index: number) {
   const { beforeRemove } = props
   const intIndex: number = index
   const file = uploadFiles.value[intIndex]
-  if (beforeRemove) {
-    beforeRemove({
-      file,
-      index: intIndex,
-      fileList: uploadFiles.value,
-      resolve: (isPass: boolean) => {
-        isPass && handleRemove(file)
-      }
-    })
-  } else {
-    handleRemove(file)
-  }
+  callInterceptor(beforeRemove, {
+    args: [{ file, index: intIndex, fileList: uploadFiles.value }],
+    done: () => handleRemove(file)
+  })
 }
 
 /**
@@ -598,19 +515,10 @@ function onPreviewImage(file: UploadFileItem) {
   if (reupload) {
     handleChoose(index)
   } else {
-    if (beforePreview) {
-      beforePreview({
-        file,
-        index,
-        fileList: fileList,
-        imgList: imgList,
-        resolve: (isPass: boolean) => {
-          isPass && handlePreviewImage(imgIndex, imgList)
-        }
-      })
-    } else {
-      handlePreviewImage(imgIndex, imgList)
-    }
+    callInterceptor(beforePreview, {
+      args: [{ file, index, fileList, imgList }],
+      done: () => handlePreviewImage(imgIndex, imgList)
+    })
   }
 }
 
@@ -623,19 +531,10 @@ function onPreviewVideo(file: UploadFileItem) {
   if (reupload) {
     handleChoose(index)
   } else {
-    if (beforePreview) {
-      beforePreview({
-        file,
-        index,
-        imgList: [],
-        fileList,
-        resolve: (isPass: boolean) => {
-          isPass && handlePreviewVieo(videoIndex, videoList)
-        }
-      })
-    } else {
-      handlePreviewVieo(videoIndex, videoList)
-    }
+    callInterceptor(beforePreview, {
+      args: [{ file, index, fileList, imgList: [] }],
+      done: () => handlePreviewVieo(videoIndex, videoList)
+    })
   }
 }
 
@@ -646,19 +545,10 @@ function onPreviewFile(file: UploadFileItem) {
   if (reupload) {
     handleChoose(index)
   } else {
-    if (beforePreview) {
-      beforePreview({
-        file,
-        index,
-        imgList: [],
-        fileList,
-        resolve: (isPass: boolean) => {
-          isPass && handlePreviewFile(file)
-        }
-      })
-    } else {
-      handlePreviewFile(file)
-    }
+    callInterceptor(beforePreview, {
+      args: [{ file, index, fileList, imgList: [] }],
+      done: () => handlePreviewFile(file)
+    })
   }
 }
 

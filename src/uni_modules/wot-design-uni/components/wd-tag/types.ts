@@ -1,5 +1,5 @@
 import type { ExtractPropTypes } from 'vue'
-import { baseProps, makeBooleanProp, makeStringProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeStringProp } from '../../common/props'
 
 /**
  * 标签类型

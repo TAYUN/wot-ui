@@ -141,6 +141,7 @@ import wdTextarea from '../wd-textarea/wd-textarea.vue'
 import { computed, inject, reactive, ref, watch } from 'vue'
 import {
   dialogProps,
+  type DialogBeforeConfirm,
   type DialogOptionsWithCallBack,
   type DialogResult,
   type DialogBuiltinIconType,
@@ -150,8 +151,9 @@ import {
   OPEN_TYPE_EVENT_KEYS
 } from './types'
 import { defaultOptions, getDialogDefaultOptionKey } from '.'
-import { deepAssign, isDef, isFunction, isObj, isString, isUndefined, omitBy } from '../common/util'
-import { useTranslate } from '../composables/useTranslate'
+import { callInterceptor } from '../../common/interceptor'
+import { deepAssign, isDef, isFunction, isObj, isString, isUndefined, omitBy } from '../../common/util'
+import { useTranslate } from '../../composables/useTranslate'
 import type { ButtonProps, ButtonVariant } from '../wd-button/types'
 
 const props = defineProps(dialogProps)
@@ -411,15 +413,13 @@ function toggleModal(action: 'confirm' | 'cancel' | 'modal') {
   switch (action) {
     case 'confirm':
       if (dialogState.beforeConfirm) {
-        dialogState.beforeConfirm({
-          resolve: (isPass) => {
-            if (isPass) {
-              handleConfirm({
-                action: action,
-                value: inputVal.value
-              })
-            }
-          }
+        callInterceptor(dialogState.beforeConfirm as DialogBeforeConfirm, {
+          args: [inputVal.value],
+          done: () =>
+            handleConfirm({
+              action: action,
+              value: inputVal.value
+            })
         })
       } else {
         handleConfirm({

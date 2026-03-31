@@ -28,8 +28,8 @@
 import type { AnchorIndex } from './type'
 import { indexBarInjectionKey, indexBarProps } from './type'
 import { ref, getCurrentInstance, onMounted, reactive, nextTick, watch } from 'vue'
-import { getRect, isDef, uuid, pause } from '../common/util'
-import { useChildren } from '../composables/useChildren'
+import { getRect, isDef, uuid, pause } from '../../common/util'
+import { useChildren } from '../../composables/useChildren'
 
 const props = defineProps(indexBarProps)
 

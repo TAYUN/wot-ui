@@ -27,11 +27,11 @@ export default {
 <script lang="ts" setup>
 import wdPickerView from '../wd-picker-view/wd-picker-view.vue'
 import { getCurrentInstance, onBeforeMount, ref, watch, computed } from 'vue'
-import { isDef, padZero, range, isArray, isString } from '../common/util'
-import { datetimePickerViewProps, type DatetimePickerViewColumnType, type DatetimePickerViewOption, type DatetimePickerViewExpose } from './types'
+import { isDef, padZero, range, isArray, isString } from '../../common/util'
+import { datetimePickerViewProps, type DatetimePickerViewColumnType, type DatetimePickerViewExpose } from './types'
 import type { PickerViewInstance } from '../wd-picker-view/types'
 import { getPickerValue } from './util'
-import { type Numeric } from '../common/props'
+import { type Numeric } from '../../common/props'
 
 // 本地时间戳
 /**

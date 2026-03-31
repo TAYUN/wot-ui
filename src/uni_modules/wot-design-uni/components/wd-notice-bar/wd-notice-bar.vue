@@ -32,7 +32,7 @@ export default {
 <script lang="ts" setup>
 import wdIcon from '../wd-icon/wd-icon.vue'
 import { ref, watch, nextTick, computed, getCurrentInstance, type CSSProperties, onMounted, onActivated, onDeactivated, reactive } from 'vue'
-import { getRect, isArray, isDef, objToStyle } from '../common/util'
+import { getRect, isArray, isDef, objToStyle } from '../../common/util'
 import { type NoticeBarExpose, noticeBarProps } from './types'
 import { onHide, onShow } from '@dcloudio/uni-app'
 const $wrap = '.wd-notice-bar__wrap'

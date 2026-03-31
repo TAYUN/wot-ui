@@ -39,8 +39,8 @@ export default {
 <script lang="ts" setup>
 import { computed, onBeforeMount, ref, watch, type CSSProperties } from 'vue'
 import { floatingPanelProps } from './type'
-import { addUnit, closest, getSystemInfo, objToStyle } from '../common/util'
-import { useTouch } from '../composables/useTouch'
+import { addUnit, closest, getSystemInfo, objToStyle } from '../../common/util'
+import { useTouch } from '../../composables/useTouch'
 
 const touch = useTouch()
 

@@ -1,101 +1,105 @@
 <template>
   <page-wraper>
-    <view>
-      <demo-block :title="$t('jiBenYongFa')">
-        <wd-notice-bar
-          :text="$t('zhe-shi-yi-tiao-xiao-xi-ti-shi-xin-xi-zhe-shi-yi-tiao-xiao-xi-ti-shi-xin-xi-zhe-shi-yi-tiao-xiao-xi-ti-shi-xin-xi')"
-          prefix="exclamation-circle-fill"
-        />
-      </demo-block>
+    <view class="page-notice-bar">
+      <demo-group title="组件类型" transparent>
+        <demo-group-item :title="$t('jiBenYongFa')" no-padding>
+          <wd-notice-bar
+            :text="$t('zhe-shi-yi-tiao-xiao-xi-ti-shi-xin-xi-zhe-shi-yi-tiao-xiao-xi-ti-shi-xin-xi-zhe-shi-yi-tiao-xiao-xi-ti-shi-xin-xi')"
+            prefix="exclamation-circle-fill"
+          />
+        </demo-group-item>
+      </demo-group>
 
-      <demo-block :title="$t('lei-xing-xiu-gai')">
-        <wd-notice-bar
-          type="danger"
-          :text="
-            $t(
-              'dang-qian-wang-luo-bu-ke-yong-qing-jian-cha-ni-de-wang-luo-she-zhi-dang-qian-wang-luo-bu-ke-yong-qing-jian-cha-ni-de-wang-luo-she-zhi'
-            )
-          "
-          prefix="close-circle-fill"
-          custom-class="space"
-        />
-        <wd-notice-bar
-          type="info"
-          :text="
-            $t(
-              'dian-ji-cha-kan-xin-xi-xiang-qing-dian-ji-cha-kan-xin-xi-xiang-qing-dian-ji-cha-kan-xin-xi-xiang-qing-dian-ji-cha-kan-xin-xi-xiang-qing-dian-ji-cha-kan-xin-xi-xiang-qing'
-            )
-          "
-          prefix="info-circle-fill"
-        />
-      </demo-block>
+      <demo-group title="组件变体" transparent>
+        <demo-group-item :title="$t('lei-xing-xiu-gai')" no-padding>
+          <wd-notice-bar
+            type="danger"
+            :text="
+              $t(
+                'dang-qian-wang-luo-bu-ke-yong-qing-jian-cha-ni-de-wang-luo-she-zhi-dang-qian-wang-luo-bu-ke-yong-qing-jian-cha-ni-de-wang-luo-she-zhi'
+              )
+            "
+            prefix="close-circle-fill"
+            custom-class="space"
+          />
+          <wd-notice-bar
+            type="info"
+            :text="
+              $t(
+                'dian-ji-cha-kan-xin-xi-xiang-qing-dian-ji-cha-kan-xin-xi-xiang-qing-dian-ji-cha-kan-xin-xi-xiang-qing-dian-ji-cha-kan-xin-xi-xiang-qing-dian-ji-cha-kan-xin-xi-xiang-qing'
+              )
+            "
+            prefix="info-circle-fill"
+          />
+        </demo-group-item>
+        <demo-group-item :title="$t('ke-guan-bi-de')" no-padding>
+          <wd-notice-bar
+            :text="$t('zhe-shi-yi-tiao-xiao-xi-ti-shi-xin-xi-zhe-shi-yi-tiao-xiao-xi-ti-shi-xin-xi-zhe-shi-yi-tiao-xiao-xi-ti-shi-xin-xi-0')"
+            closable
+            prefix="sound"
+          />
+        </demo-group-item>
+      </demo-group>
 
-      <demo-block :title="$t('jin-zhi-gun-dong')">
-        <wd-notice-bar :scrollable="false" :text="$t('yu-mai-gui-hua-tong-zai-jiu-zhong-bu-si-shao-nian-you')" prefix="stop"></wd-notice-bar>
-      </demo-block>
+      <demo-group title="内容形态" transparent>
+        <demo-group-item :title="$t('jin-zhi-gun-dong')" no-padding>
+          <wd-notice-bar :scrollable="false" :text="$t('yu-mai-gui-hua-tong-zai-jiu-zhong-bu-si-shao-nian-you')" prefix="stop" />
+        </demo-group-item>
+        <demo-group-item :title="$t('cha-cao')" no-padding>
+          <wd-notice-bar :scrollable="false">
+            <template #prefix>
+              <wd-icon custom-class="prefix" name="stop">{{ $t('zhan-wei-fu') }}</wd-icon>
+            </template>
+            {{ $t('tong-zhi-bei-jin-huo-shi-duan-nei-xiao-xi-ping-bi-ke-neng-zao-cheng-xiao') }}
+            <template #suffix>
+              <view class="page-notice-bar__suffix">{{ $t('cha-kan') }}</view>
+            </template>
+          </wd-notice-bar>
+        </demo-group-item>
+        <demo-group-item :title="$t('duo-hang-zhan-shi')" no-padding>
+          <wd-notice-bar
+            :text="
+              $t(
+                'zhe-shi-yi-tiao-xiao-xi-ti-shi-xin-xi-zhe-shi-yi-tiao-xiao-xi-ti-shi-xin-xi-zhe-shi-yi-tiao-xiao-xi-ti-shi-xin-xi-zhe-shi-yi-tiao-xiao-xi-ti-shi-xin-xi-zhe-shi-yi-tiao-xiao-xi-ti-shi-xin-xi-zhe-shi-yi-tiao-xiao-xi-ti-shi-xin-xi'
+              )
+            "
+            wrapable
+            :scrollable="false"
+          />
+        </demo-group-item>
+      </demo-group>
 
-      <demo-block :title="$t('cha-cao')">
-        <wd-notice-bar :scrollable="false">
-          <template #prefix>
-            <wd-icon custom-class="prefix" name="stop">{{ $t('zhan-wei-fu') }}</wd-icon>
-          </template>
-          {{ $t('tong-zhi-bei-jin-huo-shi-duan-nei-xiao-xi-ping-bi-ke-neng-zao-cheng-xiao') }}
-          <template #suffix>
-            <div style="color: #4d80f0">{{ $t('cha-kan') }}</div>
-          </template>
-        </wd-notice-bar>
-      </demo-block>
+      <demo-group title="组件样式" transparent>
+        <demo-group-item :title="$t('zi-ding-yi-yan-se-0')" no-padding>
+          <wd-notice-bar
+            :text="$t('zhe-shi-yi-tiao-xiao-xi-ti-shi-xin-xi-zhe-shi-yi-tiao-xiao-xi-ti-shi-xin-xi-zhe-shi-yi-tiao-xiao-xi-ti-shi-xin-xi-1')"
+            prefix="robot"
+            color="#34D19D"
+            background-color="#f0f9eb"
+          />
+        </demo-group-item>
+      </demo-group>
 
-      <demo-block :title="$t('ke-guan-bi-de')">
-        <wd-notice-bar
-          :text="$t('zhe-shi-yi-tiao-xiao-xi-ti-shi-xin-xi-zhe-shi-yi-tiao-xiao-xi-ti-shi-xin-xi-zhe-shi-yi-tiao-xiao-xi-ti-shi-xin-xi-0')"
-          closable
-          prefix="sound"
-        />
-      </demo-block>
-
-      <demo-block :title="$t('duo-hang-zhan-shi')">
-        <wd-notice-bar
-          :text="
-            $t(
-              'zhe-shi-yi-tiao-xiao-xi-ti-shi-xin-xi-zhe-shi-yi-tiao-xiao-xi-ti-shi-xin-xi-zhe-shi-yi-tiao-xiao-xi-ti-shi-xin-xi-zhe-shi-yi-tiao-xiao-xi-ti-shi-xin-xi-zhe-shi-yi-tiao-xiao-xi-ti-shi-xin-xi-zhe-shi-yi-tiao-xiao-xi-ti-shi-xin-xi'
-            )
-          "
-          wrapable
-          :scrollable="false"
-        />
-      </demo-block>
-
-      <demo-block :title="$t('zi-ding-yi-yan-se-0')">
-        <wd-notice-bar
-          :text="$t('zhe-shi-yi-tiao-xiao-xi-ti-shi-xin-xi-zhe-shi-yi-tiao-xiao-xi-ti-shi-xin-xi-zhe-shi-yi-tiao-xiao-xi-ti-shi-xin-xi-1')"
-          prefix="robot"
-          color="#34D19D"
-          background-color="#f0f9eb"
-        ></wd-notice-bar>
-      </demo-block>
-
-      <demo-block :title="$t('duo-wen-ben-lun-bo')">
-        <wd-notice-bar @click="handleClick" :text="textArray" prefix="thunderbolt" @next="onNext" />
-      </demo-block>
-
-      <demo-block :title="$t('chui-zhi-gun-dong')">
-        <wd-notice-bar @click="handleClick" prefix="experiment" direction="vertical" :text="textArray" :delay="3" custom-class="space" />
-        <wd-notice-bar
-          @click="handleClick"
-          prefix="experiment"
-          direction="vertical"
-          :text="$t('zhi-you-yi-tiao-xiao-xi-bu-hui-gun-dong')"
-          :delay="3"
-          custom-class="space"
-        />
-      </demo-block>
-
-      <demo-block :title="$t('zhong-zhi-bo-fang-dong-hua')">
-        <wd-notice-bar ref="notice" prefix="wifi" direction="vertical" :text="textArray" :delay="3" custom-class="space" />
-
-        <wd-button @click="handleReset">{{ $t('zhong-zhi-bo-fang-dong-hua-0') }}</wd-button>
-      </demo-block>
+      <demo-group title="特殊用法" transparent>
+        <demo-group-item :title="$t('duo-wen-ben-lun-bo')" no-padding>
+          <wd-notice-bar @click="handleClick" :text="textArray" prefix="thunderbolt" @next="onNext" />
+        </demo-group-item>
+        <demo-group-item :title="$t('chui-zhi-gun-dong')" no-padding>
+          <wd-notice-bar @click="handleClick" prefix="experiment" direction="vertical" :text="textArray" :delay="3" custom-class="space" />
+          <wd-notice-bar
+            @click="handleClick"
+            prefix="experiment"
+            direction="vertical"
+            :text="$t('zhi-you-yi-tiao-xiao-xi-bu-hui-gun-dong')"
+            :delay="3"
+            custom-class="space"
+          />
+        </demo-group-item>
+        <demo-group-item :title="$t('zhong-zhi-bo-fang-dong-hua')" no-padding>
+          <wd-notice-bar ref="notice" prefix="wifi" direction="vertical" :text="textArray" :delay="3" custom-class="space" />
+          <wd-button @click="handleReset">{{ $t('zhong-zhi-bo-fang-dong-hua-0') }}</wd-button>
+        </demo-group-item>
+      </demo-group>
     </view>
   </page-wraper>
 </template>
@@ -122,9 +126,19 @@ function handleClick(result: { text: string; index: number }) {
 }
 </script>
 <style lang="scss" scoped>
+.page-notice-bar {
+  :deep(.demo-group-item__content) {
+    overflow: hidden;
+  }
+}
+
 :deep(.prefix) {
   font-size: 20px;
   margin-right: 8px;
+}
+
+.page-notice-bar__suffix {
+  color: #4d80f0;
 }
 
 :deep(.space) {

@@ -33,10 +33,10 @@ import wdDivider from '../wd-divider/wd-divider.vue'
 import wdLoading from '../wd-loading/wd-loading.vue'
 import wdIcon from '../wd-icon/wd-icon.vue'
 import { computed, ref } from 'vue'
-import { useTranslate } from '../composables/useTranslate'
+import { useTranslate } from '../../composables/useTranslate'
 import { loadmoreProps, type LoadMoreState } from './types'
 import type { LoadingProps } from '../wd-loading/types'
-import { isDef, isUndefined, omitBy } from '../common/util'
+import { isDef, isUndefined, omitBy } from '../../common/util'
 
 // 计算 Loading 组件的属性 - 合并用户传入的属性和组件需要的自定义样式
 const customLoadingProps = computed(() => {

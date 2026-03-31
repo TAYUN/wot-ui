@@ -37,7 +37,7 @@ export default {
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
-import { addUnit, isDef, objToStyle } from '../common/util'
+import { addUnit, isDef, objToStyle } from '../../common/util'
 import { imgProps } from './types'
 
 const props = defineProps(imgProps)

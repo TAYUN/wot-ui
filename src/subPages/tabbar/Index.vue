@@ -2,104 +2,113 @@
   <page-wraper :safeAreaInsetBottom="false">
     <wd-toast></wd-toast>
     <wd-dialog></wd-dialog>
-    <demo-block hor="0" :title="$t('ji-chu-yong-fa-0')" transparent>
-      <wd-tabbar bordered @change="handleChange" v-model="tabbar0">
-        <wd-tabbar-item :title="$t('shou-ye')" icon="home"></wd-tabbar-item>
-        <wd-tabbar-item :title="$t('fen-lei')" icon="store"></wd-tabbar-item>
-        <wd-tabbar-item :title="$t('wo-de')" icon="user"></wd-tabbar-item>
-      </wd-tabbar>
-    </demo-block>
+    <view class="page-tabbar">
+      <demo-group transparent title="组件类型">
+        <demo-group-item no-padding :title="$t('ji-chu-yong-fa-0')">
+          <wd-tabbar v-model="tabbar0" bordered @change="handleChange">
+            <wd-tabbar-item :title="$t('shou-ye')" icon="home"></wd-tabbar-item>
+            <wd-tabbar-item :title="$t('fen-lei')" icon="store"></wd-tabbar-item>
+            <wd-tabbar-item :title="$t('wo-de')" icon="user"></wd-tabbar-item>
+          </wd-tabbar>
+        </demo-group-item>
+        <demo-group-item no-padding :title="$t('tong-guo-ming-cheng-pi-pei')">
+          <wd-tabbar v-model="tabbar1" bordered @change="handleChange">
+            <wd-tabbar-item name="home" :title="$t('shou-ye')" icon="home"></wd-tabbar-item>
+            <wd-tabbar-item name="cart" :title="$t('fen-lei')" icon="store"></wd-tabbar-item>
+            <wd-tabbar-item name="setting" :title="$t('she-zhi')" icon="settings"></wd-tabbar-item>
+            <wd-tabbar-item name="user" :title="$t('wo-de')" icon="user"></wd-tabbar-item>
+          </wd-tabbar>
+        </demo-group-item>
+      </demo-group>
 
-    <demo-block hor="0" :title="$t('tong-guo-ming-cheng-pi-pei')" transparent>
-      <wd-tabbar bordered @change="handleChange" v-model="tabbar1">
-        <wd-tabbar-item name="home" :title="$t('shou-ye')" icon="home"></wd-tabbar-item>
-        <wd-tabbar-item name="cart" :title="$t('fen-lei')" icon="store"></wd-tabbar-item>
-        <wd-tabbar-item name="setting" :title="$t('she-zhi')" icon="settings"></wd-tabbar-item>
-        <wd-tabbar-item name="user" :title="$t('wo-de')" icon="user"></wd-tabbar-item>
-      </wd-tabbar>
-    </demo-block>
+      <demo-group transparent title="组件状态">
+        <demo-group-item no-padding :title="$t('hui-biao-ti-shi')">
+          <wd-tabbar v-model="tabbar2" @change="handleChange">
+            <wd-tabbar-item is-dot :value="2" :title="$t('dian-zhuang')" icon="home"></wd-tabbar-item>
+            <wd-tabbar-item :value="2" icon="store" :title="$t('fen-lei')"></wd-tabbar-item>
+            <wd-tabbar-item :value="30" :title="$t('wo-de')" icon="user"></wd-tabbar-item>
+            <wd-tabbar-item :value="200" :title="$t('zui-da-zhi')" icon="user"></wd-tabbar-item>
+          </wd-tabbar>
+        </demo-group-item>
+      </demo-group>
 
-    <demo-block hor="0" :title="$t('hui-biao-ti-shi')" transparent>
-      <wd-tabbar v-model="tabbar2" @change="handleChange">
-        <wd-tabbar-item is-dot :value="2" :title="$t('dian-zhuang')" icon="home"></wd-tabbar-item>
-        <wd-tabbar-item :value="2" icon="store" :title="$t('fen-lei')"></wd-tabbar-item>
-        <wd-tabbar-item :value="30" :title="$t('wo-de')" icon="user"></wd-tabbar-item>
-        <wd-tabbar-item :value="200" :title="$t('zui-da-zhi')" icon="user"></wd-tabbar-item>
-      </wd-tabbar>
-    </demo-block>
-    <demo-block hor="0" :title="$t('xuan-fu-biao-qian-lan')" transparent>
-      <wd-tabbar shape="round" v-model="tabbar3" @change="handleChange">
-        <wd-tabbar-item :title="$t('shou-ye')" is-dot :value="2" icon="home"></wd-tabbar-item>
-        <wd-tabbar-item :title="$t('fen-lei')" :value="2" icon="store"></wd-tabbar-item>
-        <wd-tabbar-item :title="$t('xiang-ce')" :value="30" icon="image"></wd-tabbar-item>
-        <wd-tabbar-item :title="$t('wo-de')" :value="200" icon="user"></wd-tabbar-item>
-      </wd-tabbar>
-    </demo-block>
+      <demo-group transparent title="组件变体">
+        <demo-group-item no-padding :title="$t('xuan-fu-biao-qian-lan')">
+          <wd-tabbar v-model="tabbar3" shape="round" @change="handleChange">
+            <wd-tabbar-item :title="$t('shou-ye')" is-dot :value="2" icon="home"></wd-tabbar-item>
+            <wd-tabbar-item :title="$t('fen-lei')" :value="2" icon="store"></wd-tabbar-item>
+            <wd-tabbar-item :title="$t('xiang-ce')" :value="30" icon="image"></wd-tabbar-item>
+            <wd-tabbar-item :title="$t('wo-de')" :value="200" icon="user"></wd-tabbar-item>
+          </wd-tabbar>
+        </demo-group-item>
+      </demo-group>
 
-    <demo-block hor="0" :title="$t('ziDingYiTuBiao')" transparent>
-      <wd-tabbar v-model="tabbar4" @change="handleChange">
-        <wd-tabbar-item :value="2" :title="$t('shou-ye')" icon="home"></wd-tabbar-item>
-        <wd-tabbar-item :value="2" icon="store" :title="$t('fen-lei')">
-          <template #icon>
-            <wd-img round height="40rpx" width="40rpx" src="https://wot-ui.cn/assets/panda.jpg"></wd-img>
-          </template>
-        </wd-tabbar-item>
-        <wd-tabbar-item :value="3" :title="$t('wo-de')" icon="user"></wd-tabbar-item>
-      </wd-tabbar>
-    </demo-block>
+      <demo-group transparent title="组件样式">
+        <demo-group-item no-padding :title="$t('ziDingYiTuBiao')">
+          <wd-tabbar v-model="tabbar4" @change="handleChange">
+            <wd-tabbar-item :value="2" :title="$t('shou-ye')" icon="home"></wd-tabbar-item>
+            <wd-tabbar-item :value="2" icon="store" :title="$t('fen-lei')">
+              <template #icon>
+                <wd-img round height="40rpx" width="40rpx" src="https://wot-ui.cn/assets/panda.jpg"></wd-img>
+              </template>
+            </wd-tabbar-item>
+            <wd-tabbar-item :value="3" :title="$t('wo-de')" icon="user"></wd-tabbar-item>
+          </wd-tabbar>
+        </demo-group-item>
+        <demo-group-item no-padding :title="$t('zi-ding-yi-yan-se-0')">
+          <wd-tabbar v-model="tabbar5" active-color="#ee0a24" inactive-color="#7d7e80" @change="handleChange">
+            <wd-tabbar-item is-dot :value="2" :title="$t('dian-zhuang-0')" icon="home"></wd-tabbar-item>
+            <wd-tabbar-item :value="2" icon="store" :title="$t('fen-lei')"></wd-tabbar-item>
+            <wd-tabbar-item :value="30" :title="$t('wo-de')" icon="user"></wd-tabbar-item>
+            <wd-tabbar-item :value="200" :title="$t('zui-da-zhi-0')" icon="image"></wd-tabbar-item>
+            <wd-tabbar-item :value="10" :title="$t('ke-fu')" icon="message"></wd-tabbar-item>
+          </wd-tabbar>
+        </demo-group-item>
+      </demo-group>
 
-    <demo-block hor="0" :title="$t('zi-ding-yi-yan-se-0')" transparent>
-      <wd-tabbar v-model="tabbar5" @change="handleChange" active-color="#ee0a24" inactive-color="#7d7e80">
-        <wd-tabbar-item is-dot :value="2" :title="$t('dian-zhuang-0')" icon="home"></wd-tabbar-item>
-        <wd-tabbar-item :value="2" icon="store" :title="$t('fen-lei')"></wd-tabbar-item>
-        <wd-tabbar-item :value="30" :title="$t('wo-de')" icon="user"></wd-tabbar-item>
-        <wd-tabbar-item :value="200" :title="$t('zui-da-zhi-0')" icon="image"></wd-tabbar-item>
-        <wd-tabbar-item :value="10" :title="$t('ke-fu')" icon="message"></wd-tabbar-item>
-      </wd-tabbar>
-    </demo-block>
-    <demo-block hor="0" :title="$t('jian-ting-qie-huan-shi-jian')" transparent>
-      <wd-tabbar v-model="tabbar6" @change="handleChange1" active-color="#ee0a24" inactive-color="#7d7e80">
-        <wd-tabbar-item :title="$t('shou-ye')" icon="home"></wd-tabbar-item>
-        <wd-tabbar-item :title="$t('fen-lei')" icon="store"></wd-tabbar-item>
-        <wd-tabbar-item :title="$t('wo-de')" icon="user"></wd-tabbar-item>
-        <wd-tabbar-item :title="$t('xiang-ce')" icon="image"></wd-tabbar-item>
-        <wd-tabbar-item :title="$t('ke-fu')" icon="message"></wd-tabbar-item>
-      </wd-tabbar>
-    </demo-block>
-
-    <demo-block hor="0" title="默认插槽" transparent>
-      <wd-tabbar v-model="tabbar8" :before-change="onBeforeChange2" @change="handleChange" safeAreaInsetBottom placeholder>
-        <wd-tabbar-item :value="2" is-dot :title="$t('shou-ye')" icon="home"></wd-tabbar-item>
-        <wd-tabbar-item :title="$t('fen-lei')" icon="store"></wd-tabbar-item>
-        <wd-tabbar-item>
-          <view class="custom-raised-button">
-            <wd-icon name="plus" size="32px"></wd-icon>
-          </view>
-        </wd-tabbar-item>
-        <wd-tabbar-item :value="200" :title="$t('xiang-ce')" icon="image"></wd-tabbar-item>
-        <wd-tabbar-item :value="10" :title="$t('ke-fu')" icon="message"></wd-tabbar-item>
-      </wd-tabbar>
-    </demo-block>
-
-    <demo-block hor="0" title="异步确认" transparent>
-      <wd-tabbar v-model="tabbar9" :before-change="onBeforeChange" @change="handleChange" bordered safeAreaInsetBottom placeholder>
-        <wd-tabbar-item :value="2" is-dot :title="$t('shou-ye')" icon="home"></wd-tabbar-item>
-        <wd-tabbar-item :title="$t('fen-lei')" icon="store"></wd-tabbar-item>
-        <wd-tabbar-item :title="$t('wo-de')" icon="user"></wd-tabbar-item>
-        <wd-tabbar-item :value="200" :title="$t('xiang-ce')" icon="image"></wd-tabbar-item>
-        <wd-tabbar-item :value="10" :title="$t('ke-fu')" icon="message"></wd-tabbar-item>
-      </wd-tabbar>
-    </demo-block>
-
-    <demo-block hor="0" :title="$t('gu-ding-di-bu')" transparent>
-      <wd-tabbar fixed v-model="tabbar7" @change="handleChange" bordered safeAreaInsetBottom placeholder>
-        <wd-tabbar-item :value="2" is-dot :title="$t('shou-ye')" icon="home"></wd-tabbar-item>
-        <wd-tabbar-item :title="$t('fen-lei')" icon="store"></wd-tabbar-item>
-        <wd-tabbar-item :title="$t('wo-de')" icon="user"></wd-tabbar-item>
-        <wd-tabbar-item :value="200" :title="$t('xiang-ce')" icon="image"></wd-tabbar-item>
-        <wd-tabbar-item :value="10" :title="$t('ke-fu')" icon="message"></wd-tabbar-item>
-      </wd-tabbar>
-    </demo-block>
+      <demo-group transparent title="特殊样式">
+        <demo-group-item no-padding :title="$t('jian-ting-qie-huan-shi-jian')">
+          <wd-tabbar v-model="tabbar6" active-color="#ee0a24" inactive-color="#7d7e80" @change="handleChange1">
+            <wd-tabbar-item :title="$t('shou-ye')" icon="home"></wd-tabbar-item>
+            <wd-tabbar-item :title="$t('fen-lei')" icon="store"></wd-tabbar-item>
+            <wd-tabbar-item :title="$t('wo-de')" icon="user"></wd-tabbar-item>
+            <wd-tabbar-item :title="$t('xiang-ce')" icon="image"></wd-tabbar-item>
+            <wd-tabbar-item :title="$t('ke-fu')" icon="message"></wd-tabbar-item>
+          </wd-tabbar>
+        </demo-group-item>
+        <demo-group-item no-padding title="默认插槽">
+          <wd-tabbar v-model="tabbar8" :before-change="onBeforeChange2" @change="handleChange" safeAreaInsetBottom placeholder>
+            <wd-tabbar-item :value="2" is-dot :title="$t('shou-ye')" icon="home"></wd-tabbar-item>
+            <wd-tabbar-item :title="$t('fen-lei')" icon="store"></wd-tabbar-item>
+            <wd-tabbar-item>
+              <view class="custom-raised-button">
+                <wd-icon name="plus" size="32px"></wd-icon>
+              </view>
+            </wd-tabbar-item>
+            <wd-tabbar-item :value="200" :title="$t('xiang-ce')" icon="image"></wd-tabbar-item>
+            <wd-tabbar-item :value="10" :title="$t('ke-fu')" icon="message"></wd-tabbar-item>
+          </wd-tabbar>
+        </demo-group-item>
+        <demo-group-item no-padding title="异步确认">
+          <wd-tabbar v-model="tabbar9" :before-change="onBeforeChange" bordered safeAreaInsetBottom placeholder @change="handleChange">
+            <wd-tabbar-item :value="2" is-dot :title="$t('shou-ye')" icon="home"></wd-tabbar-item>
+            <wd-tabbar-item :title="$t('fen-lei')" icon="store"></wd-tabbar-item>
+            <wd-tabbar-item :title="$t('wo-de')" icon="user"></wd-tabbar-item>
+            <wd-tabbar-item :value="200" :title="$t('xiang-ce')" icon="image"></wd-tabbar-item>
+            <wd-tabbar-item :value="10" :title="$t('ke-fu')" icon="message"></wd-tabbar-item>
+          </wd-tabbar>
+        </demo-group-item>
+        <demo-group-item no-padding :title="$t('gu-ding-di-bu')">
+          <wd-tabbar v-model="tabbar7" fixed bordered safeAreaInsetBottom placeholder @change="handleChange">
+            <wd-tabbar-item :value="2" is-dot :title="$t('shou-ye')" icon="home"></wd-tabbar-item>
+            <wd-tabbar-item :title="$t('fen-lei')" icon="store"></wd-tabbar-item>
+            <wd-tabbar-item :title="$t('wo-de')" icon="user"></wd-tabbar-item>
+            <wd-tabbar-item :value="200" :title="$t('xiang-ce')" icon="image"></wd-tabbar-item>
+            <wd-tabbar-item :value="10" :title="$t('ke-fu')" icon="message"></wd-tabbar-item>
+          </wd-tabbar>
+        </demo-group-item>
+      </demo-group>
+    </view>
   </page-wraper>
 </template>
 <script lang="ts" setup>

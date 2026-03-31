@@ -4,7 +4,7 @@ const fs = require('fs')
 const path = require('path')
 
 // 要处理的文件路径
-const themePath = '/Users/xqk/FE/wot-design-uni/src/uni_modules/wot-design-uni/components/styles/theme'
+const themePath = '/Users/xqk/FE/wot-design-uni/src/uni_modules/wot-design-uni/styles/theme'
 const filePaths = fs
   .readdirSync(themePath)
   .filter((file) => file.endsWith('.scss'))

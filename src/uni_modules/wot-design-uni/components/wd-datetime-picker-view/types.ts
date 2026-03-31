@@ -1,5 +1,5 @@
 import type { ComponentPublicInstance, ExtractPropTypes, PropType } from 'vue'
-import { baseProps, makeBooleanProp, makeNumberProp, makeRequiredProp, makeStringProp, type Numeric } from '../common/props'
+import { baseProps, makeBooleanProp, makeNumberProp, makeRequiredProp, makeStringProp, type Numeric } from '../../common/props'
 
 export type DateTimeType = 'date' | 'year-month' | 'time' | 'datetime' | 'year'
 

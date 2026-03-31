@@ -1,34 +1,24 @@
 /*
  * @Author: weisheng
  * @Date: 2025-09-28 20:02:55
- * @LastEditTime: 2026-03-06 15:26:18
+ * @LastEditTime: 2026-03-24 11:47:17
  * @LastEditors: weisheng
  * @Description:
  * @FilePath: /wot-design-uni/src/uni_modules/wot-design-uni/components/wd-drop-menu-item/types.ts
  * 记得注释
  */
 import type { ComponentPublicInstance, ExtractPropTypes, PropType } from 'vue'
-import { baseProps, makeArrayProp, makeBooleanProp, makeNumericProp, makeStringProp, numericProp } from '../common/props'
+import { baseProps, makeArrayProp, makeBooleanProp, makeNumericProp, makeStringProp, numericProp } from '../../common/props'
 
 export type DropMenuItemBeforeToggleOption = {
   // 操作状态：true 打开下拉菜单，false 关闭下拉菜单
   status: boolean
-  // 回调函数，用于控制是否允许打开或关闭下拉菜单，true 允许打开或关闭，false 不允许打开或关闭
-  resolve: (isPass: boolean) => void
 }
 
-export type DropMenuItemBeforeToggle = (option: DropMenuItemBeforeToggleOption) => void
+export type DropMenuItemBeforeToggle = (option: DropMenuItemBeforeToggleOption) => boolean | Promise<boolean>
 
 export const dorpMenuItemProps = {
   ...baseProps,
-  /**
-   * DropMenuItem 左侧文字样式
-   */
-  customTitle: makeStringProp(''),
-  /**
-   * DropMenuItem 右侧 icon 样式
-   */
-  customIcon: makeStringProp(''),
   /**
    * 当前选中项对应选中的 value
    */

@@ -55,7 +55,8 @@ export default {
   cascader: {
     title: 'Wählen',
     placeholder: 'Wählen',
-    select: 'Wählen'
+    select: 'Wählen',
+    confirm: 'Bestätigen'
   },
   loadmore: {
     loading: 'Laden...',

@@ -57,9 +57,9 @@ export default {
 <script lang="ts" setup>
 import { computed, onBeforeMount, ref, watch } from 'vue'
 import wdIcon from '../wd-icon/wd-icon.vue'
-import { isDef, pause } from '../common/util'
-import { useParent } from '../composables/useParent'
-import { useTranslate } from '../composables/useTranslate'
+import { isDef, pause } from '../../common/util'
+import { useParent } from '../../composables/useParent'
+import { useTranslate } from '../../composables/useTranslate'
 import { textareaProps } from './types'
 import { FORM_ITEM_VALIDATE_KEY } from '../wd-form-item/types'
 

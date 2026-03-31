@@ -1,5 +1,5 @@
 import type { ComponentPublicInstance, ExtractPropTypes, PropType } from 'vue'
-import { baseProps, makeArrayProp, makeBooleanProp, makeNumberProp, makeRequiredProp, makeStringProp } from '../common/props'
+import { baseProps, makeArrayProp, makeBooleanProp, makeNumberProp, makeRequiredProp, makeStringProp } from '../../common/props'
 
 export type SelectPickerType = 'checkbox' | 'radio'
 
@@ -33,7 +33,7 @@ export const selectPickerProps = {
   labelKey: makeStringProp('label'),
   /** 确认按钮文案 */
   confirmButtonText: String,
-  /** 确定前校验函数，接收 (value, resolve) 参数，通过 resolve 继续执行 picker，resolve 接收 1 个 boolean 参数 */
+  /** 确定前校验函数，接收 (value) 参数，返回 boolean 或 Promise<boolean> */
   beforeConfirm: Function as PropType<SelectPickerBeforeConfirm>,
   /** 弹窗层级 */
   zIndex: makeNumberProp(15),
@@ -60,7 +60,7 @@ export const selectPickerProps = {
 }
 export type SelectPickerProps = ExtractPropTypes<typeof selectPickerProps>
 
-export type SelectPickerBeforeConfirm = (value: string | number | boolean | (string | number | boolean)[], resolve: (isPass: boolean) => void) => void
+export type SelectPickerBeforeConfirm = (value: string | number | boolean | (string | number | boolean)[]) => boolean | Promise<boolean>
 
 export type SelectPickerExpose = {
   // 打开picker弹框

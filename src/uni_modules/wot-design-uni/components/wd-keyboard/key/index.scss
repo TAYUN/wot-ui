@@ -1,8 +1,8 @@
-@use '../../styles/mixin/mixin.scss' as *;
-@use '../../styles/variable.scss' as *;
+@use '../../../styles/mixin/mixin.scss' as *;
+@use '../../../styles/variable.scss' as *;
 
 // 按键高度
-$keyboard-key-height: var(--wot-keyboard-key-height, $n48) !default;
+$keyboard-key-height: var(--wot-keyboard-key-height, $n-48) !default;
 // 按键间距
 $keyboard-key-padding: var(--wot-keyboard-key-padding, $padding-tight) !default;
 // 按键字号
@@ -34,7 +34,7 @@ $keyboard-key-primary-bg: var(--wot-keyboard-key-primary-bg, $primary-6) !defaul
 // 主按钮激活背景色
 $keyboard-key-primary-bg-active: var(--wot-keyboard-key-primary-bg-active, $primary-7) !default;
 // 按键图标尺寸
-$keyboard-key-icon-size: var(--wot-keyboard-key-icon-size, $n22) !default;
+$keyboard-key-icon-size: var(--wot-keyboard-key-icon-size, $n-22) !default;
 
 .wd-key-wrapper {
   position: relative;

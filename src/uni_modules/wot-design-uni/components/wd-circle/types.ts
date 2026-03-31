@@ -1,5 +1,5 @@
 import type { ExtractPropTypes, PropType } from 'vue'
-import { baseProps, makeBooleanProp, makeNumberProp, makeStringProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeNumberProp, makeStringProp } from '../../common/props'
 
 // 进度条端点的形状，可选值为 "butt" | "round" | "square"
 export type StrokeLinecapType = 'butt' | 'round' | 'square'

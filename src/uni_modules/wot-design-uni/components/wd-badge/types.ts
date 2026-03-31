@@ -7,7 +7,7 @@
  * @FilePath: /wot-design-uni/src/uni_modules/wot-design-uni/components/wd-badge/types.ts
  */
 import type { ExtractPropTypes, PropType } from 'vue'
-import { baseProps, makeBooleanProp, makeStringProp, numericProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeStringProp, numericProp } from '../../common/props'
 
 /**
  * 徽标类型

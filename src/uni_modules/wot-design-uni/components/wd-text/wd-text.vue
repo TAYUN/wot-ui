@@ -21,9 +21,9 @@ export default {
 
 <script lang="ts" setup>
 import { computed, ref, watch } from 'vue'
-import { isDef, objToStyle } from '../common/util'
+import { isDef, objToStyle } from '../../common/util'
 import { textProps } from './types'
-import { formatDate } from '../common/formatDate'
+import { formatDate } from '../../common/formatDate'
 
 // 获取组件的 props 和 emit 函数
 const props = defineProps(textProps)

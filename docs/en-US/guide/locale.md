@@ -12,7 +12,7 @@ import uni from '@dcloudio/vite-plugin-uni'
 export default defineConfig({
   ...
   optimizeDeps: {
-    exclude: process.env.UNI_PLATFORM === 'h5' && process.env.NODE_ENV === 'development' ? ['wot-design-uni'] : []
+    exclude: ['wot-design-uni']
   }
   ...
 })

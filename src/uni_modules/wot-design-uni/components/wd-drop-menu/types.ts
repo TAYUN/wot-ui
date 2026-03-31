@@ -1,5 +1,5 @@
 import { type ExtractPropTypes, type InjectionKey, type Ref } from 'vue'
-import { baseProps, makeBooleanProp, makeNumberProp, makeStringProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeNumberProp, makeStringProp } from '../../common/props'
 
 export type DropDirection = 'up' | 'down'
 

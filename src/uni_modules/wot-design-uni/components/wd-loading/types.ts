@@ -8,7 +8,7 @@
  * 记得注释
  */
 import type { ExtractPropTypes } from 'vue'
-import { baseProps, makeStringProp, numericProp } from '../common/props'
+import { baseProps, makeStringProp, numericProp } from '../../common/props'
 
 export type LoadingType = 'circular' | 'spinner' | 'dots' // 提示信息加载状态类型
 

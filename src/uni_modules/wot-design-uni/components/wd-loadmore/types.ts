@@ -1,5 +1,5 @@
 import type { PropType } from 'vue'
-import { baseProps } from '../common/props'
+import { baseProps } from '../../common/props'
 import type { LoadingProps } from '../wd-loading/types'
 
 /**

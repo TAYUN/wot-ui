@@ -1,5 +1,5 @@
 import type { ExtractPropTypes, PropType } from 'vue'
-import { baseProps, makeStringProp, numericProp } from '../common/props'
+import { baseProps, makeStringProp, numericProp, makeBooleanProp } from '../../common/props'
 import type { BadgeProps } from '../wd-badge/types'
 
 /**
@@ -83,7 +83,13 @@ export const gridItemProps = {
    * 类型: Partial<BadgeProps>
    * 默认值: {}
    */
-  badgeProps: Object as PropType<Partial<BadgeProps>>
+  badgeProps: Object as PropType<Partial<BadgeProps>>,
+  /**
+   * 是否超出隐藏，显示省略号
+   * 类型: boolean
+   * 默认值: false
+   */
+  ellipsis: makeBooleanProp(false)
 }
 
 /**

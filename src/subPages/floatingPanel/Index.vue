@@ -1,7 +1,7 @@
 <!--
  * @Author: weisheng
  * @Date: 2025-07-17 10:27:32
- * @LastEditTime: 2025-10-31 13:46:40
+ * @LastEditTime: 2026-03-24 11:49:09
  * @LastEditors: weisheng
  * @Description: 
  * @FilePath: /wot-design-uni/src/subPages/floatingPanel/Index.vue
@@ -9,7 +9,7 @@
 -->
 <template>
   <wd-toast></wd-toast>
-  <view class="floating-panel">
+  <view class="loating-panel">
     <page-wraper>
       <wd-tabs v-model="tab">
         <wd-tab :title="$t('ji-chu-yong-fa-1')">
@@ -38,7 +38,7 @@
 import { ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import { useToast } from '@/uni_modules/wot-design-uni'
-import { addUnit, getSystemInfo } from '@/uni_modules/wot-design-uni/components/common/util'
+import { addUnit, getSystemInfo } from '@/uni_modules/wot-design-uni/common/util'
 
 const { show } = useToast()
 

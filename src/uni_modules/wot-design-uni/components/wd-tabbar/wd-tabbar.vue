@@ -1,10 +1,10 @@
 <!--
  * @Author: weisheng
  * @Date: 2025-12-18 14:30:46
- * @LastEditTime: 2026-02-10 16:59:28
+ * @LastEditTime: 2026-03-27 17:16:22
  * @LastEditors: weisheng
  * @Description: 
- * @FilePath: /wot-design-uni/src/uni_modules/wot-design-uni/components/wd-tabbar/wd-tabbar.vue
+ * @FilePath: /wot-design-uni/components/wd-tabbar/wd-tabbar.vue
  * 记得注释
 -->
 <template>
@@ -34,10 +34,10 @@ export default {
 <script lang="ts" setup>
 import { getCurrentInstance, onMounted, ref, watch, nextTick, computed, type CSSProperties } from 'vue'
 import type { TabbarItem } from '../wd-tabbar-item/types'
-import { addUnit, getRect, isDef, objToStyle } from '../common/util'
-import { useChildren } from '../composables/useChildren'
+import { addUnit, getRect, isDef, objToStyle } from '../../common/util'
+import { useChildren } from '../../composables/useChildren'
 import { TABBAR_KEY, tabbarProps } from './types'
-import { callInterceptor } from '../common/interceptor'
+import { callInterceptor } from '../../common/interceptor'
 
 const props = defineProps(tabbarProps)
 const emit = defineEmits(['change', 'update:modelValue'])

@@ -128,8 +128,8 @@ html.banner-show {
   text-align: center;
   font-size: 18px;
   font-weight: 600;
-  color: white;
-  background: #131A24;
+  color: var(--vp-c-white);
+  background: var(--vp-c-bg-alt);
   display: none;
   justify-content: center;
   align-items: center;
@@ -148,7 +148,7 @@ html.banner-show .banner {
   aspect-ratio: 1.5;
   pointer-events: none;
   border-radius: 100%;
-  background: linear-gradient(270deg, #7a23a1, #715ebde6 60% 80%, #bd34fe00);
+  background: linear-gradient(270deg, var(--vt-c-accent-purple), var(--vt-c-brand-2) 60% 80%, transparent);
   filter: blur(15vw);
   transform: none;
   opacity: 0.6;
@@ -162,7 +162,7 @@ html.banner-show .banner {
   aspect-ratio: 1.5;
   pointer-events: none;
   border-radius: 100%;
-  background: linear-gradient(180deg, #61d9ff, #0000);
+  background: linear-gradient(180deg, var(--vt-c-accent-cyan), transparent);
   filter: blur(15vw);
   transform: none;
   opacity: 0.3;
@@ -194,7 +194,7 @@ button:active {
 .close {
   width: 28px;
   height: 28px;
-  fill: #fff;
+  fill: var(--vp-c-white);
   transform: rotate(45deg);
   transition: transform 0.2s ease;
 }
@@ -209,7 +209,7 @@ button:hover .close {
   justify-content: center;
   flex-wrap: wrap;
   gap: 8px;
-  color: #fff;
+  color: var(--vp-c-white);
   font-size: 18px;
   line-height: 1.4;
   padding: 8px 0;
@@ -217,7 +217,7 @@ button:hover .close {
 
 .vt-banner-title {
   display: inline-block;
-  background: linear-gradient(90deg, #bd34fe 0%, #41d1ff 100%);
+  background: linear-gradient(90deg, var(--vt-c-accent-purple) 0%, var(--vt-c-accent-cyan) 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -233,9 +233,9 @@ button:hover .close {
 .vt-primary-action {
   display: inline-block;
   background:
-    radial-gradient(140.35% 140.35% at 175% 94.74%, #2bfdd2, #bd34fe00),
-    radial-gradient(89.94% 89.94% at 18.42% 15.79%, #4d80f0, #41d1ff00);
-  color: #fff;
+    radial-gradient(140.35% 140.35% at 175% 94.74%, var(--vt-c-accent-mint), transparent),
+    radial-gradient(89.94% 89.94% at 18.42% 15.79%, var(--vt-c-brand-1), transparent);
+  color: var(--vp-c-white);
   padding: 6px 12px;
   border-radius: 6px;
   font-size: 16px;
@@ -247,7 +247,7 @@ button:hover .close {
 
 .vt-primary-action:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(77, 128, 240, 0.4);
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.28);
 }
 
 .vt-primary-action:active {

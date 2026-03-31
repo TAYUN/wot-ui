@@ -39,10 +39,10 @@ export default {
 <script lang="ts" setup>
 import wdIcon from '../wd-icon/wd-icon.vue'
 import { computed, watch } from 'vue'
-import { useParent } from '../composables/useParent'
+import { useParent } from '../../composables/useParent'
 import { RADIO_GROUP_KEY } from '../wd-radio-group/types'
 import { type RadioDirection, type RadioPlacement, radioProps, type RadioType } from './types'
-import { getPropByPath, isDef } from '../common/util'
+import { getPropByPath, isDef } from '../../common/util'
 
 const props = defineProps(radioProps)
 

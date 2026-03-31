@@ -67,7 +67,7 @@ export default {
 import wdIcon from '../wd-icon/wd-icon.vue'
 import { computed, useSlots } from 'vue'
 import { buttonProps } from './types'
-import { isDef, omitBy, isUndefined } from '../common/util'
+import { isDef, omitBy, isUndefined } from '../../common/util'
 import { type LoadingProps } from '../wd-loading/types'
 
 const slots = useSlots()

@@ -68,10 +68,10 @@ export default {
 
 <script lang="ts" setup>
 import { ref, computed, watch, nextTick, type CSSProperties } from 'vue'
-import { addUnit, getRect, getSystemInfo, isDef, objToStyle } from '../common/util'
+import { addUnit, getRect, getSystemInfo, isDef, objToStyle } from '../../common/util'
 import { tourProps, type TourEmits, type TourExpose } from './types'
-import { useRaf } from '../composables/useRaf'
-import { useTranslate } from '../composables/useTranslate'
+import { useRaf } from '../../composables/useRaf'
+import { useTranslate } from '../../composables/useTranslate'
 import wdButton from '../wd-button/wd-button.vue'
 
 const props = defineProps(tourProps)

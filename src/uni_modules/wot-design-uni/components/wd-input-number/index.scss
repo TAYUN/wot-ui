@@ -1,8 +1,8 @@
-@use '../styles/mixin/mixin.scss' as *;
-@use '../styles/variable.scss' as *;
+@use '../../styles/mixin/mixin.scss' as *;
+@use '../../styles/variable.scss' as *;
 
 // 操作按钮尺寸
-$input-number-action-size: var(--wot-input-number-action-size, $n28) !default;
+$input-number-action-size: var(--wot-input-number-action-size, $n-28) !default;
 // 操作按钮背景色
 $input-number-action-bg: var(--wot-input-number-action-bg, $filled-bottom) !default;
 // 操作按钮颜色
@@ -14,23 +14,23 @@ $input-number-action-border-radius-full: var(--wot-input-number-action-border-ra
 // 操作按钮禁用颜色
 $input-number-action-disabled-color: var(--wot-input-number-action-disabled-color, $icon-disabled) !default;
 // 操作按钮分割线宽度
-$input-number-action-divider-width: var(--wot-input-number-action-divider-width, $n1) !default;
+$input-number-action-divider-width: var(--wot-input-number-action-divider-width, $stroke-main) !default;
 // 操作按钮分割线颜色
 $input-number-action-divider-bg: var(--wot-input-number-action-divider-bg, $filled-oppo) !default;
 // 分离模式分割线颜色
 $input-number-action-divider-split-bg: var(--wot-input-number-action-divider-split-bg, $filled-strong) !default;
 // 分离模式分割线高度
-$input-number-action-divider-split-height: var(--wot-input-number-action-divider-split-height, $n18) !default;
+$input-number-action-divider-split-height: var(--wot-input-number-action-divider-split-height, $n-18) !default;
 // 图标尺寸
-$input-number-icon-size: var(--wot-input-number-icon-size, $n12) !default;
+$input-number-icon-size: var(--wot-input-number-icon-size, $n-12) !default;
 // 图标线宽
-$input-number-icon-weight: var(--wot-input-number-icon-weight, $n3) !default;
+$input-number-icon-weight: var(--wot-input-number-icon-weight, $n-3) !default;
 // 输入框宽度
-$input-number-input-width: var(--wot-input-number-input-width, $n36) !default;
+$input-number-input-width: var(--wot-input-number-input-width, $n-36) !default;
 // 输入框高度
-$input-number-input-height: var(--wot-input-number-input-height, $n28) !default;
+$input-number-input-height: var(--wot-input-number-input-height, $n-28) !default;
 // 输入框内边距
-$input-number-input-padding: var(--wot-input-number-input-padding, 0 $padding-tight) !default;
+$input-number-input-padding: var(--wot-input-number-input-padding, $spacing-zero $padding-tight) !default;
 // 输入框背景色
 $input-number-input-bg: var(--wot-input-number-input-bg, $filled-bottom) !default;
 // 输入框文字颜色

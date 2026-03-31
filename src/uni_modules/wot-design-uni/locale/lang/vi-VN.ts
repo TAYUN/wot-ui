@@ -45,7 +45,7 @@ export default {
     second: (value: number) => `${value} giây`
   },
   collapse: { expand: 'Mở rộng', retract: 'Thu gọn' },
-  cascader: { title: 'Vui lòng chọn', placeholder: 'Vui lòng chọn', select: 'Vui lòng chọn' },
+  cascader: { title: 'Vui lòng chọn', placeholder: 'Vui lòng chọn', select: 'Vui lòng chọn', confirm: 'Xác nhận' },
   datetimePicker: {
     start: 'Thời gian bắt đầu',
     end: 'Thời gian kết thúc',

@@ -1,5 +1,14 @@
+/*
+ * @Author: weisheng
+ * @Date: 2026-03-13 17:20:03
+ * @LastEditTime: 2026-03-20 15:40:21
+ * @LastEditors: weisheng
+ * @Description:
+ * @FilePath: /wot-design-uni/src/uni_modules/wot-design-uni/components/wd-swipe-action/types.ts
+ * 记得注释
+ */
 import type { ExtractPropTypes, PropType } from 'vue'
-import { baseProps, makeBooleanProp, makeStringProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeStringProp } from '../../common/props'
 
 /**
  * 滑动操作的状态
@@ -23,9 +32,9 @@ export type SwipeActionPosition = SwipeActionStatus | 'inside'
  * 关闭前回调函数类型
  * @param reason 触发关闭的原因
  * @param position 操作的位置
- * @returns 返回 false 或 Promise<false> 可阻止关闭；返回 true、其他值或 undefined 则允许关闭
+ * @returns 返回 true 或 Promise<true> 允许关闭；返回 false、Promise<false> 或不返回值时会阻止关闭
  */
-export type SwipeActionBeforeClose = (reason: SwipeActionReason, position: SwipeActionPosition) => boolean | Promise<boolean> | void
+export type SwipeActionBeforeClose = (reason: SwipeActionReason, position: SwipeActionPosition) => boolean | Promise<boolean>
 
 /** 点击事件载荷 */
 export interface SwipeActionClickEvent {
@@ -38,7 +47,7 @@ export interface SwipeActionExpose {
   /**
    * 关闭已展开的操作按钮，恢复为收起状态
    */
-  close: () => void
+  close: (reason: SwipeActionReason, position?: SwipeActionPosition) => void
 }
 
 /** 组件事件定义 */
@@ -68,7 +77,7 @@ export const swipeActionProps = {
   disabled: makeBooleanProp(false),
 
   /**
-   * 关闭前的钩子，支持同步/异步；返回 false 或 Promise<false> 可阻止关闭
+   * 关闭前的钩子，支持同步/异步；返回 true 才会继续关闭
    * 类型: SwipeActionBeforeClose
    * 默认值: 无
    */

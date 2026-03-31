@@ -1,8 +1,8 @@
-@use '../styles/mixin/mixin.scss' as *;
-@use '../styles/variable.scss' as *;
+@use '../../styles/mixin/mixin.scss' as *;
+@use '../../styles/variable.scss' as *;
 
 // 导航栏高度
-$navbar-height: var(--wot-navbar-height, $n44) !default;
+$navbar-height: var(--wot-navbar-height, $n-44) !default;
 // 导航栏背景色
 $navbar-bg: var(--wot-navbar-bg, $filled-oppo) !default;
 // 标题文字颜色
@@ -16,7 +16,7 @@ $navbar-desc-font-size: var(--wot-navbar-desc-font-size, $typography-body-size-e
 // 描述区域文字颜色
 $navbar-desc-color: var(--wot-navbar-desc-color, $text-main) !default;
 // 箭头图标大小
-$navbar-arrow-size: var(--wot-navbar-arrow-size, $n24) !default;
+$navbar-arrow-size: var(--wot-navbar-arrow-size, $n-24) !default;
 // 禁用态透明度
 $navbar-opacity-disabled: var(--wot-navbar-opacity-disabled, $opacity-disabled) !default;
 // 左侧内边距

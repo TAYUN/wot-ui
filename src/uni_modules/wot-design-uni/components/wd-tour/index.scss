@@ -1,5 +1,5 @@
-@use '../styles/mixin/mixin.scss' as *;
-@use '../styles/variable.scss' as *;
+@use '../../styles/mixin/mixin.scss' as *;
+@use '../../styles/variable.scss' as *;
 
 // 层级
 $tour-z-index: var(--wot-tour-z-index, 999) !default;
@@ -12,9 +12,9 @@ $tour-highlight-shadow-color: var(--wot-tour-highlight-shadow-color, $opac-7_55)
 // 弹层层级
 $tour-popover-z-index: var(--wot-tour-popover-z-index, 1000) !default;
 // 弹层最大宽度
-$tour-popover-max-width: var(--wot-tour-popover-max-width, calc($n1 * 340)) !default;
+$tour-popover-max-width: var(--wot-tour-popover-max-width, calc($n-1 * 340)) !default;
 // 弹层最小宽度
-$tour-popover-min-width: var(--wot-tour-popover-min-width, calc($n1 * 200)) !default;
+$tour-popover-min-width: var(--wot-tour-popover-min-width, calc($n-1 * 200)) !default;
 // 弹层背景色
 $tour-popover-bg: var(--wot-tour-popover-bg, $filled-oppo) !default;
 // 弹层内边距

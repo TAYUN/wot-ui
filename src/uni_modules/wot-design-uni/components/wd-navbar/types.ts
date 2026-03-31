@@ -1,5 +1,5 @@
 import type { ExtractPropTypes } from 'vue'
-import { baseProps, makeBooleanProp, makeNumberProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeNumberProp } from '../../common/props'
 
 export const navbarProps = {
   ...baseProps,

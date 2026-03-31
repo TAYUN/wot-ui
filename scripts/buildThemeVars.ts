@@ -1,41 +1,124 @@
 import fs from 'fs'
 import path from 'path'
 
-const extractSCSSVariables = (scssFilePath: string): Record<string, string> => {
-  const scssContent = fs.readFileSync(scssFilePath, 'utf8')
-  const componentVarIndex = scssContent.indexOf('/* component var */')
-
-  if (componentVarIndex === -1) {
-    console.log('Error: Missing /* component var */ comment in SCSS file')
-    return {}
-  }
-
-  const scssContentToProcess = scssContent.substring(componentVarIndex + '/* component var */'.length)
-
-  const variableRegex = /\/\*\s*([a-zA-Z0-9-]+)\s*\*\/([\s\S]*?)(?=\/\*\s*([a-zA-Z0-9-]+)\s*\*\/|$)/g
-
-  const variables: Record<string, string> = {}
-
-  let match
-  while ((match = variableRegex.exec(scssContentToProcess)) !== null) {
-    const keyComment = match[1].replace(/-([a-z])/g, (match, letter) => letter.toUpperCase())
-    const value = match[2].trim()
-
-    variables[keyComment] = value
-  }
-  return variables
+type ThemeVarField = {
+  fieldName: string
+  comment: string
 }
 
-/**
- * 生成 TypeScript 文件内容
- * @param {object} variables - 变量对象
- * @returns {string} - TypeScript 文件内容
- */
-const generateTSFileContent = (variables: Record<string, string>) => {
+type ThemeVarGroup = {
+  typeName: string
+  fields: ThemeVarField[]
+}
+
+const tsFilePath = path.resolve(__dirname, '../src/uni_modules/wot-design-uni/components/wd-config-provider/types.ts')
+const globalScssPath = path.resolve(__dirname, '../src/uni_modules/wot-design-uni/styles/variable.scss')
+const componentsRootPath = path.resolve(__dirname, '../src/uni_modules/wot-design-uni/components')
+
+const toCamelCase = (value: string) => {
+  const segments = value.split('-').filter(Boolean)
+  if (!segments.length) return value
+  const [first, ...rest] = segments
+  return `${first}${rest.map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1)).join('')}`
+}
+
+const normalizeComment = (value: string) => value.replace(/\s+/g, ' ').trim()
+
+const parseScssVariableFields = (scssContent: string, captureComment: boolean) => {
+  const lines = scssContent.split('\n')
+  const fields: ThemeVarField[] = []
+  let pendingComment = ''
+
+  lines.forEach((line) => {
+    const inlineCommentMatch = line.match(/^\s*\/\/\s*(.+)\s*$/)
+    if (captureComment && inlineCommentMatch) {
+      pendingComment = normalizeComment(inlineCommentMatch[1])
+      return
+    }
+
+    const variableMatch = line.match(/^\s*\$([A-Za-z0-9_-]+)\s*:\s*.*?!default;\s*(?:\/\/\s*(.+))?\s*$/)
+    if (variableMatch) {
+      const variableName = variableMatch[1]
+      const inlineComment = variableMatch[2] ? normalizeComment(variableMatch[2]) : ''
+      const fieldName = toCamelCase(variableName)
+      const comment = captureComment ? inlineComment || pendingComment : ''
+      fields.push({ fieldName, comment })
+      pendingComment = ''
+      return
+    }
+
+    if (!line.trim()) {
+      pendingComment = ''
+    }
+  })
+
+  return fields
+}
+
+const getComponentScssFiles = () => {
+  const entries = fs.readdirSync(componentsRootPath, { withFileTypes: true })
+  const files = entries
+    .filter((entry) => entry.isDirectory() && entry.name.startsWith('wd-'))
+    .map((entry) => path.join(componentsRootPath, entry.name, 'index.scss'))
+    .filter((filePath) => fs.existsSync(filePath))
+    .sort((a, b) => a.localeCompare(b))
+  return files
+}
+
+const buildBaseThemeVars = () => {
+  const content = fs.readFileSync(globalScssPath, 'utf8')
+  const fields = parseScssVariableFields(content, false)
+  const fieldMap = new Map<string, ThemeVarField>()
+  fields.forEach((field) => {
+    if (!fieldMap.has(field.fieldName)) {
+      fieldMap.set(field.fieldName, field)
+    }
+  })
+  return Array.from(fieldMap.values()).sort((a, b) => a.fieldName.localeCompare(b.fieldName))
+}
+
+const buildComponentThemeVars = () => {
+  const groups: ThemeVarGroup[] = []
+  const files = getComponentScssFiles()
+
+  files.forEach((filePath) => {
+    const componentDirName = path.basename(path.dirname(filePath))
+    const componentName = toCamelCase(componentDirName.replace(/^wd-/, ''))
+    const typeName = `${componentName}ThemeVars`
+    const content = fs.readFileSync(filePath, 'utf8')
+    const parsedFields = parseScssVariableFields(content, true)
+    const fieldMap = new Map<string, ThemeVarField>()
+
+    parsedFields.forEach((field) => {
+      if (!fieldMap.has(field.fieldName)) {
+        fieldMap.set(field.fieldName, field)
+      }
+    })
+
+    const fields = Array.from(fieldMap.values()).sort((a, b) => a.fieldName.localeCompare(b.fieldName))
+    if (fields.length) {
+      groups.push({ typeName, fields })
+    }
+  })
+
+  return groups.sort((a, b) => a.typeName.localeCompare(b.typeName))
+}
+
+const renderTypeBlock = (typeName: string, fields: ThemeVarField[]) => {
+  const lines = fields.map((field) => {
+    if (field.comment) {
+      return `  ${field.fieldName}?: string // ${field.comment}`
+    }
+    return `  ${field.fieldName}?: string`
+  })
+  return `export type ${typeName} = {\n${lines.join('\n')}\n}\n`
+}
+
+const generateTSFileContent = (baseFields: ThemeVarField[], componentGroups: ThemeVarGroup[]) => {
   let tsContent = `import type { ExtractPropTypes, PropType, InjectionKey, ComputedRef } from 'vue'
 import { makeStringProp, baseProps } from '../common/props'
 
-export type ConfigProviderTheme = 'light' | 'dark'
+export type ConfigProviderTheme = 'light' | 'dark' | ''
 
 export const configProviderProps = {
   ...baseProps,
@@ -60,108 +143,28 @@ export type ConfigProviderProvide = {
 
 export const CONFIG_PROVIDER_KEY: InjectionKey<ConfigProviderProvide> = Symbol('wd-config-provider')
 
-export type baseThemeVars = {
-  colorTheme?: string // 主题色
-  colorWhite?: string // 用于mix的白色
-  colorBlack?: string // 用于mix的黑色
-  colorSuccess?: string // 成功色
-  colorWarning?: string // 警告色
-  colorDanger?: string // 危险出错色
-  colorPurple?: string // 紫色
-  colorYellow?: string // 黄色
-  colorBlue?: string // 蓝色
-  colorInfo?: string // 信息色
-  colorGray1?: string // 灰色1
-  colorGray2?: string // 灰色2
-  colorGray3?: string // 灰色3
-  colorGray4?: string // 灰色4
-  colorGray5?: string // 灰色5
-  colorGray6?: string // 灰色6
-  colorGray7?: string // 灰色7
-  colorGray8?: string // 灰色8
-  fontGray1?: string // 字体灰色1
-  fontGray2?: string // 字体灰色2
-  fontGray3?: string // 字体灰色3
-  fontGray4?: string // 字体灰色4
-  fontWhite1?: string // 字体白色1
-  fontWhite2?: string // 字体白色2
-  fontWhite3?: string // 字体白色3
-  fontWhite4?: string // 字体白色4
-  colorTitle?: string // 模块标题/重要正文
-  colorContent?: string // 普通正文
-  colorSecondary?: string // 次要信息，注释/补充/正文
-  colorAid?: string // 辅助文字字号，弱化信息，引导性/不可点文字
-  colorTip?: string // 失效、默认提示文字
-  colorBorder?: string // 控件边框线
-  colorBorderLight?: string // 分割线颜色
-  colorBg?: string // 背景色、禁用填充色
-  darkBackground?: string // 深色背景1
-  darkBackground2?: string // 深色背景2
-  darkBackground3?: string // 深色背景3
-  darkBackground4?: string // 深色背景4
-  darkBackground5?: string // 深色背景5
-  darkBackground6?: string // 深色背景6
-  darkBackground7?: string // 深色背景7
-  darkColor?: string // 深色字体1
-  darkColor2?: string // 深色字体2
-  darkColor3?: string // 深色字体3
-  darkColorGray?: string // 深色灰色
-  darkBorderColor?: string // 深色边框颜色
-  colorIcon?: string // icon颜色
-  colorIconActive?: string // icon颜色hover
-  colorIconDisabled?: string // icon颜色disabled
-  fsBig?: string // 大型标题字号
-  fsImportant?: string // 重要数据字号
-  fsTitle?: string // 标题字号/重要正文字号
-  fsContent?: string // 普通正文字号
-  fsSecondary?: string // 次要信息字号
-  fsAid?: string // 辅助文字字号
-  fwMedium?: string // 字重500
-  fwSemibold?: string // 字重600
-  sizeSidePadding?: string // 屏幕两边留白padding
-}
-
 `
 
-  for (const key in variables) {
-    tsContent += `export type ${key}ThemeVars = {\n`
-    if (variables[key].includes('\n')) {
-      const lines = variables[key].split('\n')
+  tsContent += `${renderTypeBlock('baseThemeVars', baseFields)}\n`
 
-      lines.forEach((line) => {
-        line = line.trim()
-        if (line.split(':').length === 2) {
-          const parts = line.split(':')
-          const propertyName = parts[0].replace(/^\$-/, '').replace(/-([a-z])/g, (match, letter) => letter.toUpperCase())
-          tsContent += `  ${propertyName}?: string\n`
-        }
-      })
-    } else {
-      const line = variables[key]
-      if (line.split(':').length === 2) {
-        const parts = line.split(':')
-        const propertyName = parts[0].replace(/^\$-/, '').replace(/-([a-z])/g, (match, letter) => letter.toUpperCase())
-        tsContent += `  ${propertyName}?: string\n`
-      }
-    }
+  componentGroups.forEach((group) => {
+    tsContent += `${renderTypeBlock(group.typeName, group.fields)}\n`
+  })
 
-    tsContent += '}\n\n'
+  const unionTypes = componentGroups.map((group) => group.typeName)
+  if (unionTypes.length) {
+    tsContent += `export type ConfigProviderThemeVars = baseThemeVars &\n  ${unionTypes.join(' &\n  ')}\n`
+  } else {
+    tsContent += 'export type ConfigProviderThemeVars = baseThemeVars\n'
   }
-
-  const exportTypes = Object.keys(variables)
-    .map((key) => `${key}ThemeVars`)
-    .join(' & ')
-  tsContent += `export type ConfigProviderThemeVars = baseThemeVars &\n  ${exportTypes.split('&').join('&\n ')}\n`
 
   return tsContent
 }
 
-const tsFilePath = path.resolve(__dirname, '../src/uni_modules/wot-design-uni/components/wd-config-provider/types.ts')
-const scssFilePath = path.resolve(__dirname, '../src/uni_modules/wot-design-uni/components/common/abstracts/variable.scss')
-
-const variables = extractSCSSVariables(scssFilePath)
-const tsContent = generateTSFileContent(variables)
+const baseFields = buildBaseThemeVars()
+const componentGroups = buildComponentThemeVars()
+const tsContent = generateTSFileContent(baseFields, componentGroups)
 
 fs.writeFileSync(tsFilePath, tsContent)
 
-console.log('TS file generated successfully!')
+console.log(`TS file generated successfully! base: ${baseFields.length}, components: ${componentGroups.length}`)

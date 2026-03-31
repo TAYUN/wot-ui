@@ -1,4 +1,4 @@
-import { padZero } from '../common/util'
+import { padZero } from '../../common/util'
 
 export type TimeData = {
   days: number

@@ -66,9 +66,9 @@ export default {
 <script lang="ts" setup>
 import { computed, ref, watch } from 'vue'
 import wdIcon from '../wd-icon/wd-icon.vue'
-import { isDef, pause, isEqual } from '../common/util'
-import { useParent } from '../composables/useParent'
-import { useTranslate } from '../composables/useTranslate'
+import { isDef, pause, isEqual } from '../../common/util'
+import { useParent } from '../../composables/useParent'
+import { useTranslate } from '../../composables/useTranslate'
 import { inputProps } from './types'
 import { FORM_ITEM_VALIDATE_KEY } from '../wd-form-item/types'
 

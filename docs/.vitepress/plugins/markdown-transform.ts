@@ -1,5 +1,5 @@
 import { Plugin } from 'vite';
-import { camelCase } from '../../../src/uni_modules/wot-design-uni/components/common/util'
+import { camelCase } from '../../../src/uni_modules/wot-design-uni/common/util'
 import path from 'path'
 import i18n from '../locales/markdown-transform'
 

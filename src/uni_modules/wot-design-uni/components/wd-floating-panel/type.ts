@@ -1,5 +1,5 @@
 import type { ExtractPropTypes } from 'vue'
-import { baseProps, makeArrayProp, makeBooleanProp, makeNumberProp, makeNumericProp, truthProp } from '../common/props'
+import { baseProps, makeArrayProp, makeBooleanProp, makeNumberProp, makeNumericProp, truthProp } from '../../common/props'
 
 export const floatingPanelProps = {
   ...baseProps,

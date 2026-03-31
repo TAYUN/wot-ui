@@ -111,8 +111,9 @@ import wdButton from '../wd-button/wd-button.vue'
 import wdLoading from '../wd-loading/wd-loading.vue'
 
 import { getCurrentInstance, onBeforeMount, ref, watch, nextTick, computed } from 'vue'
-import { getRect, isArray, isDef, isFunction, pause } from '../common/util'
-import { useTranslate } from '../composables/useTranslate'
+import { getRect, isArray, isDef, isFunction, pause } from '../../common/util'
+import { callInterceptor } from '../../common/interceptor'
+import { useTranslate } from '../../composables/useTranslate'
 import { selectPickerProps, type SelectPickerExpose } from './types'
 
 const { translate } = useTranslate('select-picker')
@@ -191,18 +192,6 @@ watch(
   () => props.visible,
   (val) => {
     pickerShow.value = val
-  },
-  {
-    immediate: true
-  }
-)
-
-watch(
-  () => props.beforeConfirm,
-  (fn) => {
-    if (fn && !isFunction(fn)) {
-      console.error('The type of beforeConfirm must be Function')
-    }
   },
   {
     immediate: true
@@ -301,13 +290,12 @@ function onConfirm() {
     emit('close')
     return
   }
-  if (props.beforeConfirm) {
-    props.beforeConfirm(selectList.value, (isPass: boolean) => {
-      isPass && handleConfirm()
-    })
-  } else {
-    handleConfirm()
-  }
+  callInterceptor(props.beforeConfirm, {
+    args: [selectList.value],
+    done: () => {
+      handleConfirm()
+    }
+  })
 }
 
 function handleConfirm() {

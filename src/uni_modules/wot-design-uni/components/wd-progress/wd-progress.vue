@@ -52,7 +52,7 @@ export default {
 <script lang="ts" setup>
 import wdIcon from '../wd-icon/wd-icon.vue'
 import { computed, ref, watch } from 'vue'
-import { isArray, isDef, isObj, isString, objToStyle, pause } from '../common/util'
+import { isArray, isDef, isObj, isString, objToStyle, pause } from '../../common/util'
 import { progressProps, type ProgressColor } from './types'
 
 const props = defineProps(progressProps)

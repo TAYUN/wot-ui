@@ -36,9 +36,9 @@ export default {
 import { computed, useSlots, type CSSProperties, ref } from 'vue'
 import wdIcon from '../wd-icon/wd-icon.vue'
 import wdImg from '../wd-img/wd-img.vue'
-import { addUnit, getPropByPath, isDef, isString, objToStyle } from '../common/util'
+import { addUnit, getPropByPath, isDef, isString, objToStyle } from '../../common/util'
 import { avatarProps, type AvatarShape, type AvatarSize } from './types'
-import { useParent } from '../composables/useParent'
+import { useParent } from '../../composables/useParent'
 import { AVATAR_GROUP_KEY } from '../wd-avatar-group/types'
 
 const props = defineProps(avatarProps)

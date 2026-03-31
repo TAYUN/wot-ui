@@ -1,7 +1,9 @@
 import { mount } from '@vue/test-utils'
+import { nextTick } from 'vue'
 import { describe, test, expect } from 'vitest'
 import type { ConfigProviderThemeVars } from '@/uni_modules/wot-design-uni'
 import WdConfigProvider from '@/uni_modules/wot-design-uni/components/wd-config-provider/wd-config-provider.vue'
+import WdRootPortal from '@/uni_modules/wot-design-uni/components/wd-root-portal/wd-root-portal.vue'
 
 describe('WdConfigProvider', () => {
   // 测试基本渲染
@@ -14,16 +16,16 @@ describe('WdConfigProvider', () => {
   // 测试主题配置
   test('配置主题变量', () => {
     const themeVars: ConfigProviderThemeVars = {
-      colorTheme: '#1989fa',
-      colorDanger: '#ee0a24'
+      primary6: '#1989fa',
+      dangerMain: '#ee0a24'
     }
     const wrapper = mount(WdConfigProvider, {
       props: { themeVars }
     })
 
     const style = wrapper.attributes('style')
-    expect(style).toContain('--wot-color-theme: #1989fa')
-    expect(style).toContain('--wot-color-danger: #ee0a24')
+    expect(style).toContain('--wot-primary-6: #1989fa')
+    expect(style).toContain('--wot-danger-main: #ee0a24')
   })
 
   // 测试主题模式设置
@@ -148,5 +150,82 @@ describe('WdConfigProvider', () => {
 
     expect(wrapper.classes()).toContain('wot-theme-dark')
     expect(wrapper.attributes('style')).toContain('--wot-button-primary-color: #1989fa')
+  })
+
+  test('root-portal 默认应用浅色主题类名', async () => {
+    const wrapper = mount(WdRootPortal, {
+      attachTo: document.body
+    })
+
+    await nextTick()
+
+    const portal = document.body.querySelector('.wd-root-portal')
+    expect(portal?.classList.contains('wot-theme-light')).toBe(true)
+
+    wrapper.unmount()
+  })
+
+  test('root-portal 继承最近 config-provider 的暗黑主题', async () => {
+    const wrapper = mount(
+      {
+        components: {
+          WdConfigProvider,
+          WdRootPortal
+        },
+        template: `
+          <wd-config-provider theme="dark">
+            <wd-root-portal>
+              <div class="portal-content">内容</div>
+            </wd-root-portal>
+          </wd-config-provider>
+        `
+      },
+      {
+        attachTo: document.body
+      }
+    )
+
+    await nextTick()
+
+    const portal = document.body.querySelector('.wd-root-portal')
+    expect(portal?.classList.contains('wot-theme-dark')).toBe(true)
+
+    wrapper.unmount()
+  })
+
+  test('root-portal 保留 provider 注入的主题变量覆盖', async () => {
+    const wrapper = mount(
+      {
+        components: {
+          WdConfigProvider,
+          WdRootPortal
+        },
+        data() {
+          return {
+            themeVars: {
+              textMain: '#111111'
+            }
+          }
+        },
+        template: `
+          <wd-config-provider theme="dark" :theme-vars="themeVars">
+            <wd-root-portal>
+              <div class="portal-content">内容</div>
+            </wd-root-portal>
+          </wd-config-provider>
+        `
+      },
+      {
+        attachTo: document.body
+      }
+    )
+
+    await nextTick()
+
+    const portal = document.body.querySelector('.wd-root-portal')
+    expect(portal?.classList.contains('wot-theme-dark')).toBe(true)
+    expect(portal?.getAttribute('style')).toContain('--wot-text-main: #111111')
+
+    wrapper.unmount()
   })
 })

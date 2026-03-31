@@ -1,5 +1,5 @@
-@use '../styles/variable.scss'as *;
-@use '../styles/mixin/mixin'as *;
+@use '../../styles/variable.scss'as *;
+@use '../../styles/mixin/mixin'as *;
 
 // 轮播容器圆角
 $swiper-border-radius: var(--wot-swiper-border-radius, $radius-zero) !default;

@@ -177,7 +177,7 @@ Set the `align-right` property to right-align the picker value.
 
 ## Pre-Confirmation Validation
 
-Set the `before-confirm` function. When the user clicks the "Confirm" button, the `before-confirm` function is executed, receiving `value`, `resolve`, and `picker` parameters. You can validate `value` and notify the component whether the validation passes via `resolve`. `resolve` accepts a boolean value: `resolve(true)` indicates validation passes, while `resolve(false)` indicates validation fails (the picker popup will not close). Properties like `loading` and `columns` can be directly set via the `picker` parameter.
+Set the `before-confirm` function. When the user clicks the "Confirm" button, the `before-confirm` function is executed, receiving the `value` parameter. You can return a `boolean` or `Promise<boolean>` to control whether the option passes. The picker popup won't close if it is not approved.
 
 ```html
 <wd-toast />
@@ -189,38 +189,24 @@ Set the `before-confirm` function. When the user clicks the "Confirm" button, th
 import { useToast } from '@/uni_modules/wot-design-uni'
 
 const toast = useToast()
-
-const beforeConfirm = (value, resolve, picker) => {
-  picker.setLoading(true)
-  setTimeout(() => {
-    picker.setLoading(false)
-    if (['Option 2', 'Option 3'].indexOf(value) > -1) {
-      resolve(false)
-      toast.error('Validation failed. Please reselect.')
-    } else {
-      resolve(true)
-    }
-  }, 2000)
-}
-
 const columns = ref(['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5', 'Option 6', 'Option 7'])
 const value = ref('')
 
-const beforeConfirm = (value, resolve, picker) => {
-  picker.setLoading(true)
-  setTimeout(() => {
-    picker.setLoading(false)
-    if (['Option 2', 'Option 3'].indexOf(value) > -1) {
-      resolve(false)
-      toast.error('Validation failed. Please reselect.')
-    } else {
-      resolve(true)
-    }
-  }, 2000)
+const beforeConfirm = (value) => {
+  return new Promise<boolean>((resolve) => {
+    setTimeout(() => {
+      if (['Option 2', 'Option 3'].indexOf(value) > -1) {
+        toast.error('Validation failed. Please reselect.')
+        resolve(false)
+      } else {
+        resolve(true)
+      }
+    }, 2000)
+  })
 }
 
-function handleConfirm({ value }) {
-  value.value = value
+function handleConfirm({ value: val }) {
+  value.value = val
 }
 ```
 
@@ -262,7 +248,7 @@ Enable `use-default-slot` and use the default slot to customize the picker trigg
 | align-right | Right-align the picker value | boolean | - | false | - |
 | use-label-slot | Use label slot | boolean | - | false | - |
 | use-default-slot | Use default slot | boolean | - | false | - |
-| before-confirm | Pre-confirmation validation function (receives value, resolve, picker) | function | - | - | - |
+| before-confirm | Pre-confirmation validation function, receives (value) parameter, returns a `boolean` or `Promise<boolean>` | function | - | - | - |
 | close-on-click-modal | Close popup when clicking the mask | boolean | - | true | - |
 | z-index | Popup z-index | number | - | 15 | - |
 | safe-area-inset-bottom | Enable bottom safe area for iPhone X-type devices | boolean | - | true | - |

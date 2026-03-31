@@ -32,7 +32,7 @@ export default {
 <script lang="ts" setup>
 import { computed, type CSSProperties } from 'vue'
 import { badgeProps } from './types'
-import { addUnit, isDef, isNumber, objToStyle } from '../common/util'
+import { addUnit, isDef, isNumber, objToStyle } from '../../common/util'
 
 const props = defineProps(badgeProps)
 

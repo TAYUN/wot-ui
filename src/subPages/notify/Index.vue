@@ -1,40 +1,53 @@
-<!--
- * @Author: weisheng
- * @Date: 2025-07-17 10:27:32
- * @LastEditTime: 2026-03-04 10:49:22
- * @LastEditors: weisheng
- * @Description: 
- * @FilePath: /wot-design-uni/src/subPages/notify/Index.vue
- * 记得注释
--->
 <template>
   <page-wraper>
-    <demo-block :title="$t('jiBenYongFa')" transparent>
-      <wd-cell-group>
-        <wd-cell :title="$t('ji-chu-yong-fa-0')" is-link @click="showBasicNotify" />
-      </wd-cell-group>
-    </demo-block>
-    <demo-block :title="$t('tong-zhi-lei-xing')" transparent>
-      <wd-cell-group>
-        <wd-cell :title="$t('zhu-yao-tong-zhi')" is-link @click="showType('primary')" />
-        <wd-cell :title="$t('cheng-gong-tong-zhi')" is-link @click="showType('success')" />
-        <wd-cell :title="$t('wei-xian-tong-zhi')" is-link @click="showType('danger')" />
-        <wd-cell :title="$t('jing-gao-tong-zhi')" is-link @click="showType('warning')" />
-      </wd-cell-group>
-    </demo-block>
-    <demo-block :title="$t('zi-ding-yi-pei-zhi')" transparent>
-      <wd-cell-group>
-        <wd-cell :title="$t('zi-ding-yi-yan-se-0')" is-link @click="showCustomColor" />
-        <wd-cell :title="$t('zi-ding-yi-wei-zhi')" is-link @click="showCustomPosition" />
-        <wd-cell :title="$t('zi-ding-yi-shi-chang')" is-link @click="showCustomDuration" />
-        <wd-cell :title="t('xian-shi-guan-bi-an-niu')" is-link @click="showClosableNotify" />
-      </wd-cell-group>
-    </demo-block>
-    <demo-block :title="$t('shi-yong-notify-zu-jian')" transparent>
-      <wd-cell-group>
-        <wd-cell :title="$t('shi-yong-notify-zu-jian-0')" is-link @click="showNotifyComponent" />
-      </wd-cell-group>
-    </demo-block>
+    <view class="page-notify">
+      <demo-group title="组件状态" transparent>
+        <demo-group-item no-padding title="基础用法" transparent>
+          <wd-cell-group>
+            <wd-cell :title="$t('ji-chu-yong-fa-0')" is-link @click="showBasicNotify" />
+          </wd-cell-group>
+        </demo-group-item>
+
+        <demo-group-item no-padding title="自定义配置" transparent>
+          <wd-cell-group>
+            <wd-cell :title="$t('zi-ding-yi-yan-se-0')" is-link @click="showCustomColor" />
+            <wd-cell :title="$t('zi-ding-yi-wei-zhi')" is-link @click="showCustomPosition" />
+            <wd-cell :title="$t('zi-ding-yi-shi-chang')" is-link @click="showCustomDuration" />
+            <wd-cell :title="t('xian-shi-guan-bi-an-niu')" is-link @click="showClosableNotify" />
+          </wd-cell-group>
+        </demo-group-item>
+      </demo-group>
+
+      <demo-group title="组件类型" transparent>
+        <demo-group-item no-padding title="通知类型" transparent>
+          <wd-cell-group>
+            <wd-cell :title="$t('zhu-yao-tong-zhi')" is-link @click="showType('primary')" />
+            <wd-cell :title="$t('cheng-gong-tong-zhi')" is-link @click="showType('success')" />
+            <wd-cell :title="$t('wei-xian-tong-zhi')" is-link @click="showType('danger')" />
+            <wd-cell :title="$t('jing-gao-tong-zhi')" is-link @click="showType('warning')" />
+          </wd-cell-group>
+        </demo-group-item>
+      </demo-group>
+
+      <demo-group title="组件样式" transparent>
+        <demo-group-item no-padding title="悬浮通知" transparent>
+          <wd-cell-group>
+            <wd-cell :title="$t('zhu-yao-tong-zhi')" is-link @click="showFloatingType('primary')" />
+            <wd-cell :title="$t('cheng-gong-tong-zhi')" is-link @click="showFloatingType('success')" />
+            <wd-cell :title="$t('wei-xian-tong-zhi')" is-link @click="showFloatingType('danger')" />
+            <wd-cell :title="$t('jing-gao-tong-zhi')" is-link @click="showFloatingType('warning')" />
+          </wd-cell-group>
+        </demo-group-item>
+      </demo-group>
+
+      <demo-group title="内容形态" transparent>
+        <demo-group-item no-padding title="使用 Notify 组件" transparent>
+          <wd-cell-group>
+            <wd-cell :title="$t('shi-yong-notify-zu-jian-0')" is-link @click="showNotifyComponent" />
+          </wd-cell-group>
+        </demo-group-item>
+      </demo-group>
+    </view>
     <wd-notify selector="visible" type="success" v-model:visible="visible">
       <wd-icon name="check-outline" size="inherit" color="inherit" />
       {{ $t('cheng-gong-tong-zhi-0') }}
@@ -58,6 +71,14 @@ const showType = (type: NotifyType) => {
   })
 }
 const showBasicNotify = () => showNotify(t('ce-shi'))
+const showFloatingType = (type: NotifyType) => {
+  showNotify({
+    message: t('tong-zhi-nei-rong'),
+    type,
+    variant: 'floating',
+    closable: true
+  })
+}
 const showCustomColor = () => {
   showNotify({
     color: '#ad0000',

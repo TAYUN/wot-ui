@@ -45,7 +45,7 @@ export default {
 
 <script lang="ts" setup>
 import { computed, getCurrentInstance, onMounted, ref } from 'vue'
-import { addUnit, objToStyle, uuid } from '../common/util'
+import { addUnit, objToStyle, uuid } from '../../common/util'
 import { resizeProps } from './types'
 
 const props = defineProps(resizeProps)

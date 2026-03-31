@@ -27,9 +27,9 @@ export default {
 </script>
 <script lang="ts" setup>
 import { computed, type CSSProperties } from 'vue'
-import { useChildren } from '../composables/useChildren'
+import { useChildren } from '../../composables/useChildren'
 import { ROW_KEY, rowProps } from './types'
-import { addUnit, objToStyle } from '../common/util'
+import { addUnit, objToStyle } from '../../common/util'
 
 const props = defineProps(rowProps)
 const { linkChildren } = useChildren(ROW_KEY)

@@ -8,7 +8,7 @@
  * 记得注释
  */
 import { type ExtractPropTypes, type InjectionKey } from 'vue'
-import { baseProps, makeBooleanProp, makeNumberProp, makeStringProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeNumberProp, makeStringProp } from '../../common/props'
 
 export const stepsProps = {
   ...baseProps,

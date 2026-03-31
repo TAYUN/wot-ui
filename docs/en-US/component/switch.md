@@ -44,26 +44,19 @@ Set the `disabled` property.
 
 ## Before Change Hook
 
-Set the `before-change` property as a hook before modification. It receives { value, resolve } parameters, where `resolve(true)` means the modification is approved, and `resolve(false)` means no modification.
+Set the `before-change` property as a hook before modification. It receives the target `value`, returns `false` to prevent switching, and supports `Promise<boolean>`.
 
 ```html
 <wd-switch v-model="checked" :before-change="beforeChange" @change="handleChange" />
 ```
 
 ```typescript
-import { useMessage } from '@/uni_modules/wot-design-uni'
+import { useDialog } from '@/uni_modules/wot-design-uni'
 
-const message = useMessage()
+const message = useDialog()
 
-const beforeChange = ({ value, resolve }) => {
-  message
-    .confirm('Do you want to toggle the switch?')
-    .then(() => {
-      resolve(true)
-    })
-    .catch(() => {
-      resolve(false)
-    })
+const beforeChange = (value) => {
+  return message.confirm('Do you want to toggle the switch?').then(() => true).catch(() => false)
 }
 ```
 

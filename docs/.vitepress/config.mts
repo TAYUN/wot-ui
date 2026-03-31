@@ -2,6 +2,8 @@ import { defineConfig } from 'vitepress';
 import viteCompression from 'vite-plugin-compression'
 import { fileURLToPath, URL } from 'node:url'
 import { MarkdownTransform } from './plugins/markdown-transform'
+import { MarkdownVersionBadgeTransform } from './plugins/markdown-version-badge-transform'
+import { MarkdownScssVariablesTransform } from './plugins/markdown-scss-variables-transform'
 import { VersionBadgePlugin } from './plugins/version-badge'
 import llmstxt from 'vitepress-plugin-llms'
 import enUS from './locales/en-US'
@@ -13,7 +15,9 @@ export default defineConfig({
         ignoreFiles: ['reward/*', 'index.md', 'README.md', 'en-US/*.md', 'en-US/**/*.md', 'ads/*', 'guide/cases.md', 'guide/changelog.md', 'guide/join-group.md', 'guide/typography.md'],
         domain: 'https://wot-ui.cn',
       }) as any,
+      MarkdownScssVariablesTransform(),
       MarkdownTransform(),
+      MarkdownVersionBadgeTransform(),
       VersionBadgePlugin(),
       viteCompression({
         verbose: true,
@@ -66,7 +70,7 @@ export default defineConfig({
     }
   },
   title: `Wot UI`,
-  description: '一个参照wot-design打造的uni-app组件库',
+  description: '一个轻量、美观、AI友好的 uni-app 组件库',
   locales: {
     root: {
       label: '简体中文',

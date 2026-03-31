@@ -1,5 +1,5 @@
-@use '../styles/mixin/mixin.scss' as *;
-@use '../styles/variable.scss' as *;
+@use '../../styles/mixin/mixin.scss' as *;
+@use '../../styles/variable.scss' as *;
 
 $index-bar-sidebar-right: var(--wot-index-bar-sidebar-right, $spacing-super-tight) !default;
 $index-bar-index-font-size: var(--wot-index-bar-index-font-size, $typography-label-size-main) !default;
@@ -10,7 +10,7 @@ $index-bar-index-color: var(--wot-index-bar-index-color, $text-auxiliary) !defau
 $index-bar-index-border-radius: var(--wot-index-bar-index-border-radius, $radius-radius-full) !default;
 $index-bar-index-color-active: var(--wot-index-bar-index-color-active, $text-white) !default;
 $index-bar-index-bg-active: var(--wot-index-bar-index-bg-active, $primary-6) !default;
-$index-bar-current-index-size: var(--wot-index-bar-current-index-size, $n56) !default;
+$index-bar-current-index-size: var(--wot-index-bar-current-index-size, $n-56) !default;
 $index-bar-current-index-bg: var(--wot-index-bar-current-index-bg, $primary-6) !default;
 $index-bar-current-index-color: var(--wot-index-bar-current-index-color, $text-white) !default;
 $index-bar-current-index-font-size: var(--wot-index-bar-current-index-font-size, $typography-title-size-extra-large) !default;

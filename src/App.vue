@@ -1,18 +1,9 @@
-<!--
- * @Author: weisheng
- * @Date: 2024-10-12 13:07:08
- * @LastEditTime: 2026-02-05 10:31:38
- * @LastEditors: weisheng
- * @Description: 
- * @FilePath: /wot-design-uni/src/App.vue
- * 记得注释
--->
 <script setup lang="ts">
 import { onLaunch, onShow, onHide, onThemeChange } from '@dcloudio/uni-app'
 import { useDark } from './store'
 import { useI18nSync } from './hooks/useI18nSync'
 import { useIframeMessage } from './hooks/useIframeMessage'
-import { getSystemInfo } from './uni_modules/wot-design-uni/components/common/util'
+import { getSystemInfo } from './uni_modules/wot-design-uni/common/util'
 
 // 初始化国际化
 const darkMode = useDark()
@@ -45,8 +36,8 @@ onHide(() => {
 </script>
 <style lang="scss">
 @use '@/iconfont/index.css';
-
-@use './uni_modules/wot-design-uni/components/styles/theme/index.scss' as *;
+@use './uni_modules/wot-design-uni/styles/theme/index.scss' as *;
+@use './theme/presets.scss' as *;
 
 ::-webkit-scrollbar {
   width: 0;

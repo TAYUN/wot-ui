@@ -92,7 +92,7 @@ export default {
 <script lang="ts" setup>
 import wdSwiperNav from '../wd-swiper-nav/wd-swiper-nav.vue'
 import { computed, watch, ref, getCurrentInstance, useSlots, type CSSProperties } from 'vue'
-import { addUnit, isObj, isImageUrl, isVideoUrl, uuid, isDef, objToStyle } from '../common/util'
+import { addUnit, isObj, isImageUrl, isVideoUrl, uuid, isDef, objToStyle } from '../../common/util'
 import { swiperProps, type SwiperItem } from './types'
 import type { SwiperNavProps } from '../wd-swiper-nav/types'
 const slots = useSlots()

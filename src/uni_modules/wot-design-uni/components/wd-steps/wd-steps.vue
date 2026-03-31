@@ -25,7 +25,7 @@ export default {
 }
 </script>
 <script lang="ts" setup>
-import { useChildren } from '../composables/useChildren'
+import { useChildren } from '../../composables/useChildren'
 import { STEPS_KEY, stepsProps } from './types'
 
 const props = defineProps(stepsProps)

@@ -14,6 +14,16 @@
       @close="handlePickerClose"
       @after-leave="handleAfterLeave"
     >
+      <template v-if="props.checkStrictly" #close>
+        <view class="wd-cascader__action">
+          <view
+            :class="`wd-cascader__action-confirm ${!canStrictConfirm ? 'wd-cascader__action-confirm--disabled' : ''}`"
+            @click="handleStrictConfirm"
+          >
+            {{ confirmButtonText }}
+          </view>
+        </view>
+      </template>
       <wd-tabs
         ref="tabsRef"
         :model-value="activeTab"
@@ -31,8 +41,8 @@
           :name="tabIndex"
           :lazy="false"
         >
-          <view class="wd-cascader__panel">
-            <scroll-view scroll-y class="wd-cascader__list">
+          <view :class="['wd-cascader__panel', { 'is-loading': loadingTabs.includes(tabIndex) }]">
+            <scroll-view :scroll-y="!loadingTabs.includes(tabIndex)" class="wd-cascader__list">
               <view
                 v-for="(item, index) in tab.options"
                 :key="index"
@@ -55,7 +65,7 @@
               </view>
             </scroll-view>
             <view v-if="loadingTabs.includes(tabIndex)" class="wd-cascader__loading">
-              <wd-loading />
+              <wd-loading custom-class="wd-cascader__loading-icon" />
             </view>
           </view>
         </wd-tab>
@@ -82,10 +92,11 @@ import wdActionSheet from '../wd-action-sheet/wd-action-sheet.vue'
 import wdTabs from '../wd-tabs/wd-tabs.vue'
 import wdTab from '../wd-tab/wd-tab.vue'
 import wdLoading from '../wd-loading/wd-loading.vue'
+import { callInterceptor } from '../../common/interceptor'
 import { ref, watch, nextTick, computed } from 'vue'
-import { isArray, isDef, isFunction } from '../common/util'
-import { useTranslate } from '../composables/useTranslate'
-import { cascaderProps, type CascaderExpose, type CascaderOption, type CascaderTab, type CascaderLazyLoad } from './types'
+import { isArray, isDef } from '../../common/util'
+import { useTranslate } from '../../composables/useTranslate'
+import { cascaderProps, type CascaderExpose, type CascaderOption, type CascaderTab } from './types'
 import { type TabsInstance } from '../wd-tabs/types'
 
 const { translate } = useTranslate('cascader')
@@ -99,45 +110,82 @@ const tabs = ref<CascaderTab[]>([]) // 面板状态数据
 const activeTab = ref<number>(0) // 当前停留的列下标
 const inited = ref<boolean>(false)
 const loadingTabs = ref<number[]>([]) // 正在异步加载数据的列下标集合
-const innerOptions = ref<CascaderOption[]>(props.options as CascaderOption[]) // 内部维护的选项数据，静态模式初始化后脱离 props 响应
+const innerOptions = ref<CascaderOption[]>(props.options as CascaderOption[]) // 内部维护的选项数据（静态 + 异步缓存）
+const isRestoring = ref<boolean>(false) // 是否正在执行自动逐级恢复
 
 /**
- * 获取选中的值构成的数组，用以后续匹配全路径。
+ * 获取 modelValue 对应的叶子值（单值场景取值本身，数组取最后一项）。
  */
-function getSelectedValues(): (string | number)[] {
+function getLeafValue(): string | number | '' {
   const { modelValue } = props
-  return isArray(modelValue) ? modelValue : isDef(modelValue) ? [modelValue] : []
+  if (isArray(modelValue)) {
+    return modelValue.length > 0 ? modelValue[modelValue.length - 1] : ''
+  }
+  return isDef(modelValue) ? modelValue : ''
 }
 
 /**
- * 核心逻辑：根据当前的初始值或重新传入的 source 建立 tabs 结构。
- * 组件会自动从叶子节点回溯全路径并展示对应的面板。
+ * 获取 modelValue 作为路径数组。
  */
-function buildTabs() {
-  const { lazyLoad, findPath, modelValue, childrenKey } = props
+function getPathValues(): (string | number)[] {
+  const { modelValue } = props
+  if (isArray(modelValue)) return modelValue
+  return isDef(modelValue) && modelValue !== '' ? [modelValue] : []
+}
 
-  if (lazyLoad) {
-    // 异步模式：仅在有 findPath 时重建回显路径，其余情况不干预 tabs
-    if (isDef(modelValue) && modelValue !== '' && findPath) {
-      findPath(modelValue, (pathTabs) => {
-        tabs.value = pathTabs.map((item) => ({
-          options: item.options,
-          selectedOption: item.selectedOption
-        }))
-        activeTab.value = Math.max(pathTabs.length - 1, 0)
-      })
+/**
+ * DFS 查找某父节点的已缓存子节点。
+ */
+function getCachedChildren(parentValue: string | number): CascaderOption[] | null {
+  const { valueKey, childrenKey } = props
+  function dfs(options: CascaderOption[]): CascaderOption[] | null {
+    for (const option of options) {
+      if (option[valueKey] === parentValue) {
+        const children = option[childrenKey]
+        return isArray(children) ? children : null
+      }
+      if (option[childrenKey] && option[childrenKey].length > 0) {
+        const result = dfs(option[childrenKey])
+        if (result) return result
+      }
     }
-    return
+    return null
   }
+  return innerOptions.value.length > 0 ? dfs(innerOptions.value) : null
+}
 
-  // 静态模式：使用 innerOptions
+/**
+ * 将异步加载的子节点挂载到缓存树中对应父节点下。
+ */
+function attachChildrenToTree(parentValue: string | number, children: CascaderOption[]) {
+  const { valueKey, childrenKey } = props
+  function dfs(options: CascaderOption[]): boolean {
+    for (const option of options) {
+      if (option[valueKey] === parentValue) {
+        option[childrenKey] = children
+        return true
+      }
+      if (option[childrenKey] && option[childrenKey].length > 0) {
+        if (dfs(option[childrenKey])) return true
+      }
+    }
+    return false
+  }
+  dfs(innerOptions.value)
+}
+
+/**
+ * 从缓存树构建 tabs 结构（静态与异步模式共用）。
+ */
+function buildTabsFromTree() {
+  const { childrenKey } = props
   if (!innerOptions.value.length) {
     tabs.value = []
     return
   }
 
-  const values = getSelectedValues()
-  const path = values.length > 0 ? findPathByValue(innerOptions.value, values[0]) || [] : []
+  const leafValue = getLeafValue()
+  const path = leafValue !== '' ? findPathByValue(innerOptions.value, leafValue) || [] : []
   const newTabs: CascaderTab[] = []
 
   for (let opts: CascaderOption[] | undefined = innerOptions.value, i = 0; opts?.length; i++) {
@@ -148,6 +196,109 @@ function buildTabs() {
 
   tabs.value = newTabs
   activeTab.value = Math.max(newTabs.length - 1, 0)
+}
+
+/**
+ * 异步模式下根据路径数组逐级调用 lazyLoad 恢复选中状态。
+ */
+function autoRestoreFromPath(pathValues: (string | number)[]) {
+  const { lazyLoad, valueKey } = props
+  if (!lazyLoad || pathValues.length === 0) return
+
+  isRestoring.value = true
+  const newTabs: CascaderTab[] = []
+
+  function restoreLevel(level: number, parentOption: CascaderOption | null) {
+    const targetValue = pathValues[level]
+    const isLastLevel = level === pathValues.length - 1
+
+    // 尝试从缓存获取当前级选项
+    let cachedOptions: CascaderOption[] | null = null
+    if (level === 0) {
+      cachedOptions = innerOptions.value.length > 0 ? innerOptions.value : null
+    } else if (parentOption) {
+      cachedOptions = getCachedChildren(parentOption[valueKey])
+    }
+
+    if (cachedOptions) {
+      // 缓存命中
+      const matched = cachedOptions.find((opt) => opt[valueKey] === targetValue)
+      newTabs.push({ options: cachedOptions, selectedOption: matched || null })
+      tabs.value = [...newTabs]
+      activeTab.value = newTabs.length - 1
+
+      if (!matched || isLastLevel) {
+        isRestoring.value = false
+        return
+      }
+      restoreLevel(level + 1, matched)
+    } else {
+      // 需要异步加载
+      const tabIndex = level
+      newTabs.push({ options: [], selectedOption: null })
+      tabs.value = [...newTabs]
+      loadingTabs.value = [...loadingTabs.value, tabIndex]
+
+      lazyLoad!(parentOption, tabIndex, (children) => {
+        loadingTabs.value = loadingTabs.value.filter((i) => i !== tabIndex)
+
+        // 写入缓存
+        if (level === 0) {
+          innerOptions.value = children
+        } else if (parentOption) {
+          attachChildrenToTree(parentOption[valueKey], children)
+        }
+
+        if (children.length === 0) {
+          // 空数据，停止恢复
+          tabs.value = newTabs.slice(0, level)
+          isRestoring.value = false
+          return
+        }
+
+        const matched = children.find((opt) => opt[valueKey] === targetValue)
+        newTabs[tabIndex] = { options: children, selectedOption: matched || null }
+        tabs.value = [...newTabs]
+        activeTab.value = newTabs.length - 1
+
+        if (!matched || isLastLevel) {
+          isRestoring.value = false
+          return
+        }
+        restoreLevel(level + 1, matched)
+      })
+    }
+  }
+
+  restoreLevel(0, null)
+}
+
+/**
+ * 核心逻辑：根据当前的初始值或重新传入的 source 建立 tabs 结构。
+ */
+function buildTabs() {
+  const { lazyLoad } = props
+
+  if (lazyLoad) {
+    // 异步模式：先尝试从缓存树恢复
+    const leafValue = getLeafValue()
+    if (leafValue !== '' && innerOptions.value.length > 0) {
+      const path = findPathByValue(innerOptions.value, leafValue)
+      if (path) {
+        buildTabsFromTree()
+        return
+      }
+    }
+    // 缓存未命中，尝试路径数组逐级加载
+    const pathValues = getPathValues()
+    if (pathValues.length > 0) {
+      autoRestoreFromPath(pathValues)
+    }
+    return
+  }
+
+  // 静态模式
+  buildTabsFromTree()
 }
 
 /**
@@ -183,6 +334,14 @@ const selectedOptions = computed(() => {
   return tabs.value.map((tab: CascaderTab) => tab.selectedOption).filter(Boolean) as CascaderOption[]
 })
 
+const canStrictConfirm = computed(() => {
+  return !isRestoring.value
+})
+
+const confirmButtonText = computed(() => {
+  return props.confirmText || translate('confirm')
+})
+
 // props.options 变更时同步 innerOptions 并重建静态 tabs
 watch(
   () => props.options,
@@ -195,44 +354,17 @@ watch(
   { deep: true }
 )
 
-// modelValue 变更：静态模式直接重建；异步模式仅在有 findPath 时重建以支持回显
+// modelValue 变更：静态模式直接重建；异步模式尝试缓存恢复或逐级加载
 watch(
   () => props.modelValue,
   () => {
     if (!props.lazyLoad) {
       buildTabs()
-    } else if (isDef(props.modelValue) && props.modelValue !== '' && props.findPath) {
-      buildTabs()
-    }
-  },
-  { immediate: true }
-)
-
-watch(
-  () => props.beforeConfirm,
-  (fn) => {
-    if (fn && !isFunction(fn)) {
-      console.error('The type of beforeConfirm must be Function')
-    }
-  },
-  { immediate: true }
-)
-
-watch(
-  () => props.lazyLoad,
-  (fn) => {
-    if (fn && !isFunction(fn)) {
-      console.error('The type of lazyLoad must be Function')
-    }
-  },
-  { immediate: true }
-)
-
-watch(
-  () => props.findPath,
-  (fn) => {
-    if (fn && !isFunction(fn)) {
-      console.error('The type of findPath must be Function')
+    } else {
+      const pathValues = getPathValues()
+      if (pathValues.length > 0) {
+        buildTabs()
+      }
     }
   },
   { immediate: true }
@@ -242,7 +374,7 @@ watch(
   () => props.visible,
   (val) => {
     if (val) {
-      showPicker()
+      open()
     } else {
       close()
     }
@@ -255,18 +387,31 @@ watch(pickerShow, (val) => {
 })
 
 /**
- * 打开级联选择器弹窗。
- */
-function open() {
-  showPicker()
-}
-
-/**
  * 关闭级联选择器弹窗。
  */
 function close() {
   pickerShow.value = false
   handlePickerClose()
+}
+
+function open() {
+  pickerShow.value = true
+  // 异步模式：弹窗打开时，有缓存直接重建，否则加载根节点
+  if (props.lazyLoad && !tabs.value.length) {
+    if (innerOptions.value.length > 0) {
+      // 缓存已有根节点，直接构建
+      buildTabsFromTree()
+    } else {
+      // 无缓存，加载根节点
+      tabs.value = [{ options: [], selectedOption: null }]
+      loadingTabs.value = [0]
+      props.lazyLoad(null, 0, (children) => {
+        innerOptions.value = children
+        tabs.value = [{ options: children, selectedOption: null }]
+        loadingTabs.value = loadingTabs.value.filter((i) => i !== 0)
+      })
+    }
+  }
 }
 
 function handleEnter() {
@@ -287,28 +432,13 @@ function handlePickerClose() {
 }
 
 function handleAfterLeave() {
-  if (props.lazyLoad) {
-    // 仅在有 findPath 且 modelValue 有值时重建回显路径
-    // 无 findPath 时保留 tabs，showPicker 会在 tabs 为空时重新加载根节点
-    if (props.findPath && isDef(props.modelValue) && props.modelValue !== '') {
-      buildTabs()
-    }
-  } else {
-    buildTabs()
-  }
+  // 异步模式利用缓存树重建 tabs，静态模式直接重建
+  buildTabs()
 }
 
-function showPicker() {
-  pickerShow.value = true
-  // 异步模式：弹窗打开时，若 tabs 为空则按需加载根节点
-  if (props.lazyLoad && !tabs.value.length) {
-    tabs.value = [{ options: [], selectedOption: null }]
-    loadingTabs.value = [0]
-    props.lazyLoad(null, 0, (children) => {
-      tabs.value = [{ options: children, selectedOption: null }]
-      loadingTabs.value = loadingTabs.value.filter((i) => i !== 0)
-    })
-  }
+function handleStrictConfirm() {
+  if (!canStrictConfirm.value) return
+  handleFinish()
 }
 
 /**
@@ -322,10 +452,17 @@ function chooseItem(tabIndex: number, index: number) {
 
   if (item.disabled) return
 
+  const { childrenKey, lazyLoad, isLeafKey, valueKey, checkStrictly } = props
+
+  // checkStrictly 模式：点击已选中的项则取消选中，并清除后续列
+  if (checkStrictly && currentTab.selectedOption?.[valueKey] === item[valueKey]) {
+    currentTab.selectedOption = null
+    tabs.value = tabs.value.slice(0, tabIndex + 1)
+    return
+  }
+
   // 设置选中状态
   currentTab.selectedOption = item
-
-  const { childrenKey, lazyLoad, isLeafKey } = props
 
   // 显式标识为叶子节点，直接触发 confirm
   if (item[isLeafKey] === true) {
@@ -335,27 +472,46 @@ function chooseItem(tabIndex: number, index: number) {
   }
 
   if (lazyLoad) {
-    // 异步模式：追加占位 tab 并触发加载
-    const nextTabIndex = tabIndex + 1
-    const nextTabs = tabs.value.slice(0, tabIndex + 1)
-    nextTabs.push({ options: [], selectedOption: null })
-    tabs.value = nextTabs
-    loadingTabs.value = [...loadingTabs.value, nextTabIndex]
-    nextTick(() => {
-      activeTab.value = nextTabIndex
-    })
-    ;(lazyLoad as CascaderLazyLoad)(item, nextTabIndex, (children) => {
-      loadingTabs.value = loadingTabs.value.filter((i) => i !== nextTabIndex)
-      if (children.length === 0) {
-        // 返回空数组，视为叶子节点
+    // 异步模式：先检查缓存
+    const cachedChildren = getCachedChildren(item[valueKey])
+    if (cachedChildren !== null) {
+      // 缓存命中
+      if (cachedChildren.length === 0) {
         tabs.value = tabs.value.slice(0, tabIndex + 1)
         handleFinish()
       } else {
-        if (tabs.value[nextTabIndex]) {
-          tabs.value[nextTabIndex].options = children
-        }
+        const nextTabs = tabs.value.slice(0, tabIndex + 1)
+        nextTabs.push({ options: cachedChildren, selectedOption: null })
+        tabs.value = nextTabs
+        nextTick(() => {
+          activeTab.value = tabIndex + 1
+        })
       }
-    })
+    } else {
+      // 无缓存，异步加载
+      const nextTabIndex = tabIndex + 1
+      const nextTabs = tabs.value.slice(0, tabIndex + 1)
+      nextTabs.push({ options: [], selectedOption: null })
+      tabs.value = nextTabs
+      loadingTabs.value = [...loadingTabs.value, nextTabIndex]
+      nextTick(() => {
+        activeTab.value = nextTabIndex
+      })
+      lazyLoad(item, nextTabIndex, (children) => {
+        loadingTabs.value = loadingTabs.value.filter((i) => i !== nextTabIndex)
+        // 写入缓存
+        attachChildrenToTree(item[valueKey], children)
+        if (children.length === 0) {
+          // 返回空数组，视为叶子节点
+          tabs.value = tabs.value.slice(0, tabIndex + 1)
+          handleFinish()
+        } else {
+          if (tabs.value[nextTabIndex]) {
+            tabs.value[nextTabIndex].options = children
+          }
+        }
+      })
+    }
     return
   }
 
@@ -385,15 +541,10 @@ function handleFinish() {
   const options = selectedOptions.value
   const finalValue = values.length > 0 ? values[values.length - 1] : ''
 
-  if (beforeConfirm) {
-    beforeConfirm(finalValue, options, (isPass: boolean) => {
-      if (isPass) {
-        onConfirm(values, options)
-      }
-    })
-  } else {
-    onConfirm(values, options)
-  }
+  callInterceptor(beforeConfirm, {
+    args: [finalValue, options],
+    done: () => onConfirm(values, options)
+  })
 }
 
 /**
@@ -401,13 +552,23 @@ function handleFinish() {
  */
 function onConfirm(selectedValues: (string | number)[], selectedOptions: CascaderOption[]) {
   pickerShow.value = false
-  const finalValue = selectedValues.length > 0 ? selectedValues[selectedValues.length - 1] : ''
   tabsRef.value?.updateLineStyle()
-  emit('update:modelValue', finalValue)
-  emit('confirm', {
-    value: finalValue,
-    selectedOptions
-  })
+  if (props.lazyLoad) {
+    // 异步模式：emit 完整路径数组
+    emit('update:modelValue', selectedValues)
+    emit('confirm', {
+      value: selectedValues,
+      selectedOptions
+    })
+  } else {
+    // 静态模式：emit 叶子值
+    const finalValue = selectedValues.length > 0 ? selectedValues[selectedValues.length - 1] : ''
+    emit('update:modelValue', finalValue)
+    emit('confirm', {
+      value: finalValue,
+      selectedOptions
+    })
+  }
 }
 
 /**

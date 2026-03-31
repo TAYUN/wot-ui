@@ -80,11 +80,11 @@ export default {
 import wdIcon from '../wd-icon/wd-icon.vue'
 import wdButton from '../wd-button/wd-button.vue'
 import { computed, getCurrentInstance, ref, watch } from 'vue'
-import { addUnit, getSystemInfo, objToStyle, uuid } from '../common/util'
-import { useTranslate } from '../composables/useTranslate'
+import { addUnit, getSystemInfo, objToStyle, uuid } from '../../common/util'
+import { useTranslate } from '../../composables/useTranslate'
 import { imgCropperProps, type ImgCropperExpose } from './types'
 // #ifdef H5
-import { useLockScroll } from '../composables/useLockScroll'
+import { useLockScroll } from '../../composables/useLockScroll'
 // #endif
 
 /** 顶部裁剪框占比 */

@@ -1,12 +1,12 @@
-@use '../styles/variable.scss' as *;
-@use '../styles/mixin/_mixin.scss' as *;
+@use '../../styles/variable.scss' as *;
+@use '../../styles/mixin/_mixin.scss' as *;
 
 // 分页背景色
 $pagination-bg: var(--wot-pagination-bg, $filled-oppo) !default;
 // 分页内边距
 $pagination-padding: var(--wot-pagination-padding, $padding-loose) !default;
 // 分页图标尺寸
-$pagination-icon-size: var(--wot-pagination-icon-size, $n16) !default;
+$pagination-icon-size: var(--wot-pagination-icon-size, $n-16) !default;
 // 辅助文案颜色
 $pagination-message-color: var(--wot-pagination-message-color, $text-secondary) !default;
 // 辅助文案字号
@@ -16,7 +16,7 @@ $pagination-message-line-height: var(--wot-pagination-message-line-height, $typo
 // 辅助文案顶部间距
 $pagination-message-margin-top: var(--wot-pagination-message-margin-top, $spacing-super-tight) !default;
 // 翻页按钮最小宽度
-$pagination-nav-width: var(--wot-pagination-nav-width, $n64) !default;
+$pagination-nav-width: var(--wot-pagination-nav-width, $n-64) !default;
 // 页码字号
 $pagination-size-font-size: var(--wot-pagination-size-font-size, $typography-title-size-main) !default;
 // 页码行高

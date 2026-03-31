@@ -53,7 +53,7 @@ import wdTransition from '../wd-transition/wd-transition.vue'
 import { computed, inject, ref, watch, type CSSProperties } from 'vue'
 import { defaultOptions, getToastOptionKey, toastIcon } from '.'
 import { toastProps, type ToastDirection, type ToastLoadingType, type ToastOptions, type ToastProps } from './types'
-import { addUnit, isDef, isFunction, objToStyle } from '../common/util'
+import { addUnit, isDef, isFunction, objToStyle } from '../../common/util'
 
 const props = defineProps(toastProps)
 const iconName = ref<string>('') // 图标类型

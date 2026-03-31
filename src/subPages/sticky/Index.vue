@@ -9,60 +9,59 @@
 -->
 <template>
   <page-wraper>
-    <view style="height: 250vh">
-      <view class="demo-block">
-        <view class="demo-title">{{ $t('jiBenYongFa') }}</view>
-        <view class="demo-container">
-          <wd-sticky custom-style="margin-left: 20px">
-            <wd-button type="success">{{ $t('ji-chu-yong-fa-0') }}</wd-button>
-          </wd-sticky>
-        </view>
-      </view>
+    <view class="page-sticky page-sticky__stage">
+      <demo-group title="组件类型">
+        <demo-group-item :title="$t('jiBenYongFa')">
+          <view class="demo-container">
+            <wd-sticky custom-style="margin-left: 20px">
+              <wd-button type="success">{{ $t('ji-chu-yong-fa-0') }}</wd-button>
+            </wd-sticky>
+          </view>
+        </demo-group-item>
+        <demo-group-item :title="$t('xiang-dui-rong-qi')">
+          <view class="demo-container">
+            <wd-sticky-box>
+              <view class="custom-container">
+                <wd-sticky custom-style="margin-left: 220px">
+                  <wd-button type="warning">{{ $t('xiang-dui-rong-qi') }}</wd-button>
+                </wd-sticky>
+              </view>
+            </wd-sticky-box>
+          </view>
+        </demo-group-item>
+      </demo-group>
 
-      <view class="demo-block">
-        <view class="demo-title">{{ $t('xi-ding-ju-li') }}</view>
-        <view class="demo-container">
-          <wd-sticky :offset-top="50" custom-style="margin-left: 120px">
-            <wd-button>{{ $t('xi-ding-ju-li-0') }}</wd-button>
-          </wd-sticky>
-        </view>
-      </view>
+      <demo-group title="组件样式">
+        <demo-group-item :title="$t('xi-ding-ju-li')">
+          <view class="demo-container">
+            <wd-sticky :offset-top="50" custom-style="margin-left: 120px">
+              <wd-button>{{ $t('xi-ding-ju-li-0') }}</wd-button>
+            </wd-sticky>
+          </view>
+        </demo-group-item>
+        <demo-group-item :title="$t('xiang-dui-rong-qi-xi-ding-ju-li')">
+          <view class="demo-container">
+            <wd-sticky-box>
+              <view class="custom-container">
+                <wd-sticky :offset-top="150">
+                  <wd-button type="warning">{{ $t('xiang-dui-rong-qi-xi-ding-ju-li') }}</wd-button>
+                </wd-sticky>
+              </view>
+            </wd-sticky-box>
+          </view>
+        </demo-group-item>
+      </demo-group>
 
-      <view class="demo-block">
-        <view class="demo-title">{{ $t('xiang-dui-rong-qi') }}</view>
-        <view class="demo-container">
-          <wd-sticky-box>
-            <view class="custom-container">
-              <wd-sticky custom-style="margin-left: 220px">
-                <wd-button type="warning">{{ $t('xiang-dui-rong-qi') }}</wd-button>
-              </wd-sticky>
-            </view>
-          </wd-sticky-box>
-        </view>
-      </view>
-
-      <view class="demo-block">
-        <view class="demo-title">{{ $t('dong-tai-cha-ru') }}</view>
-        <view class="demo-container">
-          <wd-button type="info" plain @click="insert">{{ $t('dian-ji-cha-ru') }}</wd-button>
-          <wd-sticky custom-style="margin-left: 220px">
-            <wd-button type="danger" v-if="show">{{ $t('dong-tai-sheng-cheng') }}</wd-button>
-          </wd-sticky>
-        </view>
-      </view>
-
-      <view class="demo-block">
-        <view class="demo-title">{{ $t('xiang-dui-rong-qi-xi-ding-ju-li') }}</view>
-        <view class="demo-container">
-          <wd-sticky-box>
-            <view class="custom-container">
-              <wd-sticky :offset-top="150">
-                <wd-button type="warning">{{ $t('xiang-dui-rong-qi-xi-ding-ju-li') }}</wd-button>
-              </wd-sticky>
-            </view>
-          </wd-sticky-box>
-        </view>
-      </view>
+      <demo-group title="特殊样式">
+        <demo-group-item :title="$t('dong-tai-cha-ru')">
+          <view class="demo-container">
+            <wd-button type="info" plain @click="insert">{{ $t('dian-ji-cha-ru') }}</wd-button>
+            <wd-sticky custom-style="margin-left: 220px">
+              <wd-button v-if="show" type="danger">{{ $t('dong-tai-sheng-cheng') }}</wd-button>
+            </wd-sticky>
+          </view>
+        </demo-group-item>
+      </demo-group>
     </view>
   </page-wraper>
 </template>
@@ -82,12 +81,19 @@ onShow(() => {
 })
 </script>
 <style lang="scss" scoped>
+.page-sticky {
+  &__stage {
+    height: 250vh;
+  }
+}
+
 .wot-theme-dark {
   .custom-container {
     background: $-dark-background2;
   }
 }
-.demo-block {
+
+.demo-container {
   padding: 15px 0;
   color: #666;
 }
@@ -96,13 +102,5 @@ onShow(() => {
   height: 120px;
   width: 100vw;
   background-color: #ffffff;
-}
-.is-white {
-  background: #fff;
-}
-.demo-title {
-  padding: 0 15px;
-  margin: 10px 0;
-  font-size: 13px;
 }
 </style>

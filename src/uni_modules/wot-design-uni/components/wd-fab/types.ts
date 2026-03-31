@@ -1,5 +1,5 @@
 import type { ComponentPublicInstance, ExtractPropTypes } from 'vue'
-import { baseProps, makeBooleanProp, makeNumberProp, makeStringProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeNumberProp, makeStringProp } from '../../common/props'
 import type { PropType } from 'vue'
 
 /**

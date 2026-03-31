@@ -1,5 +1,5 @@
 import type { ExtractPropTypes, PropType } from 'vue'
-import { baseProps } from '../common/props'
+import { baseProps } from '../../common/props'
 
 /**
  * 步骤状态类型

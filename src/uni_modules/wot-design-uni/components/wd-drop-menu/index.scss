@@ -1,9 +1,9 @@
-@use '../styles/mixin/mixin.scss' as *;
-@use '../styles/variable.scss' as *;
+@use '../../styles/mixin/mixin.scss' as *;
+@use '../../styles/variable.scss' as *;
 
 
 // 菜单项高度
-$drop-menu-height: var(--wot-drop-menu-height, $n48) !default;
+$drop-menu-height: var(--wot-drop-menu-height, $n-48) !default;
 // 菜单列表背景色
 $drop-menu-list-bg: var(--wot-drop-menu-list-bg, $filled-oppo) !default;
 // 菜单项内边距
@@ -13,7 +13,7 @@ $drop-menu-option-opacity-disabled: var(--wot-drop-menu-option-opacity-disabled,
 // 菜单项水平内边距
 $drop-menu-option-padding-horizontal: var(--wot-drop-menu-option-padding-horizontal, $padding-extra-loose) !default;
 // 箭头图标大小
-$drop-menu-arrow-size: var(--wot-drop-menu-arrow-size, $n16) !default;
+$drop-menu-arrow-size: var(--wot-drop-menu-arrow-size, $n-16) !default;
 // 箭头图标颜色
 $drop-menu-arrow-color: var(--wot-drop-menu-arrow-color, $icon-auxiliary) !default;
 // 箭头图标激活态颜色

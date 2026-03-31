@@ -1,5 +1,5 @@
 import type { ComponentPublicInstance, ExtractPropTypes, PropType } from 'vue'
-import { baseProps, makeArrayProp, makeBooleanProp, makeNumberProp, makeStringProp } from '../common/props'
+import { baseProps, makeArrayProp, makeBooleanProp, makeNumberProp, makeStringProp } from '../../common/props'
 import type { LoadingType } from '../wd-loading/types'
 import type { ImageMode } from '../wd-img/types'
 
@@ -68,15 +68,15 @@ export type UploadSizeType = 'original' | 'compressed'
 export type UploadFileType = 'image' | 'video' | 'media' | 'all' | 'file'
 export type UploadCameraType = 'front' | 'back'
 export type UploadStatusType = 'pending' | 'loading' | 'success' | 'fail'
+export type UploadSuccessStatus = number | number[]
 
 export type UploadBeforePreviewOption = {
   file: UploadFileItem
   index: number
   imgList: string[]
   fileList: UploadFileItem[]
-  resolve: (isPass: boolean) => void
 }
-export type UploadBeforePreview = (option: UploadBeforePreviewOption) => void
+export type UploadBeforePreview = (option: UploadBeforePreviewOption) => boolean | Promise<boolean>
 
 export type UploadOnPreviewFailOption = {
   index: number
@@ -88,31 +88,27 @@ export type UploadBeforeRemoveOption = {
   file: UploadFileItem
   index: number
   fileList: UploadFileItem[]
-  resolve: (isPass: boolean) => void
 }
-export type UploadBeforeRemove = (option: UploadBeforeRemoveOption) => void
+export type UploadBeforeRemove = (option: UploadBeforeRemoveOption) => boolean | Promise<boolean>
 
 export type UploadBeforeChooseOption = {
   fileList: UploadFileItem[]
-  resolve: (isPass: boolean) => void
 }
-export type UploadBeforeChoose = (option: UploadBeforeChooseOption) => void
+export type UploadBeforeChoose = (option: UploadBeforeChooseOption) => boolean | Promise<boolean>
 
 export type UploadBeforeUploadOption = {
   files: Record<string, any>[]
   fileList: UploadFileItem[]
-  resolve: (isPass: boolean) => void
 }
-export type UploadBeforeUpload = (options: UploadBeforeUploadOption) => void
+export type UploadBeforeUpload = (options: UploadBeforeUploadOption) => boolean | Promise<boolean>
 
 export type UploadFormData = Record<string, any>
 
 export type UploadBuildFormDataOption = {
   file: UploadFileItem
   formData: UploadFormData
-  resolve: (formData: Record<string, any>) => void
 }
-export type UploadBuildFormData = (options: UploadBuildFormDataOption) => void
+export type UploadBuildFormData = (options: UploadBuildFormDataOption) => Record<string, any> | Promise<Record<string, any>>
 
 export type UploadFile = Partial<UploadFileItem> & { url: string }
 
@@ -125,7 +121,7 @@ export type UploadMethod = (
     name: string
     fileName: string
     fileType: 'image' | 'video' | 'audio'
-    statusCode: number
+    statusCode: UploadSuccessStatus
     // 添加是否自动中断之前上传的选项
     abortPrevious?: boolean
     onSuccess: (res: UniApp.UploadFileSuccessCallbackResult, file: UploadFileItem, formData: UploadFormData) => void
@@ -224,31 +220,31 @@ export const uploadProps = {
   onPreviewFail: Function as PropType<UploadOnPreviewFail>,
   /**
    * 上传文件之前的钩子，参数为上传的文件和文件列表，若返回false或者返回Promise且被reject，则停止上传。
-   * 类型：function({files,fileList,resolve})
+   * 类型：function({files,fileList})
    * 默认值：-
    */
   beforeUpload: Function as PropType<UploadBeforeUpload>,
   /**
    * 选择图片之前的钩子，参数为文件列表，若返回false或者返回Promise且被reject，则停止上传。
-   * 类型：function({fileList,resolve})
+   * 类型：function({fileList})
    * 默认值：-
    */
   beforeChoose: Function as PropType<UploadBeforeChoose>,
   /**
-   * 删除文件之前的钩子，参数为要删除的文件和文件列表，若返回false或者返回Promise且被reject，则停止上传。
-   * 类型：function({file,fileList,resolve})
+   * 删除文件之前的钩子，参数为要删除的文件和文件列表，若返回false或者返回Promise且被reject，则停止删除。
+   * 类型：function({file,index,fileList})
    * 默认值：-
    */
   beforeRemove: Function as PropType<UploadBeforeRemove>,
   /**
-   * 图片预览前的钩子，参数为预览的图片下标和图片列表，若返回false或者返回Promise且被reject，则停止上传。
-   * 类型：function({index,imgList,resolve})
+   * 图片预览前的钩子，参数为预览的文件和图片列表，若返回false或者返回Promise且被reject，则停止预览。
+   * 类型：function({file,index,imgList,fileList})
    * 默认值：-
    */
   beforePreview: Function as PropType<UploadBeforePreview>,
   /**
-   * 构建上传formData的钩子，参数为上传的文件、待处理的formData，返回值为处理后的formData，若返回false或者返回Promise且被reject，则停止上传。
-   * 类型：function({file,formData,resolve})
+   * 构建上传formData的钩子，参数为上传的文件、待处理的formData，返回值为处理后的formData，若返回Promise且被reject，则停止上传。
+   * 类型：function({file,formData})
    * 默认值：-
    * 最低版本：0.1.61
    */
@@ -309,7 +305,10 @@ export const uploadProps = {
   /**
    * 接口响应的成功状态（statusCode）值
    */
-  successStatus: makeNumberProp(200),
+  successStatus: {
+    type: [Number, Array] as PropType<UploadSuccessStatus>,
+    default: 200
+  },
   /**
    * 自定义上传按钮样式
    * 类型：string

@@ -1,5 +1,5 @@
-@use '../styles/variable.scss'as *;
-@use '../styles/mixin/mixin.scss'as *;
+@use '../../styles/variable.scss'as *;
+@use '../../styles/mixin/mixin.scss'as *;
 
 // 默认文字字号
 $text-font-size: var(--wot-text-font-size, $typography-body-size-main) !default;

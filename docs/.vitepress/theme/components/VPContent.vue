@@ -13,11 +13,11 @@ import NotFound from 'vitepress/dist/client/theme-default//NotFound.vue'
 import VPDoc from './VPDoc.vue'
 import VPHome from 'vitepress/dist/client/theme-default/components/VPHome.vue'
 import VPPage from 'vitepress/dist/client/theme-default/components/VPPage.vue'
-import { useSidebar } from 'vitepress/theme';
+import { useLayout } from 'vitepress/theme';
 
 
 const { page, frontmatter }:any = useData()
-const { hasSidebar } = useSidebar()
+const { hasSidebar } = useLayout()
 </script>
 
 <template>

@@ -1,6 +1,6 @@
 @use "sass:map";
-@use '../styles/mixin/mixin.scss'as *;
-@use '../styles/variable.scss'as *;
+@use '../../styles/mixin/mixin.scss'as *;
+@use '../../styles/variable.scss'as *;
 
 // 主类型背景色
 $button-primary-bg: var(--wot-button-primary-bg, $primary-6) !default;
@@ -85,17 +85,17 @@ $button-info-plain-border-active: var(--wot-button-info-plain-border-active, $bo
 // 实心按钮默认文本色
 $button-main-color: var(--wot-button-main-color, $text-white) !default;
 // mini 尺寸图标字号
-$button-size-icon-mini: var(--wot-button-size-icon-mini, $n14) !default;
+$button-size-icon-mini: var(--wot-button-size-icon-mini, $n-14) !default;
 // small 尺寸图标字号
-$button-size-icon-small: var(--wot-button-size-icon-small, $n16) !default;
+$button-size-icon-small: var(--wot-button-size-icon-small, $n-16) !default;
 // medium 尺寸图标字号
-$button-size-icon-medium: var(--wot-button-size-icon-medium, $n20) !default;
+$button-size-icon-medium: var(--wot-button-size-icon-medium, $n-20) !default;
 // large 尺寸图标字号
-$button-size-icon-large: var(--wot-button-size-icon-large, $n22) !default;
+$button-size-icon-large: var(--wot-button-size-icon-large, $n-22) !default;
 // 加载图标尺寸
-$button-loading-size: var(--wot-button-loading-size, $n20) !default;
+$button-loading-size: var(--wot-button-loading-size, $n-20) !default;
 // 加载图标与文字间距
-$button-loading-spacing: var(--wot-button-loading-spacing, $n6) !default;
+$button-loading-spacing: var(--wot-button-loading-spacing, $spacing-extra-tight) !default;
 // mini 尺寸文字字号
 $button-font-size-mini: var(--wot-button-font-size-mini, $typography-body-size-main) !default;
 // small 尺寸文字字号

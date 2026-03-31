@@ -9,7 +9,7 @@
  */
 import type { ExtractPropTypes, PropType } from 'vue'
 import type { InjectionKey } from 'vue'
-import { baseProps, makeStringProp, makeNumericProp } from '../common/props'
+import { baseProps, makeStringProp, makeNumericProp } from '../../common/props'
 import type { AvatarShape, AvatarSize } from '../wd-avatar/types'
 
 export type AvatarGroupCascadingValue = 'left-up' | 'right-up'

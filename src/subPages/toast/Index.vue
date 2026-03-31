@@ -1,41 +1,63 @@
 <template>
-  <view>
-    <page-wraper>
-      <demo-block :title="$t('jiBenYongFa')">
-        <wd-button @click="showToast">toast</wd-button>
-        <wd-button @click="showLongToast">{{ $t('chang-wen-an') }}</wd-button>
-      </demo-block>
-      <demo-block :title="$t('lei-xing-toast')">
-        <wd-button @click="showSuccessToast">{{ $t('cheng-gong-toast') }}</wd-button>
-        <wd-button @click="showErrorToast">{{ $t('cuo-wu-toast') }}</wd-button>
-        <wd-button @click="showWarnToast">{{ $t('jing-gao-toast') }}</wd-button>
-        <wd-button @click="showNormalToast">{{ $t('chang-gui-toast') }}</wd-button>
-      </demo-block>
-      <demo-block :title="$t('shi-yong-tu-biao')">
-        <wd-button @click="showInnerIconToast">{{ $t('nei-bu-tu-biao') }}</wd-button>
-        <wd-button @click="showCustomIconToast">{{ $t('ziDingYiTuBiao') }}</wd-button>
-      </demo-block>
-      <demo-block :title="$t('ti-shi-wei-zhi')">
-        <wd-button @click="showTopToast">{{ $t('ding-bu-toast') }}</wd-button>
-        <wd-button @click="showMiddletoast">{{ $t('ju-zhong-toast') }}</wd-button>
-        <wd-button @click="showBottomToast">{{ $t('di-bu-toast') }}</wd-button>
-      </demo-block>
-      <demo-block :title="$t('loading')">
-        <wd-button @click="showLoadingToast">circular ({{ $t('mo-ren') }})</wd-button>
-        <wd-button @click="showSpinnerLoading">spinner</wd-button>
-        <wd-button @click="showDotsLoading">dots</wd-button>
-      </demo-block>
-      <demo-block :title="$t('zong-xiang-bu-ju-loading')">
-        <wd-button @click="showVerticalCircularLoading">circular</wd-button>
-        <wd-button @click="showVerticalSpinnerLoading">spinner</wd-button>
-        <wd-button @click="showVerticalDotsLoading">dots</wd-button>
-      </demo-block>
-      <demo-block :title="$t('pai-ban-fang-xiang')">
-        <wd-button @click="showHorizonToast">{{ $t('heng-xiang-pai-ban') }}</wd-button>
-        <wd-button @click="showVerticalToast">{{ $t('zong-xiang-pai-ban') }}</wd-button>
-      </demo-block>
-    </page-wraper>
-  </view>
+  <page-wraper>
+    <wd-toast />
+
+    <demo-group title="组件类型">
+      <demo-group-item :title="$t('jiBenYongFa')">
+        <view class="button-group">
+          <wd-button @click="showToast">toast</wd-button>
+          <wd-button @click="showLongToast">{{ $t('chang-wen-an') }}</wd-button>
+        </view>
+      </demo-group-item>
+      <demo-group-item :title="$t('lei-xing-toast')">
+        <view class="button-group">
+          <wd-button @click="showSuccessToast">{{ $t('cheng-gong-toast') }}</wd-button>
+          <wd-button @click="showErrorToast">{{ $t('cuo-wu-toast') }}</wd-button>
+          <wd-button @click="showWarnToast">{{ $t('jing-gao-toast') }}</wd-button>
+          <wd-button @click="showNormalToast">{{ $t('chang-gui-toast') }}</wd-button>
+        </view>
+      </demo-group-item>
+    </demo-group>
+
+    <demo-group title="组件状态">
+      <demo-group-item :title="$t('loading')">
+        <view class="button-group">
+          <wd-button @click="showLoadingToast">circular ({{ $t('mo-ren') }})</wd-button>
+          <wd-button @click="showSpinnerLoading">spinner</wd-button>
+          <wd-button @click="showDotsLoading">dots</wd-button>
+        </view>
+      </demo-group-item>
+      <demo-group-item :title="$t('zong-xiang-bu-ju-loading')">
+        <view class="button-group">
+          <wd-button @click="showVerticalCircularLoading">circular</wd-button>
+          <wd-button @click="showVerticalSpinnerLoading">spinner</wd-button>
+          <wd-button @click="showVerticalDotsLoading">dots</wd-button>
+        </view>
+      </demo-group-item>
+    </demo-group>
+
+    <demo-group title="组件样式">
+      <demo-group-item :title="$t('shi-yong-tu-biao')">
+        <view class="button-group">
+          <wd-button @click="showInnerIconToast">{{ $t('nei-bu-tu-biao') }}</wd-button>
+          <wd-button @click="showCustomIconToast">{{ $t('ziDingYiTuBiao') }}</wd-button>
+        </view>
+      </demo-group-item>
+      <demo-group-item :title="$t('ti-shi-wei-zhi')">
+        <view class="button-group">
+          <wd-button @click="showTopToast">{{ $t('ding-bu-toast') }}</wd-button>
+          <wd-button @click="showMiddletoast">{{ $t('ju-zhong-toast') }}</wd-button>
+          <wd-button @click="showBottomToast">{{ $t('di-bu-toast') }}</wd-button>
+        </view>
+      </demo-group-item>
+      <demo-group-item :title="$t('pai-ban-fang-xiang')">
+        <view class="button-group">
+          <wd-button @click="showHorizonToast">{{ $t('heng-xiang-pai-ban') }}</wd-button>
+          <wd-button @click="showVerticalToast">{{ $t('zong-xiang-pai-ban') }}</wd-button>
+        </view>
+      </demo-group-item>
+    </demo-group>
+  </page-wraper>
 </template>
 <script lang="ts" setup>
 import { useToast } from '@/uni_modules/wot-design-uni'
@@ -63,12 +85,8 @@ function showTopToast() {
     position: 'top',
     iconClass: 'star',
     msg: t('ti-shi-xin-xi'),
-    closed() {
-      console.log(232)
-    },
-    opened() {
-      console.log(2323232)
-    }
+    closed() {},
+    opened() {}
   })
 }
 
@@ -77,12 +95,8 @@ function showMiddletoast() {
     position: 'middle',
     iconClass: 'star',
     msg: t('ti-shi-xin-xi'),
-    closed() {
-      console.log(232)
-    },
-    opened() {
-      console.log(2323232)
-    }
+    closed() {},
+    opened() {}
   })
 }
 
@@ -189,7 +203,9 @@ function showVerticalToast() {
 }
 </script>
 <style lang="scss" scoped>
-:deep(button) {
-  margin: 0 10px 10px 0;
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 </style>

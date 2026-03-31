@@ -1,5 +1,5 @@
 import type { PropType, ExtractPropTypes, CSSProperties } from 'vue'
-import { makeArrayProp, makeBooleanProp, makeStringProp } from '../common/props'
+import { makeArrayProp, makeBooleanProp, makeStringProp } from '../../common/props'
 
 /**
  * 骨架图主题样式

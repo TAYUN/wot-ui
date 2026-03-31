@@ -1,14 +1,5 @@
-/*
- * @Author: weisheng
- * @Date: 2025-05-08 22:54:27
- * @LastEditTime: 2026-02-28 13:30:44
- * @LastEditors: weisheng
- * @Description:
- * @FilePath: /wot-design-uni/src/uni_modules/wot-design-uni/components/wd-watermark/types.ts
- * 记得注释
- */
 import type { ExtractPropTypes } from 'vue'
-import { baseProps, makeBooleanProp, makeNumberProp, makeNumericProp, makeStringProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeNumberProp, makeNumericProp, makeStringProp } from '../../common/props'
 
 /**
  * 水印字体样式
@@ -91,20 +82,20 @@ export const watermarkProps = {
    */
   size: makeNumberProp(14),
   /**
-   * 水印字体样式（仅微信和h5支持）
+   * 水印字体样式（仅微信、支付宝和h5支持）
    * 类型: WatermarkFontStyle
    * 可选值: 'normal' | 'italic' | 'oblique'
    * 默认值: 'normal'
    */
   fontStyle: makeStringProp<WatermarkFontStyle>('normal'),
   /**
-   * 水印字体的粗细（仅微信和h5支持）
+   * 水印字体的粗细（仅微信、支付宝和h5支持）
    * 类型: string | number
    * 默认值: 'normal'
    */
   fontWeight: makeNumericProp('normal'),
   /**
-   * 水印字体系列（仅微信和h5支持）
+   * 水印字体系列（仅微信、支付宝和h5支持）
    * 类型: string
    * 默认值: 'PingFang SC'
    */

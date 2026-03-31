@@ -41,9 +41,9 @@ export default {
 <script lang="ts" setup>
 import wdIcon from '../wd-icon/wd-icon.vue'
 import { computed, getCurrentInstance, onBeforeMount, watch } from 'vue'
-import { useParent } from '../composables/useParent'
+import { useParent } from '../../composables/useParent'
 import { CHECKBOX_GROUP_KEY } from '../wd-checkbox-group/types'
-import { getPropByPath, isDef } from '../common/util'
+import { getPropByPath, isDef } from '../../common/util'
 import { checkboxProps, type CheckboxExpose, type CheckboxDirection, type CheckboxPlacement, type CheckboxType } from './types'
 
 const props = defineProps(checkboxProps)

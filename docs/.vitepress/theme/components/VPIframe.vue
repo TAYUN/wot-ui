@@ -1,4 +1,5 @@
 <template>
+  <ClientOnly>
   <!-- 大屏幕：原有的固定容器 -->
   <div v-if="href && !isSmallScreen" class="demo-model" :class="{
     'collapsed': !expanded,
@@ -47,6 +48,7 @@
     </div>
   </el-drawer>
 </view>
+  </ClientOnly>
 </template>
 
 <script setup lang="ts">
@@ -257,10 +259,6 @@ watch(
   display: none;
 }
 
-.dark .demo-model {
-  background: #1b1b1b;
-}
-
 .iframe {
   height: 100%;
   width: 100%;
@@ -433,7 +431,7 @@ watch(
   height: calc(340px * 143.6 / 70.9);
   border: none;
   border-radius: 20px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--vp-shadow-3);
   background: var(--vp-c-bg);
   overflow: hidden;
 }

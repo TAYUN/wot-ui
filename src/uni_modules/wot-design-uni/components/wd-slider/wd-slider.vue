@@ -88,8 +88,8 @@ export default {
 
 <script lang="ts" setup>
 import { computed, type CSSProperties, getCurrentInstance, onMounted, ref, watch } from 'vue'
-import { deepClone, getRect, isArray, isDef, isEqual, objToStyle, uuid } from '../common/util'
-import { useTouch } from '../composables/useTouch'
+import { deepClone, getRect, isArray, isDef, isEqual, objToStyle, uuid } from '../../common/util'
+import { useTouch } from '../../composables/useTouch'
 import { sliderProps, type SliderExpose, type SliderEmits, type SliderValue, type SliderMarks, type SliderPopoverVisible } from './types'
 
 const props = defineProps(sliderProps)

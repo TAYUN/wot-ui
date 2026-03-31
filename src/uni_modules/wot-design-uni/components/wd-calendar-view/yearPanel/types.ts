@@ -1,5 +1,5 @@
 import type { ComponentPublicInstance, ExtractPropTypes, PropType } from 'vue'
-import { makeBooleanProp, makeRequiredProp, makeStringProp } from '../../common/props'
+import { makeBooleanProp, makeRequiredProp, makeStringProp } from '../../../common/props'
 import type { CalendarFormatter, CalendarType } from '../types'
 
 /**

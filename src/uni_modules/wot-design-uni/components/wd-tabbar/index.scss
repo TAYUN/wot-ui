@@ -1,8 +1,8 @@
-@use '../styles/mixin/mixin.scss'as *;
-@use '../styles/variable.scss'as *;
+@use '../../styles/mixin/mixin.scss'as *;
+@use '../../styles/variable.scss'as *;
 
 // 高度
-$tabbar-height: var(--wot-tabbar-height, $n50) !default;
+$tabbar-height: var(--wot-tabbar-height, $n-50) !default;
 // 背景色
 $tabbar-bg: var(--wot-tabbar-bg, $filled-oppo) !default;
 // 固定定位层级

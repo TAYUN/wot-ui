@@ -1,7 +1,7 @@
 /*
  * @Author: weisheng
  * @Date: 2025-05-08 22:54:27
- * @LastEditTime: 2026-03-03 14:04:13
+ * @LastEditTime: 2026-03-25 16:22:03
  * @LastEditors: weisheng
  * @Description:
  * @FilePath: /wot-design-uni/src/uni_modules/wot-design-uni/components/wd-radio-group/types.ts
@@ -9,7 +9,7 @@
  */
 import { type ExtractPropTypes, type InjectionKey } from 'vue'
 import type { RadioDirection, RadioPlacement, RadioType } from '../wd-radio/types'
-import { baseProps, makeBooleanProp, makeStringProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeStringProp } from '../../common/props'
 
 export const radioGroupProps = {
   ...baseProps,
@@ -41,11 +41,6 @@ export const radioGroupProps = {
    * 默认值: false
    */
   readonly: makeBooleanProp(false),
-  /**
-   * 设置大小
-   * 默认值: 空
-   */
-  size: makeStringProp(''),
   /**
    * 图标位置
    * 可选值: 'left' | 'right'

@@ -1,5 +1,5 @@
 import { type ExtractPropTypes, type InjectionKey } from 'vue'
-import { baseProps, makeNumberProp, makeStringProp } from '../common/props'
+import { baseProps, makeNumberProp, makeStringProp } from '../../common/props'
 
 /**
  * 水平对齐方式

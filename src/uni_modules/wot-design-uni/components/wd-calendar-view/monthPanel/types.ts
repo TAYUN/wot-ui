@@ -1,5 +1,5 @@
 import type { ComponentPublicInstance, ExtractPropTypes, PropType } from 'vue'
-import { makeBooleanProp, makeNumberProp, makeStringProp } from '../../common/props'
+import { makeBooleanProp, makeNumberProp, makeStringProp } from '../../../common/props'
 import type { CalendarFormatter, CalendarTimeFilter, CalendarTimeFormatter, CalendarType } from '../types'
 
 const now = new Date()

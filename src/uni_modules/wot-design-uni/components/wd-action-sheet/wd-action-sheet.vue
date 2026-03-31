@@ -1,7 +1,7 @@
 <template>
-  <view>
+  <view class="wd-action-sheet-wrapper">
     <wd-popup
-      custom-class="wd-action-sheet-popup"
+      custom-class="wd-action-sheet-wrapper__popup"
       :custom-style="`${(actions && actions.length) || (panels && panels.length) ? 'background: transparent;' : ''}`"
       v-model="showPopup"
       :duration="duration"
@@ -10,6 +10,7 @@
       :safe-area-inset-bottom="safeAreaInsetBottom"
       :lazy-render="lazyRender"
       :root-portal="rootPortal"
+      round
       @close="close"
       @enter="emit('enter')"
       @after-enter="emit('after-enter')"
@@ -24,7 +25,9 @@
       >
         <view v-if="title" :class="`wd-action-sheet__title ${customTitleClass}`">
           {{ title }}
-          <wd-icon custom-class="wd-action-sheet__close" name="close" @click="close" />
+          <slot name="close" :close="close">
+            <wd-icon custom-class="wd-action-sheet__close" name="close" @click="close" />
+          </slot>
         </view>
 
         <slot>
@@ -32,7 +35,7 @@
             <view
               v-for="(action, rowIndex) in actions"
               :key="rowIndex"
-              :class="`wd-action-sheet__action ${action.disabled ? 'wd-action-sheet__action--disabled' : ''}  ${
+              :class="`wd-action-sheet__action ${title ? '' : 'is-border'} ${action.disabled ? 'wd-action-sheet__action--disabled' : ''}  ${
                 action.loading ? 'wd-action-sheet__action--loading' : ''
               }`"
               :style="`color: ${action.color}`"
@@ -54,6 +57,7 @@
             </view>
           </view>
         </slot>
+        <view v-if="cancelText" class="wd-action-sheet__gap"></view>
         <view v-if="cancelText" class="wd-action-sheet__cancel" @click="handleCancel">{{ cancelText }}</view>
       </view>
     </wd-popup>
@@ -78,7 +82,7 @@ import wdIcon from '../wd-icon/wd-icon.vue'
 import wdLoading from '../wd-loading/wd-loading.vue'
 import { watch, ref } from 'vue'
 import { actionSheetProps, type Panel } from './types'
-import { isArray } from '../common/util'
+import { isArray } from '../../common/util'
 
 const props = defineProps(actionSheetProps)
 const emit = defineEmits(['select', 'click-modal', 'cancel', 'leave', 'after-leave', 'close', 'enter', 'after-enter', 'update:modelValue'])

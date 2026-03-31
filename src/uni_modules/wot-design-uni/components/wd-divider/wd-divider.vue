@@ -19,7 +19,7 @@ export default {
 <script lang="ts" setup>
 import { computed, useSlots, type CSSProperties } from 'vue'
 import { dividerProps } from './types'
-import { objToStyle } from '../common/util'
+import { objToStyle } from '../../common/util'
 
 const props = defineProps(dividerProps)
 const slots = useSlots()

@@ -1,16 +1,7 @@
-<!--
- * @Author: weisheng
- * @Date: 2026-01-16 17:48:12
- * @LastEditTime: 2026-02-05 11:59:43
- * @LastEditors: weisheng
- * @Description: 
- * @FilePath: /wot-design-uni/src/components/demo-group/demo-group.vue
- * 记得注释
--->
 <template>
-  <view :class="['demo-group', transparent ? 'is-transparent' : '', customClass]">
+  <view :class="['demo-group', customClass]" :style="rootStyle">
     <view class="demo-group__title">{{ title }}</view>
-    <view class="demo-group__container" :style="transparent ? '' : style">
+    <view class="demo-group__container">
       <slot />
     </view>
   </view>
@@ -32,30 +23,38 @@ import { computed } from 'vue'
 interface Props {
   customClass?: string
   title?: string
-  ver?: number | string
-  hor?: number | string
+  customStyle?: string
   transparent?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   title: '',
+  transparent: false,
   customClass: '',
-  ver: 10,
-  hor: 15,
-  transparent: false
+  customStyle: ''
 })
 
-const style = computed(() => {
-  return `margin: 0 ${props.hor}px;padding:${props.ver}px 0;`
+const rootStyle = computed(() => {
+  return `${props.transparent ? 'background: transparent;' : ''} ${props.customStyle}`
 })
 </script>
 <style lang="scss" scoped>
 .demo-group {
+  width: 100%;
   position: relative;
   background: $filled-oppo;
 
-  &.is-transparent {
-    background: transparent;
+  &:last-child {
+    padding-bottom: $padding-loose;
+  }
+
+  &__title {
+    box-sizing: border-box;
+    font-size: $typography-body-size-extra-large;
+    font-weight: $font-weight-medium;
+    color: $text-main;
+    line-height: $typography-body-line--height-size-large;
+    padding: $padding-loose;
   }
 }
 </style>

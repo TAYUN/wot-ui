@@ -52,7 +52,7 @@ function loadmore() {
 .list-item {
   position: relative;
   display: flex;
-  padding: $n10 $n15;
+  padding: $n-10 $n-15;
   background: $base-white;
   color: $coolgrey-8;
 }
@@ -62,9 +62,9 @@ function loadmore() {
   display: block;
   content: '';
   height: $stroke-main;
-  left: $n0;
+  left: $n-0;
   width: 100%;
-  bottom: $n0;
+  bottom: $n-0;
   background: $neutralgrey-3;
   transform: scaleY(0.5);
 }
@@ -72,7 +72,7 @@ image {
   display: block;
   width: 120px;
   height: 78px;
-  margin-right: $n15;
+  margin-right: $n-15;
 }
 .right {
   -webkit-box-flex: 1;

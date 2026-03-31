@@ -1,5 +1,5 @@
 import { type PropType } from 'vue'
-import { baseProps, makeBooleanProp, makeNumberProp, makeRequiredProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeNumberProp, makeRequiredProp } from '../../common/props'
 import { type ButtonVariant } from '../wd-button/types'
 
 export const paginationProps = {

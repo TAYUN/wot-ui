@@ -1,4 +1,4 @@
-@use '../styles/mixin/mixin.scss' as *;
+@use '../../styles/mixin/mixin.scss' as *;
 
 @include b(col) {
   box-sizing: border-box;

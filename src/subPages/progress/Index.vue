@@ -1,69 +1,100 @@
 <template>
   <page-wraper>
-    <demo-block :title="$t('jiBenYongFa')">
-      <wd-progress :percentage="percentage" />
-    </demo-block>
+    <view class="page-progress">
+      <demo-group title="组件类型">
+        <demo-group-item :title="$t('jiBenYongFa')">
+          <wd-progress :percentage="basePercentage" />
+        </demo-group-item>
+        <demo-group-item title="内置百分比">
+          <view v-for="item in innerItems" :key="item.key" class="demo-row">
+            <wd-progress :percent-position="item.percentPosition" :percentage="item.percentage" :status="item.status" />
+          </view>
+        </demo-group-item>
+      </demo-group>
 
-    <demo-block title="内置百分比 (Inner)">
-      <wd-progress :percent-position="{ type: 'inner', align: 'center' }" :percentage="percentage" />
-      <view style="height: 10px"></view>
-      <wd-progress :percent-position="{ type: 'inner', align: 'right' }" :percentage="percentage" status="success" />
-      <view style="height: 10px"></view>
-      <wd-progress :percent-position="{ type: 'inner', align: 'left' }" :percentage="percentage" status="danger" />
-      <view style="height: 10px"></view>
-      <wd-progress :percent-position="{ type: 'inner', align: 'center' }" :percentage="0" />
-    </demo-block>
+      <demo-group title="组件状态">
+        <demo-group-item :title="$t('jin-du-tiao-zhuang-tai')">
+          <view v-for="item in statusItems" :key="item.status" class="demo-row">
+            <wd-progress :percentage="basePercentage" :status="item.status" hide-text />
+          </view>
+        </demo-group-item>
+      </demo-group>
 
-    <demo-block :title="$t('bu-xian-shi-jin-du-wen-zi')">
-      <wd-progress :percentage="percentage" hide-text />
-    </demo-block>
+      <demo-group title="组件样式">
+        <demo-group-item :title="$t('bu-xian-shi-jin-du-wen-zi')">
+          <wd-progress :percentage="basePercentage" hide-text />
+        </demo-group-item>
+        <demo-group-item :title="$t('xiu-gai-yan-se')">
+          <view v-for="item in solidColorItems" :key="item.color" class="demo-row">
+            <wd-progress :percentage="basePercentage" :color="item.color" />
+          </view>
+        </demo-group-item>
+        <demo-group-item :title="$t('yan-se-shu-zu')">
+          <view class="demo-row">
+            <wd-progress :percentage="basePercentage" :color="['#00c740', '#ffb300', '#e2231a', '#0083ff']" />
+          </view>
+          <view class="demo-row">
+            <wd-progress :percentage="basePercentage" :color="colorObject" />
+          </view>
+        </demo-group-item>
+      </demo-group>
 
-    <demo-block :title="$t('jin-du-tiao-zhuang-tai')">
-      <wd-progress :percentage="percentage" status="success" hide-text />
-      <view style="height: 10px"></view>
-      <wd-progress :percentage="percentage" status="danger" hide-text />
-      <view style="height: 10px"></view>
-      <wd-progress :percentage="percentage" status="warning" hide-text />
-    </demo-block>
-
-    <demo-block :title="$t('xiu-gai-yan-se')">
-      <wd-progress :percentage="percentage" color="var(--wot-color-theme, #0083ff)" />
-      <view style="height: 10px"></view>
-      <wd-progress :percentage="percentage" color="var(--wot-purple-6, #8059F3)" />
-      <view style="height: 10px"></view>
-      <wd-progress :percentage="percentage" color="var(--wot-pink-6, #FF357C)" />
-    </demo-block>
-
-    <demo-block :title="$t('yan-se-shu-zu')">
-      <wd-progress :percentage="percentage" :color="['#00c740', '#ffb300', '#e2231a', '#0083ff']" />
-      <view style="height: 10px"></view>
-      <wd-progress :percentage="percentage" :color="colorObject" />
-    </demo-block>
-
-    <view class="action-container">
-      <wd-button custom-style="margin-right: 10px;" @click="reduce" type="danger" size="small">-10</wd-button>
-      <wd-button @click="add" type="success" size="small">+10</wd-button>
+      <demo-group title="特殊样式">
+        <demo-group-item title="动态控制">
+          <wd-progress :percentage="interactivePercentage" />
+          <view class="action-container">
+            <wd-button custom-style="margin-right: 10px;" type="danger" size="small" @click="reduce">-10</wd-button>
+            <wd-button type="success" size="small" @click="add">+10</wd-button>
+          </view>
+        </demo-group-item>
+      </demo-group>
     </view>
   </page-wraper>
 </template>
+
 <script lang="ts" setup>
-import type { ProgressColor } from '@/uni_modules/wot-design-uni/components/wd-progress/types'
+import type { ProgressColor, ProgressStatus } from '@/uni_modules/wot-design-uni/components/wd-progress/types'
 import { ref } from 'vue'
 
-// 动态进度 变量
-const percentage = ref<number>(50)
+const basePercentage = 50
+const interactivePercentage = ref<number>(50)
 
-// 动态变量加10
-const add = () => {
-  percentage.value = Math.min(percentage.value + 10, 100)
-}
+const innerItems = [
+  {
+    key: 'inner-center',
+    percentPosition: { type: 'inner', align: 'center' },
+    percentage: basePercentage,
+    status: undefined
+  },
+  {
+    key: 'inner-right',
+    percentPosition: { type: 'inner', align: 'right' },
+    percentage: basePercentage,
+    status: 'success'
+  },
+  {
+    key: 'inner-left',
+    percentPosition: { type: 'inner', align: 'left' },
+    percentage: basePercentage,
+    status: 'danger'
+  },
+  {
+    key: 'inner-zero',
+    percentPosition: { type: 'inner', align: 'center' },
+    percentage: 0,
+    status: undefined
+  }
+] as const
 
-// 动态变量减10
-const reduce = () => {
-  percentage.value = Math.max(percentage.value - 10, 0)
-}
+const statusItems: Array<{ status: ProgressStatus }> = [{ status: 'success' }, { status: 'danger' }, { status: 'warning' }]
 
-const colorObject = ref<ProgressColor[]>([
+const solidColorItems = [
+  { color: 'var(--wot-color-theme, #0083ff)' },
+  { color: 'var(--wot-color-success, #00c740)' },
+  { color: 'var(--wot-color-warning, #ffb300)' }
+] as const
+
+const colorObject: ProgressColor[] = [
   {
     color: 'yellow',
     percentage: 30
@@ -80,13 +111,31 @@ const colorObject = ref<ProgressColor[]>([
     color: 'black',
     percentage: 90
   }
-])
+]
+
+function add() {
+  interactivePercentage.value = Math.min(interactivePercentage.value + 10, 100)
+}
+
+function reduce() {
+  interactivePercentage.value = Math.max(interactivePercentage.value - 10, 0)
+}
 </script>
+
 <style lang="scss" scoped>
-.action-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 30px;
-  padding-bottom: 30px;
+.page-progress {
+  .demo-row {
+    margin-bottom: 12px;
+  }
+
+  .demo-row:last-child {
+    margin-bottom: 0;
+  }
+
+  .action-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
+  }
 }
 </style>

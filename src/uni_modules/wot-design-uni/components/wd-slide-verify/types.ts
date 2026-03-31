@@ -1,5 +1,5 @@
 import type { ComponentPublicInstance, ExtractPropTypes } from 'vue'
-import { baseProps, makeBooleanProp, makeStringProp, numericProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeStringProp, numericProp } from '../../common/props'
 
 export const slideVerifyProps = {
   ...baseProps,

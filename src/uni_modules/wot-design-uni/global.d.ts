@@ -49,7 +49,7 @@ declare module 'vue' {
     WdSelectPicker: typeof import('./components/wd-select-picker/wd-select-picker.vue')['default']
     WdSlider: typeof import('./components/wd-slider/wd-slider.vue')['default']
     WdSortButton: typeof import('./components/wd-sort-button/wd-sort-button.vue')['default']
-    WdStatusTip: typeof import('./components/wd-status-tip/wd-status-tip.vue')['default']
+    WdEmpty: typeof import('./components/wd-empty/wd-empty.vue')['default']
     WdStep: typeof import('./components/wd-step/wd-step.vue')['default']
     WdSteps: typeof import('./components/wd-steps/wd-steps.vue')['default']
     WdSticky: typeof import('./components/wd-sticky/wd-sticky.vue')['default']

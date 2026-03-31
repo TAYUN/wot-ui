@@ -23,15 +23,11 @@
             @click="choose(index)"
             :class="`wd-drop-item__option ${(item[valueKey] !== '' ? item[valueKey] : item) === modelValue ? 'is-active' : ''}`"
           >
-            <view :class="`wd-drop-item__title ${customTitle}`">
+            <view class="wd-drop-item__title">
               <text class="wd-drop-item__title-text">{{ item[labelKey] ? item[labelKey] : item }}</text>
               <text v-if="item[tipKey]" class="wd-drop-item__tip">{{ item[tipKey] }}</text>
             </view>
-            <wd-icon
-              v-if="(item[valueKey] !== '' ? item[valueKey] : item) === modelValue"
-              :name="iconName"
-              :custom-class="`wd-drop-item__icon ${customIcon}`"
-            />
+            <wd-icon v-if="(item[valueKey] !== '' ? item[valueKey] : item) === modelValue" :name="iconName" custom-class="wd-drop-item__icon" />
           </view>
         </scroll-view>
       </slot>
@@ -55,12 +51,13 @@ export default {
 import wdPopup from '../wd-popup/wd-popup.vue'
 import wdIcon from '../wd-icon/wd-icon.vue'
 import { computed, getCurrentInstance, inject, onBeforeMount, onBeforeUnmount, ref, watch } from 'vue'
-import { pushToQueue, removeFromQueue } from '../common/clickoutside'
-import { type Queue, queueKey } from '../composables/useQueue'
+import { pushToQueue, removeFromQueue } from '../../common/clickoutside'
+import { type Queue, queueKey } from '../../composables/useQueue'
 import type { PopupType } from '../wd-popup/types'
-import { useParent } from '../composables/useParent'
+import { useParent } from '../../composables/useParent'
 import { DROP_MENU_KEY } from '../wd-drop-menu/types'
-import { isDef, isFunction } from '../common/util'
+import { isDef } from '../../common/util'
+import { callInterceptor } from '../../common/interceptor'
 import { dorpMenuItemProps, type DropMenuItemExpose } from './types'
 
 const props = defineProps(dorpMenuItemProps)
@@ -147,16 +144,10 @@ function close() {
   if (!showPop.value) {
     return
   }
-  if (isFunction(props.beforeToggle)) {
-    props.beforeToggle({
-      status: false,
-      resolve: (isPass: boolean) => {
-        isPass && handleClose()
-      }
-    })
-  } else {
-    handleClose()
-  }
+  callInterceptor(props.beforeToggle, {
+    args: [{ status: false }],
+    done: handleClose
+  })
 }
 
 function handleClose() {
@@ -169,16 +160,10 @@ function open() {
   if (showPop.value) {
     return
   }
-  if (isFunction(props.beforeToggle)) {
-    props.beforeToggle({
-      status: true,
-      resolve: (isPass) => {
-        isPass && handleOpen()
-      }
-    })
-  } else {
-    handleOpen()
-  }
+  callInterceptor(props.beforeToggle, {
+    args: [{ status: true }],
+    done: handleOpen
+  })
 }
 
 function handleOpen() {

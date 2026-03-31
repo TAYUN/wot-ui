@@ -1,5 +1,5 @@
-@use '../styles/variable.scss' as *;
-@use '../styles/mixin/mixin.scss' as *;
+@use '../../styles/variable.scss' as *;
+@use '../../styles/mixin/mixin.scss' as *;
 
 // 公告栏内边距
 $notice-bar-padding: var(--wot-notice-bar-padding, $padding-main $padding-loose) !default;
@@ -22,11 +22,11 @@ $notice-bar-danger-bg: var(--wot-notice-bar-danger-bg, $danger-surface) !default
 // 危险态文字颜色
 $notice-bar-danger-color: var(--wot-notice-bar-danger-color, $danger-main) !default;
 // 前缀图标大小
-$notice-bar-prefix-size: var(--wot-notice-bar-prefix-size, $n20) !default;
+$notice-bar-prefix-size: var(--wot-notice-bar-prefix-size, $n-20) !default;
 // 前缀图标右侧间距
 $notice-bar-prefix-margin-right: var(--wot-notice-bar-prefix-margin-right, $spacing-tight) !default;
 // 后缀图标大小
-$notice-bar-suffix-size: var(--wot-notice-bar-suffix-size, $n20) !default;
+$notice-bar-suffix-size: var(--wot-notice-bar-suffix-size, $n-20) !default;
 // 后缀图标左侧间距
 $notice-bar-suffix-margin-left: var(--wot-notice-bar-suffix-margin-left, $spacing-tight) !default;
 // 后缀图标颜色

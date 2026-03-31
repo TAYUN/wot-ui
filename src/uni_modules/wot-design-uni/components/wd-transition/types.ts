@@ -8,7 +8,7 @@
  * 记得注释
  */
 import type { ExtractPropTypes, PropType } from 'vue'
-import { baseProps, makeBooleanProp, makeStringProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeStringProp } from '../../common/props'
 
 export type TransitionName =
   | 'fade'

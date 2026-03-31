@@ -1,4 +1,4 @@
-# useMessage
+# useDialog
 
 Used for conveniently calling the MessageBox dialog component.
 
@@ -7,13 +7,13 @@ Used for conveniently calling the MessageBox dialog component.
 Alert dialog only has a confirm button, used for strong reminders.
 
 ```html
-<wd-message-box></wd-message-box>
+<wd-dialog></wd-dialog>
 <wd-button @click="alert">alert</wd-button>
 ```
 
 ```ts
-import { useMessage } from '@/uni_modules/wot-design-uni'
-const message = useMessage()
+import { useDialog } from '@/uni_modules/wot-design-uni'
+const message = useDialog()
 
 function alert() {
   message.alert('Operation successful')
@@ -25,13 +25,13 @@ function alert() {
 Used to prompt user operations.
 
 ```html
-<wd-message-box />
+<wd-dialog />
 <wd-button @click="confirm">confirm</wd-button>
 ```
 
 ```ts
-import { useMessage } from '@/uni_modules/wot-design-uni'
-const message = useMessage()
+import { useDialog } from '@/uni_modules/wot-design-uni'
+const message = useDialog()
 
 function confirm() {
   message
@@ -53,13 +53,13 @@ function confirm() {
 Prompt will display an input box and can perform input validation.
 
 ```html
-<wd-message-box />
+<wd-dialog />
 <wd-button @click="prompt">prompt</wd-button>
 ```
 
 ```ts
-import { useMessage } from '@/uni_modules/wot-design-uni'
-const message = useMessage()
+import { useDialog } from '@/uni_modules/wot-design-uni'
+const message = useDialog()
 
 function prompt() {
   message

@@ -1,5 +1,5 @@
 import type { ComponentPublicInstance, ExtractPropTypes, PropType } from 'vue'
-import { baseProps, makeArrayProp, makeBooleanProp, makeNumberProp, makeStringProp, numericProp } from '../common/props'
+import { baseProps, makeArrayProp, makeBooleanProp, makeNumberProp, makeStringProp, numericProp } from '../../common/props'
 import { type TabsLineTheme } from '../wd-tabs/types'
 
 /**
@@ -35,11 +35,11 @@ export type CascaderTab = {
 export const cascaderProps = {
   ...baseProps,
   /**
-   * 选中项。绑定级联节点最后一级的数据值，组件会自动反推全链路并展示。
-   * 类型: string | number
+   * 选中项。静态模式下绑定叶子节点的值；异步模式下支持传入完整路径数组以自动逐级加载回显。
+   * 类型: string | number | (string | number)[]
    * 默认值: -
    */
-  modelValue: [String, Number] as PropType<string | number>,
+  modelValue: [String, Number, Array] as PropType<string | number | (string | number)[]>,
   /**
    * 层级选项数据，树形结构
    * 类型: Array<CascaderOption>
@@ -53,12 +53,24 @@ export const cascaderProps = {
    */
   title: String,
   /**
-   * 确定前校验函数，接收 (value, selectedOptions, resolve) 参数
-   * 通过调用 resolve(true) 继续执行 confirm，resolve(false) 则停止。
+   * 确定前校验函数，接收 (value, selectedOptions) 参数
+   * 返回 false 可阻止确认，支持返回 Promise<boolean>。
    * 类型: CascaderBeforeConfirm
    * 默认值: -
    */
   beforeConfirm: Function as PropType<CascaderBeforeConfirm>,
+  /**
+   * 是否开启任意级可选。开启后点击节点仅更新当前路径，需通过右上角确认按钮提交。
+   * 类型: boolean
+   * 默认值: false
+   */
+  checkStrictly: makeBooleanProp(false),
+  /**
+   * 严格模式下确认按钮文案，为空时使用内置国际化文案。
+   * 类型: string
+   * 默认值: ''
+   */
+  confirmText: makeStringProp(''),
   /**
    * 选项对象中，value 对应的 key
    * 类型: string
@@ -140,13 +152,6 @@ export const cascaderProps = {
    */
   lazyLoad: Function as PropType<CascaderLazyLoad>,
   /**
-   * 回显路径回调函数，异步模式下用于根据 modelValue 获取完整路径数据。
-   * resolve 接收一个数组，每个元素对应一层 tab，需提供 options（该层完整选项列表）和 selectedOption（该层选中项）。
-   * 类型: CascaderFindPath
-   * 默认值: -
-   */
-  findPath: Function as PropType<CascaderFindPath>,
-  /**
    * 选项对象中，标识叶子节点的 key，值为 true 时点击直接触发 confirm
    * 类型: string
    * 默认值: 'isLeaf'
@@ -159,7 +164,7 @@ export type CascaderProps = ExtractPropTypes<typeof cascaderProps>
 /**
  * 确认前的回调函数类型
  */
-export type CascaderBeforeConfirm = (value: string | number, selectedOptions: CascaderOption[], resolve: (isPass: boolean) => void) => void
+export type CascaderBeforeConfirm = (value: string | number, selectedOptions: CascaderOption[]) => boolean | Promise<boolean>
 
 /**
  * 异步加载子节点的回调类型
@@ -168,16 +173,6 @@ export type CascaderBeforeConfirm = (value: string | number, selectedOptions: Ca
  * @param resolve 加载完成后调用，传入子选项列表；传入空数组表示该节点为叶子节点
  */
 export type CascaderLazyLoad = (option: CascaderOption | null, tabIndex: number, resolve: (children: CascaderOption[]) => void) => void
-
-/**
- * 回显路径回调类型
- * @param value 当前绑定值
- * @param resolve 获取路径后调用，传入从根到目标的每一层级数据（options 为该层完整选项列表，selectedOption 为该层选中项）
- */
-export type CascaderFindPath = (
-  value: string | number,
-  resolve: (tabs: Array<{ options: CascaderOption[]; selectedOption: CascaderOption }>) => void
-) => void
 
 /**
  * 组件暴露的方法实例

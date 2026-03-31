@@ -1,5 +1,5 @@
 import type { PropType } from 'vue'
-import { makeBooleanProp, makeRequiredProp } from '../../common/props'
+import { makeBooleanProp, makeRequiredProp } from '../../../common/props'
 import type { CalendarFormatter, CalendarType } from '../types'
 
 export const monthProps = {

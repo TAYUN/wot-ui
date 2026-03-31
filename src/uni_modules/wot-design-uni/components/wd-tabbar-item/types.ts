@@ -1,5 +1,5 @@
 import type { ExtractPropTypes, PropType } from 'vue'
-import { baseProps, numericProp } from '../common/props'
+import { baseProps, numericProp } from '../../common/props'
 import type { BadgeProps } from '../wd-badge/types'
 
 /**

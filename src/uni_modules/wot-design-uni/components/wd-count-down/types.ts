@@ -8,7 +8,7 @@
  * 记得注释
  */
 import type { ComponentPublicInstance, ExtractPropTypes } from 'vue'
-import { baseProps, makeBooleanProp, makeRequiredProp, makeStringProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeRequiredProp, makeStringProp } from '../../common/props'
 
 export const countDownProps = {
   ...baseProps,

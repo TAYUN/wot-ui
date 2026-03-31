@@ -63,7 +63,7 @@ export default {
 <script lang="ts" setup>
 import { computed, ref, onMounted } from 'vue'
 import { compareYear, formatYearTitle, getYears } from '../utils'
-import { isArray, isNumber, pause } from '../../common/util'
+import { isArray, isNumber, pause } from '../../../common/util'
 import Year from '../year/year.vue'
 import { yearPanelProps, type YearInfo, type YearPanelExpose } from './types'
 

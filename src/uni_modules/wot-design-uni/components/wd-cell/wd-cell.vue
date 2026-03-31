@@ -86,10 +86,10 @@ export default {
 <script lang="ts" setup>
 import wdIcon from '../wd-icon/wd-icon.vue'
 import { computed, useSlots } from 'vue'
-import { useCell } from '../composables/useCell'
+import { useCell } from '../../composables/useCell'
 
 import { cellProps } from './types'
-import { addUnit, isDef } from '../common/util'
+import { addUnit, isDef } from '../../common/util'
 
 const props = defineProps(cellProps)
 const emit = defineEmits<{

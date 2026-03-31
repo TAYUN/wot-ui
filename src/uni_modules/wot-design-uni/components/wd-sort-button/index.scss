@@ -1,16 +1,16 @@
-@use '../styles/mixin/mixin.scss'as *;
-@use '../styles/variable.scss'as *;
+@use '../../styles/mixin/mixin.scss'as *;
+@use '../../styles/variable.scss'as *;
 
 // 组件高度
-$sort-button-height: var(--wot-sort-button-height, $n48) !default;
+$sort-button-height: var(--wot-sort-button-height, $n-48) !default;
 // 文字字号
 $sort-button-text-font-size: var(--wot-sort-button-text-font-size, $typography-body-size-main) !default;
 // 文字行高
 $sort-button-text-line-height: var(--wot-sort-button-text-line-height, $typography-body-line--height-size-main) !default;
 // 箭头图标尺寸
-$sort-button-arrow-icon-size: var(--wot-sort-button-arrow-icon-size, $n24) !default;
+$sort-button-arrow-icon-size: var(--wot-sort-button-arrow-icon-size, $n-24) !default;
 // 右侧区域尺寸
-$sort-button-right-size: var(--wot-sort-button-right-size, $n16) !default;
+$sort-button-right-size: var(--wot-sort-button-right-size, $n-16) !default;
 // 图标颜色
 $sort-button-icon-color: var(--wot-sort-button-icon-color, $icon-auxiliary) !default;
 // 图标激活颜色
@@ -22,9 +22,9 @@ $sort-button-color-active: var(--wot-sort-button-color-active, $text-main) !defa
 // 文字激活字重
 $sort-button-font-weight-active: var(--wot-sort-button-font-weight-active, $font-weight-medium) !default;
 // 下划线宽度
-$sort-button-line-width: var(--wot-sort-button-line-width, $n24) !default;
+$sort-button-line-width: var(--wot-sort-button-line-width, $n-24) !default;
 // 下划线高度
-$sort-button-line-height: var(--wot-sort-button-line-height, $n4) !default;
+$sort-button-line-height: var(--wot-sort-button-line-height, $n-4) !default;
 // 下划线颜色
 $sort-button-line-color: var(--wot-sort-button-line-color, $primary-6) !default;
 // 下划线底部距离

@@ -52,7 +52,8 @@ export default {
   cascader: {
     title: 'Lütfen seçin',
     placeholder: 'Lütfen seçin',
-    select: 'Seç'
+    select: 'Seç',
+    confirm: 'Onayla'
   },
   datetimePicker: {
     start: 'Başlangıç zamanı',

@@ -1,72 +1,55 @@
 # ConfigProvider 全局配置
 
-用于全局配置 `Wot` 组件，提供深色模式、主题定制等能力。
+用于为 `Wot` 组件提供主题模式和主题变量配置，支持深色模式、主题定制和跨组件树共享配置。
 
-## 深色模式
+## 组件类型
 
-将 ConfigProvider 组件的 `theme` 属性设置为 `dark`，可以开启深色模式。
+### 深色模式
 
-深色模式会全局生效，使页面上的所有 `Wot` 组件变为深色风格。
-
+将 `theme` 设置为 `dark` 后，可以让当前 `ConfigProvider` 包裹范围内的 `Wot` 组件切换为深色风格。
+::: tip 提示
+`ConfigProvider` 只影响 `Wot` 组件自身的主题表现，不会自动修改页面全局文本色或背景色。你可以结合全局样式自行处理页面背景和文本颜色。
+:::
 ```vue
-<wd-config-provider theme="dark">...</wd-config-provider>
+<wd-config-provider theme="dark">
+  <wd-button type="primary">深色模式按钮</wd-button>
+</wd-config-provider>
 ```
 
-:::tip
-值得注意的是，开启 `Wot` 的深色模式只会影响 `Wot` 组件的 `UI`，并不会影响全局的文字颜色或背景颜色，你可以参考以下 `CSS` 来设置一些全局样式：
+
+
+
+## 切换主题
+
+通过响应式地更新 `theme`，可以在浅色和深色模式之间切换。
+
+::: code-group
+
+```vue [vue]
+<wd-config-provider :theme="theme">
+  <wd-button type="primary">当前模式：{{ theme }}</wd-button>
+</wd-config-provider>
+```
+
+```ts [ts]
+import { ref } from 'vue'
+
+const theme = ref<'light' | 'dark'>('light')
+
+setTimeout(() => {
+  theme.value = 'dark'
+}, 1000)
+```
+
 :::
 
-```css
-.wot-theme-dark body {
-  color: #f5f5f5;
-  background-color: black;
-}
-```
+## 主题定制
 
-## 动态切换
+### 通过 CSS 变量覆盖
 
-通过动态设置 `theme` 属性，可以在浅色风格和深色风格之间进行切换。
-
-```vue
-<wd-config-provider :theme="theme">...</wd-config-provider>
-```
-
-```ts
-export default {
-  setup() {
-    const theme = ref('light')
-
-    setTimeout(() => {
-      theme.value = 'dark'
-    }, 1000)
-
-    return { theme }
-  }
-}
-```
-
-## 定制主题
-
-`Wot` 组件通过丰富的 [CSS 变量](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Using_CSS_custom_properties) 来组织样式，通过覆盖这些 `CSS` 变量，可以实现定制主题、动态切换主题等效果。
-
-### 示例
-
-这些变量的默认值被定义在 `page` 节点上，如果要转 `H5`，默认值被定义在 `:root` 节点上
+`Wot` 组件通过 CSS 变量组织样式。你可以直接覆盖这些变量来调整组件外观。
 
 ```css
-:root,
-page {
-  --wot-color-success: red;
-  --wot-color-warning: yellow;
-}
-```
-
-### 通过 CSS 覆盖
-
-你可以直接在代码中覆盖这些 `CSS` 变量，`Button` 组件的样式会随之发生改变：
-
-```css
-/* 添加这段样式后，默认 Button 底色会变成绿色 */
 :root,
 page {
   --wot-button-normal-bg: green;
@@ -75,56 +58,70 @@ page {
 
 ### 通过 ConfigProvider 覆盖
 
-`ConfigProvider` 组件提供了覆盖 `CSS` 变量的能力，你需要在根节点包裹一个 `ConfigProvider` 组件，并通过 `theme-vars` 属性来配置一些主题变量
+`ConfigProvider` 支持通过 `theme-vars` 覆盖主题变量，仅影响当前包裹范围内的组件。
 
-```html
+::: tip 提示
+`ConfigProvider` 仅影响它的子组件样式，不会直接修改全局 `root` 节点样式。
+:::
+
+::: code-group
+
+```html [vue]
 <wd-config-provider :theme-vars="themeVars">
-  <div style="margin: 16px">
+  <view style="margin: 16px">
     <wd-button round block type="primary">提交</wd-button>
-  </div>
+  </view>
 </wd-config-provider>
 ```
 
-```ts
-import { ref, reactive } from 'vue'
+```ts [ts]
+import { reactive } from 'vue'
 
-export default {
-  setup() {
-    // themeVars 内的值会被转换成对应 CSS 变量
-    // 比如 buttonPrimaryBg 会转换成 `--wot-button-primary-bg-color`
-    const themeVars = reactive({
-      buttonPrimaryBgColor: '#07c160',
-      buttonPrimaryColor: '#07c160'
-    })
-    return {
-      themeVars
-    }
-  }
-}
+const themeVars = reactive({
+  buttonPrimaryBgColor: '#07c160',
+  buttonPrimaryColor: '#ffffff'
+})
 ```
 
-### 在 TypeScript 中使用
-在 TypeScript 中定义 `themeVars` 时，建议使用 **wot-design-uni** 提供的 **ConfigProviderThemeVars** 类型，可以提供完善的类型提示：
-
-```ts
-import type { ConfigProviderThemeVars } from 'wot-design-uni';
-
-const themeVars: ConfigProviderThemeVars = {
-  colorTheme: 'red'
-}
-```
-
-:::tip
-注意：ConfigProvider 仅影响它的子组件的样式，不影响全局 root 节点。
 :::
 
-## 全局共享
+### 在 TypeScript 中使用
 
-> 需要配合虚拟根组件([uni-ku-root](https://github.com/uni-ku/root)) 来做全局共享
-
-### 安装
+在 TypeScript 中定义 `themeVars` 时，建议使用组件库提供的 `ConfigProviderThemeVars` 类型，以获得完整的类型提示。
 
 ::: code-group
+
+```ts [ts]
+import type { ConfigProviderThemeVars } from 'wot-design-uni'
+
+const themeVars: ConfigProviderThemeVars = {
+  buttonPrimaryBgColor: '#07c160',
+  buttonPrimaryColor: '#ffffff'
+}
+```
+
+```ts [ts]
+import type { ConfigProviderThemeVars } from '@/uni_modules/wot-design-uni/components/wd-config-provider/types'
+
+const localThemeVars: ConfigProviderThemeVars = {
+  cellTitleColor: '#4d80f0'
+}
+```
+
+:::
+
+
+
+## 特殊样式
+
+### 全局共享
+
+如需在应用层共享主题配置，可以结合虚拟根组件 [uni-ku-root](https://github.com/uni-ku/root) 使用。
+
+#### 安装
+
+::: code-group
+
 ```bash [npm]
 npm i -D @uni-ku/root
 ```
@@ -136,78 +133,60 @@ yarn add -D @uni-ku/root
 ```bash [pnpm]
 pnpm add -D @uni-ku/root
 ```
+
 :::
 
-### 引入
+#### 引入
 
-- CLI项目: 直接编辑 根目录下的 vite.config.(js|ts)
-- HBuilderX项目: 需要在根目录下 创建 vite.config.(js|ts)
+- CLI 项目：直接编辑根目录下的 vite.config.(js|ts)
+- HBuilderX 项目：需要在根目录下创建 vite.config.(js|ts)
 
 ```ts
-// vite.config.(js|ts)
-
 import { defineConfig } from 'vite'
 import UniKuRoot from '@uni-ku/root'
 import Uni from '@dcloudio/vite-plugin-uni'
 
 export default defineConfig({
-  plugins: [
-    // ...plugins
-    UniKuRoot(),
-    Uni()
-  ]
+  plugins: [UniKuRoot(), Uni()]
 })
 ```
 
-:::tip
-若存在改变 pages.json 的插件，需要将 UniKuRoot 放置其后
+::: tip
+若存在会修改 pages.json 的插件，需要将 `UniKuRoot` 放置在这些插件之后。
 :::
 
-### 使用
+#### 使用
 
-1. 创建根组件并处理全局配置组件
-
-- CLI项目: 在 **src** 目录下创建下 App.ku.vue
-- HBuilderX项目: 在 **根** 目录下创建 App.ku.vue
-
-:::tip
-在 App.ku.vue 中标签 `<KuRootView />` 代表指定视图存放位置
-:::
+1. 创建根组件并处理全局配置组件。
 
 ```vue
-<!-- src/App.ku.vue | App.ku.vue -->
-
 <script setup lang="ts">
 import { useTheme } from './composables/useTheme'
 
 const { theme, themeVars } = useTheme({
   buttonPrimaryBgColor: '#07c160',
-  buttonPrimaryColor: '#07c160'
+  buttonPrimaryColor: '#ffffff'
 })
 </script>
 
 <template>
-  <div>Hello AppKuVue</div>
-  <!-- 需要确保已注册 WdConfigProvider 组件 -->
   <wd-config-provider :theme="theme" :theme-vars="themeVars">
     <KuRootView />
   </wd-config-provider>
 </template>
 ```
 
-2. 编写控制主题组合式函数
+2. 编写控制主题的组合式函数。
 
 ```ts
-// src/composables/useTheme.ts
-
 import type { ConfigProviderThemeVars } from 'wot-design-uni'
 import { ref } from 'vue'
 
-const theme = ref<'light' | 'dark'>()
+const theme = ref<'light' | 'dark'>('light')
 const themeVars = ref<ConfigProviderThemeVars>()
 
 export function useTheme(vars?: ConfigProviderThemeVars) {
-  vars && (themeVars.value = vars)
+  if (vars) themeVars.value = vars
 
   function toggleTheme(mode?: 'light' | 'dark') {
     theme.value = mode || (theme.value === 'light' ? 'dark' : 'light')
@@ -216,16 +195,14 @@ export function useTheme(vars?: ConfigProviderThemeVars) {
   return {
     theme,
     themeVars,
-    toggleTheme,
+    toggleTheme
   }
 }
 ```
 
-3. 在任意视图文件中使用切换主题模式
+3. 在任意页面中使用切换主题模式。
 
 ```vue
-<!-- src/pages/*.vue -->
-
 <script setup lang="ts">
 import { useTheme } from '@/composables/useTheme'
 
@@ -233,9 +210,7 @@ const { theme, toggleTheme } = useTheme()
 </script>
 
 <template>
-  <button @click="toggleTheme">
-    切换主题，当前模式：{{ theme }}
-  </button>
+  <button @click="toggleTheme">切换主题，当前模式：{{ theme }}</button>
 </template>
 ```
 
@@ -243,11 +218,9 @@ const { theme, toggleTheme } = useTheme()
 
 ### useConfigProvider
 
-详细文档请查看 [useConfigProvider](/component/use-config-provider)
+详细文档请查看 [useConfigProvider](/component/use-config-provider)。
 
-在微信小程序等环境中，由于组件渲染机制的限制（如原生插槽的作用域隔离），被渲染在插槽中的组件可能无法获取到包裹在插槽出口（slot outlet）外部的 `ConfigProvider` 组件的 Provide。此外，使用 `root-portal` 将节点移动到根节点时也可能导致上下文丢失。
-
-为了解决这个问题，`wot-design-uni` 提供了 `useConfigProvider` 组合式函数，允许你在 JS 逻辑中直接注入配置，确保深层嵌套或跨组件树的组件也能正确获取主题样式。
+在微信小程序等环境中，由于组件渲染机制限制，被渲染在插槽中的组件或通过 `root-portal` 移动到根节点的组件，可能无法继承外层 `ConfigProvider` 的 provide 上下文。为了解决这个问题，组件库提供了 `useConfigProvider`，允许你在逻辑层显式注入配置。
 
 #### 引入
 
@@ -257,7 +230,7 @@ import { useConfigProvider } from 'wot-design-uni'
 
 #### 使用
 
-`useConfigProvider` 接受一个包含 `themeVars` 的对象，`themeVars` 支持普通对象、`reactive` 对象或 `Ref` 对象，能够实现响应式更新。
+`useConfigProvider` 接受一个包含 `themeVars` 的对象，`themeVars` 支持普通对象、`reactive` 对象或 `Ref` 对象。
 
 ```vue
 <script setup lang="ts">
@@ -266,25 +239,24 @@ import { useConfigProvider } from 'wot-design-uni'
 
 const themeVars = reactive({
   buttonPrimaryBgColor: '#07c160',
-  buttonPrimaryColor: '#07c160'
+  buttonPrimaryColor: '#ffffff'
 })
 
-// 在当前组件提供配置，使其对子组件（包括插槽内容和 root-portal）可见
 useConfigProvider({ themeVars })
 </script>
 ```
 
-## Attributes
+## ConfigProvider Attributes
 
-| 参数       | 说明                                             | 类型   | 可选值         | 默认值 | 最低版本 |
-| ---------- | ------------------------------------------------ | ------ | -------------- | ------ | -------- |
-| theme      | 主题风格，设置为 `dark` 来开启深色模式，全局生效 | string | `dark`/`light` | -      | -        |
-| theme-vars | 自定义主题变量                                   | `ConfigProviderThemeVars` | -              | -      | -        |
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| theme | 主题风格，可选值为 `light`、`dark` | `ConfigProviderTheme` | `light` |
+| theme-vars | 自定义主题变量 | `ConfigProviderThemeVars` | `{}` |
+| custom-class ^(1.3.9) | 根节点自定义样式类 | `string` | `''` |
+| custom-style ^(1.3.9) | 根节点自定义样式 | `string` | `''` |
 
+## ConfigProvider Slots
 
-## 外部样式类
-
-| 类名         | 说明       | 最低版本         |
-| ------------ | ---------- | ---------------- |
-| custom-class | 根节点样式 | 1.3.9 |
-| custom-style | 根节点样式 | 1.3.9 |
+| 名称 | 说明 |
+| --- | --- |
+| default | 默认插槽，用于包裹需要应用主题的子组件 |

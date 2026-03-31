@@ -21,7 +21,7 @@
       :options="area"
       @confirm="handleAddressConfirm"
     />
-    <wd-message-box />
+    <wd-dialog />
     <wd-form ref="form" :model="model" :schema="activeSchema" :title-width="100" :layout="formItemLayout" border asterisk-position="end">
       <wd-cell-group custom-class="group" title="布局切换示例">
         <wd-form-item title="表单项布局" value-align="left">
@@ -135,11 +135,7 @@
           <wd-input :placeholder="$t('qing-shu-ru-ma-ka-ba-ka')" clearable v-model="model.phone" compact />
         </wd-form-item>
         <wd-form-item :title="$t('huo-dong-tu-pian')" title-width="100px" prop="fileList">
-          <wd-upload
-            :file-list="model.fileList"
-            action="https://mockapi.eolink.com/zhTuw2P8c29bc981a741931bdd86eb04dc1e8fd64865cb5/upload"
-            @change="handleFileChange"
-          ></wd-upload>
+          <wd-upload :file-list="model.fileList" action="https://69bd04402bc2a25b22ad0a49.mockapi.io/upload" @change="handleFileChange"></wd-upload>
         </wd-form-item>
       </wd-cell-group>
       <wd-cell-group custom-class="group" title="组合示例">
@@ -183,7 +179,7 @@
 </template>
 <script lang="ts" setup>
 import { useToast, zodAdapter } from '@/uni_modules/wot-design-uni'
-import { isArray } from '@/uni_modules/wot-design-uni/components/common/util'
+import { isArray } from '@/uni_modules/wot-design-uni/common/util'
 import { useCascaderAreaData } from '@vant/area-data'
 import { type FormInstance, type FormSchema, type FormSchemaIssue } from '@/uni_modules/wot-design-uni/components/wd-form/types'
 import type { SliderInstance } from '@/uni_modules/wot-design-uni/components/wd-slider/types'

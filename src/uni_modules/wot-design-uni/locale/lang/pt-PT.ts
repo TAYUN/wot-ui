@@ -47,7 +47,8 @@ export default {
   cascader: {
     title: 'Por favor selecione',
     placeholder: 'Por favor selecione',
-    select: 'Por favor selecione'
+    select: 'Por favor selecione',
+    confirm: 'Confirmar'
   },
   datetimePicker: {
     start: 'Hora de início',

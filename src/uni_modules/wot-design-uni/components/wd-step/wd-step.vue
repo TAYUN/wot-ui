@@ -43,10 +43,10 @@ export default {
 <script lang="ts" setup>
 import wdIcon from '../wd-icon/wd-icon.vue'
 import { computed } from 'vue'
-import { useParent } from '../composables/useParent'
+import { useParent } from '../../composables/useParent'
 import { STEPS_KEY } from '../wd-steps/types'
-import { isDef, objToStyle } from '../common/util'
-import { useTranslate } from '../composables/useTranslate'
+import { isDef, objToStyle } from '../../common/util'
+import { useTranslate } from '../../composables/useTranslate'
 import { stepProps, type StepStatus } from './types'
 import type { CSSProperties } from 'vue'
 

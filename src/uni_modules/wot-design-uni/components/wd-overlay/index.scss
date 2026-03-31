@@ -1,5 +1,5 @@
-@use '../styles/mixin/mixin.scss'as *;
-@use '../styles/variable.scss'as *;
+@use '../../styles/mixin/mixin.scss'as *;
+@use '../../styles/variable.scss'as *;
 
 // 遮罩层背景色
 $overlay-bg: var(--wot-overlay-bg, $opac-7_55) !default;

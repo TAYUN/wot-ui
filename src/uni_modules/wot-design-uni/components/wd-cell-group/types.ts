@@ -1,5 +1,5 @@
 import { type PropType, type ExtractPropTypes, type InjectionKey } from 'vue'
-import { baseProps, makeBooleanProp, numericProp } from '../common/props'
+import { baseProps, makeBooleanProp, numericProp } from '../../common/props'
 import type { CellLayout, CellSize, CellValueAlign } from '../wd-cell/types'
 
 export type CellGroupProvide = {

@@ -8,7 +8,7 @@
  * 记得注释
  */
 import { type ExtractPropTypes, type InjectionKey, type PropType } from 'vue'
-import { baseProps, makeNumericProp } from '../common/props'
+import { baseProps, makeNumericProp } from '../../common/props'
 
 export type SidebarProvide = {
   props: Partial<SidebarProps>
@@ -17,20 +17,7 @@ export type SidebarProvide = {
 
 export const SIDEBAR_KEY: InjectionKey<SidebarProvide> = Symbol('wd-sidebar')
 
-/**
- * Sidebar切换前的选项接口
- */
-export type SidebarBeforeChangeOption = {
-  // 目标值
-  value: number | string
-  resolve: (pass: boolean) => void
-}
-
-/**
- * Sidebar切换前的钩子函数类型
- * @param option 切换选项
- */
-export type SidebarBeforeChange = (option: SidebarBeforeChangeOption) => void
+export type SidebarBeforeChange = (value: number | string) => boolean | Promise<boolean>
 
 export const sidebarProps = {
   ...baseProps,

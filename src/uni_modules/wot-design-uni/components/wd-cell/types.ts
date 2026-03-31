@@ -1,5 +1,5 @@
 import type { ExtractPropTypes, PropType } from 'vue'
-import { baseProps, makeBooleanProp, makeStringProp, makeNumericProp, numericProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeStringProp, makeNumericProp, numericProp } from '../../common/props'
 
 /**
  * 必填星号位置

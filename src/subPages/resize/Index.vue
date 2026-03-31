@@ -1,46 +1,50 @@
 <template>
   <page-wraper>
-    <demo-block :title="$t('ji-chu-yong-fa-0')">
-      <wd-resize @resize="handleResize">
-        <view :style="`background: #4d80f0; width: ${width};height: ${height}`"></view>
-      </wd-resize>
-      <view class="tip-item">
-        <view class="tip-label">width:</view>
-        {{ lastWidth }}
-        <wd-icon name="arrow-thin-up" custom-class="icon"></wd-icon>
-        {{ sizeWidth }}
-      </view>
-      <view class="tip-item">
-        <view class="tip-label">height:</view>
-        {{ lastHeight }}
-        <wd-icon name="arrow-thin-up" custom-class="icon"></wd-icon>
-        {{ sizeHeight }}
-      </view>
-      <view class="tip-item">
-        <view class="tip-label">top:</view>
-        {{ lastTop }}
-        <wd-icon name="arrow-thin-up" custom-class="icon"></wd-icon>
-        {{ sizeTop }}
-      </view>
-      <view class="tip-item">
-        <view class="tip-label">right:</view>
-        {{ lastRight }}
-        <wd-icon name="arrow-thin-up" custom-class="icon"></wd-icon>
-        {{ sizeRight }}
-      </view>
-      <view class="tip-item">
-        <view class="tip-label">bottom:</view>
-        {{ lastBottom }}
-        <wd-icon name="arrow-thin-up" custom-class="icon"></wd-icon>
-        {{ sizeBottom }}
-      </view>
-      <view class="tip-item">
-        <view class="tip-label">left:</view>
-        {{ lastLeft }}
-        <wd-icon name="arrow-thin-up" custom-class="icon"></wd-icon>
-        {{ sizeLeft }}
-      </view>
-    </demo-block>
+    <view class="page-resize">
+      <demo-group title="组件类型">
+        <demo-group-item :title="$t('ji-chu-yong-fa-0')">
+          <wd-resize @resize="handleResize">
+            <view class="resize-target" :style="{ width, height }"></view>
+          </wd-resize>
+          <view class="tip-item">
+            <view class="tip-label">width:</view>
+            {{ lastWidth }}
+            <wd-icon name="arrow-thin-up" custom-class="icon"></wd-icon>
+            {{ sizeWidth }}
+          </view>
+          <view class="tip-item">
+            <view class="tip-label">height:</view>
+            {{ lastHeight }}
+            <wd-icon name="arrow-thin-up" custom-class="icon"></wd-icon>
+            {{ sizeHeight }}
+          </view>
+          <view class="tip-item">
+            <view class="tip-label">top:</view>
+            {{ lastTop }}
+            <wd-icon name="arrow-thin-up" custom-class="icon"></wd-icon>
+            {{ sizeTop }}
+          </view>
+          <view class="tip-item">
+            <view class="tip-label">right:</view>
+            {{ lastRight }}
+            <wd-icon name="arrow-thin-up" custom-class="icon"></wd-icon>
+            {{ sizeRight }}
+          </view>
+          <view class="tip-item">
+            <view class="tip-label">bottom:</view>
+            {{ lastBottom }}
+            <wd-icon name="arrow-thin-up" custom-class="icon"></wd-icon>
+            {{ sizeBottom }}
+          </view>
+          <view class="tip-item">
+            <view class="tip-label">left:</view>
+            {{ lastLeft }}
+            <wd-icon name="arrow-thin-up" custom-class="icon"></wd-icon>
+            {{ sizeLeft }}
+          </view>
+        </demo-group-item>
+      </demo-group>
+    </view>
   </page-wraper>
 </template>
 <script lang="ts" setup>
@@ -69,7 +73,6 @@ onReady(() => {
 })
 
 function handleResize(detail: Record<string, string | number>) {
-  console.log(detail)
   const { height, width, top, right, bottom, left } = detail
   lastHeight.value = sizeHeight.value
   lastTop.value = sizeTop.value
@@ -85,6 +88,10 @@ function handleResize(detail: Record<string, string | number>) {
 }
 </script>
 <style lang="scss" scoped>
+.resize-target {
+  background: #4d80f0;
+}
+
 .wot-theme-dark {
   .tip-item {
     color: $-dark-color;

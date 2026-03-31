@@ -1,11 +1,11 @@
-@use '../styles/mixin/mixin.scss'as *;
-@use '../styles/variable.scss'as *;
+@use '../../styles/mixin/mixin.scss'as *;
+@use '../../styles/variable.scss'as *;
 // 输入框内边距
 $input-padding: var(--wot-input-padding, $padding-loose $padding-loose);
 // 输入框背景色
 $input-bg: var(--wot-input-bg, $filled-oppo);
 // 输入框内高度
-$input-inner-height: var(--wot-input-inner-height, $n20);
+$input-inner-height: var(--wot-input-inner-height, $n-20);
 // 输入框内字号
 $input-inner-font-size: var(--wot-input-inner-font-size, $typography-body-size-main);
 // 输入框文字颜色
@@ -17,7 +17,7 @@ $input-disabled-color: var(--wot-input-disabled-color, $text-disabled);
 // 输入框图标颜色
 $input-icon-color: var(--wot-input-icon-color, $icon-secondary);
 // 输入框图标字号
-$input-icon-font-size: var(--wot-input-icon-font-size, $n18);
+$input-icon-font-size: var(--wot-input-icon-font-size, $n-18);
 // 输入框图标间距
 $input-icon-margin: var(--wot-input-icon-margin, $spacing-tight);
 // 输入框字数统计间距

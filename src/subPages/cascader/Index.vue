@@ -1,44 +1,56 @@
 <template>
   <page-wraper>
-    <wd-cell-group border>
-      <wd-cell :title="$t('ji-chu-yong-fa')" is-link :value="showValue1" @click="show1 = true" />
-      <wd-cascader v-model="value1" v-model:visible="show1" :options="areaData" @confirm="handleConfirm1" />
+    <view class="page-cascader">
+      <demo-group title="组件类型">
+        <wd-cell-group border>
+          <wd-cell :title="$t('ji-chu-yong-fa')" is-link :value="showValue1" @click="show1 = true" />
+          <wd-cell :title="$t('chu-shi-xuan-xiang')" is-link :value="showValue2" @click="show2 = true" />
+          <wd-cell title="自定义字段" is-link :value="showValue9" @click="show9 = true" />
+        </wd-cell-group>
+        <wd-cascader v-model="value1" v-model:visible="show1" :options="areaData" @confirm="handleConfirm1" />
+        <wd-cascader v-model="value2" v-model:visible="show2" :options="areaData" @confirm="handleConfirm2" />
+        <wd-cascader
+          v-model="value9"
+          v-model:visible="show9"
+          :options="areaData9"
+          value-key="id"
+          text-key="name"
+          children-key="items"
+          @confirm="handleConfirm9"
+        />
+      </demo-group>
 
-      <wd-cell :title="$t('chu-shi-xuan-xiang')" is-link :value="showValue2" @click="show2 = true" />
-      <wd-cascader v-model="value2" v-model:visible="show2" :options="areaData" @confirm="handleConfirm2" />
+      <demo-group title="组件状态">
+        <wd-cell-group border>
+          <wd-cell :title="$t('jin-yong-xuan-xiang')" is-link :value="showValue3" @click="show3 = true" />
+          <wd-cell :title="$t('xuan-xiang-ti-shi-xin-xi')" is-link :value="showValue4" @click="show4 = true" />
+          <wd-cell title="before-confirm" is-link :value="showValue7" @click="show7 = true" />
+        </wd-cell-group>
+        <wd-cascader v-model="value3" v-model:visible="show3" :options="areaData3" @confirm="handleConfirm3" />
+        <wd-cascader v-model="value4" v-model:visible="show4" :options="areaData4" @confirm="handleConfirm4" />
+        <wd-cascader v-model="value7" v-model:visible="show7" :options="areaData" :before-confirm="beforeConfirm" @confirm="handleConfirm7" />
+      </demo-group>
 
-      <wd-cell :title="$t('jin-yong-xuan-xiang')" is-link :value="showValue3" @click="show3 = true" />
-      <wd-cascader v-model="value3" v-model:visible="show3" :options="areaData3" @confirm="handleConfirm3" />
+      <demo-group title="组件样式">
+        <wd-cell-group border>
+          <wd-cell :title="$t('zhan-shi-ge-shi-hua')" is-link :value="showValue5" @click="show5 = true" />
+          <wd-cell :title="$t('biaoTi-0')" is-link :value="showValue6" @click="show6 = true" />
+        </wd-cell-group>
+        <wd-cascader v-model="value5" v-model:visible="show5" :options="areaData" @confirm="handleConfirm5" />
+        <wd-cascader v-model="value6" v-model:visible="show6" :title="$t('xuan-ze-di-zhi')" :options="areaData" @confirm="handleConfirm6" />
+      </demo-group>
 
-      <wd-cell :title="$t('xuan-xiang-ti-shi-xin-xi')" is-link :value="showValue4" @click="show4 = true" />
-      <wd-cascader v-model="value4" v-model:visible="show4" :options="areaData4" @confirm="handleConfirm4" />
-
-      <wd-cell :title="$t('zhan-shi-ge-shi-hua')" is-link :value="showValue5" @click="show5 = true" />
-      <wd-cascader v-model="value5" v-model:visible="show5" :options="areaData" @confirm="handleConfirm5" />
-
-      <wd-cell :title="$t('biaoTi-0')" is-link :value="showValue6" @click="show6 = true" />
-      <wd-cascader v-model="value6" v-model:visible="show6" :title="$t('xuan-ze-di-zhi')" :options="areaData" @confirm="handleConfirm6" />
-
-      <wd-cell title="before-confirm" is-link :value="showValue7" @click="show7 = true" />
-      <wd-cascader v-model="value7" v-model:visible="show7" :options="areaData" :before-confirm="beforeConfirm" @confirm="handleConfirm7" />
-
-      <wd-cell title="自定义字段" is-link :value="showValue9" @click="show9 = true" />
-      <wd-cascader
-        v-model="value9"
-        v-model:visible="show9"
-        :options="areaData9"
-        value-key="id"
-        text-key="name"
-        children-key="items"
-        @confirm="handleConfirm9"
-      />
-
-      <wd-cell title="异步加载" is-link :value="showValue10" @click="show10 = true" />
-      <wd-cascader v-model="value10" v-model:visible="show10" :lazy-load="lazyLoad10" :find-path="findPath10" @confirm="handleConfirm10" />
-
-      <wd-cell title="异步加载（无初始值）" is-link :value="showValue11" @click="show11 = true" />
-      <wd-cascader v-model="value11" v-model:visible="show11" :lazy-load="lazyLoad11" @confirm="handleConfirm11" />
-    </wd-cell-group>
+      <demo-group title="特殊样式">
+        <wd-cell-group border>
+          <wd-cell title="异步加载" is-link :value="showValue10" @click="show10 = true" />
+          <wd-cell title="异步加载（无初始值）" is-link :value="showValue11" @click="show11 = true" />
+          <wd-cell title="任意级可选" is-link :value="showValue12" @click="show12 = true" />
+        </wd-cell-group>
+        <wd-cascader v-model="value10" v-model:visible="show10" :lazy-load="lazyLoad10" @confirm="handleConfirm10" />
+        <wd-cascader v-model="value11" v-model:visible="show11" :lazy-load="lazyLoad11" @confirm="handleConfirm11" />
+        <wd-cascader v-model="value12" v-model:visible="show12" :options="areaData" check-strictly @confirm="handleConfirm12" />
+      </demo-group>
+    </view>
     <wd-toast />
   </page-wraper>
 </template>
@@ -47,7 +59,7 @@ import { ref } from 'vue'
 import { useToast } from '@/uni_modules/wot-design-uni'
 import { useCascaderAreaData } from '@vant/area-data'
 import { useI18n } from 'vue-i18n'
-import { type CascaderOption, type CascaderLazyLoad, type CascaderFindPath } from '@/uni_modules/wot-design-uni/components/wd-cascader/types'
+import { type CascaderOption, type CascaderLazyLoad } from '@/uni_modules/wot-design-uni/components/wd-cascader/types'
 
 const { t } = useI18n()
 const toast = useToast()
@@ -79,11 +91,6 @@ const show6 = ref<boolean>(false)
 const value7 = ref<string>('')
 const showValue7 = ref<string>('')
 const show7 = ref<boolean>(false)
-
-const value8 = ref<string>('')
-const showValue8 = ref<string>('')
-const show8 = ref<boolean>(false)
-const areaData8 = ref<CascaderOption[]>([])
 
 const value9 = ref<number>(1)
 const showValue9 = ref<string>('选项一/选项一-一')
@@ -138,13 +145,12 @@ const areaData4 = ref<any[]>(
   })
 )
 
-const beforeConfirm = (value: string | number | (string | number)[], selectedOptions: Record<string, any>[], resolve: (isPass: boolean) => void) => {
+const beforeConfirm = (value: string | number, selectedOptions: Record<string, any>[]) => {
   if (parseInt(String(value)) > 120000) {
     toast.error(t('gai-di-qu-ku-cun-bu-zu'))
-    resolve(false)
-  } else {
-    resolve(true)
+    return false
   }
+  return true
 }
 
 const handleConfirm1 = ({ selectedOptions }: { selectedOptions: CascaderOption[] }) => {
@@ -239,40 +245,12 @@ function fetchChildren(parentValue: string | null): Promise<CascaderOption[]> {
   })
 }
 
-const value10 = ref<string>('130204')
+const value10 = ref<(string | number)[]>(['130000', '130200', '130204'])
 const showValue10 = ref<string>('河北省/唐山市/古冶区')
 const show10 = ref<boolean>(false)
 
 const lazyLoad10: CascaderLazyLoad = (option, _tabIndex, resolve) => {
   fetchChildren(option ? String(option.value) : null).then(resolve)
-}
-
-const findPath10: CascaderFindPath = (value, resolve) => {
-  // 模拟异步：延迟 300ms 后返回对应的省/市/区路径
-  setTimeout(() => {
-    const district = Object.entries(asyncDistricts).find(([, ds]) => ds.some((d) => d.value === value))
-    if (!district) {
-      resolve([])
-      return
-    }
-    const [cityValue, districts] = district
-    const selectedDistrict = districts.find((d) => d.value === value)!
-
-    const province = Object.entries(asyncCities).find(([, cs]) => cs.some((c) => c.value === cityValue))
-    if (!province) {
-      resolve([])
-      return
-    }
-    const [provinceValue, cities] = province
-    const selectedCity = cities.find((c) => c.value === cityValue)!
-    const selectedProvince = asyncProvinces.find((p) => p.value === provinceValue)!
-
-    resolve([
-      { options: asyncProvinces, selectedOption: selectedProvince },
-      { options: cities, selectedOption: selectedCity },
-      { options: districts, selectedOption: selectedDistrict }
-    ])
-  }, 300)
 }
 
 const handleConfirm10 = ({ selectedOptions }: { selectedOptions: CascaderOption[] }) => {
@@ -351,12 +329,20 @@ const value11 = ref<string>('')
 const showValue11 = ref<string>('')
 const show11 = ref<boolean>(false)
 
+const value12 = ref<string>('')
+const showValue12 = ref<string>('')
+const show12 = ref<boolean>(false)
+
 const lazyLoad11: CascaderLazyLoad = (option, _tabIndex, resolve) => {
   fetchIndustryChildren(option ? String(option.value) : null).then(resolve)
 }
 
 const handleConfirm11 = ({ selectedOptions }: { selectedOptions: CascaderOption[] }) => {
   showValue11.value = selectedOptions.map((item) => item.text).join(' / ')
+}
+
+const handleConfirm12 = ({ selectedOptions }: { selectedOptions: CascaderOption[] }) => {
+  showValue12.value = selectedOptions.map((item) => item.text).join('/')
 }
 </script>
 <style lang="scss"></style>

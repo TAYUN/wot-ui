@@ -1,5 +1,5 @@
 import { type ComponentPublicInstance, type ExtractPropTypes, type InjectionKey } from 'vue'
-import { baseProps, makeBooleanProp, makeNumberProp, makeNumericProp, makeStringProp, numericProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeNumberProp, makeNumericProp, makeStringProp, numericProp } from '../../common/props'
 
 export type TabsProvide = {
   state: {

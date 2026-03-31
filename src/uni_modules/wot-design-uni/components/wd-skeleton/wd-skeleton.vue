@@ -24,7 +24,7 @@ import type { CSSProperties } from 'vue'
 import { ref, computed, watch } from 'vue'
 import type { SkeletonRowCol, SkeletonRowColObj } from './types'
 import { skeletonProps } from './types'
-import { isNumber, addUnit } from '../common/util'
+import { isNumber, addUnit } from '../../common/util'
 
 const themeMap = {
   avatar: [{ type: 'circle', height: '64px', width: '64px' }],

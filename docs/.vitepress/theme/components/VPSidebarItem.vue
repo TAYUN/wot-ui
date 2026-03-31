@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { DefaultTheme } from 'vitepress/theme'
 import { computed } from 'vue'
-import { useSidebarControl } from 'vitepress/dist/client/theme-default/composables/sidebar.js'
+import { useSidebarItemControl } from 'vitepress/dist/client/theme-default/composables/sidebar.js'
 import VPLink from 'vitepress/dist/client/theme-default/components/VPLink.vue'
 import { versionData } from '../../config/version-data'
 
@@ -18,7 +18,7 @@ const {
   hasActiveLink,
   hasChildren,
   toggle
-} = useSidebarControl(computed(() => props.item))
+} = useSidebarItemControl(computed(() => props.item))
 
 const sectionTag = computed(() => (hasChildren.value ? 'section' : `div`))
 

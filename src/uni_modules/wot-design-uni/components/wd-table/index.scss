@@ -1,5 +1,5 @@
-@use '../styles/mixin/mixin.scss'as *;
-@use '../styles/variable.scss'as *;
+@use '../../styles/mixin/mixin.scss'as *;
+@use '../../styles/variable.scss'as *;
 
 // 表格背景色
 $table-bg: var(--wot-table-bg, $filled-oppo) !default;
@@ -20,7 +20,7 @@ $table-cell-padding: var(--wot-table-cell-padding, $padding-loose $padding-extra
 // 固定列阴影渐变背景
 $table-shadow-gradient: var(--wot-table-shadow-gradient, linear-gradient(270deg, $base-transparent 0%, $opac-2_04 100%)) !default;
 // 排序按钮高度
-$table-sort-button-height: var(--wot-table-sort-button-height, $n20) !default;
+$table-sort-button-height: var(--wot-table-sort-button-height, $n-20) !default;
 
 @include b(table) {
   position: relative;

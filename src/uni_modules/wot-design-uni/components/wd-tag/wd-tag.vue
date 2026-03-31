@@ -46,9 +46,9 @@ export default {
 </script>
 <script lang="ts" setup>
 import wdIcon from '../wd-icon/wd-icon.vue'
-import { objToStyle } from '../common/util'
+import { objToStyle } from '../../common/util'
 import { computed, ref } from 'vue'
-import { useTranslate } from '../composables/useTranslate'
+import { useTranslate } from '../../composables/useTranslate'
 import { tagProps } from './types'
 
 const props = defineProps(tagProps)

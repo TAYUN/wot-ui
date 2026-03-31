@@ -1,6 +1,6 @@
 import { inject, provide, ref } from 'vue'
 import type { Dialog, DialogOptions, DialogOptionsWithCallBack, DialogResult, DialogType } from './types'
-import { deepMerge, isDef, isObj, isString } from '../common/util'
+import { deepMerge, isDef, isObj, isString } from '../../common/util'
 import { type IconProps } from '../wd-icon/types'
 
 const dialogDefaultOptionKey = '__MESSAGE_OPTION__'

@@ -1,5 +1,5 @@
-@use '../styles/mixin/mixin.scss' as *;
-@use '../styles/variable.scss' as *;
+@use '../../styles/mixin/mixin.scss' as *;
+@use '../../styles/variable.scss' as *;
 
 // 圆形模式圆角
 $img-border-radius: var(--wot-img-border-radius, $radius-radius-full) !default;
@@ -12,7 +12,7 @@ $img-loading-font-size: var(--wot-img-loading-font-size, $typography-body-size-m
 // 加载态图标颜色
 $img-loading-icon-color: var(--wot-img-loading-icon-color, $text-placeholder) !default;
 // 加载态图标尺寸
-$img-loading-icon-size: var(--wot-img-loading-icon-size, $n32) !default;
+$img-loading-icon-size: var(--wot-img-loading-icon-size, $n-32) !default;
 // 失败态文字颜色
 $img-error-color: var(--wot-img-error-color, $text-placeholder) !default;
 // 失败态背景色
@@ -22,7 +22,7 @@ $img-error-font-size: var(--wot-img-error-font-size, $typography-body-size-main)
 // 失败态图标颜色
 $img-error-icon-color: var(--wot-img-error-icon-color, $text-placeholder) !default;
 // 失败态图标尺寸
-$img-error-icon-size: var(--wot-img-error-icon-size, $n32) !default;
+$img-error-icon-size: var(--wot-img-error-icon-size, $n-32) !default;
 
 @include b(img) {
   position: relative;

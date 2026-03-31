@@ -1,6 +1,6 @@
 import { inject, provide, ref } from 'vue'
 import type { VideoPreview, VideoPreviewOptions, PreviewVideo } from './types'
-import { deepMerge } from '../common/util'
+import { deepMerge } from '../../common/util'
 
 /**
  * useVideoPreview 用到的 key

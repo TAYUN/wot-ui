@@ -1,42 +1,49 @@
 <template>
   <page-wraper>
-    <demo-block :title="$t('ji-chu-biao-dan')" transparent>
-      <wd-form ref="form1" :model="model1" :schema="schema1" :title-width="100">
-        <wd-form-item :title="$t('wai-bi-ba-bu')" prop="value1">
-          <wd-input type="text" v-model="model1.value1" :placeholder="$t('qing-shu-ru-wai-bi-ba-bu')" />
-        </wd-form-item>
+    <view class="page-form">
+      <demo-group title="组件类型">
+        <demo-group-item :title="$t('ji-chu-biao-dan')" transparent no-padding>
+          <wd-form ref="form1" :model="model1" :schema="schema1" :title-width="100">
+            <wd-form-item :title="$t('wai-bi-ba-bu')" prop="value1">
+              <wd-input type="text" v-model="model1.value1" :placeholder="$t('qing-shu-ru-wai-bi-ba-bu')" />
+            </wd-form-item>
 
-        <wd-form-item :title="$t('sha-ka-la-ka')" prop="value2">
-          <wd-input type="text" v-model="model1.value2" :placeholder="$t('qing-shu-ru-sha-ka-la-ka')" />
-        </wd-form-item>
-        <view class="footer">
-          <wd-button type="primary" size="large" @click="handleSubmit1" block>{{ $t('ti-jiao') }}</wd-button>
-        </view>
-      </wd-form>
-    </demo-block>
+            <wd-form-item :title="$t('sha-ka-la-ka')" prop="value2">
+              <wd-input type="text" v-model="model1.value2" :placeholder="$t('qing-shu-ru-sha-ka-la-ka')" />
+            </wd-form-item>
+            <view class="footer">
+              <wd-button type="primary" size="large" @click="handleSubmit1" block>{{ $t('ti-jiao') }}</wd-button>
+            </view>
+          </wd-form>
+        </demo-group-item>
 
-    <demo-block :title="$t('dong-tai-biao-dan')" transparent>
-      <view class="demo-button">
-        <wd-button @click="handleClick1" :round="false" block size="large">{{ $t('dong-tai-biao-dan-0') }}</wd-button>
-      </view>
-    </demo-block>
+        <demo-group-item :title="$t('dong-tai-biao-dan')" transparent>
+          <view class="demo-button">
+            <wd-button @click="handleClick1" :round="false" block size="large">{{ $t('dong-tai-biao-dan-0') }}</wd-button>
+          </view>
+        </demo-group-item>
 
-    <demo-block :title="$t('fu-za-biao-dan')" transparent>
-      <view class="demo-button">
-        <wd-button @click="handleClick3" :round="false" block size="large">{{ $t('fu-za-biao-dan-0') }}</wd-button>
-      </view>
-    </demo-block>
+        <demo-group-item :title="$t('fu-za-biao-dan')" transparent>
+          <view class="demo-button">
+            <wd-button @click="handleClick3" :round="false" block size="large">{{ $t('fu-za-biao-dan-0') }}</wd-button>
+          </view>
+        </demo-group-item>
+      </demo-group>
 
-    <demo-block :title="$t('xiao-yan-ti-shi-fang-shi')" transparent>
-      <view class="demo-button">
-        <wd-button @click="handleClick4" :round="false" block size="large">{{ $t('xiao-yan-ti-shi-fang-shi') }}</wd-button>
-      </view>
-    </demo-block>
-    <demo-block title="校验触发时机" transparent>
-      <view class="demo-button">
-        <wd-button @click="handleClick2" :round="false" block size="large">校验触发时机</wd-button>
-      </view>
-    </demo-block>
+      <demo-group title="组件配置">
+        <demo-group-item :title="$t('xiao-yan-ti-shi-fang-shi')" transparent>
+          <view class="demo-button">
+            <wd-button @click="handleClick4" :round="false" block size="large">{{ $t('xiao-yan-ti-shi-fang-shi') }}</wd-button>
+          </view>
+        </demo-group-item>
+
+        <demo-group-item title="校验触发时机" transparent>
+          <view class="demo-button">
+            <wd-button @click="handleClick2" :round="false" block size="large">校验触发时机</wd-button>
+          </view>
+        </demo-group-item>
+      </demo-group>
+    </view>
   </page-wraper>
 </template>
 <script lang="ts" setup>
@@ -45,7 +52,6 @@ import type { FormInstance } from '@/uni_modules/wot-design-uni/components/wd-fo
 import { reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { z } from 'zod'
-
 const { t } = useI18n()
 
 const model1 = reactive<{

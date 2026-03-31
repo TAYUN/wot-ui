@@ -9,7 +9,7 @@
     <root-portal>
       <!-- #endif -->
       <!-- #endif -->
-      <view :style="configProviderStyle" class="wd-root-portal">
+      <view :class="themeClass" :style="configProviderStyle" class="wd-root-portal">
         <slot />
       </view>
       <!-- #ifdef MP-WEIXIN || MP-ALIPAY -->
@@ -35,9 +35,14 @@ export default {
 </script>
 <script lang="ts" setup>
 import { computed, inject } from 'vue'
-import { useParent } from '../composables/useParent'
-import { USE_CONFIG_PROVIDER_KEY } from '../composables/useConfigProvider'
+import { useParent } from '../../composables/useParent'
+import { USE_CONFIG_PROVIDER_KEY } from '../../composables/useConfigProvider'
 import { CONFIG_PROVIDER_KEY, type ConfigProviderProvide } from '../wd-config-provider/types'
+import { baseProps } from '../../common/props'
+
+const props = defineProps({
+  ...baseProps
+})
 
 const None = Symbol('None')
 const hooksProvider = inject<ConfigProviderProvide | typeof None>(USE_CONFIG_PROVIDER_KEY, None)
@@ -45,6 +50,11 @@ const { parent: configProvider } = useParent(CONFIG_PROVIDER_KEY)
 
 const configProviderStyle = computed(() => {
   return hooksProvider !== None ? hooksProvider.themeStyle.value || '' : configProvider.value?.themeStyle.value || ''
+})
+
+const themeClass = computed(() => {
+  const theme = hooksProvider !== None ? hooksProvider.theme?.value : configProvider.value?.theme?.value
+  return theme ? `wot-theme-${theme}` : 'wot-theme-light'
 })
 </script>
 

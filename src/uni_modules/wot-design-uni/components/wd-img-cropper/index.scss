@@ -1,5 +1,5 @@
-@use '../styles/mixin/mixin.scss'as *;
-@use '../styles/variable.scss'as *;
+@use '../../styles/mixin/mixin.scss'as *;
+@use '../../styles/variable.scss'as *;
 
 // ============================================================
 // img-cropper 组件变量
@@ -24,7 +24,7 @@ $img-cropper-cut-border-color: var(--wot-img-cropper-cut-border-color, $base-whi
 // 角标粗细
 $img-cropper-corner-size: var(--wot-img-cropper-corner-size, $stroke-blod) !default;
 // 角标长度
-$img-cropper-corner-length: var(--wot-img-cropper-corner-length, $n20) !default;
+$img-cropper-corner-length: var(--wot-img-cropper-corner-length, $n-20) !default;
 // 角标颜色
 $img-cropper-corner-color: var(--wot-img-cropper-corner-color, $base-white) !default;
 // 网格线边框颜色
@@ -40,13 +40,13 @@ $img-cropper-footer-z-index: var(--wot-img-cropper-footer-z-index, 10) !default;
 // 底部操作栏内边距
 $img-cropper-footer-padding: var(--wot-img-cropper-footer-padding, $padding-extra-loose) !default;
 // 底部按钮向上边距
-$img-cropper-footer-btn-margin: var(--wot-img-cropper-footer-btn-margin, $n32) !default;
+$img-cropper-footer-btn-margin: var(--wot-img-cropper-footer-btn-margin, $spacing-extra-spacious) !default;
 // 取消按钮文字颜色
 $img-cropper-cancel-color: var(--wot-img-cropper-cancel-color, $base-white) !default;
 // 取消按钮字号
 $img-cropper-cancel-font-size: var(--wot-img-cropper-cancel-font-size, $typography-body-size-extra-large) !default;
 // 旋转图标大小
-$img-cropper-icon-size: var(--wot-img-cropper-icon-size, $n36) !default;
+$img-cropper-icon-size: var(--wot-img-cropper-icon-size, $n-36) !default;
 // 旋转图标颜色
 $img-cropper-icon-color: var(--wot-img-cropper-icon-color, $base-white) !default;
 

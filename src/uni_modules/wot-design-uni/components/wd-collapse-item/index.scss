@@ -1,5 +1,5 @@
-@use '../styles/mixin/mixin.scss'as *;
-@use '../styles/variable.scss'as *;
+@use '../../styles/mixin/mixin.scss'as *;
+@use '../../styles/variable.scss'as *;
 
 // 折叠项头部内边距
 $collapse-item-header-padding: var(--wot-collapse-item-header-padding, $padding-extra-loose) !default;
@@ -10,7 +10,7 @@ $collapse-item-title-font-size: var(--wot-collapse-item-title-font-size, $typogr
 // 折叠项标题文字行高
 $collapse-item-title-line-height: var(--wot-collapse-item-title-line-height, $typography-body-line--height-size-extra-large) !default;
 // 折叠项箭头尺寸
-$collapse-item-arrow-size: var(--wot-collapse-item-arrow-size, $n16) !default;
+$collapse-item-arrow-size: var(--wot-collapse-item-arrow-size, $n-16) !default;
 // 折叠项箭头颜色
 $collapse-item-arrow-color: var(--wot-collapse-item-arrow-color, $icon-secondary) !default;
 // 折叠项内容文字颜色
@@ -52,7 +52,6 @@ $collapse-item-body-padding: var(--wot-collapse-item-body-padding, $padding-loos
 
   @include e(title) {
     color: $collapse-item-title-color;
-    font-weight: $font-weight-medium;
     font-size: $collapse-item-title-font-size;
     line-height: $collapse-item-title-line-height;
   }

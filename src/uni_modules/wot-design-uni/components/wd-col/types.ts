@@ -1,5 +1,5 @@
 import type { ExtractPropTypes } from 'vue'
-import { baseProps, makeNumberProp } from '../common/props'
+import { baseProps, makeNumberProp } from '../../common/props'
 
 export const colProps = {
   ...baseProps,

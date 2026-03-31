@@ -1,41 +1,50 @@
 <template>
   <page-wraper>
-    <wd-toast />
-    <demo-block :title="$t('ri-qi-xuan-ze-0')" transparent>
-      <wd-datetime-picker-view v-model="value1" @change="onChange1" />
-    </demo-block>
+    <view class="page-datetime-picker-view">
+      <wd-toast />
 
-    <demo-block :title="$t('ri-qi-xuan-ze-dai-miao')" transparent>
-      <wd-datetime-picker-view v-model="value8" use-second />
-    </demo-block>
+      <demo-group title="组件类型">
+        <demo-group-item :title="$t('ri-qi-xuan-ze-0')">
+          <wd-datetime-picker-view v-model="value1" @change="onChange1" />
+        </demo-group-item>
+      </demo-group>
 
-    <demo-block :title="$t('nian-yue-ri')" transparent>
-      <wd-datetime-picker-view type="date" v-model="value2" @change="onChange2" />
-    </demo-block>
+      <demo-group title="组件变体">
+        <demo-group-item :title="$t('ri-qi-xuan-ze-dai-miao')">
+          <wd-datetime-picker-view v-model="value8" use-second />
+        </demo-group-item>
 
-    <demo-block :title="$t('nian-yue')" transparent>
-      <wd-datetime-picker-view type="year-month" v-model="value3" @change="onChange3" />
-    </demo-block>
+        <demo-group-item :title="$t('nian-yue-ri')">
+          <wd-datetime-picker-view type="date" v-model="value2" @change="onChange2" />
+        </demo-group-item>
 
-    <demo-block :title="$t('nian-0')" transparent>
-      <wd-datetime-picker-view type="year" v-model="value7" @change="onChange7" />
-    </demo-block>
+        <demo-group-item :title="$t('nian-yue')">
+          <wd-datetime-picker-view type="year-month" v-model="value3" @change="onChange3" />
+        </demo-group-item>
 
-    <demo-block :title="$t('shi-fen')" transparent>
-      <wd-datetime-picker-view type="time" v-model="value4" @change="onChange4" />
-    </demo-block>
+        <demo-group-item :title="$t('nian-0')">
+          <wd-datetime-picker-view type="year" v-model="value7" @change="onChange7" />
+        </demo-group-item>
 
-    <demo-block :title="$t('shi-jian-xuan-ze-dai-miao')" transparent>
-      <wd-datetime-picker-view type="time" v-model="value9" use-second @change="onChange4" />
-    </demo-block>
+        <demo-group-item :title="$t('shi-fen')">
+          <wd-datetime-picker-view type="time" v-model="value4" @change="onChange4" />
+        </demo-group-item>
 
-    <demo-block :title="$t('nei-bu-ge-shi')" transparent>
-      <wd-datetime-picker-view v-model="value5" :formatter="formatter" @change="onChange5" />
-    </demo-block>
+        <demo-group-item :title="$t('shi-jian-xuan-ze-dai-miao')">
+          <wd-datetime-picker-view type="time" v-model="value9" use-second @change="onChange4" />
+        </demo-group-item>
+      </demo-group>
 
-    <demo-block :title="$t('guo-lv-xuan-xiang')" transparent>
-      <wd-datetime-picker-view v-model="value6" :filter="filter" @change="onChange6" />
-    </demo-block>
+      <demo-group title="组件样式">
+        <demo-group-item title="内部格式">
+          <wd-datetime-picker-view v-model="value5" :formatter="formatter" @change="onChange5" />
+        </demo-group-item>
+
+        <demo-group-item :title="$t('guo-lv-xuan-xiang')">
+          <wd-datetime-picker-view v-model="value6" :filter="filter" @change="onChange6" />
+        </demo-group-item>
+      </demo-group>
+    </view>
   </page-wraper>
 </template>
 <script lang="ts" setup>

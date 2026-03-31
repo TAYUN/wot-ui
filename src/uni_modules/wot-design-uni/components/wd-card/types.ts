@@ -8,7 +8,7 @@
  * 记得注释
  */
 import type { ExtractPropTypes, PropType } from 'vue'
-import { baseProps, makeStringProp } from '../common/props'
+import { baseProps, makeStringProp } from '../../common/props'
 
 export type CardType = 'rectangle'
 

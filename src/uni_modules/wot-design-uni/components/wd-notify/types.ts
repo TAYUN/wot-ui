@@ -1,5 +1,5 @@
-import type { PropType, ExtractPropTypes } from 'vue'
-import { makeBooleanProp, makeNumberProp, makeNumericProp, makeStringProp } from '../common/props'
+import type { ExtractPropTypes } from 'vue'
+import { baseProps, makeBooleanProp, makeNumberProp, makeNumericProp, makeStringProp } from '../../common/props'
 
 /**
  * notify 通知类型
@@ -9,6 +9,10 @@ export type NotifyType = 'primary' | 'success' | 'danger' | 'warning'
  * notify 弹出位置
  */
 export type NotifyPosition = 'top' | 'bottom'
+/**
+ * notify 展示形态
+ */
+export type NotifyVariant = 'filled' | 'floating'
 /**
  * notify 属性定义
  */
@@ -41,6 +45,7 @@ export type NotifyThemeVars = {
   notifyWarningBackground?: string
 }
 export const notifyProps = {
+  ...baseProps,
   /**
    * 类型
    * 类型: string
@@ -114,5 +119,12 @@ export const notifyProps = {
    * 类型: boolean
    * 默认值: false
    */
-  closable: makeBooleanProp(false)
+  closable: makeBooleanProp(false),
+  /**
+   * 展示形态
+   * 类型: string
+   * 可选值: 'filled' | 'floating'
+   * 默认值: 'filled'
+   */
+  variant: makeStringProp<NotifyVariant>('filled')
 }

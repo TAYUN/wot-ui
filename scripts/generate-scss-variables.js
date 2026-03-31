@@ -3,10 +3,10 @@ const fs = require('fs')
 const path = require('path')
 
 // 文件路径
-const basePath = '/Users/xqk/FE/wot-design-uni/src/uni_modules/wot-design-uni/components/styles/theme'
+const basePath = '/Users/xqk/FE/wot-design-uni/src/uni_modules/wot-design-uni/styles/theme'
 const baseScssPath = path.join(basePath, 'base.scss')
 const lightScssPath = path.join(basePath, 'light.scss')
-const variableScssPath = '/Users/xqk/FE/wot-design-uni/src/uni_modules/wot-design-uni/components/styles/variable.scss'
+const variableScssPath = '/Users/xqk/FE/wot-design-uni/src/uni_modules/wot-design-uni/styles/variable.scss'
 
 /**
  * 解析base.scss文件，提取基础变量和对应的值

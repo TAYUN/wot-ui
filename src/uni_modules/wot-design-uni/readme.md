@@ -3,7 +3,7 @@
 </p>
 <h1 align="center">Wot UI</h1>
 
-<p align="center">📱 一个基于vue3+Typescript构建，参照<a href="https://ftf.jd.com/wot-design/">wot-design</a>打造的uni-app组件库</p>
+<p align="center">📱 一个轻量、美观、AI友好的 uni-app 组件库</p>
 
 <p align="center">
 
@@ -43,7 +43,7 @@
 ## ✨ 特性
 
 - 🎯 多平台覆盖，支持 微信小程序、支付宝小程序、钉钉小程序、H5、APP 等.
-- 🚀 70+ 个高质量组件，覆盖移动端主流场景.
+- 🚀 80+ 个高质量组件，覆盖移动端主流场景.
 - 💪 使用 Typescript 构建，提供良好的组件类型系统.
 - 🌍 支持国际化，内置 15 种语言包.
 - 📖 提供丰富的文档和组件示例.
@@ -91,7 +91,7 @@
 | [wot-starter-retail](https://github.com/Moonofweisheng/wot-starter-retail)                                  | 基于 wot-ui 的 uni-app 零售行业模板          |
 | [Wot UI Snippets](https://marketplace.visualstudio.com/items?itemName=kiko.wot-design-uni-snippets) | wot-ui 代码块提示                            |
 | [uni-mini-ci](https://github.com/Moonofweisheng/uni-mini-ci)                                                | 一个 uni-app 小程序端构建后支持 CI（持续集成）的插件 |
-| [uni-mini-router](https://github.com/Moonofweisheng/uni-mini-router)                                        | 一个基于 vue3 和 Typescript 的轻量级 uni-app 路由库  |
+| [my-uni](https://github.com/wot-ui/my-uni)                                        | 摸鱼 uni 插件库合集  |
 | [unibest](https://github.com/unibest-tech/unibest)                                                              | 基于 wot-ui 的 uni-app 模板                  |
 | [wot-design-uni AI 助手](https://www.coze.cn/store/bot/7347916532258701363)                                 | 一个能回答你关于 wot-ui 组件库问题的智能助手 |
 | [uni-ku-root](https://github.com/uni-ku/root)                                                               | 一个模拟 App.vue 原有能力的根组件插件                  |

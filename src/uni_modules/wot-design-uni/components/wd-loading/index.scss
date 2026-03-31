@@ -1,5 +1,5 @@
-@use '../styles/mixin/mixin.scss'as *;
-@use '../styles/variable.scss'as *;
+@use '../../styles/mixin/mixin.scss'as *;
+@use '../../styles/variable.scss'as *;
 
 // 主色模式颜色
 $loading-color-main: var(--wot-loading-color-main, $primary-6) !default;
@@ -10,7 +10,7 @@ $loading-color-white: var(--wot-loading-color-white, $icon-white) !default;
 // 文本颜色
 $loading-color-text: var(--wot-loading-color-text, $text-main) !default;
 // 组件基准尺寸
-$loading-size: var(--wot-loading-size, $n28) !default;
+$loading-size: var(--wot-loading-size, $n-28) !default;
 // 容器宽度
 $loading-size-width: var(--wot-loading-size-width, 1em) !default;
 // 容器高度
@@ -36,7 +36,9 @@ $loading-spinner-padding: var(--wot-loading-spinner-padding, $padding-ultra-tigh
 // 文本与加载器间距
 $loading-text-spacing: var(--wot-loading-text-spacing, $spacing-extra-tight) !default;
 // 文本字号
-$loading-text-font-size: var(--wot-loading-text-font-size, $n14) !default;
+$loading-text-font-size: var(--wot-loading-text-font-size, $typography-body-size-main) !default;
+// 文本行高
+$loading-text-line-height: var(--wot-loading-text-line-height, $typography-body-line--height-size-main) !default;
 
 
 @mixin generate($n, $i: 1) {
@@ -165,6 +167,7 @@ $loading-text-font-size: var(--wot-loading-text-font-size, $n14) !default;
 
   @include e(text) {
     font-size: $loading-text-font-size;
+    line-height: $loading-text-line-height;
     color: currentColor;
   }
 }

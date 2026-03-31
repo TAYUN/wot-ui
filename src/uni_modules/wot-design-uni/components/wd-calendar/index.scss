@@ -1,5 +1,5 @@
-@use '../styles/mixin/mixin.scss'as *;
-@use '../styles/variable.scss'as *;
+@use '../../styles/mixin/mixin.scss'as *;
+@use '../../styles/variable.scss'as *;
 
 $calendar-bg: var(--wot-calendar-bg, $filled-oppo) !default; // 日历弹层背景色
 $calendar-tabs-width: var(--wot-calendar-tabs-width, 100%) !default; // Tabs 宽度
@@ -18,8 +18,8 @@ $calendar-range-item-line-color: var(--wot-calendar-range-item-line-color, $prim
 $calendar-range-item-line-color-placeholder: var(--wot-calendar-range-item-line-color-placeholder, $border-main) !default; // 范围标签项下划线占位符颜色
 $calendar-range-separator-margin: var(--wot-calendar-range-separator-margin, $spacing-zero $spacing-tight) !default; // 分隔符水平间距
 $calendar-range-separator-color: var(--wot-calendar-range-separator-color, $text-auxiliary) !default; // 分隔符颜色
-$calendar-range-separator-width: var(--wot-calendar-range-separator-width, $n8) !default; // 分隔符宽度
-$calendar-range-separator-height: var(--wot-calendar-range-separator-height, $n1) !default; // 分隔符高度
+$calendar-range-separator-width: var(--wot-calendar-range-separator-width, $n-8) !default; // 分隔符宽度
+$calendar-range-separator-height: var(--wot-calendar-range-separator-height, $stroke-main) !default; // 分隔符高度
 $calendar-confirm-padding: var(--wot-calendar-confirm-padding, $padding-tight $padding-loose) !default; // 确认区域内边距
 $calendar-confirm-border-color: var(--wot-calendar-confirm-border-color, $border-light) !default; // 确认区域上边框颜色
 

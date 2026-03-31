@@ -1,5 +1,5 @@
-@use '../styles/mixin/mixin.scss' as *;
-@use '../styles/variable.scss' as *;
+@use '../../styles/mixin/mixin.scss' as *;
+@use '../../styles/variable.scss' as *;
 
 // 选项字号
 $sidebar-item-font-size: var(--wot-sidebar-item-font-size, $typography-body-size-main) !default;
@@ -12,7 +12,7 @@ $sidebar-item-padding: var(--wot-sidebar-item-padding, $padding-extra-tight $pad
 // 选项背景色
 $sidebar-item-bg: var(--wot-sidebar-item-bg, $filled-bottom) !default;
 // 选项最小高度
-$sidebar-item-min-height: var(--wot-sidebar-item-min-height, $n52) !default;
+$sidebar-item-min-height: var(--wot-sidebar-item-min-height, $n-52) !default;
 // 选项点击态背景色
 $sidebar-item-bg-hover: var(--wot-sidebar-item-bg-hover, $feedback-active) !default;
 // 激活项背景色
@@ -22,15 +22,15 @@ $sidebar-item-color-active: var(--wot-sidebar-item-color-active, $primary-6) !de
 // 激活项字重
 $sidebar-item-font-weight-active: var(--wot-sidebar-item-font-weight-active, $font-weight-semibold) !default;
 // 激活指示条宽度
-$sidebar-item-indicator-width: var(--wot-sidebar-item-indicator-width, $n2) !default;
+$sidebar-item-indicator-width: var(--wot-sidebar-item-indicator-width, $n-2) !default;
 // 激活指示条高度
-$sidebar-item-indicator-height: var(--wot-sidebar-item-indicator-height, $n20) !default;
+$sidebar-item-indicator-height: var(--wot-sidebar-item-indicator-height, $n-20) !default;
 // 圆角大小
 $sidebar-item-border-radius: var(--wot-sidebar-item-border-radius, $radius-large) !default;
 // 禁用状态文字颜色
 $sidebar-item-color-disabled: var(--wot-sidebar-item-color-disabled, $text-disabled) !default;
 // 图标大小
-$sidebar-item-icon-size: var(--wot-sidebar-item-icon-size, $n20) !default;
+$sidebar-item-icon-size: var(--wot-sidebar-item-icon-size, $n-20) !default;
 // 图标右边距
 $sidebar-item-icon-margin-right: var(--wot-sidebar-item-icon-margin-right, $padding-ultra-tight) !default;
 

@@ -47,7 +47,7 @@
 ## ✨ Features
 
 - 🎯 Multi-platform support: WeChat Mini Program, Alipay Mini Program, DingTalk Mini Program, H5, APP, etc.
-- 🚀 70+ high-quality components covering mainstream mobile scenarios.
+- 🚀 80+ high-quality components covering mainstream mobile scenarios.
 - 💪 Built with TypeScript, providing a robust component type system.
 - 🌍 Internationalization support with 15 built-in language packs.
 - 📖 Rich documentation and component examples.
@@ -93,7 +93,7 @@ We welcome contributions of excellent demos and cases. Feel free to submit your 
 | [wot-starter-retail](https://github.com/Moonofweisheng/wot-starter-retail)                                  | A uni-app retail industry template based on wot-ui          |
 | [Wot UI Snippets](https://marketplace.visualstudio.com/items?itemName=kiko.wot-design-uni-snippets) | wot-ui code snippets                            |
 | [uni-mini-ci](https://github.com/Moonofweisheng/uni-mini-ci)                                                | A uni-app mini-program build plugin that supports CI (Continuous Integration) |
-| [uni-mini-router](https://github.com/Moonofweisheng/uni-mini-router)                                        | A lightweight uni-app router library based on vue3 and TypeScript  |
+| [my-uni](https://github.com/wot-ui/my-uni)                                        | A lightweight uni-app router library based on vue3 and TypeScript  |
 | [unibest](https://github.com/unibest-tech/unibest)                                                              | A uni-app template based on wot-ui                  |
 | [wot-design-uni AI Assistant](https://www.coze.cn/store/bot/7347916532258701363)                                 | An intelligent assistant that can answer your questions about wot-ui component library |
 | [uni-ku-root](https://github.com/uni-ku/root)                                                               | A root component plugin that simulates the original capabilities of App.vue                  |

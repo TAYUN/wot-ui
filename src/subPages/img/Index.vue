@@ -1,74 +1,101 @@
 <template>
   <page-wraper>
-    <demo-block :title="$t('jiBenYongFa')">
-      <wd-img :width="100" :height="100" :src="imgURL" />
-    </demo-block>
+    <view class="page-img">
+      <demo-group title="组件类型">
+        <demo-group-item :title="$t('ji-ben-shi-yong')">
+          <wd-img :width="100" :height="100" :src="imgURL" />
+        </demo-group-item>
+      </demo-group>
 
-    <demo-block title="加载中提示">
-      <view class="col">
-        <wd-img width="100%" height="27vw" src="https://www.123.wot.com/a.jpg" />
-        <view class="center">默认提示</view>
-      </view>
-      <view class="col">
-        <wd-img width="100%" height="27vw" src="https://www.123.wot.com/a.jpg">
-          <template #loading>
-            <wd-loading />
-          </template>
-        </wd-img>
-        <view class="center">自定义提示</view>
-      </view>
-    </demo-block>
+      <demo-group title="组件状态">
+        <demo-group-item :title="$t('jia-zai-zhong-0')">
+          <view class="demo-grid demo-grid--two">
+            <view class="demo-col">
+              <wd-img width="100%" height="27vw" src="https://www.123.wot.com/a.jpg" />
+              <view class="demo-text">默认提示</view>
+            </view>
+            <view class="demo-col">
+              <wd-img width="100%" height="27vw" src="https://www.123.wot.com/a.jpg">
+                <template #loading>
+                  <wd-loading />
+                </template>
+              </wd-img>
+              <view class="demo-text">自定义提示</view>
+            </view>
+          </view>
+        </demo-group-item>
 
-    <demo-block title="加载失败提示">
-      <view class="col">
-        <wd-img width="100%" height="27vw" src="https://www.123.wot.com/a.jpg" />
-        <view class="center">默认提示</view>
-      </view>
-      <view class="col">
-        <wd-img width="100%" height="27vw" src="https://www.123.wot.com/a.jpg">
-          <template #error>
-            <view class="error-wrap">加载失败</view>
-          </template>
-        </wd-img>
-        <view class="center">自定义提示</view>
-      </view>
-    </demo-block>
+        <demo-group-item :title="$t('jia-zai-shi-bai')">
+          <view class="demo-grid demo-grid--two">
+            <view class="demo-col">
+              <wd-img width="100%" height="27vw" src="https://www.123.wot.com/a.jpg" />
+              <view class="demo-text">默认提示</view>
+            </view>
+            <view class="demo-col">
+              <wd-img width="100%" height="27vw" src="https://www.123.wot.com/a.jpg">
+                <template #error>
+                  <view class="error-wrap">加载失败</view>
+                </template>
+              </wd-img>
+              <view class="demo-text">自定义提示</view>
+            </view>
+          </view>
+        </demo-group-item>
+      </demo-group>
 
-    <demo-block :title="$t('tian-chong')">
-      <view class="col" v-for="(mode, index) in modes" :key="index">
-        <wd-img width="100%" height="27vw" :src="imgURL" :mode="mode" />
-        <view class="center">{{ mode }}</view>
-      </view>
-    </demo-block>
-    <demo-block :title="$t('yuan-xing')">
-      <view class="col" v-for="(mode, index) in modes" :key="index">
-        <wd-img round width="100%" height="27vw" :src="imgURL" :mode="mode" />
-        <view class="center">{{ mode }}</view>
-      </view>
-    </demo-block>
-    <demo-block :title="$t('yuan-jiao')">
-      <view class="col" v-for="(mode, index) in modes" :key="index">
-        <wd-img width="100%" height="27vw" :radius="5" :src="imgURL" :mode="mode" />
-        <view class="center">{{ mode }}</view>
-      </view>
-    </demo-block>
+      <demo-group title="组件样式">
+        <demo-group-item :title="$t('tian-chong')">
+          <view class="demo-grid">
+            <view class="demo-col" v-for="mode in modes" :key="mode">
+              <wd-img width="100%" height="27vw" :src="imgURL" :mode="mode" />
+              <view class="demo-text">{{ mode }}</view>
+            </view>
+          </view>
+        </demo-group-item>
 
-    <demo-block :title="$t('ke-yu-lan')">
-      <view class="col">
-        <wd-img :width="100" :height="100" :src="imgURL" :enable-preview="true" />
-      </view>
-      <view class="col">
-        <wd-img :width="100" :height="100" :src="imgURL" :preview-src="imgURL" :enable-preview="true" />
-      </view>
-    </demo-block>
+        <demo-group-item :title="$t('yuan-xing')">
+          <view class="demo-grid">
+            <view class="demo-col" v-for="mode in modes" :key="`round-${mode}`">
+              <wd-img round width="100%" height="27vw" :src="imgURL" :mode="mode" />
+              <view class="demo-text">{{ mode }}</view>
+            </view>
+          </view>
+        </demo-group-item>
+
+        <demo-group-item :title="$t('yuan-jiao')">
+          <view class="demo-grid">
+            <view class="demo-col" v-for="mode in modes" :key="`radius-${mode}`">
+              <wd-img width="100%" height="27vw" :radius="5" :src="imgURL" :mode="mode" />
+              <view class="demo-text">{{ mode }}</view>
+            </view>
+          </view>
+        </demo-group-item>
+      </demo-group>
+
+      <demo-group title="特殊用法">
+        <demo-group-item :title="$t('ke-yu-lan')">
+          <view class="demo-grid demo-grid--two">
+            <view class="demo-col">
+              <wd-img width="100%" mode="widthFix" :src="imgURL" :enable-preview="true" />
+              <view class="demo-text">默认预览图</view>
+            </view>
+            <view class="demo-col">
+              <wd-img width="100%" mode="widthFix" :src="imgURL" :preview-src="previewURL" :enable-preview="true" />
+              <view class="demo-text">指定预览图</view>
+            </view>
+          </view>
+        </demo-group-item>
+      </demo-group>
+    </view>
   </page-wraper>
 </template>
 <script lang="ts" setup>
 import type { ImageMode } from '@/uni_modules/wot-design-uni/components/wd-img/types'
-// 小黑毛
 import blackMao from './black_mao.png'
+import blackMaoPreview from './black_mao_1.png'
 
 const imgURL = blackMao
+const previewURL = blackMaoPreview
 
 const modes: ImageMode[] = [
   'top left',
@@ -89,21 +116,38 @@ const modes: ImageMode[] = [
 </script>
 
 <style lang="scss" scoped>
-.col {
-  display: inline-block;
-  width: 33.333%;
+.page-img {
+  :deep(.demo-group-item__content) {
+    overflow: hidden;
+  }
+}
+
+.demo-card {
+  display: flex;
+  justify-content: center;
+}
+
+.demo-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.demo-grid--two {
+  .demo-col {
+    width: 50%;
+  }
+}
+
+.demo-col {
   box-sizing: border-box;
   min-height: 1px;
-  padding-left: 10px;
-  padding-right: 10px;
-  margin-bottom: 20px;
+  padding: 0 10px 20px;
+  width: 33.3333%;
 }
-.center {
+
+.demo-text {
+  margin-top: 8px;
   text-align: center;
-}
-:deep(.border) {
-  border: 1px solid red;
-  margin: 0 10px;
 }
 
 .error-wrap {
@@ -113,13 +157,5 @@ const modes: ImageMode[] = [
   color: white;
   line-height: 100px;
   text-align: center;
-}
-
-.loading-wrap {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 </style>

@@ -4,13 +4,13 @@ import { computed, ref } from 'vue'
 import VPDocAside from 'vitepress/dist/client/theme-default/components/VPDocAside.vue'
 import VPDocFooter from 'vitepress/dist/client/theme-default/components/VPDocFooter.vue'
 import { useData } from 'vitepress';
-import { useSidebar } from 'vitepress/theme';
+import { useLayout } from 'vitepress/theme';
 import VPIframe from './VPIframe.vue'
 
 const { theme }: any = useData()
 
 const route = useRoute()
-const { hasSidebar, hasAside, leftAside } = useSidebar()
+const { hasSidebar, hasAside, leftAside } = useLayout()
 
 const pageName = computed(() =>
   route.path.replace(/[./]+/g, '_').replace(/_html$/, '')

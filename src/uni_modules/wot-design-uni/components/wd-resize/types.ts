@@ -1,4 +1,4 @@
-import { baseProps, makeStringProp } from '../common/props'
+import { baseProps, makeStringProp } from '../../common/props'
 
 /**
  * Resize 组件 Props 定义

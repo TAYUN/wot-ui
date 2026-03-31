@@ -21,7 +21,7 @@ export default {
 <script setup lang="ts">
 import { watch, computed, onMounted } from 'vue'
 import { parseFormat } from './utils'
-import { useCountDown } from '../composables/useCountDown'
+import { useCountDown } from '../../composables/useCountDown'
 import { countDownProps, type CountDownExpose } from './types'
 
 const props = defineProps(countDownProps)

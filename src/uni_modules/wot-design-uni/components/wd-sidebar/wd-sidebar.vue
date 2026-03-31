@@ -19,8 +19,8 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { isFunction } from '../common/util'
-import { useChildren } from '../composables/useChildren'
+import { callInterceptor } from '../../common/interceptor'
+import { useChildren } from '../../composables/useChildren'
 import { SIDEBAR_KEY, sidebarProps } from './types'
 
 const props = defineProps(sidebarProps)
@@ -35,18 +35,10 @@ linkChildren({ props, setChange })
  * @param label 目标值标题
  */
 function setChange(value: number | string, label: string) {
-  if (isFunction(props.beforeChange)) {
-    props.beforeChange({
-      value: value,
-      resolve: (pass: boolean) => {
-        if (pass) {
-          updateValue(value, label)
-        }
-      }
-    })
-  } else {
-    updateValue(value, label)
-  }
+  callInterceptor(props.beforeChange, {
+    args: [value],
+    done: () => updateValue(value, label)
+  })
 }
 
 /**

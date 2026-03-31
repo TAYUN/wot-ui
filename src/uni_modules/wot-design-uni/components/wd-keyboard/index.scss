@@ -1,5 +1,5 @@
-@use '../styles/mixin/mixin.scss'as *;
-@use '../styles/variable.scss'as *;
+@use '../../styles/mixin/mixin.scss'as *;
+@use '../../styles/variable.scss'as *;
 
 // 键盘背景色
 $keyboard-bg: var(--wot-keyboard-bg, $filled-content) !default;
@@ -8,7 +8,7 @@ $keyboard-color: var(--wot-keyboard-color, $text-main) !default;
 // 键盘内容间距
 $keyboard-padding: var(--wot-keyboard-padding, $padding-tight) !default;
 // 键盘头部高度
-$keyboard-header-height: var(--wot-keyboard-header-height, $n40) !default;
+$keyboard-header-height: var(--wot-keyboard-header-height, $n-40) !default;
 // 键盘标题颜色
 $keyboard-title-color: var(--wot-keyboard-title-color, $text-secondary) !default;
 // 键盘标题字号

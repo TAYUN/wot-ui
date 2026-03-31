@@ -1,6 +1,5 @@
 <template>
   <page-wraper>
-    <wd-search hide-cancel :placeholder="$t('wo-yao-qu-na-li')" v-model="keyword" @search="handleSearch" @clear="handleClear" />
     <view class="wraper">
       <wd-index-bar sticky v-if="showList.length">
         <view v-for="item in showList" :key="item.index">
@@ -180,11 +179,6 @@ function handleSearch() {
       showList.value = indexList.value
     }
   })
-}
-
-function handleClear() {
-  keyword.value = ''
-  handleSearch()
 }
 </script>
 

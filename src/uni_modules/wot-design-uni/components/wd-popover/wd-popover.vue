@@ -71,11 +71,11 @@ export default {
 import wdIcon from '../wd-icon/wd-icon.vue'
 import wdTransition from '../wd-transition/wd-transition.vue'
 import { getCurrentInstance, inject, onBeforeMount, onBeforeUnmount, onMounted, ref, watch } from 'vue'
-import { usePopover } from '../composables/usePopover'
-import { closeOther, pushToQueue, removeFromQueue } from '../common/clickoutside'
-import { type Queue, queueKey } from '../composables/useQueue'
+import { usePopover } from '../../composables/usePopover'
+import { closeOther, pushToQueue, removeFromQueue } from '../../common/clickoutside'
+import { type Queue, queueKey } from '../../composables/useQueue'
 import { popoverProps, type PopoverExpose } from './types'
-import { isArray, isObj } from '../common/util'
+import { isArray, isObj } from '../../common/util'
 
 const props = defineProps(popoverProps)
 const emit = defineEmits(['update:modelValue', 'menuclick', 'change', 'open', 'close'])

@@ -1,82 +1,133 @@
-#  PickerView 选择器视图
+# PickerView 选择器视图
 
 选择器视图，用于从一组数据中选择单个或多个值。
 
-## 基本用法
+`wd-picker-view` 只负责滚筒选择区域本身，不包含弹出层与顶部操作栏；如果需要完整的弹窗选择器，可以使用 [Picker](./picker.md)。
 
-单列选择器，给 `columns` 传入一个数值数组，设置 `v-model` 绑定值。选项可以为字符串，也可以为对象，如果为对象则默认取选项 `label` 属性为选项内容进行渲染，`v-model` 获取的值为选项 `value` 属性的值，如果选项 `value` 属性不存在，则取选项 `label` 的值。
+当 `columns` 中的选项为对象时，组件默认读取 `label` 作为展示文本、读取 `value` 作为选中值；也可以通过 `label-key`、`value-key`、`children-key` 自定义字段映射。
+
+## 组件类型
+
+### 基本用法
+
+单列选择器可直接传入字符串数组或对象数组，`v-model` 推荐始终使用数组形式保存当前选中值。
+
+::: code-group
 
 ```html
-<wd-picker-view :columns="columns" v-model="value" @change="onChange" />
+<wd-picker-view v-model="value" :columns="columns" />
 ```
+
 ```typescript
-import { useToast } from '@/uni_modules/wot-design-uni'
-const toast = useToast()
-const columns = ref(['选项1', '选项2', '选项3', '选项4', '选项5', '选项6', '选项7'])
-const value3 = ref<string>('')
-function onChange({ selectedValues, columnIndex }) {
-  toast.show(`当前选中项: ${selectedValues}, 下标: ${columnIndex}`)
+import { ref } from 'vue'
+
+const value = ref<string[]>(['选项1'])
+const columns = ref(['选项1', '选项2', '选项3', '选项4', '选项5'])
+```
+
+:::
+
+当 `columns` 为对象数组时，单项数据结构如下：
+
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| value | 选项值 | `string \| number` | - |
+| label | 选项文本 | `string \| number` | - |
+| disabled | 是否禁用 | `boolean` | `false` |
+| children | 子选项列表，用于级联模式 | `PickerOption[]` | - |
+
+## 组件状态
+
+### 禁用选项
+
+通过给选项对象设置 `disabled`，可以禁止某一项被选中。
+
+::: code-group
+
+```html
+<wd-picker-view v-model="value" :columns="columns" />
+```
+
+```typescript
+import { ref } from 'vue'
+
+const value = ref<string[]>(['选项1'])
+const columns = ref([
+  { label: '选项1', value: '选项1' },
+  { label: '选项2', value: '选项2' },
+  { label: '选项3', value: '选项3', disabled: true },
+  { label: '选项4', value: '选项4' }
+])
+```
+
+:::
+
+## 组件变体
+
+### 立即触发
+
+设置 `immediate-change` 后，手指松开时就会触发 `change` 事件；默认情况下会在滚动动画结束后再触发。
+
+::: code-group
+
+```html
+<wd-picker-view v-model="value" :columns="columns" immediate-change @change="handleChange" />
+```
+
+```typescript
+import { ref } from 'vue'
+
+const value = ref<string[]>(['选项1'])
+const columns = ref([
+  { label: '选项1', value: '选项1' },
+  { label: '选项2', value: '选项2' },
+  { label: '选项3', value: '选项3' }
+])
+
+function handleChange({ selectedValues, selectedLabels, columnIndex }: any) {
+  console.log(selectedValues, selectedLabels, columnIndex)
 }
 ```
 
-当 `columns` 选项为对象时，其数据结构为：
+:::
 
-| 参数 | 类型 | 说明 | 最低版本 |
-|-----|-----|------|---------|
-| value | string / number / boolean | 选项值，如果 value 属性不存在，则使用 label 作为选项的值 | - |
-| label | string | 选项文本内容 | - |
-| disabled | boolean | 选项是否禁用 | - |
+### 多列
 
-## 禁用选项
+将 `columns` 设为二维数组即可展示多列选择器，对应的 `v-model` 仍为一维数组，按列顺序保存每一列的选中值。
 
-选项可以为对象，设置 `disabled` 属性。
+::: code-group
 
 ```html
-<wd-picker-view :columns="columns" v-model="value" disabled />
+<wd-picker-view v-model="value" :columns="columns" />
 ```
+
 ```typescript
-const columns = ref(['选项1', '选项2', '选项3', '选项4', '选项5', '选项6', '选项7'])
-const value = ref('选项3')
-```
+import { ref } from 'vue'
 
-## 加载中
-
-设置 `loading` 属性。
-
-```html
-<wd-picker-view :columns="columns" loading />
-```
-## 多列
-
-`columns` 属性设置为二维数组，`value` 为数组。
-
-```html
-<wd-picker-view :columns="columns" v-model="value" />
-```
-```typescript
 const value = ref(['中南大学', '软件工程'])
-
 const columns = ref([
   ['中山大学', '中南大学', '华南理工大学'],
   ['计算机科学与技术', '软件工程', '通信工程', '法学', '经济学']
 ])
-
 ```
 
-## 多级联动
+:::
 
-> 从 2.0 版本开始，多级联动采用新的实现方式。推荐使用 `cascade` 属性搭配树形数据结构（带 `children` 字段）实现级联选择。
+### 多级联动
 
-设置 `cascade` 属性为 `true`，并传入带有 `children` 字段的树形数据。组件会自动根据选中项展开对应的下级数据。
+设置 `cascade` 后，`columns` 应传入树形数据结构。组件会根据当前选中值自动展开后续列。
+
+::: code-group
 
 ```html
-<wd-picker-view :columns="cascadeColumns" v-model="value" cascade />
+<wd-picker-view v-model="value" :columns="columns" cascade />
 ```
 
 ```typescript
-const value = ref(['110000', '110100', '110102'])
+import { ref } from 'vue'
 
-const cascadeColumns = ref([
+const value = ref(['110000', '110100', '110102'])
+const columns = ref([
   {
     label: '北京',
     value: '110000',
@@ -87,9 +138,7 @@ const cascadeColumns = ref([
         children: [
           { label: '东城区', value: '110101' },
           { label: '西城区', value: '110102' },
-          { label: '朝阳区', value: '110105' },
-          { label: '丰台区', value: '110106' },
-          { label: '石景山区', value: '110107' }
+          { label: '朝阳区', value: '110105' }
         ]
       }
     ]
@@ -106,73 +155,93 @@ const cascadeColumns = ref([
           { label: '越秀区', value: '440104' },
           { label: '海珠区', value: '440105' }
         ]
-      },
-      {
-        label: '深圳市',
-        value: '440300',
-        children: [
-          { label: '罗湖区', value: '440303' },
-          { label: '福田区', value: '440304' }
-        ]
       }
-      // ... 更多城市
     ]
   }
 ])
 ```
 
+:::
+
+## 特殊用法
+
+### 自定义字段名
+
+通过 `value-key`、`label-key`、`children-key` 可以适配非标准字段名的数据结构。
+
+::: code-group
+
+```html
+<wd-picker-view v-model="value" :columns="columns" value-key="id" label-key="text" />
+```
+
+```typescript
+import { ref } from 'vue'
+
+const value = ref<number[]>([1])
+const columns = ref([
+  { id: 1, text: '选项一' },
+  { id: 2, text: '选项二' },
+  { id: 3, text: '选项三' }
+])
+```
+
+:::
 
 ## Attributes
 
-| 参数 | 说明 | 类型 | 可选值 | 默认值 | 最低版本 |
-|-----|------|-----|-------|-------|---------|
-| v-model | 选中项，如果为多列选择器，则其类型应为数组 | string / number / boolean / array | - | - | - |
-| columns | 选择器数据，可以为字符串数组，也可以为对象数组，如果为二维数组，则为多列选择器；如果开启 cascade，则为树形数据（带 children） | array | - | - | - |
-| loading | 加载中 | boolean | - | false | - |
-| loading-color | 加载的颜色，只能使用十六进制的色值写法，且不能使用缩写 | string | - | #4D80F0 | - |
-| columns-height | picker内部滚筒高 | number | - | 231 | - |
-| item-height | picker item的高度 | number | - | 35 | 1.13.0 |
-| value-key | 选项对象中，value对应的 key | string | - | value | - |
-| label-key | 选项对象中，展示的文本对应的 key | string | - | label | - |
-| cascade | 是否开启级联模式，开启后 columns 应为树形数据（带 children） | boolean | - | false | 2.0.0 |
-| children-key | 级联模式下，选项对象中 children 对应的 key | string | - | children | 2.0.0 |
-| immediate-change | 是否在手指松开时立即触发picker-view的 change 事件。若不开启则会在滚动动画结束后触发 change 事件，1.2.25版本起提供，仅微信小程序和支付宝小程序支持。 | boolean | - | false | 1.2.25 |
-
-
- 
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| v-model | 当前选中值；单列时通常为长度为 1 的数组，多列与级联时按列顺序保存各列选中值 | `(string \| number)[]` | `[]` |
+| columns | 选择器数据；可传入一维数组、对象数组、二维数组，级联模式下传入树形数据 | `Array<string \| number \| PickerOption> \| Array<Array<string \| number \| PickerOption>>` | `[]` |
+| item-height | 每个选项的高度 | `number` | `44` |
+| visible-item-count | 可见选项数量 | `number` | `6` |
+| value-key | 选项对象中值字段对应的键名 | `string` | `'value'` |
+| label-key | 选项对象中文本字段对应的键名 | `string` | `'label'` |
+| immediate-change ^(1.2.25) | 是否在手指松开时立即触发 `change` 事件；若不开启，则在滚动动画结束后触发 | `boolean` | `false` |
+| cascade ^(2.0.0) | 是否开启级联模式；开启后 `columns` 应传入树形数据 | `boolean` | `false` |
+| children-key ^(2.0.0) | 级联模式下子节点字段对应的键名 | `string` | `'children'` |
+| custom-class | 根节点自定义类名 | `string` | `''` |
+| custom-style | 根节点自定义样式 | `string` | `''` |
 
 ## Methods
 
-| 方法名称 | 说明 | 参数 | 最低版本 |
-|---------|-----|-----|---------|
-| getSelectedLabels | 获取所有列选中项的文本，返回值为一个数组 | - | - |
-| getColumnIndex | 获取某一列的选中项下标 | columnIndex | - |
-| getColumnData | 获取某一列的选项 | columnIndex | - |
-| getColumnsData | 获取所有列的选项数据 | - | - |
-| getSelectedOptions | 获取所有列的选中项 | - | - |
-| getSelectedValues | 获取所有列的选中值 | - | - |
-| getSelectedIndex | 获取所有列的选中下标 | - | - |
-| resetColumns | 重置列数据为指定列数据 | columns（类型与props中columns相同） | 1.3.9 |
+| 方法名称 | 说明 | 参数 |
+| --- | --- | --- |
+| getSelectedOptions | 获取所有列选中项 | - |
+| getSelectedValues | 获取所有列的选中值 | - |
+| getColumnsData | 获取所有列数据 | - |
+| getColumnData | 获取指定列数据 | `columnIndex: number` |
+| getColumnIndex | 获取指定列的选中下标 | `columnIndex: number` |
+| getSelectedLabels | 获取所有列选中项的文本 | - |
+| getSelectedIndex | 获取所有列的选中下标 | - |
+| resetColumns | 重置列数据 | `columns: PickerOption[] \| PickerOption[][]` |
 
 ## Events
 
-| 事件名称 | 说明 | 参数 | 最低版本 |
-|--------|------|------|--------|
-| change | 选项值修改时触发 | { selectedValues, selectedOptions, selectedIndexes, columnIndex } | - |
-| pickstart | 当滚动选择开始时候触发事件 | - | - |
-| pickend | 当滚动选择结束时候触发事件 | - | - |
+| 事件名称 | 说明 | 参数 |
+| --- | --- | --- |
+| change | 选中值变化时触发 | `{ selectedValues, selectedOptions, selectedLabels, selectedIndexes, columnIndex }` |
+| pickstart | 开始滚动选择时触发 | - |
+| pickend | 结束滚动选择时触发 | - |
+| update:modelValue | `v-model` 更新时触发 | `value: (string \| number)[]` |
 
-**change 事件参数说明：**
+### change 事件参数
 
 | 参数名 | 说明 | 类型 |
-|-------|------|------|
-| selectedValues | 所有列的选中值数组 | Array<string \| number> |
-| selectedOptions | 所有列的选中项对象数组 | Array<PickerOption> |
-| selectedIndexes | 所有列的选中下标数组 | Array<number> |
-| columnIndex | 当前变化的列索引（单列时为选中项下标） | number |
+| --- | --- | --- |
+| selectedValues | 所有列的选中值数组 | `Array<string \| number>` |
+| selectedOptions | 所有列的选中项对象数组 | `Array<PickerOption>` |
+| selectedLabels | 所有列的选中文本数组 | `Array<string>` |
+| selectedIndexes | 所有列的选中下标数组 | `Array<number>` |
+| columnIndex | 当前发生变化的列索引；单列时为当前选项下标 | `number` |
+
+## Slots
+
+组件未提供插槽。
 
 ## 外部样式类
 
-| 类名 | 说明 | 最低版本 |
-|-----|------|--------|
-| custom-class | 根节点样式 | - |
+| 类名 | 说明 |
+| --- | --- |
+| custom-class | 根节点样式 |

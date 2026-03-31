@@ -7,7 +7,7 @@
  * @FilePath: /wot-design-uni/src/uni_modules/wot-design-uni/components/wd-icon/types.ts
  * 记得注释
  */
-import { baseProps, makeBooleanProp, makeRequiredProp, makeStringProp, numericProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeRequiredProp, makeStringProp, numericProp } from '../../common/props'
 import type { ExtractPropTypes } from 'vue'
 
 export const iconProps = {

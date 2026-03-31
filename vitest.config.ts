@@ -56,7 +56,7 @@ export default defineConfig({
         'dist/**',
         '**/*.js',
         '**/*.d.ts',
-        'src/uni_modules/wot-design-uni/components/common/**/*.{vue,ts}'
+        'src/uni_modules/wot-design-uni/common/**/*.{vue,ts}'
       ],
       // 当测试单个组件时，不应用全局阈值
       thresholds:

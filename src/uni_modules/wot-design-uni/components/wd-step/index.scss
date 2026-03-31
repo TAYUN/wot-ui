@@ -1,5 +1,5 @@
-@use '../styles/mixin/mixin.scss'as *;
-@use '../styles/variable.scss'as *;
+@use '../../styles/mixin/mixin.scss'as *;
+@use '../../styles/variable.scss'as *;
 
 // 组件级 CSS 变量定义
 
@@ -7,15 +7,15 @@
 // 内容区距头部的顶部外边距
 $step-content-margin-top: var(--wot-step-content-margin-top, $spacing-super-tight) !default;
 // 垂直布局时内容区的左外边距
-$step-vertical-content-margin-left: var(--wot-step-vertical-content-margin-left, $n32) !default;
+$step-vertical-content-margin-left: var(--wot-step-vertical-content-margin-left, $n-32) !default;
 // 垂直布局时内容区的底部内边距
-$step-vertical-content-padding-bottom: var(--wot-step-vertical-content-padding-bottom, $n20) !default;
+$step-vertical-content-padding-bottom: var(--wot-step-vertical-content-padding-bottom, $n-20) !default;
 // 垂直布局且为点状指示器时，头部的顶部绝对定位距离
-$step-vertical-header-dot-top: var(--wot-step-vertical-header-dot-top, $n6) !default;
+$step-vertical-header-dot-top: var(--wot-step-vertical-header-dot-top, $n-6) !default;
 
 // 步骤指示器（圆形/背景） (Indicator Circle)
 // 圆形指示器的宽高尺寸
-$step-indicator-size: var(--wot-step-indicator-size, $n18) !default;
+$step-indicator-size: var(--wot-step-indicator-size, $n-18) !default;
 // 圆形指示器的圆角大小
 $step-circle-border-radius: var(--wot-step-circle-border-radius, $radius-radius-full) !default;
 // 等待 (wait) 状态下圆形指示器的背景色
@@ -43,9 +43,9 @@ $step-circle-text-finished-color: var(--wot-step-circle-text-finished-color, $pr
 
 // 指示器图标 (Indicator Icon)
 // 圆形指示器内置状态图标 (如完成时的对号或错误时的叉号) 的字号大小
-$step-circle-icon-size: var(--wot-step-circle-icon-size, $n12) !default;
+$step-circle-icon-size: var(--wot-step-circle-icon-size, $n-12) !default;
 // 外部自定义传入的图标 (通过 icon 属性) 的字号大小
-$step-icon-size: var(--wot-step-icon-size, $n18) !default;
+$step-icon-size: var(--wot-step-icon-size, $n-18) !default;
 // 等待或默认状态下图标的颜色
 $step-icon-color: var(--wot-step-icon-color, $icon-auxiliary) !default;
 // 激活 (如 process 或 finished) 状态下图标的颜色
@@ -67,7 +67,7 @@ $step-line-active-color: var(--wot-step-line-active-color, $primary-6) !default;
 
 // 点状指示器 (Dot Indicator)
 // 点状指示器的宽高尺寸
-$step-dot-size: var(--wot-step-dot-size, $n10) !default;
+$step-dot-size: var(--wot-step-dot-size, $n-10) !default;
 // 等待 (wait) 状态下点状指示器的背景色
 $step-dot-wait-bg: var(--wot-step-dot-wait-bg, $filled-strong) !default;
 // 进行中 (process) 状态下点状指示器的背景色
@@ -360,7 +360,7 @@ $step-description-padding: var(--wot-step-description-padding, $padding-zero $pa
 
     .wd-step__icon.is-dot {
       margin-left: 0;
-      margin-top: -$n1;
+      margin-top: -$n-1;
     }
   }
 }

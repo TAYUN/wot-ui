@@ -1,5 +1,5 @@
 import { type ExtractPropTypes, type InjectionKey } from 'vue'
-import { baseProps, makeBooleanProp, makeStringProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeStringProp } from '../../common/props'
 
 /**
  * 格子内容排列方向

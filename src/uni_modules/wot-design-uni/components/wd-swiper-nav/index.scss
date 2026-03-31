@@ -1,5 +1,5 @@
-@use '../styles/variable.scss'as *;
-@use '../styles/mixin/mixin'as *;
+@use '../../styles/variable.scss'as *;
+@use '../../styles/mixin/mixin'as *;
 
 // 导航定位间距
 $swiper-nav-spacing: var(--wot-swiper-nav-spacing, $spacing-tight) !default;
@@ -9,11 +9,11 @@ $swiper-nav-dot-color: var(--wot-swiper-nav-dot-color, $filled-extra-strong) !de
 // dot 激活颜色
 $swiper-nav-dot-color-active: var(--wot-swiper-nav-dot-color-active, $icon-white) !default;
 // dot 尺寸
-$swiper-nav-dot-size: var(--wot-swiper-nav-dot-size, $n6) !default;
+$swiper-nav-dot-size: var(--wot-swiper-nav-dot-size, $n-6) !default;
 // dot 间距
 $swiper-nav-dot-margin: var(--wot-swiper-nav-dot-margin, $spacing-super-tight) !default;
 // dots-bar 激活宽度
-$swiper-nav-dots-bar-width-active: var(--wot-swiper-nav-dots-bar-width-active, $n15) !default;
+$swiper-nav-dots-bar-width-active: var(--wot-swiper-nav-dots-bar-width-active, $n-15) !default;
 // dot 圆角
 $swiper-nav-dot-border-radius: var(--wot-swiper-nav-dot-border-radius, $radius-radius-full) !default;
 // fraction
@@ -35,9 +35,9 @@ $swiper-nav-btn-color: var(--wot-swiper-nav-btn-color, $icon-white) !default;
 // 按钮背景色
 $swiper-nav-btn-bg: var(--wot-swiper-nav-btn-bg, $opacfilled-main-cover) !default;
 // 按钮尺寸
-$swiper-nav-btn-size: var(--wot-swiper-nav-btn-size, $n24) !default;
+$swiper-nav-btn-size: var(--wot-swiper-nav-btn-size, $n-24) !default;
 // 按钮图标尺寸
-$swiper-nav-btn-icon-size: var(--wot-swiper-nav-btn-icon-size, $n16) !default;
+$swiper-nav-btn-icon-size: var(--wot-swiper-nav-btn-icon-size, $n-16) !default;
 // 按钮水平间距
 $swiper-nav-btn-spacing: var(--wot-swiper-nav-btn-spacing, $spacing-loose) !default;
 // 按钮圆角

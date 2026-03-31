@@ -1,22 +1,22 @@
-@use '../styles/mixin/mixin.scss'as *;
-@use '../styles/variable.scss'as *;
+@use '../../styles/mixin/mixin.scss'as *;
+@use '../../styles/variable.scss'as *;
 
 /* ================================ 组件SCSS变量 ================================ */
 
 /* 轨道 (Track) */
-$slider-bar-height: var(--wot-slider-bar-height, $n2) !default;
-$slider-bar-height-capsule: var(--wot-slider-bar-height-capsule, $n24) !default;
+$slider-bar-height: var(--wot-slider-bar-height, $n-2) !default;
+$slider-bar-height-capsule: var(--wot-slider-bar-height-capsule, $n-24) !default;
 $slider-bar-bg: var(--wot-slider-bar-bg, $filled-strong) !default;
 $slider-bar-radius: var(--wot-slider-bar-radius, $radius-radius-full) !default;
-$slider-bar-height-vertical: var(--wot-slider-bar-height-vertical, $n248) !default;
+$slider-bar-height-vertical: var(--wot-slider-bar-height-vertical, $n-248) !default;
 
 /* 进度条 (Range) */
 $slider-line-bg: var(--wot-slider-line-bg, $primary-6) !default;
-$slider-line-height: var(--wot-slider-line-height, $n2) !default;
-$slider-line-height-capsule: var(--wot-slider-line-height-capsule, $n18) !default;
+$slider-line-height: var(--wot-slider-line-height, $n-2) !default;
+$slider-line-height-capsule: var(--wot-slider-line-height-capsule, $n-18) !default;
 
 /* 滑块 (Thumb) */
-$slider-dot-size: var(--wot-slider-dot-size, $n24) !default;
+$slider-dot-size: var(--wot-slider-dot-size, $n-24) !default;
 $slider-dot-bg: var(--wot-slider-dot-bg, $filled-oppo) !default;
 $slider-dot-shadow: var(--wot-slider-dot-shadow, 0 2px 8px 0 rgba(0, 0, 0, 0.1)) !default;
 
@@ -27,21 +27,21 @@ $slider-dot-popover-radius: var(--wot-slider-dot-popover-radius, $radius-main) !
 $slider-dot-popover-padding: var(--wot-slider-dot-popover-padding, $padding-extra-tight $padding-loose) !default;
 $slider-dot-popover-font-size: var(--wot-slider-dot-popover-font-size, $typography-body-size-main) !default;
 $slider-dot-popover-line-height: var(--wot-slider-dot-popover-line-height, $typography-body-line--height-size-main) !default;
-$slider-dot-popover-gap: var(--wot-slider-dot-popover-gap, $n3) !default;
-$slider-dot-popover-arrow-width: var(--wot-slider-dot-popover-arrow-width, $n12) !default;
-$slider-dot-popover-arrow-height: var(--wot-slider-dot-popover-arrow-height, $n6) !default;
+$slider-dot-popover-gap: var(--wot-slider-dot-popover-gap, $n-3) !default;
+$slider-dot-popover-arrow-width: var(--wot-slider-dot-popover-arrow-width, $n-12) !default;
+$slider-dot-popover-arrow-height: var(--wot-slider-dot-popover-arrow-height, $n-6) !default;
 $slider-dot-popover-duration-exit: var(--wot-slider-dot-popover-duration-exit, 100ms) !default;
 $slider-dot-popover-easing-exit: var(--wot-slider-dot-popover-easing-exit, cubic-bezier(0.4, 0, 1, 1)) !default;
 $slider-dot-popover-duration-enter: var(--wot-slider-dot-popover-duration-enter, 200ms) !default;
 $slider-dot-popover-easing-enter: var(--wot-slider-dot-popover-easing-enter, cubic-bezier(0.34, 1.56, 0.64, 1)) !default;
 
 /* 刻度 (Scale) */
-$slider-scale-size: var(--wot-slider-scale-size, $n6) !default;
+$slider-scale-size: var(--wot-slider-scale-size, $n-6) !default;
 $slider-scale-border-radius: var(--wot-slider-scale-border-radius, $radius-radius-full) !default;
 $slider-scale-bg: var(--wot-slider-scale-bg, $filled-strong) !default;
 $slider-scale-bg-active: var(--wot-slider-scale-bg-active, $primary-6) !default;
 $slider-scale-capsule-bg: var(--wot-slider-scale-capsule-bg, $filled-strong) !default;
-$slider-scale-capsule-width: var(--wot-slider-scale-capsule-width, $n2) !default;
+$slider-scale-capsule-width: var(--wot-slider-scale-capsule-width, $n-2) !default;
 $slider-scale-capsule-border-radius: var(--wot-slider-scale-capsule-border-radius, $radius-zero) !default;
 $slider-scale-desc-font-size: var(--wot-slider-scale-desc-font-size, $typography-body-size-main) !default;
 $slider-scale-desc-line-height: var(--wot-slider-scale-desc-line-height, $typography-body-line--height-size-main) !default;
@@ -53,7 +53,7 @@ $slider-marks-extra-padding: var(--wot-slider-marks-extra-padding, $padding-supe
 $slider-marks-extra-capsule-padding: var(--wot-slider-marks-extra-capsule-padding, $padding-ultra-loose) !default;
 
 /* 布局 (Layout) */
-$slider-capsule-track-inset: var(--wot-slider-capsule-track-inset, $n3) !default;
+$slider-capsule-track-inset: var(--wot-slider-capsule-track-inset, $n-3) !default;
 $slider-extreme-spacing: var(--wot-slider-extreme-spacing, $spacing-loose) !default;
 
 /* 极值文字 (Extreme Value) */

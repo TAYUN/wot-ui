@@ -24,10 +24,10 @@ export default {
 <script lang="ts" setup>
 import wdResize from '../wd-resize/wd-resize.vue'
 import { getCurrentInstance, onBeforeMount, reactive, ref } from 'vue'
-import { getRect, uuid } from '../common/util'
-import { baseProps } from '../common/props'
+import { getRect, uuid } from '../../common/util'
+import { baseProps } from '../../common/props'
 import { STICKY_BOX_KEY } from './types'
-import { useChildren } from '../composables/useChildren'
+import { useChildren } from '../../composables/useChildren'
 
 const props = defineProps(baseProps)
 

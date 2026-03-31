@@ -1,26 +1,31 @@
 <template>
-  <view>
-    <page-wraper>
-      <demo-block :title="$t('fade-dong-hua')">
-        <wd-button @click="fade">fade</wd-button>
-        <wd-button @click="fadeUp">fade-up</wd-button>
-        <wd-button @click="fadeDown">fade-down</wd-button>
-        <wd-button @click="fadeLeft">fade-left</wd-button>
-        <wd-button @click="fadeRight">fade-right</wd-button>
-      </demo-block>
-      <demo-block :title="$t('slide-dong-hua')">
-        <wd-button @click="slideUp">slide-up</wd-button>
-        <wd-button @click="slideDown">slide-down</wd-button>
-        <wd-button @click="slideLeft">slide-left</wd-button>
-        <wd-button @click="slideRight">slide-right</wd-button>
-      </demo-block>
-      <demo-block :title="$t('zoom-dong-hua')">
-        <wd-button @click="zoomIn">zoom-in</wd-button>
-        <wd-button @click="zoomOut">zoom-out</wd-button>
-      </demo-block>
-      <demo-block :title="$t('zi-ding-yi-dong-hua')">
-        <wd-button @click="custom">custom</wd-button>
-      </demo-block>
+  <page-wraper>
+    <view class="page-transition">
+      <demo-group title="组件类型">
+        <demo-group-item :title="$t('fade-dong-hua')">
+          <wd-button @click="runTransition('fade')">fade</wd-button>
+          <wd-button @click="runTransition('fade-up')">fade-up</wd-button>
+          <wd-button @click="runTransition('fade-down')">fade-down</wd-button>
+          <wd-button @click="runTransition('fade-left')">fade-left</wd-button>
+          <wd-button @click="runTransition('fade-right')">fade-right</wd-button>
+        </demo-group-item>
+        <demo-group-item :title="$t('slide-dong-hua')">
+          <wd-button @click="runTransition('slide-up')">slide-up</wd-button>
+          <wd-button @click="runTransition('slide-down')">slide-down</wd-button>
+          <wd-button @click="runTransition('slide-left')">slide-left</wd-button>
+          <wd-button @click="runTransition('slide-right')">slide-right</wd-button>
+        </demo-group-item>
+        <demo-group-item :title="$t('zoom-dong-hua')">
+          <wd-button @click="runTransition('zoom-in')">zoom-in</wd-button>
+          <wd-button @click="runTransition('zoom-out')">zoom-out</wd-button>
+        </demo-group-item>
+      </demo-group>
+
+      <demo-group title="特殊样式">
+        <demo-group-item :title="$t('zi-ding-yi-dong-hua')">
+          <wd-button @click="runCustomTransition">custom</wd-button>
+        </demo-group-item>
+      </demo-group>
 
       <wd-transition :show="show" :name="name" custom-class="block" />
 
@@ -35,8 +40,8 @@
         leave-to-class="custom-leave-to"
         custom-class="block"
       />
-    </page-wraper>
-  </view>
+    </view>
+  </page-wraper>
 </template>
 <script lang="ts" setup>
 import type { TransitionName } from '@/uni_modules/wot-design-uni/components/wd-transition/types'
@@ -45,47 +50,16 @@ import { ref } from 'vue'
 const show = ref<boolean>(false)
 const name = ref<TransitionName>()
 const customShow = ref<boolean>(false)
-function fade() {
-  transition('fade')
-}
-function fadeUp() {
-  transition('fade-up')
-}
-function fadeDown() {
-  transition('fade-down')
-}
-function fadeLeft() {
-  transition('fade-left')
-}
-function fadeRight() {
-  transition('fade-right')
-}
-function slideUp() {
-  transition('slide-up')
-}
-function slideDown() {
-  transition('slide-down')
-}
-function slideLeft() {
-  transition('slide-left')
-}
-function slideRight() {
-  transition('slide-right')
-}
-function zoomIn() {
-  transition('zoom-in')
-}
-function zoomOut() {
-  transition('zoom-out')
-}
-function custom() {
+
+function runCustomTransition() {
   customShow.value = true
   setTimeout(() => {
     customShow.value = false
   }, 1200)
 }
-function transition(transition: TransitionName) {
-  name.value = transition
+
+function runTransition(transitionName: TransitionName) {
+  name.value = transitionName
   show.value = true
   setTimeout(() => {
     show.value = false
@@ -93,9 +67,12 @@ function transition(transition: TransitionName) {
 }
 </script>
 <style lang="scss" scoped>
-:deep(.wd-button) {
-  margin: 0 10px 10px 0;
+.page-transition {
+  :deep(.wd-button) {
+    margin: 0 10px 10px 0;
+  }
 }
+
 :deep(.block) {
   position: fixed;
   left: 50%;
@@ -110,10 +87,12 @@ function transition(transition: TransitionName) {
 :deep(.custom-leave-active) {
   transition-property: background, transform;
 }
+
 :deep(.custom-enter) {
   transform: translate3d(-100px, -100px, 0) rotate(-180deg);
   background: #ff0000;
 }
+
 :deep(.custom-leave-to) {
   transform: translate3d(100px, 100px, 0) rotate(180deg);
   background: #ff0000;

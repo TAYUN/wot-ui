@@ -1,4 +1,4 @@
-# useMessage
+# useDialog
 
 用于便捷地调用 MessageBox 弹框组件。
 
@@ -7,13 +7,13 @@
 alert 弹框只有确定按钮，用于强提醒。
 
 ```html
-<wd-message-box></wd-message-box>
+<wd-dialog></wd-dialog>
 <wd-button @click="alert">alert</wd-button>
 ```
 
 ```ts
-import { useMessage } from '@/uni_modules/wot-design-uni'
-const message = useMessage()
+import { useDialog } from '@/uni_modules/wot-design-uni'
+const message = useDialog()
 
 function alert() {
   message.alert('操作成功')
@@ -25,13 +25,13 @@ function alert() {
 用于提示用户操作。
 
 ```html
-<wd-message-box />
+<wd-dialog />
 <wd-button @click="confirm">confirm</wd-button>
 ```
 
 ```ts
-import { useMessage } from '@/uni_modules/wot-design-uni'
-const message = useMessage()
+import { useDialog } from '@/uni_modules/wot-design-uni'
+const message = useDialog()
 
 function confirm() {
   message
@@ -53,13 +53,13 @@ function confirm() {
 prompt 会展示一个输入框，并可以进行输入校验。
 
 ```html
-<wd-message-box />
+<wd-dialog />
 <wd-button @click="prompt">prompt</wd-button>
 ```
 
 ```ts
-import { useMessage } from '@/uni_modules/wot-design-uni'
-const message = useMessage()
+import { useDialog } from '@/uni_modules/wot-design-uni'
+const message = useDialog()
 
 function prompt() {
   message

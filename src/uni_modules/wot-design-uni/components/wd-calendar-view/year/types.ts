@@ -1,5 +1,14 @@
+/*
+ * @Author: weisheng
+ * @Date: 2026-03-13 17:20:03
+ * @LastEditTime: 2026-03-27 18:57:39
+ * @LastEditors: weisheng
+ * @Description:
+ * @FilePath: /wot-design-uni/src/uni_modules/wot-design-uni/components/wd-calendar-view/year/types.ts
+ * 记得注释
+ */
 import type { PropType } from 'vue'
-import { makeBooleanProp, makeRequiredProp } from '../../common/props'
+import { makeBooleanProp, makeRequiredProp } from '../../../common/props'
 import type { CalendarFormatter, CalendarType } from '../types'
 
 export const yearProps = {

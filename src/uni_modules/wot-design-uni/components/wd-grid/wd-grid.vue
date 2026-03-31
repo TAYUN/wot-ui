@@ -19,9 +19,9 @@ export default {
 
 <script lang="ts" setup>
 import { computed, type CSSProperties } from 'vue'
-import { useChildren } from '../composables/useChildren'
+import { useChildren } from '../../composables/useChildren'
 import { GRID_KEY, gridProps } from './types'
-import { addUnit, isDef, objToStyle } from '../common/util'
+import { addUnit, isDef, objToStyle } from '../../common/util'
 
 const props = defineProps(gridProps)
 

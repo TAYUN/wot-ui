@@ -1,287 +1,380 @@
-# Dialog 弹框  
+# Dialog 弹框
 
-弹出对话框，常用于消息提示、消息确认等，支持函数调用。
+弹出对话框，常用于消息提示、操作确认和输入收集，支持函数式调用。
 
 :::tip 提示
-全局调用方案见 [wot-starter](https://starter.wot-ui.cn/guide/feedback.html)，支持在路由导航守卫和网络请求拦截器等场景使用的可全局调用的反馈组件。
+全局调用方案见 [wot-starter](https://starter.wot-ui.cn/guide/feedback.html)，可用于路由守卫、请求拦截器等场景。
 :::
 
-## Alert 弹框
+## 组件类型
 
-alert 弹框只有确定按钮，用于强提醒。
+### Alert 弹框
 
-```html
-<wd-dialog></wd-dialog>
-<wd-button @click="alert">alert</wd-button>
-```
-
-```typescript
-import { useDialog } from '@/uni_modules/wot-design-uni'
-const dialog = useDialog()
-
-function alert() {
-  dialog.alert('操作成功')
-}
-```
-
-显示标题的 alert 弹框。
+Alert 仅展示确认按钮，常用于消息通知。
 
 ```html
 <wd-dialog />
-<wd-button @click="alert">alert</wd-button>
+<wd-button @click="openAlert">打开 Alert</wd-button>
 ```
 
-```typescript
+```ts
 import { useDialog } from '@/uni_modules/wot-design-uni'
+
 const dialog = useDialog()
 
-function alert() {
+const openAlert = () => {
   dialog.alert({
-    msg: '提示文案',
-    title: '标题'
+    title: '提示',
+    msg: '操作成功'
   })
 }
 ```
 
-如果内容文案过长，弹框高度不再增加，而是展示滚动条。
+### Confirm 弹框
+
+Confirm 通过 `Promise` 返回用户操作结果，`then` 对应确认，`catch` 对应取消。
 
 ```html
 <wd-dialog />
-<wd-button @click="alert">alert</wd-button>
+<wd-button @click="openConfirm">打开 Confirm</wd-button>
 ```
 
-```typescript
+```ts
 import { useDialog } from '@/uni_modules/wot-design-uni'
+
 const dialog = useDialog()
 
-function alert() {
-  dialog.alert({
-    msg: '以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文字是示意以上文',
-    title: '标题'
-  })
-}
-```
-
-## Confirm 弹框
-
-用于提示用户操作。
-
-```html
-<wd-dialog />
-<wd-button @click="confirm">confirm</wd-button>
-```
-
-```typescript
-import { useDialog } from '@/uni_modules/wot-design-uni'
-const dialog = useDialog()
-
-function confirm() {
-  message
+const openConfirm = () => {
+  dialog
     .confirm({
-      msg: '提示文案',
-      title: '标题'
+      title: '提示',
+      msg: '确认执行此操作吗？'
     })
     .then(() => {
-      console.log('点击了确定按钮')
+      console.log('点击了确认')
     })
     .catch(() => {
-      console.log('点击了取消按钮')
+      console.log('点击了取消')
     })
 }
 ```
 
-## Prompt 弹框
+### Prompt 弹框
 
-prompt 会展示一个输入框，并可以进行输入校验。
+Prompt 会展示输入框，可用于采集文本并进行校验。
 
 ```html
 <wd-dialog />
-<wd-button @click="prompt">prompt</wd-button>
+<wd-button @click="openPrompt">打开 Prompt</wd-button>
 ```
 
-```typescript
+```ts
 import { useDialog } from '@/uni_modules/wot-design-uni'
+
 const dialog = useDialog()
 
-function prompt() {
-  message
+const openPrompt = () => {
+  dialog
     .prompt({
       title: '请输入邮箱',
-      inputValue: value1.value,
-      inputPattern: /.+@.+\..+/i
+      inputPattern: /.+@.+\..+/i,
+      inputError: '邮箱格式不正确'
     })
-    .then((resp) => {
-      console.log(resp)
-    })
-    .catch((error) => {
-      console.log(error)
+    .then((res) => {
+      console.log(res.value)
     })
 }
 ```
 
-## 插槽
+## 组件状态
 
-如果提供的弹框内容不满足需求，可以使用插槽自定义弹框内容。可以通过指定唯一标识`selector`的方式，在一个页面中使用多个`Dialog`,`useDialog(selector)`会返回一个指定了`selector`的组件实例。
+### 确认前校验
+
+`beforeConfirm` 接收当前输入值，支持返回 `boolean` 或 `Promise<boolean>`，返回 `false` 时会拦截关闭。
 
 ```html
-<wd-dialog selector="wd-dialog-slot">
-  <wd-rate custom-class="custom-rate-class" v-model="rate" />
-</wd-dialog>
-
-<wd-button @click="withSlot">custom</wd-button>
-```
-
-```typescript
-import { useDialog } from '@/uni_modules/wot-design-uni'
-const rate = ref<number>(1)
-const dialog = useDialog('wd-dialog-slot')
-
-function withSlot() {
-  message
-    .confirm({
-      title: '评分'
-    })
-    .then(() => {
-      dialog.alert(`你的评分为：${rate.value}分`)
-    })
-    .catch((error) => {
-      console.log(error)
-    })
-}
-```
-
-```scss
-:deep(.custom-rate-class) {
-  display: block;
-  height: 22px;
-}
-```
-
-## 确认前置处理
-
-设置 `beforeConfirm` 函数，在用户选择图片点击确认后，会执行 `beforeConfirm` 函数，接收 { resolve }，开发者可以在确认前进行处理，并通过 `resolve` 函数告知组件是否确定通过，`resolve` 接受 1 个 `boolean` 值，`resolve(true)` 表示选项通过，`resolve(false)` 表示选项不通过，不通过时不会完成确认操作。
-
-```html
-<wd-toast />
 <wd-dialog />
-<wd-button @click="beforeConfirm">beforeConfirm</wd-button>
+<wd-button @click="openBeforeConfirm">确认前校验</wd-button>
 ```
 
-```typescript
+```ts
 import { useDialog, useToast } from '@/uni_modules/wot-design-uni'
+
 const dialog = useDialog()
 const toast = useToast()
 
-function beforeConfirm() {
-  message
-    .confirm({
-      msg: '是否删除',
-      title: '提示',
-      beforeConfirm: ({ resolve }) => {
-        toast.loading('删除中...')
+const openBeforeConfirm = () => {
+  dialog.confirm({
+    title: '删除确认',
+    msg: '确定删除该记录吗？',
+    beforeConfirm: () => {
+      toast.loading('删除中...')
+      return new Promise((resolve) => {
         setTimeout(() => {
           toast.close()
           resolve(true)
-          toast.success('删除成功')
-        }, 2000)
-      }
-    })
-    .then(() => {})
-    .catch((error) => {
-      console.log(error)
-    })
+        }, 1500)
+      })
+    }
+  })
 }
 ```
 
-## 自定义操作按钮<el-tag text style="vertical-align: middle;margin-left:8px;" effect="plain">1.5.0</el-tag>
+### 输入校验
 
-可以通过按钮属性 `cancel-button-props` 和 `confirm-button-props` 自定义操作按钮的样式，具体参考 [Button Attributes](/component/button.html#attributes)。
+Prompt 同时支持正则校验 `input-pattern` 与函数校验 `input-validate`。
 
 ```html
-<wd-dialog></wd-dialog>
-<wd-button @click="withButtonProps">自定义按钮</wd-button>
+<wd-dialog />
+<wd-button @click="openPromptValidate">输入校验</wd-button>
 ```
 
-```typescript
-function withButtonProps() {
-  message
-    .confirm({
-      msg: '自定义按钮样式',
-      title: '提示',
-      cancelButtonProps: {
-        type: 'error',
-        customClass: 'custom-shadow'
-      },
-      confirmButtonProps: {
-        type: 'success',
-        customClass: 'custom-shadow'
-      }
-    })
-    .then(() => {})
-    .catch((error) => {
-      console.log(error)
-    })
+```ts
+import { useDialog } from '@/uni_modules/wot-design-uni'
+
+const dialog = useDialog()
+
+const openPromptValidate = () => {
+  dialog.prompt({
+    title: '请输入手机号',
+    inputProps: {
+      type: 'tel',
+      placeholder: '请输入 11 位手机号'
+    },
+    inputValidate: (value) => /^1[3-9]\d{9}$/.test(String(value)),
+    inputError: '手机号格式不正确'
+  })
 }
 ```
 
-```css
-:deep() {
-  .wd-dialog {
-    .custom-shadow {
-      box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+## 组件变体
+
+### 风格与布局
+
+通过 `theme` 与 `action-layout` 控制弹框按钮风格和排列方式。
+
+```html
+<wd-dialog />
+<wd-button @click="openTextTheme">Text 风格 + 纵向布局</wd-button>
+```
+
+```ts
+import { useDialog } from '@/uni_modules/wot-design-uni'
+
+const dialog = useDialog()
+
+const openTextTheme = () => {
+  dialog.confirm({
+    title: '版本更新',
+    msg: '发现新版本，是否立即更新？',
+    theme: 'text',
+    actionLayout: 'vertical'
+  })
+}
+```
+
+### 自定义操作按钮
+
+通过 `actions` 可以定义多个按钮。`actions` 与 `confirm-button-props` / `cancel-button-props` 同时配置时优先使用 `actions`。
+
+```html
+<wd-dialog />
+<wd-button @click="openActions">自定义操作按钮</wd-button>
+```
+
+```ts
+import { useDialog } from '@/uni_modules/wot-design-uni'
+
+const dialog = useDialog()
+
+const openActions = () => {
+  dialog.show({
+    title: '选择支付方式',
+    actionLayout: 'vertical',
+    actions: [
+      { text: '微信支付', type: 'success', block: true },
+      { text: '支付宝', type: 'primary', block: true },
+      { text: '取消', block: true }
+    ]
+  })
+}
+```
+
+## 组件样式
+
+### 图标与头图
+
+可通过 `icon`、`icon-color`、`icon-props`、`header-image` 配置视觉样式。
+
+```html
+<wd-dialog />
+<wd-button @click="openStyledDialog">图标和头图</wd-button>
+```
+
+```ts
+import { useDialog } from '@/uni_modules/wot-design-uni'
+
+const dialog = useDialog()
+
+const openStyledDialog = () => {
+  dialog.alert({
+    title: '活动通知',
+    msg: '恭喜您获得专属权益',
+    icon: 'success',
+    headerImage: 'https://example.com/banner.png'
+  })
+}
+```
+
+### 自定义按钮样式
+
+可通过 `confirm-button-props`、`cancel-button-props` 透传按钮属性。
+
+```html
+<wd-dialog />
+<wd-button @click="openCustomButtons">自定义按钮样式</wd-button>
+```
+
+```ts
+import { useDialog } from '@/uni_modules/wot-design-uni'
+
+const dialog = useDialog()
+
+const openCustomButtons = () => {
+  dialog.confirm({
+    title: '提示',
+    msg: '是否继续？',
+    confirmButtonProps: {
+      type: 'success',
+      customClass: 'custom-shadow'
+    },
+    cancelButtonProps: {
+      type: 'danger',
+      customClass: 'custom-shadow'
     }
-  }
+  })
 }
 ```
 
----
+## 特殊样式
 
-弹框在点击确定和取消按钮时，会返回一个 promise 对象，用 then 接收“确定”按钮事件，用 catch 接收“取消”按钮事件。传入的 action 值为:'confirm'、'cancel'、'modal'。
+### 插槽
 
-`Dialog.show(msg)`在调用时直接传入字符串，`Dialog.show(options)` 在调用时，需传入 options 参数。alert、confirm 和 prompt 都支持快捷调用：
+通过 `selector` 区分多个实例，并使用 `useDialog(selector)` 调用指定弹框。
 
-```typescript
-Dialog.show(msg)
-
-Dialog.show(options)
-
-Dialog.alert(options)
-
-Dialog.confirm(options)
-
-Dialog.prompt(options)
+```html
+<wd-dialog selector="wd-dialog-slot">
+  <wd-rate v-model="rate" />
+</wd-dialog>
+<wd-button @click="openSlotDialog">打开插槽弹框</wd-button>
 ```
+
+```ts
+import { ref } from 'vue'
+import { useDialog } from '@/uni_modules/wot-design-uni'
+
+const rate = ref(1)
+const slotDialog = useDialog('wd-dialog-slot')
+
+const openSlotDialog = () => {
+  slotDialog.confirm({
+    title: '请为我们评分'
+  })
+}
+```
+
+### OpenType
+
+`confirm-button-props`、`cancel-button-props` 与 `actions` 支持透传按钮开放能力属性（如 `openType`）及对应事件回调。
+
+```html
+<wd-dialog />
+<wd-button @click="openOpenTypeDialog">获取手机号</wd-button>
+```
+
+```ts
+import { useDialog } from '@/uni_modules/wot-design-uni'
+
+const dialog = useDialog()
+
+const openOpenTypeDialog = () => {
+  dialog.confirm({
+    title: '获取手机号',
+    confirmButtonProps: {
+      text: '授权获取',
+      openType: 'getPhoneNumber',
+      onGetphonenumber: (detail) => {
+        console.log(detail)
+      }
+    }
+  })
+}
+```
+
+## Methods
+
+`useDialog()` 返回如下方法：
+
+| 方法名称 | 说明 | 参数 | 返回值 |
+| --- | --- | --- | --- |
+| show | 打开弹框 | `string \| DialogOptions` | `Promise<DialogResult>` |
+| alert | 打开 Alert 弹框 | `string \| DialogOptions` | `Promise<DialogResult>` |
+| confirm | 打开 Confirm 弹框 | `string \| DialogOptions` | `Promise<DialogResult>` |
+| prompt | 打开 Prompt 弹框 | `string \| DialogOptions` | `Promise<DialogResult>` |
+| close | 关闭当前弹框 | - | `void` |
 
 ## Options
 
-| 参数                 | 说明                                                                            | 类型            | 可选值                   | 默认值           | 最低版本         |
-| -------------------- | ------------------------------------------------------------------------------- | --------------- | ------------------------ | ---------------- | ---------------- |
-| title                | 标题                                                                            | string          | -                        | -                | -                |
-| msg                  | 消息文案                                                                        | string          | -                        | -                | -                |
-| type                 | 弹框类型                                                                        | string          | alert / confirm / prompt | alert            | -                |
-| closeOnClickModal    | 是否支持点击蒙层进行关闭，点击蒙层回调传入的 action 为'modal'                   | boolean         | -                        | true             | -                |
-| inputType            | 当 type 为 prompt 时，输入框类型                                                | string          | -                        | text             | -                |
-| inputValue           | 当 type 为 prompt 时，输入框初始值                                              | string / number | -                        | -                | -                |
-| inputPlaceholder     | 当 type 为 prompt 时，输入框 placeholder                                        | string          | -                        | 请输入内容       | -                |
-| inputPattern         | 当 type 为 prompt 时，输入框正则校验，点击确定按钮时进行校验                    | regex           | -                        | -                | -                |
-| inputValidate        | 当 type 为 prompt 时，输入框校验函数，点击确定按钮时进行校验                    | function        | -                        | -                | -                |
-| inputError           | 当 type 为 prompt 时，输入框检验不通过时的错误提示文案                          | string          | -                        | 输入的数据不合法 | -                |
-| confirmButtonText    | 确定按钮文案                                                                    | string          | -                        | 确定             | -                |
-| cancelButtonText     | 取消按钮文案                                                                    | string          | -                        | 取消             | -                |
-| zIndex               | 弹窗层级                                                                        | number          | -                        | 99               | -                |
-| lazyRender           | 弹层内容懒渲染，触发展示时才渲染内容                                            | boolean         | -                        | true             | -                |
-| cancel-button-props  | 取消按钮的属性，具体参考 [Button Attributes](/component/button.html#attributes) | object          | -                        | -                | 1.5.0 |
-| confirm-button-props | 确定按钮的属性，具体参考 [Button Attributes](/component/button.html#attributes) | object          | -                        | -                | 1.5.0 |
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| title | 标题 | string | `''` |
+| msg | 消息内容 | string | `''` |
+| type | 弹框类型，可选值为 `alert`、`confirm`、`prompt` | DialogType | alert |
+| theme | 按钮风格，可选值为 `button`、`text` | DialogTheme | button |
+| zIndex | 弹窗层级 | number | 99 |
+| lazyRender | 弹层内容懒渲染 | boolean | true |
+| headerImage | 顶部通栏图片地址 | string | - |
+| icon | 图标名称。可选值为 `success`、`info`、`warning`、`danger`，也可传自定义图标名 | string | - |
+| iconColor | 图标颜色 | string | - |
+| iconProps | 透传 `wd-icon` 的属性 | `Partial<IconProps>` | - |
+| inputValue | Prompt 输入框初始值 | `string \| number` | - |
+| inputProps | Prompt 模式下 `wd-input` 属性 | `Partial<InputProps>` | - |
+| textareaProps | Prompt 模式下 `wd-textarea` 属性 | `Partial<TextareaProps>` | - |
+| inputPattern | Prompt 输入正则校验规则 | RegExp | - |
+| inputValidate | Prompt 输入函数校验规则，返回 `boolean` 或错误信息字符串 | `(inputValue: string \| number) => boolean \| string` | - |
+| inputError | Prompt 校验失败提示文案 | string | - |
+| actionLayout | 操作按钮排列方式，可选值为 `horizontal`、`vertical` | DialogActionLayout | horizontal |
+| showCancelButton | 是否显示取消按钮 | boolean | `alert` 为 false，`confirm/prompt` 为 true |
+| confirmButtonText | 确认按钮文案 | string | - |
+| cancelButtonText | 取消按钮文案 | string | - |
+| confirmButtonProps ^(1.5.0) | 确认按钮高级配置，支持传字符串、对象或 `null` | DialogBoxButtonOption | `{}` |
+| cancelButtonProps ^(1.5.0) | 取消按钮高级配置，支持传字符串、对象或 `null` | DialogBoxButtonOption | 由 `showCancelButton` 推导 |
+| actions | 自定义操作按钮数组，配置后优先级高于确认/取消按钮 | DialogAction[] | - |
+| closeOnClickModal | 是否支持点击遮罩关闭（返回 action 为 `modal`） | boolean | false |
+| showClose | 是否显示右上角关闭按钮 | boolean | false |
+| beforeConfirm | 确认前拦截函数，返回 `boolean` 或 `Promise<boolean>` | DialogBeforeConfirm | - |
 
 ## Attributes
 
-| 参数          | 说明     | 类型    | 可选值 | 默认值 | 最低版本 |
-| ------------- | -------- | ------- | ------ | ------ | -------- |
-| selector      | 指定唯一标识 | string  | -      | -     | -   |
-| root-portal   | 是否从页面中脱离出来，用于解决各种 fixed 失效问题 | boolean | -      | false | 1.11.0 |
+`wd-dialog` 组件实例支持以下属性：
+
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| selector | 指定唯一标识，用于区分页面中的多个实例 | string | `''` |
+| root-portal ^(1.11.0) | 是否脱离页面文档流渲染，用于解决 fixed 失效问题 | boolean | false |
+
+## Slots
+
+| 名称 | 说明 | 参数 |
+| --- | --- | --- |
+| header | 自定义头部区域 | - |
+| image | 自定义图片区域 | - |
+| title | 自定义标题区域 | `{ icon, title, iconProps }` |
+| default | 自定义内容区域 | `{ msg, type, inputValue, showErr, inputError }` |
+| actions | 自定义操作区 | `{ confirm, cancel, close }` |
 
 ## 外部样式类
 
-| 类名         | 说明       | 最低版本 |
-| ------------ | ---------- | -------- |
-| custom-class | 根节点样式 | -        |
+| 类名 | 说明 |
+| --- | --- |
+| custom-class | 根节点样式类 |

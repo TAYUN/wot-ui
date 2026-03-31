@@ -3,7 +3,7 @@
   <view
     :class="`wd-swipe-action ${customClass}`"
     :style="customStyle"
-    @click.stop="onClick()"
+    @click.stop="handleClick()"
     @touchstart="startDrag"
     @touchmove="onDrag"
     @touchend="endDrag"
@@ -12,13 +12,13 @@
     <!--容器-->
     <view class="wd-swipe-action__wrapper" :style="wrapperStyle">
       <!--左侧操作-->
-      <view class="wd-swipe-action__left" @click="onClick('left')">
+      <view class="wd-swipe-action__left" @click.stop="handleClick('left')">
         <slot name="left" />
       </view>
       <!--内容-->
       <slot />
       <!--右侧操作-->
-      <view class="wd-swipe-action__right" @click="onClick('right')">
+      <view class="wd-swipe-action__right" @click.stop="handleClick('right')">
         <slot name="right" />
       </view>
     </view>
@@ -38,10 +38,11 @@ export default {
 </script>
 <script lang="ts" setup>
 import { getCurrentInstance, inject, onBeforeMount, onBeforeUnmount, onMounted, ref, watch } from 'vue'
-import { closeOther, pushToQueue, removeFromQueue } from '../common/clickoutside'
-import { type Queue, queueKey } from '../composables/useQueue'
-import { useTouch } from '../composables/useTouch'
-import { getRect } from '../common/util'
+import { callInterceptor } from '../../common/interceptor'
+import { closeOther, pushToQueue, removeFromQueue } from '../../common/clickoutside'
+import { type Queue, queueKey } from '../../composables/useQueue'
+import { useTouch } from '../../composables/useTouch'
+import { getRect } from '../../common/util'
 import {
   swipeActionProps,
   type SwipeActionEmits,
@@ -166,15 +167,16 @@ function swipeMove(offset = 0) {
  * 处理点击：若已展开则关闭并触发 click 事件
  * @param position 点击位置（'left' | 'right' | undefined 表示内容区）
  */
-function onClick(position?: SwipeActionPosition) {
+function handleClick(position?: SwipeActionPosition) {
   if (props.disabled || wrapperOffset.value === 0) {
     return
   }
 
-  position = position || 'inside'
-  close('click', position)
-  emit('click', {
-    value: position
+  const clickPosition = position || 'inside'
+  close('click', clickPosition, () => {
+    emit('click', {
+      value: clickPosition
+    })
   })
 }
 
@@ -278,24 +280,36 @@ function endDrag() {
  * 关闭已展开的操作按钮并同步 modelValue；会调用 beforeClose 钩子
  * @param reason 关闭原因
  * @param position 关闭时的操作位置（swipe 时根据当前偏移推断）
+ * @param afterClose 关闭成功后的回调
  */
-function close(reason: SwipeActionReason, position?: SwipeActionPosition) {
+function close(reason: SwipeActionReason, position?: SwipeActionPosition, afterClose?: () => void) {
   if (reason === 'swipe' && originOffset.value === 0) {
     return swipeMove(0)
   }
+
+  let closePosition = position
+
   if (reason === 'swipe' && originOffset.value > 0) {
-    position = 'left'
+    closePosition = 'left'
   } else if (reason === 'swipe' && originOffset.value < 0) {
-    position = 'right'
+    closePosition = 'right'
   }
 
-  if (reason && position) {
-    props.beforeClose?.(reason, position)
+  const doClose = () => {
+    swipeMove(0)
+    if (props.modelValue !== 'close') {
+      emit('update:modelValue', 'close')
+    }
+    afterClose?.()
   }
 
-  swipeMove(0)
-  if (props.modelValue !== 'close') {
-    emit('update:modelValue', 'close')
+  if (reason && closePosition) {
+    callInterceptor(props.beforeClose, {
+      args: [reason, closePosition],
+      done: doClose
+    })
+  } else {
+    doClose()
   }
 }
 

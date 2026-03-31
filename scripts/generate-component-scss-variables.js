@@ -236,7 +236,7 @@ function main() {
   try {
     if (args[0] === '--all') {
       // 批量处理模式
-      const outputPath = args[1] || path.join(__dirname, '../src/uni_modules/wot-design-uni/components/styles/component-variables.scss')
+      const outputPath = args[1] || path.join(__dirname, '../src/uni_modules/wot-design-uni/styles/component-variables.scss')
       processAllComponents(outputPath)
     } else {
       // 单个组件模式

@@ -17,25 +17,58 @@ Wot UI 已被很多公司和团队在生产环境使用，下面是一些优秀�
 <style scoped>
 .cases-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 240px));
+  justify-content: center;
+  gap: 16px;
   margin: 20px 0;
 }
 
+:deep(.el-card) {
+  border-radius: 10px;
+}
+
+:deep(.el-card__header) {
+  padding: 14px 16px 10px;
+}
+
+:deep(.el-card__body) {
+  padding: 0 16px 16px;
+}
+
 .case-title {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
 }
 
 .case-description {
-  margin-left: 10px;
-  font-size: 14px;
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 1.5;
   color: #999;
 }
 
 :deep(.el-card__body .el-image) {
   width: 100%;
+  max-width: 208px;
   border-radius: 4px;
+}
+
+:deep(.el-card__body .el-image__inner) {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 640px) {
+  .cases-container {
+    grid-template-columns: minmax(0, 1fr);
+    justify-content: stretch;
+  }
+
+  :deep(.el-card__body .el-image) {
+    max-width: none;
+  }
 }
 </style>
 

@@ -47,7 +47,8 @@ export default {
   cascader: {
     title: 'Выберите, пожалуйста',
     placeholder: 'Выберите, пожалуйста',
-    select: 'Выберите'
+    select: 'Выберите',
+    confirm: 'Подтвердить'
   },
   datetimePicker: {
     start: 'Начало',

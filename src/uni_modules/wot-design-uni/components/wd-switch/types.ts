@@ -1,15 +1,10 @@
 import type { ExtractPropTypes, PropType } from 'vue'
-import { baseProps, makeBooleanProp, makeStringProp, numericProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeStringProp, numericProp } from '../../common/props'
 import { type LoadingProps } from '../wd-loading/types'
 
 export type SwitchShape = 'round' | 'square'
 
-export type SwitchBeforeChangeOption = {
-  value: number | string | boolean
-  resolve: (pass: boolean) => void
-}
-
-export type SwitchBeforeChange = (option: SwitchBeforeChangeOption) => void
+export type SwitchBeforeChange = (value: number | string | boolean) => boolean | Promise<boolean>
 
 export const switchProps = {
   ...baseProps,

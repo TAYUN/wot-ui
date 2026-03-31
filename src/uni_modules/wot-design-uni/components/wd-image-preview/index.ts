@@ -9,7 +9,7 @@
  */
 import { inject, provide, ref } from 'vue'
 import type { ImagePreview, ImagePreviewOptions } from './types'
-import { deepMerge, isArray, isString } from '../common/util'
+import { deepMerge, isArray, isString } from '../../common/util'
 import { type SwiperItem } from '../wd-swiper/types'
 
 /**

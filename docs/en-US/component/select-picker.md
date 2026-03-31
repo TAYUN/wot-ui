@@ -140,7 +140,7 @@ const displayFormat = (items, columns) => {
 
 ## Validation Before Confirmation
 
-Set the `before-confirm` function, which will be executed when the user clicks the `confirm` button. It receives `value` (selected items, which is the currently selected value) and `resolve` parameters. You can validate the `value` and use the `resolve` function to tell the component whether to confirm. `resolve` accepts 1 boolean value, `resolve(true)` means the option passes, `resolve(false)` means the option doesn't pass, and the popup won't close when it doesn't pass.
+Set the `before-confirm` function, which will be executed when the user clicks the `confirm` button. It receives a `value` parameter (selected items, which is the currently selected value). You can return a `boolean` or `Promise<boolean>` to control whether the option passes. The popup won't close when it doesn't pass.
 
 ```html
 <wd-select-picker label="Validation Before Confirmation" v-model="value" :columns="columns" :before-confirm="beforeConfirm"></wd-select-picker>
@@ -159,13 +159,15 @@ const columns = ref<Record<string, any>>([{
 }])
 const value = ref<string[]>(['101'])
 
-const beforeConfirm = (value, resolve) => {
-  if (value.length > 0) {
-    toast.error('Unable to select products at this time')
-    resolve(false)
-  } else {
-    resolve(true)
-  }
+const beforeConfirm = (value) => {
+  return new Promise<boolean>((resolve) => {
+    if (value.length > 0) {
+      toast.error('Unable to select products at this time')
+      resolve(false)
+    } else {
+      resolve(true)
+    }
+  })
 }
 ```
 
@@ -250,7 +252,7 @@ Set the `label-key` property to customize the key name of the option label.
 | required | Whether to display the required asterisk | boolean | false | - |
 | marker-side | Position of the required marker | 'before' \| 'after' | 'before' | 1.12.0 |
 | align | Alignment of right content | string | 'left' | - |
-| before-confirm | Validation function before confirming | function | - | - |
+| before-confirm | Pre-confirmation validation function, receives (value) parameter, returns a `boolean` or `Promise<boolean>` | function | - | - |
 | display-format | Display format function | function | - | - |
 | close-on-click-modal | Whether to close when clicking modal | boolean | true | - |
 | safe-area-inset-bottom | Whether to enable bottom safe area adaptation | boolean | true | - |

@@ -1,12 +1,12 @@
-@use '../styles/mixin/mixin.scss'as *;
-@use '../styles/variable.scss'as *;
+@use '../../styles/mixin/mixin.scss'as *;
+@use '../../styles/variable.scss'as *;
 
 // 未激活图标颜色
 $rate-color: var(--wot-rate-color, $filled-extra-strong) !default;
 // 激活图标颜色
-$rate-active-color: var(--wot-rate-active-color, $classifyapplication-Yellow-content) !default;
+$rate-active-color: var(--wot-rate-active-color, $classifyapplication-yellow-content) !default;
 // 图标尺寸
-$rate-size: var(--wot-rate-size, $n24) !default;
+$rate-size: var(--wot-rate-size, $n-24) !default;
 // 禁用态透明度
 $rate-disabled-opacity: var(--wot-rate-disabled-opacity, $opacity-disabled) !default;
 // 图标间距

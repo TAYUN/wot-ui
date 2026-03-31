@@ -1,190 +1,131 @@
 <template>
   <page-wraper>
-    <demo-block :title="$t('dian-zhuang-zhi-shi-qi')">
-      <wd-swiper
-        :list="swiperList"
-        autoplay
-        v-model:current="current"
-        :indicator="{ type: 'dots' }"
-        @click="handleClick"
-        @change="onChange"
-      ></wd-swiper>
-    </demo-block>
+    <view class="page-swiper">
+      <demo-group title="组件类型">
+        <demo-group-item no-padding :title="$t('dian-zhuang-zhi-shi-qi')">
+          <wd-swiper :list="swiperList" autoplay v-model:current="current" :indicator="{ type: 'dots' }"></wd-swiper>
+        </demo-group-item>
+        <demo-group-item no-padding :title="$t('dian-tiao-zhuang-zhi-shi-qi')">
+          <wd-swiper :list="swiperList" autoplay v-model:current="current1" :indicator="{ type: 'dots-bar' }"></wd-swiper>
+        </demo-group-item>
+        <demo-group-item no-padding :title="$t('shu-zi-zhi-shi-qi')">
+          <wd-swiper
+            :list="swiperList"
+            autoplay
+            v-model:current="current2"
+            :indicator="{ type: 'fraction' }"
+            indicator-position="bottom-right"
+          ></wd-swiper>
+        </demo-group-item>
+      </demo-group>
 
-    <demo-block :title="$t('dian-tiao-zhuang-zhi-shi-qi')">
-      <wd-swiper
-        :list="swiperList"
-        autoplay
-        v-model:current="current1"
-        :indicator="{ type: 'dots-bar' }"
-        @click="handleClick"
-        @change="onChange"
-      ></wd-swiper>
-    </demo-block>
+      <demo-group title="组件变体">
+        <demo-group-item no-padding :title="$t('shou-dong-qie-huan')">
+          <wd-swiper :list="swiperList" :autoplay="false" v-model:current="current3" :indicator="{ showControls: true }" :loop="false"></wd-swiper>
+        </demo-group-item>
+        <demo-group-item no-padding :title="$t('chui-zhi-fang-xiang')">
+          <wd-swiper
+            :list="swiperList"
+            direction="vertical"
+            indicator-position="right"
+            autoplay
+            v-model:current="current6"
+            :indicator="{ type: 'dots-bar' }"
+          ></wd-swiper>
+        </demo-group-item>
+        <demo-group-item no-padding :title="$t('zhi-ding-valuekey-he-textkey')">
+          <wd-swiper value-key="url" text-key="title" :list="customSwiperList" autoplay v-model:current="current9"></wd-swiper>
+        </demo-group-item>
+      </demo-group>
 
-    <demo-block :title="$t('shu-zi-zhi-shi-qi')">
-      <wd-swiper
-        :list="swiperList"
-        autoplay
-        v-model:current="current2"
-        :indicator="{ type: 'fraction' }"
-        indicator-position="bottom-right"
-        @click="handleClick"
-        @change="onChange"
-      ></wd-swiper>
-    </demo-block>
+      <demo-group title="组件样式">
+        <demo-group-item no-padding :title="$t('ka-pian-yang-shi')">
+          <view class="card-swiper">
+            <wd-swiper
+              autoplay
+              v-model:current="current4"
+              custom-indicator-class="custom-indicator-class"
+              custom-image-class="custom-image"
+              custom-next-image-class="custom-image-prev"
+              custom-prev-image-class="custom-image-prev"
+              :indicator="{ type: 'dots' }"
+              :list="swiperList"
+              previousMargin="24px"
+              nextMargin="24px"
+            ></wd-swiper>
+          </view>
+        </demo-group-item>
+        <demo-group-item no-padding :title="$t('tong-shi-zhan-shi-2-ge-hua-kuai')">
+          <view class="card-swiper">
+            <wd-swiper
+              autoplay
+              v-model:current="current5"
+              :display-multiple-items="2"
+              custom-indicator-class="custom-indicator-class"
+              custom-image-class="custom-image"
+              custom-next-image-class="custom-image-prev"
+              custom-prev-image-class="custom-image-prev"
+              :indicator="{ type: 'dots' }"
+              :list="swiperList"
+              previousMargin="24px"
+              nextMargin="24px"
+            ></wd-swiper>
+          </view>
+        </demo-group-item>
+        <demo-group-item no-padding :title="$t('zi-ding-yi-zhi-shi-qi')">
+          <wd-swiper :list="swiperList" direction="vertical" indicator-position="right" autoplay v-model:current="current7">
+            <template #indicator="{ current, total }">
+              <view class="custom-indicator">{{ current + 1 }}/{{ total }}</view>
+            </template>
+          </wd-swiper>
+        </demo-group-item>
+      </demo-group>
 
-    <!-- #ifdef MP-WEIXIN || H5 || MP-DINGTALK -->
-    <demo-block :title="$t('shi-pin-lun-bo')">
-      <wd-swiper
-        :list="videoList"
-        autoplay
-        :indicator="{ type: 'fraction' }"
-        indicator-position="top-right"
-        @click="handleClick"
-        @change="onChange"
-      ></wd-swiper>
-    </demo-block>
-
-    <demo-block :title="$t('shou-dong-bo-fang-shi-pin')">
-      <wd-swiper
-        :list="videoList"
-        autoplay
-        :autoplayVideo="false"
-        :indicator="{ type: 'fraction' }"
-        indicator-position="top-right"
-        @click="handleClick"
-        @change="onChange"
-      ></wd-swiper>
-    </demo-block>
-
-    <demo-block :title="$t('bo-fang-shi-pin-shi-ting-zhi-lun-bo')">
-      <wd-swiper
-        :list="videoList"
-        autoplay
-        stopAutoplayWhenVideoPlay
-        :autoplayVideo="false"
-        :indicator="{ type: 'fraction' }"
-        indicator-position="top-right"
-        @click="handleClick"
-        @change="onChange"
-      ></wd-swiper>
-    </demo-block>
-    <!-- #endif -->
-
-    <demo-block :title="$t('shou-dong-qie-huan')">
-      <wd-swiper
-        :list="swiperList"
-        :autoplay="false"
-        v-model:current="current3"
-        :indicator="{ showControls: true }"
-        :loop="false"
-        @click="handleClick"
-        @change="onChange"
-      ></wd-swiper>
-    </demo-block>
-
-    <demo-block :title="$t('ka-pian-yang-shi')">
-      <view class="card-swiper">
-        <wd-swiper
-          autoplay
-          v-model:current="current4"
-          custom-indicator-class="custom-indicator-class"
-          custom-image-class="custom-image"
-          custom-next-image-class="custom-image-prev"
-          custom-prev-image-class="custom-image-prev"
-          :indicator="{ type: 'dots' }"
-          :list="swiperList"
-          previousMargin="24px"
-          nextMargin="24px"
-        ></wd-swiper>
-      </view>
-    </demo-block>
-
-    <demo-block :title="$t('tong-shi-zhan-shi-2-ge-hua-kuai')">
-      <view class="card-swiper">
-        <wd-swiper
-          autoplay
-          v-model:current="current5"
-          :display-multiple-items="2"
-          custom-indicator-class="custom-indicator-class"
-          custom-image-class="custom-image"
-          custom-next-image-class="custom-image-prev"
-          custom-prev-image-class="custom-image-prev"
-          :indicator="{ type: 'dots' }"
-          :list="swiperList"
-          previousMargin="24px"
-          nextMargin="24px"
-        ></wd-swiper>
-      </view>
-    </demo-block>
-
-    <demo-block :title="$t('chui-zhi-fang-xiang')">
-      <wd-swiper
-        :list="swiperList"
-        direction="vertical"
-        indicator-position="right"
-        autoplay
-        v-model:current="current6"
-        :indicator="{ type: 'dots-bar' }"
-        @click="handleClick"
-        @change="onChange"
-      ></wd-swiper>
-    </demo-block>
-
-    <demo-block :title="$t('zi-ding-yi-zhi-shi-qi')">
-      <wd-swiper
-        :list="swiperList"
-        direction="vertical"
-        indicator-position="right"
-        autoplay
-        v-model:current="current7"
-        @click="handleClick"
-        @change="onChange"
-      >
-        <template #indicator="{ current, total }">
-          <view class="custom-indicator" style="position: absolute; bottom: 24rpx; right: 24rpx">{{ current + 1 }}/{{ total }}</view>
-        </template>
-      </wd-swiper>
-    </demo-block>
-
-    <demo-block :title="$t('zhi-ding-valuekey-he-textkey')">
-      <wd-swiper
-        value-key="url"
-        text-key="title"
-        :list="customSwiperList"
-        autoplay
-        v-model:current="current9"
-        @click="handleClick"
-        @change="onChange"
-      ></wd-swiper>
-    </demo-block>
-
-    <demo-block :title="$t('shu-xing-kong-zhi-qie-huan')">
-      <wd-swiper :loop="isLoop" :autoplay="false" :list="swiperList" v-model:current="current8" />
-      <wd-gap />
-      <wd-cell-group>
-        <wd-cell title="loop">
-          <wd-switch v-model="isLoop" size="24px" />
-        </wd-cell>
-        <wd-cell title="current" :value="current8.toString()" />
-      </wd-cell-group>
-      <view style="display: flex; justify-content: space-between">
-        <wd-button @click="current8--">prev</wd-button>
-
-        <wd-button type="success" @click="current8++">next</wd-button>
-      </view>
-    </demo-block>
-
-    <demo-block :title="$t('cha-cao-yong-fa')">
-      <wd-swiper :list="swiperList" autoplay v-model:current="current1" :indicator="{ type: 'dots-bar' }" @click="handleClick" @change="onChange">
-        <template #default="{ item }">
-          <image :src="item as string" mode="aspectFill" style="width: 100%; height: 100%" />
-        </template>
-      </wd-swiper>
-    </demo-block>
+      <demo-group title="特殊样式">
+        <!-- #ifdef MP-WEIXIN || H5 || MP-DINGTALK -->
+        <demo-group-item no-padding :title="$t('shi-pin-lun-bo')">
+          <wd-swiper :list="videoList" autoplay :indicator="{ type: 'fraction' }" indicator-position="top-right"></wd-swiper>
+        </demo-group-item>
+        <demo-group-item no-padding :title="$t('shou-dong-bo-fang-shi-pin')">
+          <wd-swiper :list="videoList" autoplay :autoplay-video="false" :indicator="{ type: 'fraction' }" indicator-position="top-right"></wd-swiper>
+        </demo-group-item>
+        <demo-group-item no-padding :title="$t('bo-fang-shi-pin-shi-ting-zhi-lun-bo')">
+          <wd-swiper
+            :list="videoList"
+            autoplay
+            stop-autoplay-when-video-play
+            :autoplay-video="false"
+            :indicator="{ type: 'fraction' }"
+            indicator-position="top-right"
+          ></wd-swiper>
+        </demo-group-item>
+        <!-- #endif -->
+        <demo-group-item no-padding :title="$t('shu-xing-kong-zhi-qie-huan')">
+          <wd-swiper :loop="isLoop" :autoplay="false" :list="swiperList" v-model:current="current8" />
+          <wd-gap />
+          <wd-cell-group>
+            <wd-cell title="loop">
+              <wd-switch v-model="isLoop" size="24px" />
+            </wd-cell>
+            <wd-cell title="current" :value="current8.toString()" />
+          </wd-cell-group>
+          <view class="demo-actions">
+            <wd-button @click="current8--">prev</wd-button>
+            <wd-button type="success" @click="current8++">next</wd-button>
+          </view>
+        </demo-group-item>
+        <demo-group-item no-padding :title="$t('cha-cao-yong-fa')">
+          <wd-swiper :list="swiperList" autoplay v-model:current="current1" :indicator="{ type: 'dots-bar' }">
+            <template #default="{ item }">
+              <image :src="item as string" mode="aspectFill" class="custom-slot-image" />
+            </template>
+          </wd-swiper>
+        </demo-group-item>
+      </demo-group>
+    </view>
   </page-wraper>
 </template>
+
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -225,14 +166,8 @@ const current8 = ref<number>(0)
 const current9 = ref<number>(0)
 
 const isLoop = ref(false)
-
-function handleClick(e: any) {
-  console.log(e)
-}
-function onChange(e: any) {
-  console.log(e)
-}
 </script>
+
 <style lang="scss" scoped>
 .card-swiper {
   --wot-swiper-radius: 0;
@@ -240,12 +175,15 @@ function onChange(e: any) {
   --wot-swiper-nav-dot-color: #e7e7e7;
   --wot-swiper-nav-dot-active-color: #4d80f0;
   padding-bottom: 24rpx;
+
   :deep(.custom-indicator-class) {
     bottom: -16px;
   }
+
   :deep(.custom-image) {
     border-radius: 12rpx;
   }
+
   :deep(.custom-image-prev) {
     height: 168px !important;
   }
@@ -257,6 +195,9 @@ function onChange(e: any) {
 }
 
 .custom-indicator {
+  position: absolute;
+  right: 24rpx;
+  bottom: 24rpx;
   padding: 0 12rpx;
   height: 48rpx;
   line-height: 48rpx;
@@ -264,5 +205,10 @@ function onChange(e: any) {
   background: rgba(0, 0, 0, 0.6);
   color: #ffffff;
   font-size: 24rpx;
+}
+
+.demo-actions {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

@@ -1,7 +1,7 @@
 <!--
  * @Author: weisheng
  * @Date: 2026-01-21 16:32:23
- * @LastEditTime: 2026-01-22 11:26:36
+ * @LastEditTime: 2026-03-24 17:50:11
  * @LastEditors: weisheng
  * @Description: 
  * @FilePath: /wot-design-uni/src/subPages/imagePreview/Index.vue
@@ -10,42 +10,54 @@
 <template>
   <page-wraper>
     <view class="page-image-preview">
-      <demo-block title="基本用法">
-        <wd-button @click="handleBasicPreview">预览图片</wd-button>
-      </demo-block>
+      <demo-group title="组件类型">
+        <demo-group-item title="基本用法">
+          <wd-button @click="handleBasicPreview">预览图片</wd-button>
+        </demo-group-item>
 
-      <demo-block title="指定起始位置">
-        <wd-button @click="handleStartPosition">从第二张开始</wd-button>
-      </demo-block>
+        <demo-group-item title="传入图片数组">
+          <wd-button @click="handleArrayPreview">直接传入数组</wd-button>
+        </demo-group-item>
+      </demo-group>
 
-      <demo-block title="隐藏页码">
-        <wd-button @click="handleHideIndex">不显示页码</wd-button>
-      </demo-block>
+      <demo-group title="组件变体">
+        <demo-group-item title="指定起始位置">
+          <wd-button @click="handleStartPosition">从第二张开始</wd-button>
+        </demo-group-item>
+      </demo-group>
 
-      <demo-block title="关闭按钮位置">
-        <wd-button @click="handleClosePosition('top-left')">左上角</wd-button>
-        <wd-button @click="handleClosePosition('top-right')">右上角</wd-button>
-      </demo-block>
+      <demo-group title="组件配置">
+        <demo-group-item title="隐藏页码">
+          <wd-button @click="handleHideIndex">不显示页码</wd-button>
+        </demo-group-item>
 
-      <demo-block title="隐藏关闭按钮">
-        <wd-button @click="handleHideClose">不显示关闭按钮</wd-button>
-      </demo-block>
+        <demo-group-item title="隐藏关闭按钮">
+          <wd-button @click="handleHideClose">不显示关闭按钮</wd-button>
+        </demo-group-item>
 
-      <demo-block title="禁用点击关闭">
-        <wd-button @click="handleDisableCloseOnClick">点击不关闭</wd-button>
-      </demo-block>
+        <demo-group-item title="关闭按钮位置">
+          <wd-button @click="handleClosePosition('top-left')">左上角</wd-button>
+          <wd-button @click="handleClosePosition('top-right')">右上角</wd-button>
+        </demo-group-item>
 
-      <demo-block title="禁用循环">
-        <wd-button @click="handleDisableLoop">禁用循环播放</wd-button>
-      </demo-block>
+        <demo-group-item title="禁用点击关闭">
+          <wd-button @click="handleDisableCloseOnClick">点击不关闭</wd-button>
+        </demo-group-item>
 
-      <demo-block title="监听事件">
-        <wd-button @click="handleWithEvents">带事件回调</wd-button>
-      </demo-block>
+        <demo-group-item title="禁用循环">
+          <wd-button @click="handleDisableLoop">禁用循环播放</wd-button>
+        </demo-group-item>
+      </demo-group>
 
-      <demo-block title="使用插槽">
-        <wd-button @click="handleSlotPreview">自定义插槽</wd-button>
-      </demo-block>
+      <demo-group title="特殊用法">
+        <demo-group-item title="监听事件">
+          <wd-button @click="handleWithEvents">带事件回调</wd-button>
+        </demo-group-item>
+
+        <demo-group-item title="使用插槽">
+          <wd-button @click="handleSlotPreview">自定义插槽</wd-button>
+        </demo-group-item>
+      </demo-group>
 
       <!-- 函数式调用需要的组件 -->
       <wd-image-preview />
@@ -87,6 +99,13 @@ const imageDescriptions = ['小熊猫', '水豚', '大熊猫', '月亮', '萌宠
 
 // 基本用法
 function handleBasicPreview() {
+  previewImage({
+    images
+  })
+}
+
+// 传入图片数组
+function handleArrayPreview() {
   previewImage(images)
 }
 
@@ -165,8 +184,6 @@ function handleSlotPreview() {
 
 <style lang="scss" scoped>
 .page-image-preview {
-  padding: 12px;
-
   :deep(.wd-button) {
     margin-right: 10px;
     margin-bottom: 10px;

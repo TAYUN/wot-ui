@@ -16,8 +16,8 @@
 import { indexAnchorProps } from './type'
 import { onMounted, getCurrentInstance, ref, computed } from 'vue'
 import { indexBarInjectionKey } from '../wd-index-bar/type'
-import { getRect, isDef, uuid } from '../common/util'
-import { useParent } from '../composables/useParent'
+import { getRect, isDef, uuid } from '../../common/util'
+import { useParent } from '../../composables/useParent'
 
 const props = defineProps(indexAnchorProps)
 

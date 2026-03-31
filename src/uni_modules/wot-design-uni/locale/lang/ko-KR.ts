@@ -47,7 +47,8 @@ export default {
   cascader: {
     title: '선택',
     placeholder: '선택',
-    select: '선택'
+    select: '선택',
+    confirm: '확인'
   },
   datetimePicker: {
     start: '시작',

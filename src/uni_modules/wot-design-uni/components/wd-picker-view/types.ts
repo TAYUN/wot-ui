@@ -1,5 +1,5 @@
 import type { ComponentPublicInstance, ExtractPropTypes, PropType } from 'vue'
-import { baseProps, makeArrayProp, makeBooleanProp, makeNumberProp, makeStringProp, type Numeric } from '../common/props'
+import { baseProps, makeArrayProp, makeBooleanProp, makeNumberProp, makeStringProp, type Numeric } from '../../common/props'
 
 /**
  * 选项对象
@@ -9,12 +9,12 @@ export type PickerOption = {
    * 选项值
    * 类型: string | number
    */
-  value: Numeric
+  value?: Numeric
   /**
    * 选项显示文本
    * 类型: string | number
    */
-  label: Numeric
+  label?: Numeric
   /**
    * 是否禁用
    * 类型: boolean

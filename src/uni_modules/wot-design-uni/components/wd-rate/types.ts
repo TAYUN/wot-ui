@@ -1,16 +1,14 @@
 import type { PropType } from 'vue'
-import { baseProps, makeBooleanProp, makeNumberProp, makeStringProp, numericProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeNumberProp, makeStringProp, numericProp } from '../../common/props'
 
 export const rateProps = {
   ...baseProps,
-
   /**
    * 评分最大值
    * 类型: number
    * 默认值: 5
    */
   num: makeNumberProp(5),
-
   /**
    * 当前分数，使用v-model进行双向绑定
    * 类型: string | number | null

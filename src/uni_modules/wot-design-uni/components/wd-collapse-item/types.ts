@@ -1,7 +1,7 @@
 import type { ComponentPublicInstance, ExtractPropTypes, PropType } from 'vue'
-import { baseProps, makeBooleanProp, makeRequiredProp, makeStringProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeRequiredProp, makeStringProp } from '../../common/props'
 
-export type CollapseItemBeforeExpand = (name: string) => boolean | Promise<unknown>
+export type CollapseItemBeforeExpand = (name: string) => boolean | Promise<boolean>
 
 export const collapseItemProps = {
   ...baseProps,

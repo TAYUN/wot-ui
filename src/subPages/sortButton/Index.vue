@@ -1,20 +1,27 @@
 <template>
   <page-wraper>
-    <demo-block :title="$t('ji-chu-yong-fa-0')">
-      <wd-sort-button v-model="value1" :title="$t('jia-ge')" @change="handleChange1" />
-    </demo-block>
+    <view class="page-sort-button">
+      <demo-group title="组件类型">
+        <demo-group-item :title="$t('ji-chu-yong-fa-0')">
+          <wd-sort-button v-model="value1" :title="$t('jia-ge')" @change="handleChange1" />
+        </demo-group-item>
+      </demo-group>
 
-    <demo-block :title="$t('she-zhi-allowreset-yun-xu-zhong-zhi-an-niu')">
-      <wd-sort-button v-model="value2" :title="$t('jia-ge-0')" allow-reset @change="handleChange2" />
-    </demo-block>
+      <demo-group title="组件变体">
+        <demo-group-item :title="$t('she-zhi-allowreset-yun-xu-zhong-zhi-an-niu')">
+          <wd-sort-button v-model="value2" :title="$t('jia-ge-0')" allow-reset @change="handleChange2" />
+        </demo-group-item>
+        <demo-group-item :title="$t('she-zhi-descfirst-you-xian-qie-huan-wei-jiang-xu')">
+          <wd-sort-button v-model="value3" :title="$t('jia-ge-1')" desc-first @change="handleChange3" />
+        </demo-group-item>
+      </demo-group>
 
-    <demo-block :title="$t('she-zhi-descfirst-you-xian-qie-huan-wei-jiang-xu')">
-      <wd-sort-button v-model="value3" :title="$t('jia-ge-1')" desc-first @change="handleChange3" />
-    </demo-block>
-
-    <demo-block title="显示下划线">
-      <wd-sort-button v-model="value4" :title="$t('jia-ge-2')" line @change="handleChange4" />
-    </demo-block>
+      <demo-group title="组件样式">
+        <demo-group-item title="显示下划线">
+          <wd-sort-button v-model="value4" :title="$t('jia-ge-2')" line @change="handleChange4" />
+        </demo-group-item>
+      </demo-group>
+    </view>
   </page-wraper>
 </template>
 <script lang="ts" setup>

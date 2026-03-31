@@ -110,11 +110,12 @@ export default {
 import wdPopup from '../wd-popup/wd-popup.vue'
 import wdDatetimePickerView from '../wd-datetime-picker-view/wd-datetime-picker-view.vue'
 import { getCurrentInstance, nextTick, onMounted, ref, watch, computed } from 'vue'
-import { deepClone, isArray, isDef, isEqual, isFunction, padZero } from '../common/util'
+import { deepClone, isArray, isDef, isEqual, padZero } from '../../common/util'
+import { callInterceptor } from '../../common/interceptor'
 import { type DatetimePickerViewColumnType, type DatetimePickerViewOption, type DatetimePickerViewColumn } from '../wd-datetime-picker-view/types'
-import { useTranslate } from '../composables/useTranslate'
+import { useTranslate } from '../../composables/useTranslate'
 import { datetimePickerProps, type DatetimePickerExpose } from './types'
-import { formatDate } from '../common/formatDate'
+import { formatDate } from '../../common/formatDate'
 import { getPickerValue } from '../wd-datetime-picker-view/util'
 
 const props = defineProps(datetimePickerProps)
@@ -148,22 +149,6 @@ watch(
     if (isEqual(val, oldVal)) return
 
     resetInnerValue()
-  },
-  {
-    deep: true,
-    immediate: true
-  }
-)
-
-watch(
-  [() => props.filter, () => props.formatter, () => props.beforeConfirm, () => props.displayFormatTabLabel],
-  (values) => {
-    const propNames = ['filter', 'formatter', 'beforeConfirm', 'displayFormatTabLabel']
-    values.forEach((fn, index) => {
-      if (fn && !isFunction(fn)) {
-        console.error(`The type of ${propNames[index]} must be Function`)
-      }
-    })
   },
   {
     deep: true,
@@ -468,17 +453,12 @@ function onConfirm() {
   }
 
   const { beforeConfirm } = props
-  if (beforeConfirm) {
-    beforeConfirm(
-      region.value ? [innerValue.value, endInnerValue.value] : innerValue.value,
-      (isPass: boolean) => {
-        isPass && handleConfirm()
-      },
-      proxy.$.exposed
-    )
-  } else {
-    handleConfirm()
-  }
+  callInterceptor(beforeConfirm, {
+    args: [region.value ? [innerValue.value, endInnerValue.value] : innerValue.value],
+    done: () => {
+      handleConfirm()
+    }
+  })
 }
 
 function onPickStart() {

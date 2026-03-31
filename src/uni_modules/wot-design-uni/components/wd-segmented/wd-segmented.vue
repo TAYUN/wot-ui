@@ -34,7 +34,7 @@ export default {
 
 <script setup lang="ts">
 import { computed, getCurrentInstance, onMounted, reactive, watch } from 'vue'
-import { getRect, isObj, objToStyle, addUnit, pause, isEqual } from '../common/util'
+import { getRect, isObj, objToStyle, addUnit, pause, isEqual } from '../../common/util'
 import type { CSSProperties } from 'vue'
 import { segmentedProps, type SegmentedExpose, type SegmentedOption } from './types'
 /** 分段器选项元素的选择器 */

@@ -1,141 +1,154 @@
 <template>
-  <view class="collapse">
-    <page-wraper>
-      <demo-block title="toggleAll">
-        <wd-button custom-class="custom-button" type="info" @click="collapse?.toggleAll()">{{ $t('quan-bu-qie-huan') }}</wd-button>
-        <wd-button custom-class="custom-button" type="success" @click="collapse?.toggleAll(true)">{{ $t('quan-bu-zhan-kai') }}</wd-button>
-        <wd-button custom-class="custom-button" type="primary" @click="collapse?.toggleAll(false)">{{ $t('quan-bu-shou-qi') }}</wd-button>
-        <wd-button custom-class="custom-button" type="warning" @click="collapse?.toggleAll({ skipDisabled: true })">
-          {{ $t('quan-bu-qie-huan-tiao-guo-jin-yong') }}
-        </wd-button>
-        <wd-button custom-class="custom-button" type="danger" @click="collapse?.toggleAll({ expanded: true, skipDisabled: true })">
-          {{ $t('quan-bu-xuan-zhong-tiao-guo-jin-yong') }}
-        </wd-button>
-      </demo-block>
-      <demo-block :title="$t('ji-chu-yong-fa')" transparent>
-        <wd-collapse ref="collapse" v-model="value1" @change="handleChange1">
-          <wd-collapse-item
-            :disabled="item.disabled"
-            v-for="(item, index) in itemList"
-            :before-expend="index === 2 ? beforeExpend : undefined"
-            :key="index"
-            :title="item.title"
-            :name="item.name"
-          >
-            {{ item.body }}
-          </wd-collapse-item>
-        </wd-collapse>
-      </demo-block>
+  <page-wraper>
+    <view class="page-collapse">
+      <demo-group title="组件类型">
+        <demo-group-item title="手动切换">
+          <wd-button custom-class="custom-button" type="info" @click="collapse?.toggleAll()">{{ $t('quan-bu-qie-huan') }}</wd-button>
+          <wd-button custom-class="custom-button" type="success" @click="collapse?.toggleAll(true)">{{ $t('quan-bu-zhan-kai') }}</wd-button>
+          <wd-button custom-class="custom-button" type="primary" @click="collapse?.toggleAll(false)">{{ $t('quan-bu-shou-qi') }}</wd-button>
+          <wd-button custom-class="custom-button" type="warning" @click="collapse?.toggleAll({ skipDisabled: true })">
+            {{ $t('quan-bu-qie-huan-tiao-guo-jin-yong') }}
+          </wd-button>
+          <wd-button custom-class="custom-button" type="danger" @click="collapse?.toggleAll({ expanded: true, skipDisabled: true })">
+            {{ $t('quan-bu-xuan-zhong-tiao-guo-jin-yong') }}
+          </wd-button>
+        </demo-group-item>
+        <demo-group-item :title="$t('ji-chu-yong-fa')" no-padding>
+          <wd-collapse ref="collapse" v-model="value1" @change="handleChange1">
+            <wd-collapse-item
+              v-for="(item, index) in itemList"
+              :key="index"
+              :title="item.title"
+              :name="item.name"
+              :disabled="item.disabled"
+              :before-expend="index === 2 ? beforeExpend : undefined"
+            >
+              {{ item.body }}
+            </wd-collapse-item>
+          </wd-collapse>
+        </demo-group-item>
+      </demo-group>
 
-      <demo-block :title="$t('zi-ding-yi-title')" transparent>
-        <wd-collapse v-model="value7">
-          <wd-collapse-item name="item1">
-            <template #title="{ expanded }">
-              <view class="header">
-                <text style="color: red">{{ $t('tong-guo-slot-zi-ding-yi-biao-ti') }}</text>
-                <text>{{ expanded ? '我展开了' : '我已收起' }}</text>
-              </view>
-            </template>
-            {{ desc7 }}
-          </wd-collapse-item>
-          <wd-collapse-item name="item2" disabled>
-            <template #title="{ expanded, disabled }">
-              <view class="header">
-                <text v-if="disabled">{{ $t('bei-jin-yong') }}</text>
-                <text style="color: red" v-else>{{ $t('tong-guo-slot-zi-ding-yi-title') }}</text>
-                <text>{{ expanded ? '我展开了' : '我已收起' }}</text>
-              </view>
-            </template>
-            {{ desc7 }}
-          </wd-collapse-item>
-        </wd-collapse>
-      </demo-block>
+      <demo-group title="组件状态">
+        <demo-group-item :title="$t('jinYong')" no-padding>
+          <wd-collapse v-model="value3" @change="handleChange3">
+            <wd-collapse-item :title="$t('biao-qian-1-0')" name="item1">
+              {{
+                $t(
+                  'zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-0'
+                )
+              }}
+            </wd-collapse-item>
+            <wd-collapse-item :title="$t('biao-qian-2-0')" name="item2" disabled>
+              {{ $t('zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-1') }}
+            </wd-collapse-item>
+            <wd-collapse-item :title="$t('biao-qian-3-0')" name="item3">{{ $t('zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-2') }}</wd-collapse-item>
+          </wd-collapse>
+        </demo-group-item>
+      </demo-group>
 
-      <demo-block :title="$t('shou-feng-qin')" transparent>
-        <wd-collapse v-model="value2" :accordion="accordion" @change="handleChange2">
-          <wd-collapse-item :title="$t('biao-qian-1')" name="item1">{{ $t('zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi') }}</wd-collapse-item>
-          <wd-collapse-item :title="$t('biao-qian-2')" name="item2">
+      <demo-group title="组件变体">
+        <demo-group-item :title="$t('shou-feng-qin')" no-padding>
+          <wd-collapse v-model="value2" :accordion="accordion" @change="handleChange2">
+            <wd-collapse-item :title="$t('biao-qian-1')" name="item1">{{ $t('zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi') }}</wd-collapse-item>
+            <wd-collapse-item :title="$t('biao-qian-2')" name="item2">
+              {{
+                $t(
+                  'zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi'
+                )
+              }}
+            </wd-collapse-item>
+            <wd-collapse-item :title="$t('biao-qian-3')" name="item3">{{ $t('zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-0') }}</wd-collapse-item>
+          </wd-collapse>
+        </demo-group-item>
+
+        <demo-group-item :title="$t('cha-kan-geng-duo')" no-padding>
+          <wd-collapse viewmore v-model="value4" @change="handleChange4">
             {{
               $t(
-                'zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi'
+                'zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-1'
               )
             }}
-          </wd-collapse-item>
-          <wd-collapse-item :title="$t('biao-qian-3')" name="item3">{{ $t('zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-0') }}</wd-collapse-item>
-        </wd-collapse>
-      </demo-block>
-      <demo-block :title="$t('jinYong')" transparent>
-        <wd-collapse v-model="value3" @change="handleChange3">
-          <wd-collapse-item :title="$t('biao-qian-1-0')" name="item1">
+          </wd-collapse>
+        </demo-group-item>
+      </demo-group>
+
+      <demo-group title="组件样式">
+        <demo-group-item :title="$t('zi-ding-yi-title')" no-padding>
+          <wd-collapse v-model="value7">
+            <wd-collapse-item name="item1">
+              <template #title="{ expanded }">
+                <view class="header">
+                  <text style="color: red">{{ $t('tong-guo-slot-zi-ding-yi-biao-ti') }}</text>
+                  <text>{{ expanded ? '我展开了' : '我已收起' }}</text>
+                </view>
+              </template>
+              {{ desc7 }}
+            </wd-collapse-item>
+            <wd-collapse-item name="item2" disabled>
+              <template #title="{ expanded, disabled }">
+                <view class="header">
+                  <text v-if="disabled">{{ $t('bei-jin-yong') }}</text>
+                  <text style="color: red" v-else>{{ $t('tong-guo-slot-zi-ding-yi-title') }}</text>
+                  <text>{{ expanded ? '我展开了' : '我已收起' }}</text>
+                </view>
+              </template>
+              {{ desc7 }}
+            </wd-collapse-item>
+          </wd-collapse>
+        </demo-group-item>
+
+        <demo-group-item :title="$t('cha-kan-geng-duo-hang-shu-xian-shi-she-zhi')">
+          <wd-collapse viewmore v-model="value5" :line-num="3" @change="handleChange5">
             {{
               $t(
-                'zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-0'
+                'hang-shu-xian-shi-she-zhi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi'
               )
             }}
-          </wd-collapse-item>
-          <wd-collapse-item :title="$t('biao-qian-2-0')" name="item2" disabled>
-            {{ $t('zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-1') }}
-          </wd-collapse-item>
-          <wd-collapse-item :title="$t('biao-qian-3-0')" name="item3">{{ $t('zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-2') }}</wd-collapse-item>
-        </wd-collapse>
-      </demo-block>
+          </wd-collapse>
+        </demo-group-item>
 
-      <demo-block :title="$t('qian-tao')" transparent>
-        <wd-collapse v-model="collapseRoot" @change="handleChange1">
-          <wd-collapse-item
-            custom-body-style="padding:0 0 0 14px"
-            v-for="item in 5"
-            :key="item"
-            :title="$t('biao-qian-item') + item"
-            :name="`${item}`"
-          >
-            <wd-collapse v-model="collapseList[item - 1]">
-              <wd-collapse-item
-                :custom-class="index === 0 ? 'no-border' : ''"
-                v-for="(item, index) in itemList"
-                :key="index"
-                :title="item.title"
-                :name="item.name"
-              >
-                {{ item.body }}
-              </wd-collapse-item>
-            </wd-collapse>
-          </wd-collapse-item>
-        </wd-collapse>
-      </demo-block>
+        <demo-group-item :title="$t('cha-kan-geng-duo-ju-ming-cha-cao')" no-padding>
+          <wd-collapse viewmore v-model="value6" use-more-slot custom-more-slot-class="more-slot" @change="handleChange6">
+            {{
+              $t(
+                'ju-ming-cha-cao-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi'
+              )
+            }}
+            <template #more>
+              <view>{{ $t('xian-shi-quan-bu') }}</view>
+            </template>
+          </wd-collapse>
+        </demo-group-item>
+      </demo-group>
 
-      <demo-block :title="$t('cha-kan-geng-duo')" transparent>
-        <wd-collapse viewmore v-model="value4" @change="handleChange4">
-          {{
-            $t(
-              'zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-1'
-            )
-          }}
-        </wd-collapse>
-      </demo-block>
-      <demo-block :title="$t('cha-kan-geng-duo-hang-shu-xian-shi-she-zhi')" transparent>
-        <wd-collapse viewmore v-model="value5" @change="handleChange5" :line-num="3">
-          {{
-            $t(
-              'hang-shu-xian-shi-she-zhi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi'
-            )
-          }}
-        </wd-collapse>
-      </demo-block>
-      <demo-block :title="$t('cha-kan-geng-duo-ju-ming-cha-cao')" transparent>
-        <wd-collapse viewmore v-model="value6" @change="handleChange6" use-more-slot custom-more-slot-class="more-slot">
-          {{
-            $t(
-              'ju-ming-cha-cao-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi'
-            )
-          }}
-          <template #more>
-            <view>{{ $t('xian-shi-quan-bu') }}</view>
-          </template>
-        </wd-collapse>
-      </demo-block>
-    </page-wraper>
-  </view>
+      <demo-group title="特殊样式">
+        <demo-group-item :title="$t('qian-tao')" no-padding>
+          <wd-collapse v-model="collapseRoot" @change="handleChange1">
+            <wd-collapse-item
+              v-for="item in 5"
+              :key="item"
+              custom-body-style="padding:0 0 0 14px"
+              :title="$t('biao-qian-item') + item"
+              :name="`${item}`"
+            >
+              <wd-collapse v-model="collapseList[item - 1]">
+                <wd-collapse-item
+                  v-for="(item, index) in itemList"
+                  :key="index"
+                  :custom-class="index === 0 ? 'no-border' : ''"
+                  :title="item.title"
+                  :name="item.name"
+                >
+                  {{ item.body }}
+                </wd-collapse-item>
+              </wd-collapse>
+            </wd-collapse-item>
+          </wd-collapse>
+        </demo-group-item>
+      </demo-group>
+    </view>
+  </page-wraper>
 </template>
 <script lang="ts" setup>
 import { useToast } from '@/uni_modules/wot-design-uni'
@@ -216,10 +229,6 @@ function handleChange5({ value }: any) {
 function handleChange6({ value }: any) {
   console.log(value)
 }
-function handleChange7({ value }: any) {
-  console.log(value)
-}
-
 /**
  * 折叠面板展开前回调方法
  * @param e
@@ -234,17 +243,17 @@ function beforeExpend(name: string) {
     )
   }
 
-  return new Promise((reslove, reject) => {
+  return new Promise<boolean>((resolve) => {
     toast.loading(t('jia-zai-zhong-0'))
     setTimeout(() => {
       toast.close()
-      reslove(true)
+      resolve(true)
     }, 500)
   })
 }
 </script>
 <style lang="scss" scoped>
-.collapse {
+.page-collapse {
   .header {
     display: flex;
     align-items: center;

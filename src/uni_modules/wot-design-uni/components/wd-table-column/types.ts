@@ -1,5 +1,5 @@
 import type { ComponentPublicInstance, ExtractPropTypes } from 'vue'
-import { makeBooleanProp, makeNumericProp, makeRequiredProp, makeStringProp } from '../common/props'
+import { makeBooleanProp, makeNumericProp, makeRequiredProp, makeStringProp } from '../../common/props'
 
 /**
  * 列的对齐方式

@@ -7,7 +7,7 @@
  * @FilePath: /wot-design-uni/src/uni_modules/wot-design-uni/components/wd-dialog/types.ts
  * 记得注释
  */
-import { baseProps, makeStringProp, makeBooleanProp, makeNumberProp } from '../common/props'
+import { baseProps, makeStringProp, makeBooleanProp, makeNumberProp } from '../../common/props'
 import type { ButtonProps } from '../wd-button/types'
 import { type IconProps } from '../wd-icon/types'
 import { type InputType, type InputProps } from '../wd-input/types'
@@ -251,15 +251,13 @@ export type DialogOptions = {
   showClose?: boolean
 
   /**
-   * 确认前钩子，支持返回 Promise 阻断关闭
-   * 类型: (options: DialogBeforeConfirmOption) => Promise<boolean> | boolean | void
+   * 确认前钩子，接收当前输入值，返回 false 可阻止确认，支持 Promise<boolean>
+   * 类型: DialogBeforeConfirm
    */
-  beforeConfirm?: (options: DialogBeforeConfirmOption) => Promise<boolean> | boolean | void
+  beforeConfirm?: DialogBeforeConfirm
 }
 
-export type DialogBeforeConfirmOption = {
-  resolve: (isPass: boolean) => void
-}
+export type DialogBeforeConfirm = (value: string | number) => boolean | Promise<boolean>
 
 export type DialogOptionsWithCallBack = DialogOptions & {
   show?: boolean

@@ -9,7 +9,7 @@ import WdTag from '@/uni_modules/wot-design-uni/components/wd-tag/wd-tag.vue'
 import { describe, expect, test, vi } from 'vitest'
 import { nextTick } from 'vue'
 import { type CalendarFormatter } from '@/uni_modules/wot-design-uni/components/wd-calendar-view/types'
-import { pause } from '@/uni_modules/wot-design-uni/components/common/util'
+import { pause } from '@/uni_modules/wot-design-uni/common/util'
 import WdTabs from '@/uni_modules/wot-design-uni/components/wd-tabs/wd-tabs.vue'
 import WdTab from '@/uni_modules/wot-design-uni/components/wd-tab/wd-tab.vue'
 
@@ -382,12 +382,7 @@ describe('WdCalendar', () => {
   })
 
   test('beforeConfirm 回调', async () => {
-    const beforeConfirm = vi.fn().mockImplementation((params: { value: any; resolve: (result: boolean) => void }) => {
-      // 模拟异步验证
-      setTimeout(() => {
-        params.resolve(true)
-      }, 0)
-    })
+    const beforeConfirm = vi.fn().mockReturnValue(true)
 
     const wrapper = mount(WdCalendar, {
       props: {
@@ -413,20 +408,50 @@ describe('WdCalendar', () => {
     wrapper.vm.open()
     await nextTick()
 
-    // 点击确认按钮
-    await wrapper.findComponent(WdButton).trigger('click')
+    // 直接触发确认逻辑
+    await (wrapper.vm as any).handleConfirm()
 
     // 验证 beforeConfirm 被调用
     expect(beforeConfirm).toHaveBeenCalled()
-    expect(beforeConfirm.mock.calls[0][0]).toHaveProperty('value')
-    expect(beforeConfirm.mock.calls[0][0]).toHaveProperty('resolve')
-
-    // 等待异步操作完成
-    await new Promise((resolve) => setTimeout(resolve, 10))
+    expect(beforeConfirm.mock.calls[0]).toHaveLength(1)
+    const firstArg = beforeConfirm.mock.calls[0][0]
+    expect(typeof firstArg === 'object' && firstArg !== null && 'resolve' in firstArg).toBe(false)
 
     // 验证事件被触发
     expect(wrapper.emitted('update:modelValue')).toBeTruthy()
     expect(wrapper.emitted('confirm')).toBeTruthy()
+  })
+
+  test('beforeConfirm 返回 false 时阻止确认', async () => {
+    const beforeConfirm = vi.fn().mockReturnValue(false)
+
+    const wrapper = mount(WdCalendar, {
+      props: {
+        modelValue: Date.now(),
+        beforeConfirm
+      },
+      global: {
+        components: {
+          WdActionSheet,
+          WdCalendarView,
+          WdButton,
+          WdIcon,
+          WdTag,
+          WdTabs,
+          WdTab
+        }
+      }
+    })
+
+    await nextTick()
+    wrapper.vm.open()
+    await nextTick()
+    await (wrapper.vm as any).handleConfirm()
+
+    expect(beforeConfirm).toHaveBeenCalled()
+    const emitted = wrapper.emitted() as Record<string, any[]> | undefined
+    expect(emitted?.['update:modelValue']).toBeFalsy()
+    expect(emitted?.['confirm']).toBeFalsy()
   })
 
   test('日历视图变化事件', async () => {

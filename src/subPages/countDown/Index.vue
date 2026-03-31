@@ -1,38 +1,48 @@
 <template>
   <page-wraper>
-    <demo-block :title="$t('jiBenYongFa')">
-      <wd-count-down :time="time" />
-    </demo-block>
+    <view class="page-count-down">
+      <demo-group title="组件类型">
+        <demo-group-item :title="$t('jiBenYongFa')">
+          <wd-count-down :time="time" />
+        </demo-group-item>
+      </demo-group>
 
-    <demo-block :title="$t('zi-ding-yi-ge-shi')">
-      <wd-count-down :time="time" format="DD 天 HH 时 mm 分 ss 秒" />
-    </demo-block>
+      <demo-group title="组件变体">
+        <demo-group-item :title="$t('zi-ding-yi-ge-shi')">
+          <wd-count-down :time="time" format="DD 天 HH 时 mm 分 ss 秒" />
+        </demo-group-item>
 
-    <demo-block :title="$t('hao-miao-ji-xuan-ran')">
-      <wd-count-down :time="time" millisecond format="HH:mm:ss:SS" />
-    </demo-block>
+        <demo-group-item :title="$t('hao-miao-ji-xuan-ran')">
+          <wd-count-down :time="time" millisecond format="HH:mm:ss:SS" />
+        </demo-group-item>
+      </demo-group>
 
-    <demo-block :title="$t('ziDingYiYangShi')">
-      <wd-count-down :time="time">
-        <template #default="{ current }">
-          <span class="custom-count-down">{{ current.hours }}</span>
-          <span class="custom-count-down-colon">:</span>
-          <span class="custom-count-down">{{ current.minutes }}</span>
-          <span class="custom-count-down-colon">:</span>
-          <span class="custom-count-down">{{ current.seconds }}</span>
-        </template>
-      </wd-count-down>
-    </demo-block>
+      <demo-group title="组件样式">
+        <demo-group-item :title="$t('ziDingYiYangShi')">
+          <wd-count-down :time="time">
+            <template #default="{ current }">
+              <span class="custom-count-down">{{ current.hours }}</span>
+              <span class="custom-count-down-colon">:</span>
+              <span class="custom-count-down">{{ current.minutes }}</span>
+              <span class="custom-count-down-colon">:</span>
+              <span class="custom-count-down">{{ current.seconds }}</span>
+            </template>
+          </wd-count-down>
+        </demo-group-item>
+      </demo-group>
 
-    <demo-block :title="$t('shou-dong-kong-zhi')">
-      <wd-count-down ref="countDown" :time="3000" millisecond :auto-start="false" format="ss:SSS" @finish="onFinish"></wd-count-down>
-      <wd-grid clickable border>
-        <wd-grid-item :text="$t('kai-shi')" icon="play-circle" @click="start" />
-        <wd-grid-item :text="$t('zan-ting')" icon="pause-circle" @click="pause" />
-        <wd-grid-item :text="$t('zhong-zhi')" icon="refresh" @click="reset" />
-      </wd-grid>
-    </demo-block>
-    <wd-toast></wd-toast>
+      <demo-group title="特殊样式">
+        <demo-group-item :title="$t('shou-dong-kong-zhi')">
+          <wd-count-down ref="countDown" :time="3000" millisecond :auto-start="false" format="ss:SSS" @finish="onFinish"></wd-count-down>
+          <wd-grid clickable border>
+            <wd-grid-item :text="$t('kai-shi')" icon="play-circle" @click="start" />
+            <wd-grid-item :text="$t('zan-ting')" icon="pause-circle" @click="pause" />
+            <wd-grid-item :text="$t('zhong-zhi')" icon="refresh" @click="reset" />
+          </wd-grid>
+        </demo-group-item>
+      </demo-group>
+      <wd-toast />
+    </view>
   </page-wraper>
 </template>
 <script lang="ts" setup>

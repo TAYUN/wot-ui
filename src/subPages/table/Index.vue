@@ -1,140 +1,136 @@
 <template>
   <page-wraper>
-    <demo-block :title="$t('jiBenYongFa')">
-      <wd-table :data="dataList" @sort-method="handleSort" :height="400" @row-click="handleRowClick">
-        <wd-table-column prop="name" :label="$t('xing-ming')" align="center" width="50%"></wd-table-column>
-        <wd-table-column prop="grade" :label="$t('fen-shu')" align="center" width="50%"></wd-table-column>
-      </wd-table>
-    </demo-block>
+    <demo-group title="组件类型">
+      <demo-group-item :title="$t('jiBenYongFa')">
+        <wd-table :data="dataList" :height="400" @sort-method="handleSort" @row-click="handleRowClick">
+          <wd-table-column prop="name" :label="$t('xing-ming')" align="center" width="50%"></wd-table-column>
+          <wd-table-column prop="grade" :label="$t('fen-shu')" align="center" width="50%"></wd-table-column>
+        </wd-table>
+      </demo-group-item>
+      <demo-group-item :title="$t('gu-ding-lie')">
+        <wd-table :data="dataList" :height="400" @sort-method="handleSort" @row-click="handleRowClick">
+          <wd-table-column prop="name" :label="$t('xing-ming')" fixed sortable align="center"></wd-table-column>
+          <wd-table-column prop="grade" :label="$t('fen-shu')" fixed sortable align="center"></wd-table-column>
+          <wd-table-column prop="hobby" :label="$t('yi-yan-yi-bi-zhi')" sortable :width="160"></wd-table-column>
+          <wd-table-column prop="school" :label="$t('qiu-xue-zhi-suo')" :width="180"></wd-table-column>
+          <wd-table-column prop="major" :label="$t('zhuan-ye')"></wd-table-column>
+          <wd-table-column prop="gender" :label="$t('xing-bie')"></wd-table-column>
+        </wd-table>
+      </demo-group-item>
+      <demo-group-item :title="$t('xian-shi-suo-yin')">
+        <wd-table :data="dataList" :height="400" :index="{ align: 'center' }" @sort-method="handleSort">
+          <wd-table-column prop="name" :label="$t('xing-ming')" sortable align="center"></wd-table-column>
+          <wd-table-column prop="grade" :label="$t('fen-shu')" sortable align="center"></wd-table-column>
+          <wd-table-column prop="hobby" :label="$t('yi-yan-yi-bi-zhi')" sortable :width="160"></wd-table-column>
+          <wd-table-column prop="school" :label="$t('qiu-xue-zhi-suo')" :width="180"></wd-table-column>
+          <wd-table-column prop="major" :label="$t('zhuan-ye-0')"></wd-table-column>
+          <wd-table-column prop="gender" :label="$t('xing-bie')"></wd-table-column>
+        </wd-table>
+      </demo-group-item>
+      <demo-group-item :title="$t('zi-ding-yi-lie-mo-ban')">
+        <wd-table :data="dataList" :height="400" @sort-method="handleSort" @row-click="handleRowClick">
+          <wd-table-column prop="name" :label="$t('xing-ming')" fixed sortable align="center"></wd-table-column>
+          <wd-table-column prop="grade" :label="$t('fen-shu')" fixed sortable align="center">
+            <template #value="{ row }">
+              <view class="custom-class">
+                <text>{{ row.grade }}</text>
+                <text>同比{{ row.compare }}</text>
+              </view>
+            </template>
+          </wd-table-column>
+          <wd-table-column prop="hobby" :label="$t('yi-yan-yi-bi-zhi')" sortable :width="160"></wd-table-column>
+          <wd-table-column prop="school" :label="$t('qiu-xue-zhi-suo')" :width="180"></wd-table-column>
+          <wd-table-column prop="major" :label="$t('zhuan-ye-1')"></wd-table-column>
+          <wd-table-column prop="gender" :label="$t('xing-bie')"></wd-table-column>
+          <wd-table-column prop="graduation" :label="$t('xue-cheng-shi-jian')"></wd-table-column>
+        </wd-table>
+      </demo-group-item>
+      <demo-group-item :title="$t('he-bing-dan-yuan-ge')">
+        <wd-table :data="spanData" :span-method="handleSpan" :height="400">
+          <wd-table-column prop="name" :label="$t('xing-ming')" align="center"></wd-table-column>
+          <wd-table-column prop="grade" :label="$t('fen-shu')" align="center"></wd-table-column>
+          <wd-table-column prop="school" :label="$t('qiu-xue-zhi-suo')"></wd-table-column>
+          <wd-table-column prop="major" :label="$t('zhuan-ye')"></wd-table-column>
+        </wd-table>
+      </demo-group-item>
+      <demo-group-item :title="$t('he-bing-zi-ding-yi-lie')">
+        <wd-table :data="spanData" :span-method="handleCustomSpan" :height="400">
+          <wd-table-column prop="name" :label="$t('xing-ming')" fixed sortable align="center"></wd-table-column>
+          <wd-table-column prop="grade" :label="$t('fen-shu')" align="center">
+            <template #value="{ row }">
+              <view class="custom-class">
+                <text>{{ row.grade }}</text>
+                <text>同比{{ row.compare }}</text>
+              </view>
+            </template>
+          </wd-table-column>
+          <wd-table-column prop="hobby" :label="$t('yi-yan-yi-bi-zhi')" :width="160"></wd-table-column>
+          <wd-table-column prop="school" :label="$t('qiu-xue-zhi-suo')" :width="180"></wd-table-column>
+          <wd-table-column prop="major" :label="$t('zhuan-ye')"></wd-table-column>
+        </wd-table>
+      </demo-group-item>
+      <demo-group-item :title="$t('gu-ding-lie-he-bing')">
+        <wd-table :data="spanData" :span-method="handleFixedSpan" :height="400">
+          <wd-table-column prop="name" :label="$t('xing-ming')" fixed align="center"></wd-table-column>
+          <wd-table-column prop="grade" :label="$t('fen-shu')" align="center"></wd-table-column>
+          <wd-table-column prop="hobby" :label="$t('yi-yan-yi-bi-zhi')" :width="160"></wd-table-column>
+          <wd-table-column prop="school" :label="$t('qiu-xue-zhi-suo')" :width="180"></wd-table-column>
+          <wd-table-column prop="major" :label="$t('zhuan-ye')"></wd-table-column>
+          <wd-table-column prop="gender" :label="$t('xing-bie')"></wd-table-column>
+        </wd-table>
+      </demo-group-item>
+      <demo-group-item :title="$t('gu-ding-tou-he-bing')">
+        <wd-table :data="dataList" :span-method="handleHeaderSpan" :height="300">
+          <wd-table-column prop="name" :label="$t('xing-ming')" align="center"></wd-table-column>
+          <wd-table-column prop="grade" :label="$t('fen-shu')" align="center"></wd-table-column>
+          <wd-table-column prop="school" :label="$t('qiu-xue-zhi-suo')"></wd-table-column>
+          <wd-table-column prop="major" :label="$t('zhuan-ye')"></wd-table-column>
+        </wd-table>
+      </demo-group-item>
+      <demo-group-item title="虚拟滚动">
+        <wd-table :data="virtualData" :height="400" virtual :row-height="50">
+          <wd-table-column prop="index" label="序号" width="80px" align="center"></wd-table-column>
+          <wd-table-column prop="name" label="姓名" width="120px" align="center"></wd-table-column>
+          <wd-table-column prop="score" label="分数" width="100px" align="center"></wd-table-column>
+          <wd-table-column prop="remark" label="备注" width="200px"></wd-table-column>
+        </wd-table>
+      </demo-group-item>
+    </demo-group>
 
-    <demo-block :title="$t('wu-bian-kuang')">
-      <wd-table :data="dataList" @sort-method="handleSort" :height="400" :border="false" @row-click="handleRowClick">
-        <wd-table-column prop="name" :label="$t('xing-ming')" align="center" width="50%"></wd-table-column>
-        <wd-table-column prop="grade" :label="$t('fen-shu')" align="center" width="50%"></wd-table-column>
-      </wd-table>
-    </demo-block>
+    <demo-group title="组件状态">
+      <demo-group-item :title="$t('wu-bian-kuang')">
+        <wd-table :data="dataList" :height="400" :border="false" @sort-method="handleSort" @row-click="handleRowClick">
+          <wd-table-column prop="name" :label="$t('xing-ming')" align="center" width="50%"></wd-table-column>
+          <wd-table-column prop="grade" :label="$t('fen-shu')" align="center" width="50%"></wd-table-column>
+        </wd-table>
+      </demo-group-item>
+      <demo-group-item :title="$t('wu-ban-ma-wen')">
+        <wd-table :data="dataList" :height="400" :stripe="false" @sort-method="handleSort" @row-click="handleRowClick">
+          <wd-table-column prop="name" :label="$t('xing-ming')" align="center" width="50%"></wd-table-column>
+          <wd-table-column prop="grade" :label="$t('fen-shu')" align="center" width="50%"></wd-table-column>
+        </wd-table>
+      </demo-group-item>
+      <demo-group-item :title="$t('bu-zhan-shi-biao-tou')">
+        <wd-table :data="dataList" :height="400" :show-header="false" @sort-method="handleSort" @row-click="handleRowClick">
+          <wd-table-column prop="name" :label="$t('xing-ming')" align="center" width="50%"></wd-table-column>
+          <wd-table-column prop="grade" :label="$t('fen-shu')" align="center" width="50%"></wd-table-column>
+        </wd-table>
+      </demo-group-item>
+    </demo-group>
 
-    <demo-block :title="$t('wu-ban-ma-wen')">
-      <wd-table :data="dataList" @sort-method="handleSort" :height="400" :stripe="false" @row-click="handleRowClick">
-        <wd-table-column prop="name" :label="$t('xing-ming')" align="center" width="50%"></wd-table-column>
-        <wd-table-column prop="grade" :label="$t('fen-shu')" align="center" width="50%"></wd-table-column>
-      </wd-table>
-    </demo-block>
-
-    <demo-block :title="$t('bu-zhan-shi-biao-tou')">
-      <wd-table :data="dataList" @sort-method="handleSort" :height="400" :show-header="false" @row-click="handleRowClick">
-        <wd-table-column prop="name" :label="$t('xing-ming')" align="center" width="50%"></wd-table-column>
-        <wd-table-column prop="grade" :label="$t('fen-shu')" align="center" width="50%"></wd-table-column>
-      </wd-table>
-    </demo-block>
-
-    <demo-block :title="$t('gu-ding-lie')">
-      <wd-table :data="dataList" @sort-method="handleSort" @row-click="handleRowClick" :height="400">
-        <wd-table-column prop="name" :label="$t('xing-ming')" fixed sortable align="center"></wd-table-column>
-        <wd-table-column prop="grade" :label="$t('fen-shu')" fixed sortable align="center"></wd-table-column>
-        <wd-table-column prop="hobby" :label="$t('yi-yan-yi-bi-zhi')" sortable :width="160"></wd-table-column>
-        <wd-table-column prop="school" :label="$t('qiu-xue-zhi-suo')" :width="180"></wd-table-column>
-        <wd-table-column prop="major" :label="$t('zhuan-ye')"></wd-table-column>
-        <wd-table-column prop="gender" :label="$t('xing-bie')"></wd-table-column>
-      </wd-table>
-    </demo-block>
-
-    <demo-block :title="$t('xian-shi-suo-yin')">
-      <wd-table :data="dataList" :height="400" @sort-method="handleSort" :index="{ align: 'center' }">
-        <wd-table-column prop="name" :label="$t('xing-ming')" sortable align="center"></wd-table-column>
-        <wd-table-column prop="grade" :label="$t('fen-shu')" sortable align="center"></wd-table-column>
-        <wd-table-column prop="hobby" :label="$t('yi-yan-yi-bi-zhi')" sortable :width="160"></wd-table-column>
-        <wd-table-column prop="school" :label="$t('qiu-xue-zhi-suo')" :width="180"></wd-table-column>
-        <wd-table-column prop="major" :label="$t('zhuan-ye-0')"></wd-table-column>
-        <wd-table-column prop="gender" :label="$t('xing-bie')"></wd-table-column>
-      </wd-table>
-    </demo-block>
-
-    <demo-block :title="$t('zi-ding-yi-lie-mo-ban')">
-      <wd-table :data="dataList" @sort-method="handleSort" @row-click="handleRowClick" :height="400">
-        <wd-table-column prop="name" :label="$t('xing-ming')" fixed sortable align="center"></wd-table-column>
-        <wd-table-column prop="grade" :label="$t('fen-shu')" fixed sortable align="center">
-          <template #value="{ row }">
-            <view class="custom-class">
-              <text>{{ row.grade }}</text>
-              <text>{{ '同比' }}{{ row.compare }}</text>
-            </view>
-          </template>
-        </wd-table-column>
-        <wd-table-column prop="hobby" :label="$t('yi-yan-yi-bi-zhi')" sortable :width="160"></wd-table-column>
-        <wd-table-column prop="school" :label="$t('qiu-xue-zhi-suo')" :width="180"></wd-table-column>
-        <wd-table-column prop="major" :label="$t('zhuan-ye-1')"></wd-table-column>
-        <wd-table-column prop="gender" :label="$t('xing-bie')"></wd-table-column>
-        <wd-table-column prop="graduation" :label="$t('xue-cheng-shi-jian')"></wd-table-column>
-      </wd-table>
-    </demo-block>
-
-    <demo-block :title="$t('he-bing-dan-yuan-ge')">
-      <wd-table :data="spanData" :span-method="handleSpan" :height="400">
-        <wd-table-column prop="name" :label="$t('xing-ming')" align="center"></wd-table-column>
-        <wd-table-column prop="grade" :label="$t('fen-shu')" align="center"></wd-table-column>
-        <wd-table-column prop="school" :label="$t('qiu-xue-zhi-suo')"></wd-table-column>
-        <wd-table-column prop="major" :label="$t('zhuan-ye')"></wd-table-column>
-      </wd-table>
-    </demo-block>
-
-    <demo-block :title="$t('he-bing-zi-ding-yi-lie')">
-      <wd-table :data="spanData" :span-method="handleCustomSpan" :height="400">
-        <wd-table-column prop="name" :label="$t('xing-ming')" fixed sortable align="center"></wd-table-column>
-        <wd-table-column prop="grade" :label="$t('fen-shu')" align="center">
-          <template #value="{ row }">
-            <view class="custom-class">
-              <text>{{ row.grade }}</text>
-              <text>{{ '同比' }}{{ row.compare }}</text>
-            </view>
-          </template>
-        </wd-table-column>
-        <wd-table-column prop="hobby" :label="$t('yi-yan-yi-bi-zhi')" :width="160"></wd-table-column>
-        <wd-table-column prop="school" :label="$t('qiu-xue-zhi-suo')" :width="180"></wd-table-column>
-        <wd-table-column prop="major" :label="$t('zhuan-ye')"></wd-table-column>
-      </wd-table>
-    </demo-block>
-
-    <demo-block :title="$t('gu-ding-lie-he-bing')">
-      <wd-table :data="spanData" :span-method="handleFixedSpan" :height="400">
-        <wd-table-column prop="name" :label="$t('xing-ming')" fixed align="center"></wd-table-column>
-        <wd-table-column prop="grade" :label="$t('fen-shu')" align="center"></wd-table-column>
-        <wd-table-column prop="hobby" :label="$t('yi-yan-yi-bi-zhi')" :width="160"></wd-table-column>
-        <wd-table-column prop="school" :label="$t('qiu-xue-zhi-suo')" :width="180"></wd-table-column>
-        <wd-table-column prop="major" :label="$t('zhuan-ye')"></wd-table-column>
-        <wd-table-column prop="gender" :label="$t('xing-bie')"></wd-table-column>
-      </wd-table>
-    </demo-block>
-
-    <demo-block :title="$t('gu-ding-tou-he-bing')">
-      <wd-table :data="dataList" :span-method="handleHeaderSpan" :height="300">
-        <wd-table-column prop="name" :label="$t('xing-ming')" align="center"></wd-table-column>
-        <wd-table-column prop="grade" :label="$t('fen-shu')" align="center"></wd-table-column>
-        <wd-table-column prop="school" :label="$t('qiu-xue-zhi-suo')"></wd-table-column>
-        <wd-table-column prop="major" :label="$t('zhuan-ye')"></wd-table-column>
-      </wd-table>
-    </demo-block>
-
-    <demo-block :title="$t('bu-gu-ding-biao-tou-jie-he-fen-ye-qi')">
-      <wd-table :data="paginationData" :fixed-header="false">
-        <wd-table-column prop="name" :label="$t('xing-ming')" fixed align="center"></wd-table-column>
-        <wd-table-column prop="grade" :label="$t('fen-shu')" fixed align="center"></wd-table-column>
-        <wd-table-column prop="hobby" :label="$t('yi-yan-yi-bi-zhi')" :width="160"></wd-table-column>
-        <wd-table-column prop="school" :label="$t('qiu-xue-zhi-suo')" :width="180"></wd-table-column>
-        <wd-table-column prop="major" :label="$t('zhuan-ye-2')"></wd-table-column>
-        <wd-table-column prop="gender" :label="$t('xing-bie')"></wd-table-column>
-      </wd-table>
-      <wd-pagination v-model="page" :total="total"></wd-pagination>
-    </demo-block>
-
-    <demo-block title="虚拟滚动（10000行）">
-      <wd-table :data="virtualData" :height="400" virtual :row-height="50">
-        <wd-table-column prop="index" label="序号" width="80px" align="center"></wd-table-column>
-        <wd-table-column prop="name" label="姓名" width="120px" align="center"></wd-table-column>
-        <wd-table-column prop="score" label="分数" width="100px" align="center"></wd-table-column>
-        <wd-table-column prop="remark" label="备注" width="200px"></wd-table-column>
-      </wd-table>
-    </demo-block>
+    <demo-group title="特殊样式">
+      <demo-group-item :title="$t('bu-gu-ding-biao-tou-jie-he-fen-ye-qi')">
+        <wd-table :data="paginationData" :fixed-header="false">
+          <wd-table-column prop="name" :label="$t('xing-ming')" fixed align="center"></wd-table-column>
+          <wd-table-column prop="grade" :label="$t('fen-shu')" fixed align="center"></wd-table-column>
+          <wd-table-column prop="hobby" :label="$t('yi-yan-yi-bi-zhi')" :width="160"></wd-table-column>
+          <wd-table-column prop="school" :label="$t('qiu-xue-zhi-suo')" :width="180"></wd-table-column>
+          <wd-table-column prop="major" :label="$t('zhuan-ye-2')"></wd-table-column>
+          <wd-table-column prop="gender" :label="$t('xing-bie')"></wd-table-column>
+        </wd-table>
+        <wd-pagination v-model="page" :total="total"></wd-pagination>
+      </demo-group-item>
+    </demo-group>
   </page-wraper>
 </template>
 <script lang="ts" setup>

@@ -13,7 +13,7 @@ a {
 
 a,
 a:active {
-  color: #34495e;
+  color: var(--vp-c-text-2);
 }
 
 
@@ -24,12 +24,12 @@ a:active {
   margin-right: 20px;
   margin-bottom: 20px;
   border-radius: 4px;
-  color: #fff;
+  color: var(--vp-c-white);
 }
 
 .style-block p {
   margin: 0;
-  color: #fff;
+  color: var(--vp-c-white);
 }
 
 .a-dot,
@@ -38,10 +38,10 @@ a:active {
   border-radius: 50%;
   width: 12px;
   height: 12px;
-  background: #668df8;
+  background: var(--vp-c-brand-1);
   z-index: 10;
-  border: 2px solid #fff;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .09);
+  border: 2px solid var(--vp-c-white);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
 }
 
 .a-dot {
@@ -52,7 +52,7 @@ a:active {
 .a-dot:before {
   content: "A";
   display: inline-block;
-  color: rgba(0, 0, 0, .85);
+  color: var(--vp-c-text-1);
   font-size: 17px;
   -webkit-transform: translate(14px, -22px);
   transform: translate(14px, -22px);
@@ -66,7 +66,7 @@ a:active {
 .b-dot:before {
   content: "B";
   display: inline-block;
-  color: rgba(0, 0, 0, .85);
+  color: var(--vp-c-text-1);
   font-size: 17px;
   -webkit-transform: translate(14px, -22px);
   transform: translate(14px, -22px);
@@ -85,7 +85,7 @@ a:active {
   height: 250px;
   right: 79px;
   top: 50%;
-  background-color: #fff;
+  background-color: var(--vp-c-white);
   -webkit-transform: translateY(-50%) rotate(-45deg);
   transform: translateY(-50%) rotate(-45deg);
 }
@@ -102,7 +102,7 @@ a:active {
   display: inline-block;
   text-align: center;
   height: 20px;
-  color: #fff;
+  color: var(--vp-c-white);
   font-size: 14px;
   margin-left: 5px;
 }
@@ -141,8 +141,8 @@ a:active {
 }
 
 .color-group.dark {
-  background: #262626;
-  border: 3px solid #262626;
+  background: var(--vp-c-bg-alt);
+  border: 3px solid var(--vp-c-bg-alt);
   border-radius: 4px;
 }
 
@@ -160,4 +160,47 @@ a:active {
 
 .color-group li div {
   font-weight: 500;
+}
+
+.VPSidebar {
+  overflow: hidden !important;
+}
+
+.VPSidebar:hover {
+  overflow-y: auto !important;
+}
+
+* {
+  scrollbar-color: var(--el-scrollbar-bg-color) var(--el-fill-color-light);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar:horizontal {
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  transition: all 0.2s ease-in-out;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.45);
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.22);
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.38);
 }

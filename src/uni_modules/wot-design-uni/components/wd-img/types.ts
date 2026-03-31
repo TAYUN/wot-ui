@@ -1,5 +1,5 @@
 import { type ExtractPropTypes } from 'vue'
-import { baseProps, makeBooleanProp, makeStringProp, numericProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeStringProp, numericProp } from '../../common/props'
 export type ImageMode =
   | 'scaleToFill'
   | 'aspectFit'

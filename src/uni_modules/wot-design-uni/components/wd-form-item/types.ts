@@ -1,5 +1,5 @@
 import type { ExtractPropTypes, InjectionKey, PropType } from 'vue'
-import { baseProps, makeBooleanProp, makeStringProp, numericProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeStringProp, numericProp } from '../../common/props'
 import { type CellValueAlign, type CellAsteriskPosition, type CellLayout, type CellSize } from '../wd-cell/types'
 import type { FormValidateEvent, FormValidateTrigger } from '../wd-form/types'
 

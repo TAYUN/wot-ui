@@ -14,8 +14,12 @@ type ZodLikeSafeParseResult = {
   }
 }
 
+type ZodLikeParseContext = {
+  jitless?: boolean
+}
+
 type ZodLikeSchema = {
-  safeParse: (model: Record<string, any>) => ZodLikeSafeParseResult
+  safeParse: (model: Record<string, any>, context?: ZodLikeParseContext) => ZodLikeSafeParseResult
 }
 
 type ZodAdapterOptions = {
@@ -35,7 +39,14 @@ function normalizeIssues(result: ZodLikeSafeParseResult): FormSchemaIssue[] {
 export function zodAdapter(schema: ZodLikeSchema, options: ZodAdapterOptions = {}): FormSchema {
   const formSchema: FormSchema = {
     validate(model) {
-      return normalizeIssues(schema.safeParse(model))
+      return normalizeIssues(
+        schema.safeParse(
+          model,
+          // #ifndef H5
+          { jitless: true }
+          // #endif
+        )
+      )
     }
   }
   if (options.isRequired) {

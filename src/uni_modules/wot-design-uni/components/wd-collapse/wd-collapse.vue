@@ -46,9 +46,9 @@ export default {
 import wdIcon from '../wd-icon/wd-icon.vue'
 import { onBeforeMount, ref, watch } from 'vue'
 import { COLLAPSE_KEY, collapseProps, type CollapseExpose, type CollapseToggleAllOptions } from './types'
-import { useChildren } from '../composables/useChildren'
-import { isArray, isBoolean, isDef } from '../common/util'
-import { useTranslate } from '../composables/useTranslate'
+import { useChildren } from '../../composables/useChildren'
+import { isArray, isBoolean, isDef } from '../../common/util'
+import { useTranslate } from '../../composables/useTranslate'
 
 const props = defineProps(collapseProps)
 const emit = defineEmits<{

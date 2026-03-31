@@ -73,11 +73,11 @@ export default {
 </script>
 <script lang="ts" setup>
 import { computed, getCurrentInstance, onBeforeMount, onMounted, reactive, ref, watch, type CSSProperties } from 'vue'
-import { addUnit, getRect, getSystemInfo, isDef, objToStyle, uuid } from '../common/util'
+import { addUnit, getRect, getSystemInfo, isDef, objToStyle, uuid } from '../../common/util'
 import { signatureProps, type SignatureExpose, type SignatureResult, type Point, type Line } from './types'
-import { useTranslate } from '../composables/useTranslate'
+import { useTranslate } from '../../composables/useTranslate'
 // #ifdef MP-WEIXIN
-import { canvas2dAdapter } from '../common/canvasHelper'
+import { canvas2dAdapter } from '../../common/canvasHelper'
 // #endif
 
 const props = defineProps(signatureProps)

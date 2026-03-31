@@ -203,7 +203,7 @@ First, check if the usage is correct. The `uni-app` platform doesn't support glo
 The functional calls of `Message` and `Toast` are implemented based on `provide/inject`, so your calls must be made within `setup`.
 
 ## Why are multiple messageBoxes popping up?
-Check if the page with multiple `messageBox` popups has multiple `<wd-message-box></wd-message-box>` tags with the same `selector` or no `selector` (including components used in the current page). The same applies to `toast`. When using components like `messageBox` in child components, you need to specify a `selector` and ensure the `selector` is unique.
+Check if the page with multiple `messageBox` popups has multiple `<wd-dialog></wd-dialog>` tags with the same `selector` or no `selector` (including components used in the current page). The same applies to `toast`. When using components like `messageBox` in child components, you need to specify a `selector` and ensure the `selector` is unique.
 
 ## How to call Toast, Message, Loading globally?
 

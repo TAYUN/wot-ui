@@ -32,8 +32,8 @@ export default {
 import wdText from '../wd-text/wd-text.vue'
 import { computed, watch, onMounted } from 'vue'
 import { countToProps, type CountToExpose } from './types'
-import { easingFn, isNumber } from '../common/util'
-import { useCountDown } from '../composables/useCountDown'
+import { easingFn, isNumber } from '../../common/util'
+import { useCountDown } from '../../composables/useCountDown'
 
 const props = defineProps(countToProps)
 const emit = defineEmits(['mounted', 'finish'])

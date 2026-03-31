@@ -1,5 +1,5 @@
-@use '../styles/mixin/mixin' as *;
-@use '../styles/variable.scss' as *;
+@use '../../styles/mixin/mixin' as *;
+@use '../../styles/variable.scss' as *;
 
 // 默认文字颜色
 $divider-color-default: var(--wot-divider-color-default, $text-auxiliary) !default;
@@ -10,13 +10,13 @@ $divider-padding: var(--wot-divider-padding, $padding-zero $padding-extra-loose)
 // 组件垂直外边距
 $divider-margin: var(--wot-divider-margin, $spacing-extra-loose $spacing-zero) !default;
 // 分割线厚度
-$divider-line-height: var(--wot-divider-line-height, $n3) !default;
+$divider-line-height: var(--wot-divider-line-height, $n-3) !default;
 // 内容文字行高
 $divider-size-line-height: var(--wot-divider-size-line-height, $typography-body-line--height-size-main) !default;
 // 纵向分割线高度
 $divider-size-vertical-height: var(--wot-divider-size-vertical-height, $spacing-extra-loose) !default;
 // 纵向分割线宽度
-$divider-size-vertical-line-width: var(--wot-divider-size-vertical-line-width,  $n3) !default;
+$divider-size-vertical-line-width: var(--wot-divider-size-vertical-line-width,  $n-3) !default;
 // 左对齐模式左侧线段宽度
 $divider-size-content-left-width: var(--wot-divider-size-content-left-width, 10%) !default;
 // 右对齐模式右侧线段宽度

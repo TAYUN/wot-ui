@@ -1,5 +1,5 @@
 import type { ExtractPropTypes } from 'vue'
-import { baseProps, makeBooleanProp, makeNumberProp, makeNumericProp, makeStringProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeNumberProp, makeNumericProp, makeStringProp } from '../../common/props'
 import type { InputClearTrigger, InputMode } from '../wd-input/types'
 
 export type ConfirmType = 'send' | 'search' | 'next' | 'go' | 'done'

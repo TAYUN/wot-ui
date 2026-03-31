@@ -46,9 +46,9 @@ export default {
 <script lang="ts" setup>
 import wdIcon from '../wd-icon/wd-icon.vue'
 import { type CSSProperties, computed, getCurrentInstance, nextTick, onMounted, ref, watch } from 'vue'
-import { getRect, addUnit, isDef, objToStyle } from '../common/util'
+import { getRect, addUnit, isDef, objToStyle } from '../../common/util'
 import { navbarProps } from './types'
-import { useDeviceInfo } from '../composables/useDeviceInfo'
+import { useDeviceInfo } from '../../composables/useDeviceInfo'
 
 const props = defineProps(navbarProps)
 const emit = defineEmits(['click-left', 'click-right'])

@@ -46,9 +46,9 @@ export default {
 import { ref, computed, onMounted, onBeforeUnmount, getCurrentInstance, type CSSProperties } from 'vue'
 import wdIcon from '../wd-icon/wd-icon.vue'
 import { slideVerifyProps, type SlideVerifyEmits, type SlideVerifyExpose } from './types'
-import { useTouch } from '../composables/useTouch'
-import { useTranslate } from '../composables/useTranslate'
-import { objToStyle, isDef, getRect, uuid } from '../common/util'
+import { useTouch } from '../../composables/useTouch'
+import { useTranslate } from '../../composables/useTranslate'
+import { objToStyle, isDef, getRect, uuid } from '../../common/util'
 
 const props = defineProps(slideVerifyProps)
 const emit = defineEmits<SlideVerifyEmits>()

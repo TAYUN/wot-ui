@@ -1,92 +1,123 @@
 <template>
   <page-wraper>
-    <demo-block :title="$t('jiBenYongFa')" transparent>
-      <wd-input
-        type="text"
-        @input="handleInput"
-        v-model="value"
-        :placeholder="$t('qing-shu-ru-wai-bi-ba-bu')"
-        @change="handleChange"
-        @blur="handleBlur"
-      />
-    </demo-block>
-    <demo-block :title="$t('jin-yong-zhuang-tai')" transparent>
-      <wd-input type="text" @input="handleInput" v-model="value1" disabled />
-    </demo-block>
-    <demo-block :title="$t('zhi-du-zhuang-tai')" transparent>
-      <wd-input type="text" @input="handleInput" v-model="value2" readonly />
-    </demo-block>
-    <demo-block :title="$t('cuo-wu-zhuang-tai-0')" transparent>
-      <wd-input type="text" @input="handleInput" v-model="value3" :placeholder="$t('qing-shu-ru-wai-bi-ba-bu')" error />
-    </demo-block>
-    <demo-block :title="$t('qing-kong-an-niu')" transparent>
-      <wd-input type="text" @input="handleInput" v-model="value4" clearable @change="handleChange1" />
-    </demo-block>
-    <demo-block :title="$t('you-zhi-qie-ju-jiao-shi-zhan-shi-qing-kong-an-niu')" transparent>
-      <wd-input type="text" clear-trigger="focus" @input="handleInput" v-model="value20" clearable @change="handleChange1" />
-    </demo-block>
-    <demo-block :title="$t('dian-ji-qing-chu-an-niu-shi-bu-zi-dong-ju-jiao')" transparent>
-      <wd-input type="text" :focus-when-clear="false" @input="handleInput" v-model="value21" clearable @change="handleChange1" />
-    </demo-block>
-    <demo-block :title="$t('mi-ma-kuang')" transparent>
-      <wd-input type="text" @input="handleInput" v-model="value5" clearable show-password @change="handleChange2" />
-    </demo-block>
-    <demo-block :title="$t('shu-zi-lei-xing')" transparent>
-      <wd-input type="number" @input="handleInput" v-model="value9" />
-    </demo-block>
-    <demo-block :title="$t('she-zhi-qian-hou-icon')" transparent>
-      <wd-input type="text" v-model="value6" @input="handleInput" prefix-icon="sound" suffix-icon="send" clearable @change="handleChange3" />
-    </demo-block>
-    <demo-block :title="$t('zi-shu-xian-zhi-0')" transparent>
-      <wd-input type="text" v-model="value7" @input="handleInput" :maxlength="20" show-word-limit />
-    </demo-block>
-    <demo-block title="紧凑布局">
-      <wd-input
-        v-model="value8"
-        @input="handleInput"
-        compact
-        :placeholder="$t('qing-shu-ru-jia-ge')"
-        custom-style="display: inline-block; width: 70px; vertical-align: middle;"
-      />
-      <text class="custom-txt">{{ $t('yuan') }}</text>
-    </demo-block>
-    <demo-block title="结合表单使用" transparent>
-      <wd-form :model="formData" border title-width="98px">
-        <wd-form-item title="基本用法" prop="basic">
-          <wd-input type="text" v-model="formData.basic" @input="handleInput" placeholder="请输入" compact />
-        </wd-form-item>
-        <wd-form-item title="禁用" prop="disabled">
-          <wd-input type="text" v-model="formData.disabled" @input="handleInput" disabled placeholder="外比巴卜" compact />
-        </wd-form-item>
-        <wd-form-item title="清除/密码" prop="password">
-          <wd-input type="text" v-model="formData.password" @input="handleInput" placeholder="请输入" clearable show-password compact />
-        </wd-form-item>
-        <wd-form-item title="错误状态" prop="error">
-          <wd-input type="text" v-model="formData.error" @input="handleInput" placeholder="请输入外比巴卜" error compact />
-        </wd-form-item>
-        <wd-form-item title="必填" prop="required" required>
-          <wd-input type="text" v-model="formData.required" @input="handleInput" placeholder="请输入外比巴卜" compact />
-        </wd-form-item>
-        <wd-form-item title="字数限制" prop="limit">
-          <wd-input type="text" v-model="formData.limit" placeholder="请输入" :maxlength="20" show-word-limit clearable compact />
-        </wd-form-item>
-        <wd-form-item title="图标" prop="icon" prefix-icon="sound">
-          <wd-input type="text" v-model="formData.icon" @input="handleInput" placeholder="请输入" compact suffix-icon="send" />
-        </wd-form-item>
-        <wd-form-item title="自定义插槽" prop="slot" center>
-          <wd-input type="text" v-model="formData.slot" @input="handleInput" placeholder="请输入" clearable compact>
+    <view class="page-input">
+      <demo-group title="组件类型" transparent>
+        <demo-group-item :title="$t('ji-ben-shi-yong')" no-padding>
+          <wd-input v-model="value" type="text" :placeholder="$t('qing-shu-ru-wai-bi-ba-bu')" @input="handleEvent" @blur="handleEvent" />
+        </demo-group-item>
+        <demo-group-item :title="$t('shu-zi-lei-xing')" no-padding>
+          <wd-input v-model="value9" type="number" @input="handleEvent" />
+        </demo-group-item>
+      </demo-group>
+
+      <demo-group title="组件状态" transparent>
+        <demo-group-item :title="$t('jin-yong-zhuang-tai')" no-padding>
+          <wd-input v-model="value1" type="text" disabled @input="handleEvent" />
+        </demo-group-item>
+        <demo-group-item :title="$t('zhi-du-zhuang-tai')" no-padding>
+          <wd-input v-model="value2" type="text" readonly @input="handleEvent" />
+        </demo-group-item>
+        <demo-group-item :title="$t('cuo-wu-zhuang-tai-0')" no-padding>
+          <wd-input v-model="value3" type="text" :placeholder="$t('qing-shu-ru-wai-bi-ba-bu')" error @input="handleEvent" />
+        </demo-group-item>
+      </demo-group>
+
+      <demo-group title="组件变体" transparent>
+        <demo-group-item :title="$t('qing-kong-an-niu')" no-padding>
+          <wd-input v-model="value4" type="text" clearable @input="handleEvent" @clear="handleEvent" />
+        </demo-group-item>
+        <demo-group-item :title="$t('you-zhi-qie-ju-jiao-shi-zhan-shi-qing-kong-an-niu')" no-padding>
+          <wd-input v-model="value20" type="text" clear-trigger="focus" clearable @input="handleEvent" @clear="handleEvent" />
+        </demo-group-item>
+        <demo-group-item :title="$t('dian-ji-qing-chu-an-niu-shi-bu-zi-dong-ju-jiao')" no-padding>
+          <wd-input v-model="value21" type="text" :focus-when-clear="false" clearable @input="handleEvent" @clear="handleEvent" />
+        </demo-group-item>
+        <demo-group-item :title="$t('mi-ma-kuang')" no-padding>
+          <wd-input v-model="value5" type="text" clearable show-password @input="handleEvent" />
+        </demo-group-item>
+      </demo-group>
+
+      <demo-group title="内容形态" transparent>
+        <demo-group-item :title="$t('she-zhi-qian-hou-icon')" no-padding>
+          <wd-input
+            v-model="value6"
+            type="text"
+            prefix-icon="sound"
+            suffix-icon="send"
+            clearable
+            @input="handleEvent"
+            @clickprefixicon="handleEvent"
+            @clicksuffixicon="handleEvent"
+          />
+        </demo-group-item>
+        <demo-group-item title="后缀插槽" no-padding>
+          <wd-input v-model="slotValue" type="text" :placeholder="$t('qing-shu-ru-wai-bi-ba-bu')" clearable @input="handleEvent">
             <template #suffix>
               <wd-button size="small" custom-class="button">{{ $t('huo-qu-yan-zheng-ma') }}</wd-button>
             </template>
           </wd-input>
-        </wd-form-item>
-      </wd-form>
-    </demo-block>
+        </demo-group-item>
+      </demo-group>
+
+      <demo-group title="组件样式" transparent>
+        <demo-group-item :title="$t('zi-shu-xian-zhi-0')" no-padding>
+          <wd-input v-model="value7" type="text" :maxlength="20" show-word-limit @input="handleEvent" />
+        </demo-group-item>
+        <demo-group-item title="紧凑布局">
+          <view class="compact-row">
+            <wd-input
+              v-model="value8"
+              compact
+              :placeholder="$t('qing-shu-ru-jia-ge')"
+              custom-style="display: inline-block; width: 70px; vertical-align: middle;"
+              @input="handleEvent"
+            />
+            <text class="custom-txt">{{ $t('yuan') }}</text>
+          </view>
+        </demo-group-item>
+      </demo-group>
+
+      <demo-group title="特殊用法" transparent>
+        <demo-group-item title="结合表单使用" transparent no-padding>
+          <wd-form :model="formData" border title-width="98px">
+            <wd-form-item title="基本用法" prop="basic">
+              <wd-input v-model="formData.basic" type="text" placeholder="请输入" compact @input="handleEvent" />
+            </wd-form-item>
+            <wd-form-item title="禁用" prop="disabled">
+              <wd-input v-model="formData.disabled" type="text" disabled placeholder="外比巴卜" compact @input="handleEvent" />
+            </wd-form-item>
+            <wd-form-item title="清除/密码" prop="password">
+              <wd-input v-model="formData.password" type="text" placeholder="请输入" clearable show-password compact @input="handleEvent" />
+            </wd-form-item>
+            <wd-form-item title="错误状态" prop="error">
+              <wd-input v-model="formData.error" type="text" placeholder="请输入外比巴卜" error compact @input="handleEvent" />
+            </wd-form-item>
+            <wd-form-item title="必填" prop="required" required>
+              <wd-input v-model="formData.required" type="text" placeholder="请输入外比巴卜" compact @input="handleEvent" />
+            </wd-form-item>
+            <wd-form-item title="字数限制" prop="limit">
+              <wd-input v-model="formData.limit" type="text" placeholder="请输入" :maxlength="20" show-word-limit clearable compact />
+            </wd-form-item>
+            <wd-form-item title="图标" prop="icon" prefix-icon="sound">
+              <wd-input v-model="formData.icon" type="text" placeholder="请输入" compact suffix-icon="send" @input="handleEvent" />
+            </wd-form-item>
+            <wd-form-item title="自定义插槽" prop="slot" center>
+              <wd-input v-model="formData.slot" type="text" placeholder="请输入" clearable compact @input="handleEvent">
+                <template #suffix>
+                  <wd-button size="small" custom-class="button">{{ $t('huo-qu-yan-zheng-ma') }}</wd-button>
+                </template>
+              </wd-input>
+            </wd-form-item>
+          </wd-form>
+        </demo-group-item>
+      </demo-group>
+    </view>
   </page-wraper>
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+
 const { t } = useI18n()
 
 const value = ref<string>('')
@@ -99,10 +130,10 @@ const value6 = ref<string>('')
 const value7 = ref<string>('1234')
 const value8 = ref<string>('')
 const value9 = ref<number | ''>('')
+const slotValue = ref<string>('')
 const value20 = ref<string>('')
 const value21 = ref<string>('')
 
-// 表单数据
 const formData = ref({
   basic: '',
   disabled: t('gai-shu-ru-kuang-jin-yong'),
@@ -114,49 +145,32 @@ const formData = ref({
   slot: ''
 })
 
-function handleChange(event: any) {
-  console.log(event)
-}
-function handleChange1(event: any) {
-  console.log(event)
-}
-function handleChange2(event: any) {
-  console.log(event)
-}
-function handleChange3(event: any) {
-  console.log(event)
-}
-function handleBlur(event: any) {
-  console.log('失焦', event)
-}
-
-function handleInput(event: any) {
+function handleEvent(event: any) {
   console.log(event)
 }
 </script>
 <style lang="scss" scoped>
+.page-input {
+  :deep(.demo-group-item__content) {
+    overflow: hidden;
+  }
+}
+
+.compact-row {
+  display: flex;
+  align-items: center;
+}
+
 .wot-theme-dark {
   .custom-txt {
     color: $-dark-color;
   }
 }
 .custom-txt {
-  display: inline-block;
-  vertical-align: middle;
-  font-size: 14px;
-  line-height: 24px;
-}
-.flex {
-  display: flex;
-  justify-content: space-between;
+  display: inline-flex;
   align-items: center;
-}
-.suffix-slot {
-  display: inline-block;
-  height: 37px;
-  line-height: 37px;
+  font-size: 14px;
   margin-left: 8px;
-  vertical-align: middle;
 }
 :deep(.button) {
   margin-left: 8px;

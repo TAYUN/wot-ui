@@ -32,7 +32,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { useChildren } from '../composables/useChildren'
+import { useChildren } from '../../composables/useChildren'
 import { CELL_GROUP_KEY, cellGroupProps } from './types'
 
 const props = defineProps(cellGroupProps)

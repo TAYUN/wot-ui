@@ -1,5 +1,5 @@
 import type { ComponentPublicInstance, ExtractPropTypes, PropType } from 'vue'
-import { baseProps } from '../common/props'
+import { baseProps } from '../../common/props'
 import type { RadioDirection, RadioPlacement, RadioType } from '../wd-radio/types'
 
 export type CheckboxType = RadioType

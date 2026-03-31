@@ -104,11 +104,11 @@ export default {
 <script lang="ts" setup>
 import wdDatetimePickerView from '../../wd-datetime-picker-view/wd-datetime-picker-view.vue'
 import { computed, ref, watch, onMounted, type CSSProperties } from 'vue'
-import { debounce, isArray, isEqual, isNumber, pause, padZero, addUnit, objToStyle } from '../../common/util'
+import { debounce, isArray, isEqual, isNumber, pause, padZero, addUnit, objToStyle } from '../../../common/util'
 import { compareMonth, formatMonthTitle, getMonthEndDay, getMonths, getWeekLabel } from '../utils'
 import Month from '../month/month.vue'
 import { monthPanelProps, type MonthInfo, type MonthPanelTimeType, type MonthPanelExpose } from './types'
-import { useTranslate } from '../../composables/useTranslate'
+import { useTranslate } from '../../../composables/useTranslate'
 import { type CalendarTimeFormatter } from '../types'
 const props = defineProps(monthPanelProps)
 const emit = defineEmits(['change', 'pickstart', 'pickend'])

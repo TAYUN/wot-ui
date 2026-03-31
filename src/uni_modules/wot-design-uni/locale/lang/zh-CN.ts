@@ -51,7 +51,8 @@ export default {
   cascader: {
     title: '请选择',
     placeholder: '请选择',
-    select: '请选择'
+    select: '请选择',
+    confirm: '确认'
   },
   datetimePicker: {
     start: '开始时间',

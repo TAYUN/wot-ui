@@ -8,8 +8,8 @@
  * 记得注释
  */
 import type { ComponentPublicInstance, ExtractPropTypes, PropType } from 'vue'
-import { baseProps, makeBooleanProp, makeStringProp } from '../common/props'
-import type { PlacementType, PopoverOffset } from '../composables/usePopover'
+import { baseProps, makeBooleanProp, makeStringProp } from '../../common/props'
+import type { PlacementType, PopoverOffset } from '../../composables/usePopover'
 
 export type { PlacementType, PopoverOffset }
 

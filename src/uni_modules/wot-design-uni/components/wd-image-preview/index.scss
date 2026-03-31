@@ -1,5 +1,5 @@
-@use '../styles/mixin/mixin.scss' as *;
-@use '../styles/variable.scss' as *;
+@use '../../styles/mixin/mixin.scss' as *;
+@use '../../styles/variable.scss' as *;
 
 // 预览蒙层背景色
 $image-preview-bg: var(--wot-image-preview-bg, $opac-9_75) !default;
@@ -14,7 +14,7 @@ $image-preview-index-font-weight: var(--wot-image-preview-index-font-weight, $ty
 // 页码文字行高
 $image-preview-index-line-height: var(--wot-image-preview-index-line-height, $typography-title-line--height-size-main) !default;
 // 关闭图标尺寸
-$image-preview-close-size: var(--wot-image-preview-close-size, $n24) !default;
+$image-preview-close-size: var(--wot-image-preview-close-size, $n-24) !default;
 // 关闭图标颜色
 $image-preview-close-color: var(--wot-image-preview-close-color, $icon-white) !default;
 // 关闭按钮边距

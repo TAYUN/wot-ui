@@ -1,12 +1,12 @@
-@use '../styles/mixin/mixin.scss'as *;
-@use '../styles/variable.scss'as *;
+@use '../../styles/mixin/mixin.scss'as *;
+@use '../../styles/variable.scss'as *;
 
 // 文本域内边距
 $textarea-padding: var(--wot-textarea-padding, $padding-loose $padding-loose) !default;
 // 文本域背景色
 $textarea-bg: var(--wot-textarea-bg, $filled-oppo) !default;
 // 文本域最小高度
-$textarea-inner-min-height: var(--wot-textarea-inner-min-height, $n20) !default;
+$textarea-inner-min-height: var(--wot-textarea-inner-min-height, $n-20) !default;
 // 文本域字号
 $textarea-inner-font-size: var(--wot-textarea-inner-font-size, $typography-body-size-main) !default;
 // 文本域行高
@@ -20,7 +20,7 @@ $textarea-disabled-color: var(--wot-textarea-disabled-color, $text-disabled) !de
 // 图标颜色
 $textarea-icon-color: var(--wot-textarea-icon-color, $icon-secondary) !default;
 // 图标字号
-$textarea-icon-font-size: var(--wot-textarea-icon-font-size, $n18) !default;
+$textarea-icon-font-size: var(--wot-textarea-icon-font-size, $n-18) !default;
 // 图标间距
 $textarea-icon-margin: var(--wot-textarea-icon-margin, $spacing-tight) !default;
 // 字数统计颜色

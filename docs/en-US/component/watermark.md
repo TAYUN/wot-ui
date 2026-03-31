@@ -40,7 +40,7 @@ Set opacity through `opacity` and watermark layer level through `z-index`.
 | Parameter | Description | Type | Accepted Values | Default | Version |
 |-------------|--------------------------|---------|-----------------------------------|---------|----------|
 | `content` | Display content | string | - | `''` | 0.1.16 |
-| `image` | Image address, supports network images and base64 (DingTalk Mini Program supports network images) | string | - | `''` | 0.1.16 |
+| `image` | Image address, supports network images and base64 (DingTalk Mini Program only supports network images) | string | - | `''` | 0.1.16 |
 | `imageHeight` | Image height | number | - | `100` | 0.1.16 |
 | `imageWidth` | Image width | number | - | `100` | 0.1.16 |
 | `gutterX` | X-axis spacing, unit px | number | - | `0` | 0.1.16 |
@@ -48,11 +48,12 @@ Set opacity through `opacity` and watermark layer level through `z-index`.
 | `width` | Canvas width, unit px | number | - | `100` | 0.1.16 |
 | `height` | Canvas height, unit px | number | - | `100` | 0.1.16 |
 | `fullScreen` | Whether it is a full-screen watermark | boolean | - | `true` | 0.1.16 |
-| `color` | Watermark font color | string | - | `'#8c8c8c'` | 0.1.16 |
+| `color` | Watermark font color | string | - | `'#C9CBD4'` | 0.1.16 |
 | `size` | Watermark font size, unit px | number | - | `14` | 0.1.16 |
 | `fontStyle` | Watermark font style (only supported by WeChat, Alipay and H5) | string | `normal` / `italic` / `oblique` | `'normal'` | 0.1.16 |
-| `fontWeight` | Watermark font weight (only supported by WeChat, Alipay and H5) | string | `normal` / `bold` / `bolder` | `'normal'` | 0.1.16 |
+| `fontWeight` | Watermark font weight (only supported by WeChat, Alipay and H5) | string / number | `normal` / `bold` / `bolder` / numeric value | `'normal'` | 0.1.16 |
 | `fontFamily` | Watermark font family (only supported by WeChat, Alipay and H5) | string | - | `'PingFang SC'` | 0.1.16 |
 | `rotate` | Watermark rotation angle | number | - | `-25` | 0.1.16 |
 | `zIndex` | Custom layer level | number | - | `1100` | 0.1.16 |
 | `opacity` | Custom opacity, value range 0~1 | number | - | `0.5` | 0.1.16 |
+| `layout` | Watermark layout mode | string | `grid` / `staggered` | `'grid'` | 1.6.0 |

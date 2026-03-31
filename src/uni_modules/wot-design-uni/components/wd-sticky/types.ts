@@ -1,4 +1,4 @@
-import { baseProps, makeNumberProp } from '../common/props'
+import { baseProps, makeNumberProp } from '../../common/props'
 
 export const stickyProps = {
   ...baseProps,

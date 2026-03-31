@@ -304,7 +304,7 @@ function handleConfirm({ value }) {
 
 ## Validation Before Confirmation
 
-Set the `before-confirm` function. When the user clicks the `confirm` button, the `before-confirm` function will be executed and passed `value` and `resolve` parameters. You can validate `value` and inform the component whether to confirm through the `resolve` function. `resolve` accepts 1 boolean value: `resolve(true)` means the option passes, `resolve(false)` means the option does not pass, and the popup will not close when it does not pass.
+Set the `before-confirm` function to run when the user clicks the `confirm` button. It receives the target `value`, returns `false` to prevent confirmation, and supports returning `Promise<boolean>`.
 
 ```html
 <wd-toast />
@@ -319,13 +319,12 @@ const toast = useToast()
 
 const value = ref<string>('')
 
-const beforeConfirm = ({ value, resolve }) => {
+const beforeConfirm = (value) => {
   if (value > Date.now()) {
     toast.error('No data available for this date')
-    resolve(false)
-  } else {
-    resolve(true)
+    return false
   }
+  return true
 }
 
 function handleConfirm({ value }) {
@@ -466,7 +465,7 @@ function handleConfirm({ value }) {
 | center | Whether to vertically center | boolean | - | false | - |
 | ellipsis | Whether to hide overflow | boolean | - | false | - |
 | align-right | Display picker value aligned to the right | boolean | - | false | - |
-| before-confirm | Validation function before confirmation, receives { value, resolve } parameters, continue through resolve, resolve accepts a boolean parameter | function | - | - | - |
+| before-confirm | Validation function before confirmation, receives target value, returns `false` to prevent confirmation, and supports `Promise<boolean>` | function | - | - | - |
 | close-on-click-modal | Whether to close when clicking mask | boolean | - | true | - |
 | z-index | Popup layer z-index | number | - | 15 | - |
 | safe-area-inset-bottom | Whether to set bottom safe area for popup panel (iPhone X type devices) | boolean | - | true | - |

@@ -1,11 +1,5 @@
-/*
- * wd-action-sheet types
- * --------------------
- * 组件动作面板相关的 TypeScript 类型定义与 props 元数据。
- * 只包含类型与注释，不包含运行时逻辑。请保持注释为中文以便编辑器提示友好。
- */
 import type { ExtractPropTypes } from 'vue'
-import { baseProps, makeArrayProp, makeBooleanProp, makeNumberProp, makeRequiredProp, makeStringProp } from '../common/props'
+import { baseProps, makeArrayProp, makeBooleanProp, makeNumberProp, makeStringProp } from '../../common/props'
 
 /**
  * 动作面板选项
@@ -34,6 +28,10 @@ export type Action = {
    * 是否显示加载态（优先展示 loading，而非文字）
    */
   loading?: boolean
+  /**
+   * 未尽字段
+   */
+  [key: string]: any
 }
 
 /**

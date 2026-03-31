@@ -45,9 +45,7 @@ describe('侧边栏组件', () => {
     })
 
     test('使用 beforeChange 钩子', async () => {
-      const beforeChange = vi.fn(({ resolve }: { resolve: (pass: boolean) => void }) => {
-        resolve(true)
-      })
+      const beforeChange = vi.fn((value: number | string) => value === 2)
 
       const wrapper = mount(WdSidebar, {
         props: {
@@ -60,6 +58,7 @@ describe('侧边栏组件', () => {
 
       // 验证 beforeChange 被调用
       expect(beforeChange).toHaveBeenCalled()
+      expect(beforeChange).toHaveBeenCalledWith(2)
 
       // 验证事件
       const emitted = wrapper.emitted() as Record<string, any[]>

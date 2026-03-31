@@ -1,51 +1,102 @@
 <template>
   <page-wraper>
-    <view>
-      <demo-block title="切换模式">
-        <wd-radio-group v-model="switchMode" type="button">
-          <wd-radio value="none">none</wd-radio>
-          <wd-radio value="month">month</wd-radio>
-          <wd-radio value="year-month">year-month</wd-radio>
-        </wd-radio-group>
-      </demo-block>
-      <wd-cell-group border>
-        <wd-cell :title="$t('dan-ge-ri-qi-xuan-ze')" :value="formatValue(value1, 'date')" is-link @click="show1 = true" />
+    <view class="page-calendar">
+      <demo-group title="组件类型">
+        <wd-cell-group border>
+          <wd-cell :title="$t('dan-ge-ri-qi-xuan-ze')" :value="formatValue(value1, 'date')" is-link @click="show1 = true" />
+        </wd-cell-group>
         <wd-calendar v-model="value1" v-model:visible="show1" @confirm="handleConfirm1" :switch-mode="switchMode" />
 
-        <wd-cell :title="$t('duo-ge-ri-qi-xuan-ze')" :value="formatValue(value2, 'dates')" is-link @click="show2 = true" />
+        <wd-cell-group border>
+          <wd-cell :title="$t('duo-ge-ri-qi-xuan-ze')" :value="formatValue(value2, 'dates')" is-link @click="show2 = true" />
+        </wd-cell-group>
         <wd-calendar type="dates" v-model="value2" v-model:visible="show2" @confirm="handleConfirm2" :switch-mode="switchMode" />
 
-        <wd-cell :title="$t('ri-qi-fan-wei-xuan-ze')" :value="formatValue(value3, 'daterange')" is-link @click="show3 = true" />
+        <wd-cell-group border>
+          <wd-cell :title="$t('ri-qi-fan-wei-xuan-ze')" :value="formatValue(value3, 'daterange')" is-link @click="show3 = true" />
+        </wd-cell-group>
         <wd-calendar type="daterange" v-model="value3" v-model:visible="show3" :switch-mode="switchMode" />
 
-        <wd-cell :title="$t('ri-qi-shi-jian-xuan-ze')" :value="formatValue(value4, 'datetime')" is-link @click="show4 = true" />
+        <wd-cell-group border>
+          <wd-cell :title="$t('ri-qi-shi-jian-xuan-ze')" :value="formatValue(value4, 'datetime')" is-link @click="show4 = true" />
+        </wd-cell-group>
         <wd-calendar type="datetime" v-model="value4" v-model:visible="show4" :switch-mode="switchMode" />
 
-        <wd-cell :title="$t('ri-qi-shi-jian-fan-wei-xuan-ze')" :value="formatValue(value5, 'datetimerange')" is-link @click="show5 = true" />
+        <wd-cell-group border>
+          <wd-cell :title="$t('ri-qi-shi-jian-fan-wei-xuan-ze')" :value="formatValue(value5, 'datetimerange')" is-link @click="show5 = true" />
+        </wd-cell-group>
         <wd-calendar type="datetimerange" v-model="value5" v-model:visible="show5" :switch-mode="switchMode" />
 
-        <wd-cell :title="$t('zhou-xuan-ze')" :value="formatValue(value6, 'week')" is-link @click="show6 = true" />
+        <wd-cell-group border>
+          <wd-cell :title="$t('zhou-xuan-ze')" :value="formatValue(value6, 'week')" is-link @click="show6 = true" />
+        </wd-cell-group>
         <wd-calendar type="week" v-model="value6" v-model:visible="show6" :switch-mode="switchMode" />
 
-        <wd-cell :title="$t('yue-xuan-ze')" :value="formatValue(value7, 'month')" is-link @click="show7 = true" />
+        <wd-cell-group border>
+          <wd-cell :title="$t('yue-xuan-ze')" :value="formatValue(value7, 'month')" is-link @click="show7 = true" />
+        </wd-cell-group>
         <wd-calendar type="month" :min-date="minDate" v-model="value7" v-model:visible="show7" :switch-mode="switchMode" />
 
-        <wd-cell :title="$t('zhou-fan-wei-xuan-ze')" :value="formatValue(value8, 'weekrange')" is-link @click="show8 = true" />
+        <wd-cell-group border>
+          <wd-cell :title="$t('zhou-fan-wei-xuan-ze')" :value="formatValue(value8, 'weekrange')" is-link @click="show8 = true" />
+        </wd-cell-group>
         <wd-calendar :first-day-of-week="1" type="weekrange" v-model="value8" v-model:visible="show8" :switch-mode="switchMode" />
 
-        <wd-cell :title="$t('yue-fan-wei-xuan-ze')" :value="formatValue(value9, 'monthrange')" is-link @click="show9 = true" />
+        <wd-cell-group border>
+          <wd-cell :title="$t('yue-fan-wei-xuan-ze')" :value="formatValue(value9, 'monthrange')" is-link @click="show9 = true" />
+        </wd-cell-group>
         <wd-calendar type="monthrange" v-model="value9" v-model:visible="show9" :switch-mode="switchMode" />
+      </demo-group>
 
-        <wd-cell :title="$t('ri-zhou-yue-qie-huan')" :value="formatValue(value10, 'date')" is-link @click="show10 = true" />
-        <wd-calendar :first-day-of-week="1" show-type-switch v-model="value10" v-model:visible="show10" :switch-mode="switchMode" />
-
-        <wd-cell :title="$t('kuai-jie-cao-zuo')" :value="formatValue(value16, 'date')" is-link @click="show16 = true" />
+      <demo-group title="组件状态">
+        <wd-cell-group border>
+          <wd-cell :title="$t('kuai-jie-cao-zuo')" :value="formatValue(value16, 'date')" is-link @click="show16 = true" />
+        </wd-cell-group>
         <wd-calendar v-model="value16" v-model:visible="show16" :show-confirm="false" :switch-mode="switchMode" />
 
-        <wd-cell :title="$t('ri-qi-ge-shi-hua')" :value="formatValue(value11, 'daterange')" is-link @click="show11 = true" />
+        <wd-cell-group border>
+          <wd-cell title="before-confirm" :value="formatValue(value14, 'date')" is-link @click="show14 = true" />
+        </wd-cell-group>
+        <wd-calendar v-model="value14" v-model:visible="show14" :before-confirm="beforeConfirm" :switch-mode="switchMode" />
+      </demo-group>
+
+      <demo-group title="组件变体">
+        <demo-group-item title="切换模式">
+          <wd-radio-group v-model="switchMode" type="button">
+            <wd-radio value="none">none</wd-radio>
+            <wd-radio value="month">month</wd-radio>
+            <wd-radio value="year-month">year-month</wd-radio>
+          </wd-radio-group>
+        </demo-group-item>
+
+        <wd-cell-group border>
+          <wd-cell :title="$t('ri-zhou-yue-qie-huan')" :value="formatValue(value10, 'date')" is-link @click="show10 = true" />
+        </wd-cell-group>
+        <wd-calendar :first-day-of-week="1" show-type-switch v-model="value10" v-model:visible="show10" :switch-mode="switchMode" />
+      </demo-group>
+
+      <demo-group title="组件样式">
+        <wd-cell-group border>
+          <wd-cell :title="$t('ri-qi-ge-shi-hua')" :value="formatValue(value11, 'daterange')" is-link @click="show11 = true" />
+        </wd-cell-group>
         <wd-calendar type="daterange" v-model="value11" v-model:visible="show11" :formatter="formatter" :switch-mode="switchMode" />
 
-        <wd-cell :title="$t('kuai-jie-xuan-xiang')" :value="formatValue(value12, 'daterange')" is-link @click="show12 = true" />
+        <wd-cell-group border>
+          <wd-cell :title="$t('zi-ding-yi-zhan-shi')" :value="displayFormat(value13)" is-link @click="show13 = true" />
+        </wd-cell-group>
+        <wd-calendar
+          type="daterange"
+          v-model="value13"
+          v-model:visible="show13"
+          :inner-display-format="innerDisplayFormat"
+          :switch-mode="switchMode"
+        />
+      </demo-group>
+
+      <demo-group title="特殊样式">
+        <wd-cell-group border>
+          <wd-cell :title="$t('kuai-jie-xuan-xiang')" :value="formatValue(value12, 'daterange')" is-link @click="show12 = true" />
+        </wd-cell-group>
         <wd-calendar
           :shortcuts="shortcuts"
           :on-shortcuts-click="onShortcutsClick"
@@ -56,40 +107,30 @@
           :switch-mode="switchMode"
         />
 
-        <wd-cell :title="$t('zi-ding-yi-zhan-shi')" :value="displayFormat(value13)" is-link @click="show13 = true" />
-        <wd-calendar
-          type="daterange"
-          v-model="value13"
-          v-model:visible="show13"
-          :inner-display-format="innerDisplayFormat"
-          :switch-mode="switchMode"
-        />
-
-        <wd-cell title="before-confirm" :value="formatValue(value14, 'date')" is-link @click="show14 = true" />
-        <wd-calendar v-model="value14" v-model:visible="show14" :before-confirm="beforeConfirm" :switch-mode="switchMode" />
-
-        <wd-cell :title="$t('tuo-zhan-que-ding-qu-yu')" :value="formatValue(value19, 'date')" is-link @click="show19 = true" />
+        <wd-cell-group border>
+          <wd-cell :title="$t('tuo-zhan-que-ding-qu-yu')" :value="formatValue(value19, 'date')" is-link @click="show19 = true" />
+        </wd-cell-group>
         <wd-calendar v-model="value19" v-model:visible="show19" :switch-mode="switchMode">
           <template #confirm-right>
             <wd-button block plain custom-style="margin-left: 10px;" @click="selectToday">{{ $t('xuan-ze-jin-tian') }}</wd-button>
           </template>
         </wd-calendar>
-      </wd-cell-group>
+      </demo-group>
     </view>
   </page-wraper>
   <wd-toast />
 
-  <wd-message-box />
+  <wd-dialog />
 </template>
 <script lang="ts" setup>
 import { useToast } from '@/uni_modules/wot-design-uni'
 import dayjs from 'dayjs'
 import type { CalendarDayItem, CalendarFormatter } from '@/uni_modules/wot-design-uni/components/wd-calendar-view/types'
-import type { CalendarOnShortcutsClickOption } from '@/uni_modules/wot-design-uni/components/wd-calendar/types'
+import type { CalendarBeforeConfirm, CalendarOnShortcutsClickOption } from '@/uni_modules/wot-design-uni/components/wd-calendar/types'
 import { nextTick, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { getWeekNumber } from '@/uni_modules/wot-design-uni/components/wd-calendar-view/utils'
-import { padZero } from '@/uni_modules/wot-design-uni/components/common/util'
+import { padZero } from '@/uni_modules/wot-design-uni/common/util'
 
 const { t } = useI18n()
 
@@ -231,13 +272,12 @@ const innerDisplayFormat = (value: string | number | Date | undefined, rangeType
 
   return dayjs(value).format(t('yy-nian-mm-yue-dd-ri-1'))
 }
-const beforeConfirm = ({ value, resolve }: any) => {
-  if (value > Date.now()) {
+const beforeConfirm: CalendarBeforeConfirm = (value) => {
+  if (typeof value === 'number' && value > Date.now()) {
     toast.error(t('gai-ri-qi-zan-wu-shu-ju'))
-    resolve(false)
-  } else {
-    resolve(true)
+    return false
   }
+  return true
 }
 
 function handleConfirm1({ value }: any) {

@@ -8,7 +8,7 @@
  * 记得注释
  */
 import type { PropType, ExtractPropTypes } from 'vue'
-import { baseProps, makeBooleanProp, makeNumberProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeNumberProp } from '../../common/props'
 
 /**
  * 进度条状态

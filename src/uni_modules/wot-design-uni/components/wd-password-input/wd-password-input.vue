@@ -34,7 +34,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { addUnit } from '../common/util'
+import { addUnit } from '../../common/util'
 import { passwordInputProps } from './types'
 
 defineProps(passwordInputProps)

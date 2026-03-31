@@ -8,7 +8,7 @@
  * 记得注释
  */
 import type { ComponentPublicInstance, ExtractPropTypes, PropType } from 'vue'
-import { baseProps, makeArrayProp, makeBooleanProp, makeNumberProp, makeRequiredProp, makeStringProp } from '../common/props'
+import { baseProps, makeArrayProp, makeBooleanProp, makeNumberProp, makeRequiredProp, makeStringProp } from '../../common/props'
 import type { CalendarFormatter, CalendarTimeFilter, CalendarType } from '../wd-calendar-view/types'
 
 const now = new Date()
@@ -149,7 +149,7 @@ export const calendarProps = {
    */
   safeAreaInsetBottom: makeBooleanProp(true),
   /**
-   * 确定前校验函数，接收 { value, resolve } 参数，通过 resolve 继续执行，resolve 接收 1 个 boolean 参数
+   * 确定前校验函数，接收目标 value，返回 false 可阻止确认，支持返回 Promise<boolean>
    * 类型: CalendarBeforeConfirm
    */
   beforeConfirm: Function as PropType<CalendarBeforeConfirm>,
@@ -205,12 +205,7 @@ export const calendarProps = {
 
 export type CalendarInnerDisplayFormat = (value: number, rangeType: 'start' | 'end', type: CalendarType) => string
 
-export type CalendarBeforeConfirmOption = {
-  value: number | number[] | null
-  resolve: (isPass: boolean) => void
-}
-
-export type CalendarBeforeConfirm = (option: CalendarBeforeConfirmOption) => void
+export type CalendarBeforeConfirm = (value: number | number[] | null) => boolean | Promise<boolean>
 
 export type CalendarOnShortcutsClickOption = {
   item: Record<string, any>

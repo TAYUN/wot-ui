@@ -47,10 +47,10 @@ export default {
 
 <script lang="ts" setup>
 import { computed, getCurrentInstance, inject, onBeforeMount, ref, watch } from 'vue'
-import { closeOther } from '../common/clickoutside'
-import { type Queue, queueKey } from '../composables/useQueue'
-import { getRect, getSystemInfo, uuid } from '../common/util'
-import { useChildren } from '../composables/useChildren'
+import { closeOther } from '../../common/clickoutside'
+import { type Queue, queueKey } from '../../composables/useQueue'
+import { getRect, getSystemInfo, uuid } from '../../common/util'
+import { useChildren } from '../../composables/useChildren'
 import { DROP_MENU_KEY, dropMenuProps } from './types'
 import wdOverlay from '../wd-overlay/wd-overlay.vue'
 

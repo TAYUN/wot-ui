@@ -1,6 +1,8 @@
 # 介绍
 
-`wot-design-uni`组件库基于`vue3`+`Typescript`构建，参照`wot design`的设计规范进行开发，提供 70+高质量组件，支持暗黑模式、国际化和自定义主题，旨在给开发者提供统一的 UI 交互，同时提高研发的开发效率。
+在 `V1` 版本，`Wot UI` 基于 `vue3`+`Typescript`构建，参照`wot design`的设计规范进行开发。  
+
+在 `V2` 版本我们更加注重美观和 AI 友好度，采用了 AI 友好度更高的设计，提供了 80+ 高质量组件和 AI 编程实践方案，支持暗黑模式、国际化和自定义主题，旨在给开发者提供简洁高效的 UI 交互和`AI友好`的开发体验。
 
 ## 快速上手
 
@@ -33,21 +35,13 @@
 ## ✨ 特性
 
 - 🎯 多平台覆盖，支持 微信小程序、支付宝小程序、钉钉小程序、H5、APP 等.
-- 🚀 70+ 个高质量组件，覆盖移动端主流场景.
+- 🚀 80+ 个高质量组件，覆盖移动端主流场景.
 - 💪 使用 Typescript 构建，提供良好的组件类型系统.
+- 🤖 提供 AI 友好的设计系统.
 - 🌍 支持国际化，内置 15 种语言包.
 - 📖 提供丰富的文档和组件示例.
 - 🎨 支持修改 CSS 变量实现主题定制.
 - 🍭 支持暗黑模式
-
-## 链接
-
-- [更新日志](/guide/changelog)
-- [常见问题](/guide/common-problems)
-- [Discussions 讨论区](https://github.com/Moonofweisheng/wot-design-uni/discussions)
-- [互助交流群](/guide/join-group.html)
-- [优秀案例](/guide/cases)
-
 
 ## 赞助我们
 
@@ -55,7 +49,7 @@
 
 捐赠后您的昵称、留言等将会展示在[捐赠榜单](/reward/donor.html)中。
 
-## 生态推荐
+## 生态
 
 | 项目                                                                                                        | 描述                                                 |
 | ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
@@ -66,16 +60,15 @@
 | [wot-ui-intellisense](https://github.com/wot-ui/wot-ui-intellisense)                                        | wot-ui vscode 代码提示插件                           |
 | [Wot UI Snippets](https://marketplace.visualstudio.com/items?itemName=kiko.wot-design-uni-snippets) | Wot UI 代码块提示                            |
 | [uni-mini-ci](https://github.com/Moonofweisheng/uni-mini-ci)                                                | 一个 uni-app 小程序端构建后支持 CI（持续集成）的插件 |
-| [uni-mini-router](https://github.com/Moonofweisheng/uni-mini-router)                                        | 一个基于 vue3 和 Typescript 的轻量级 uni-app 路由库  |
+| [my-uni](https://github.com/wot-ui/my-uni)                                        | 摸鱼 uni 插件库合集  |
 | [unibest](https://github.com/unibest-tech/unibest)                                                              | 基于 wot-design-uni 的 uni-app 模板                  |
-| [wot-design-uni AI 助手](https://www.coze.cn/store/bot/7347916532258701363)                                 | 一个能回答你关于 wot-design-uni 组件库问题的智能助手 |
 | [uni-ku-root](https://github.com/uni-ku/root)                                                               | 一个模拟 App.vue 原有能力的根组件插件                |
 
 ## 鸣谢
 
-- [wot-design](https://github.com/jd-ftf/wot-design-mini) - 感谢 wot-design 团队多年来的不断维护，让 wot-design-uni 能够站在巨人的肩膀上。
-- [uni-helper](https://github.com/uni-helper) - 感谢 uni-helper 团队提供的 uni-app 工具库，让 wot-design-uni 能够更方便地使用。
-- [捐赠者](https://wot-ui.cn/reward/donor.html) - 感谢所有捐赠者，是你们的捐赠让 wot-design-uni 能够更好地发展。
+- [wot-design](https://github.com/jd-ftf/wot-design-mini) - 感谢 wot-design 团队多年来的不断维护，让 wot-ui 能够站在巨人的肩膀上。
+- [uni-helper](https://github.com/uni-helper) - 感谢 uni-helper 团队提供的 uni-app 工具库，让 wot-ui 能够更方便地使用。
+- [捐赠者](https://wot-ui.cn/reward/donor.html) - 感谢所有捐赠者，是你们的捐赠让 wot-ui 能够更好地发展。
 
 ## 开源协议
 

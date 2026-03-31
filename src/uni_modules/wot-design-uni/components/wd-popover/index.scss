@@ -1,5 +1,5 @@
-@use '../styles/mixin/mixin.scss'as *;
-@use '../styles/variable.scss'as *;
+@use '../../styles/mixin/mixin.scss'as *;
+@use '../../styles/variable.scss'as *;
 
 // 浮层背景色
 $popover-bg: var(--wot-popover-bg, $filled-oppo) !default;
@@ -14,7 +14,7 @@ $popover-border-color: var(--wot-popover-border-color, $border-main) !default;
 // 浮层圆角
 $popover-radius: var(--wot-popover-radius, $radius-main) !default;
 // 箭头尺寸
-$popover-arrow-size: var(--wot-popover-arrow-size, $n8) !default;
+$popover-arrow-size: var(--wot-popover-arrow-size, $n-8) !default;
 // 浮层字号
 $popover-font-size: var(--wot-popover-font-size, $typography-body-size-main) !default;
 // 浮层行高
@@ -24,13 +24,13 @@ $popover-padding: var(--wot-popover-padding, $padding-loose) !default;
 // 浮层层级
 $popover-z-index: var(--wot-popover-z-index, 500) !default;
 // 关闭图标尺寸
-$popover-close-icon-size: var(--wot-popover-close-icon-size, $n12) !default;
+$popover-close-icon-size: var(--wot-popover-close-icon-size, $n-12) !default;
 // 关闭图标颜色
 $popover-close-icon-color: var(--wot-popover-close-icon-color, $icon-secondary) !default;
 // 关闭图标内边距
 $popover-close-icon-padding: var(--wot-popover-close-icon-padding, $padding-super-tight) !default;
 // 菜单图标大小
-$popover-menu-icon-size: var(--wot-popover-menu-icon-size, $n18) !default;
+$popover-menu-icon-size: var(--wot-popover-menu-icon-size, $n-18) !default;
 // 菜单图标右侧间距
 $popover-menu-icon-margin-right: var(--wot-popover-menu-icon-margin-right, $spacing-super-tight) !default;
 

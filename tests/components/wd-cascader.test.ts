@@ -119,9 +119,7 @@ describe('WdCascader (Cascader)', () => {
   })
 
   test('支持 beforeConfirm 钩子拦截', async () => {
-    const beforeConfirm = (value: string | number, selectedItems: any[], resolve: (isPass: boolean) => void) => {
-      resolve(false)
-    }
+    const beforeConfirm = vi.fn(() => false)
 
     const wrapper = mount(WdCascader, {
       props: {
@@ -143,8 +141,33 @@ describe('WdCascader (Cascader)', () => {
     await wrapper.findAll('.wd-cascader__list')[2].findAll('.wd-cascader__list-item')[0].trigger('click')
     await sleep(60)
 
+    expect(beforeConfirm).toHaveBeenCalled()
     // 被拦截，不会抛出 update:modelValue
     expect(wrapper.emitted('update:modelValue')).toBeFalsy()
+  })
+
+  test('支持 beforeConfirm Promise 放行', async () => {
+    const beforeConfirm = vi.fn(() => Promise.resolve(true))
+
+    const wrapper = mount(WdCascader, {
+      props: {
+        modelValue: '',
+        options,
+        beforeConfirm
+      }
+    })
+    await wrapper.setProps({ visible: true })
+    await sleep(60)
+
+    await wrapper.findAll('.wd-cascader__list')[0].findAll('.wd-cascader__list-item')[0].trigger('click')
+    await sleep(60)
+    await wrapper.findAll('.wd-cascader__list')[1].findAll('.wd-cascader__list-item')[0].trigger('click')
+    await sleep(60)
+    await wrapper.findAll('.wd-cascader__list')[2].findAll('.wd-cascader__list-item')[0].trigger('click')
+    await sleep(60)
+
+    expect(beforeConfirm).toHaveBeenCalled()
+    expect(wrapper.emitted('update:modelValue')).toBeTruthy()
   })
 
   // ── 异步加载模式 ────────────────────────────────────────────────
@@ -228,7 +251,7 @@ describe('WdCascader (Cascader)', () => {
     // 点击 isLeaf 节点后，不再调用 lazyLoad
     expect(lazyLoad.mock.calls.length).toBe(callCountBefore)
     expect(wrapper.emitted('update:modelValue')).toBeTruthy()
-    expect(wrapper.emitted('update:modelValue')![0]).toEqual(['130204'])
+    expect(wrapper.emitted('update:modelValue')![0]).toEqual([['130204']])
   })
 
   test('[async] lazyLoad resolve([]) 视为叶子节点直接触发 confirm', async () => {
@@ -245,34 +268,188 @@ describe('WdCascader (Cascader)', () => {
     await sleep(60)
 
     expect(wrapper.emitted('confirm')).toBeTruthy()
-    expect(wrapper.emitted('update:modelValue')![0]).toEqual(['130204'])
+    expect(wrapper.emitted('update:modelValue')![0]).toEqual([['130204']])
   })
 
-  test('[async] findPath 回显，modelValue 存在时正确构建多层 tabs', async () => {
-    const pathTabs = [
-      {
-        options: [
-          { value: '130000', text: '河北省' },
-          { value: '140000', text: '山西省' }
-        ],
-        selectedOption: { value: '130000', text: '河北省' }
-      },
-      { options: [{ value: '130200', text: '唐山市' }], selectedOption: { value: '130200', text: '唐山市' } },
-      { options: [{ value: '130204', text: '古冶区', isLeaf: true }], selectedOption: { value: '130204', text: '古冶区', isLeaf: true } }
+  test('[async] findPath 已移除，modelValue 数组格式触发自动逐级加载', async () => {
+    const provinces = [
+      { value: '130000', text: '河北省' },
+      { value: '140000', text: '山西省' }
     ]
+    const cities = [{ value: '130200', text: '唐山市' }]
+    const districts = [{ value: '130204', text: '古冶区', isLeaf: true }]
 
-    const lazyLoad = vi.fn()
-    const findPath = vi.fn((_value: any, resolve: (tabs: any[]) => void) => resolve(pathTabs))
+    const lazyLoad = vi.fn((option: any, _tabIndex: number, resolve: (c: any[]) => void) => {
+      if (option === null) resolve(provinces)
+      else if (option.value === '130000') resolve(cities)
+      else if (option.value === '130200') resolve(districts)
+    })
 
-    const wrapper = mount(WdCascader, { props: { modelValue: '130204', lazyLoad, findPath } })
+    const wrapper = mount(WdCascader, { props: { modelValue: ['130000', '130200', '130204'], lazyLoad } })
     await sleep(60)
 
-    // findPath 应被调用
-    expect(findPath).toHaveBeenCalledWith('130204', expect.any(Function))
-    // tabs 应正确构建
+    // 应自动逐级加载并构建三层 tabs
     expect((wrapper.vm as any).tabs).toHaveLength(3)
     expect((wrapper.vm as any).activeTab).toBe(2)
-    // lazyLoad 不应被调用（由 findPath 承担回显）
-    expect(lazyLoad).not.toHaveBeenCalled()
+    // lazyLoad 应被调用 3 次（根、省、市）
+    expect(lazyLoad).toHaveBeenCalledTimes(3)
+  })
+
+  test('[async] confirm 后 update:modelValue emit 完整路径数组', async () => {
+    const lazyLoad = vi.fn((option: any, _tabIndex: number, resolve: (c: any[]) => void) => {
+      if (option === null) resolve([{ value: '130000', text: '河北省' }])
+      else if (option.value === '130000') resolve([{ value: '130200', text: '唐山市', isLeaf: true }])
+    })
+
+    const wrapper = mount(WdCascader, { props: { modelValue: [], lazyLoad } })
+    await wrapper.setProps({ visible: true })
+    await sleep(60)
+
+    // 选中 "河北省"
+    await wrapper.findAll('.wd-cascader__list')[0].findAll('.wd-cascader__list-item')[0].trigger('click')
+    await sleep(60)
+
+    // 选中 "唐山市" (isLeaf)
+    await wrapper.findAll('.wd-cascader__list')[1].findAll('.wd-cascader__list-item')[0].trigger('click')
+    await sleep(60)
+
+    expect(wrapper.emitted('update:modelValue')).toBeTruthy()
+    // 异步模式 emit 完整路径数组
+    expect(wrapper.emitted('update:modelValue')![0]).toEqual([['130000', '130200']])
+  })
+
+  test('[async] 内部树缓存：选择后关闭再打开，利用缓存恢复无需重新加载', async () => {
+    const provinces = [{ value: '130000', text: '河北省' }]
+    const cities = [{ value: '130200', text: '唐山市', isLeaf: true }]
+
+    const lazyLoad = vi.fn((option: any, _tabIndex: number, resolve: (c: any[]) => void) => {
+      if (option === null) resolve(provinces)
+      else if (option.value === '130000') resolve(cities)
+    })
+
+    const wrapper = mount(WdCascader, { props: { modelValue: [], lazyLoad } })
+    await wrapper.setProps({ visible: true })
+    await sleep(60)
+
+    // 选中 "河北省"
+    await wrapper.findAll('.wd-cascader__list')[0].findAll('.wd-cascader__list-item')[0].trigger('click')
+    await sleep(60)
+
+    const callCountAfterFirstSelect = lazyLoad.mock.calls.length
+
+    // 再次选中 "河北省"（回到第一级重新点击），应使用缓存
+    await wrapper.findAll('.wd-cascader__list')[0].findAll('.wd-cascader__list-item')[0].trigger('click')
+    await sleep(60)
+
+    // lazyLoad 不应再次被调用（缓存命中）
+    expect(lazyLoad.mock.calls.length).toBe(callCountAfterFirstSelect)
+    expect((wrapper.vm as any).tabs[1].options).toHaveLength(1)
+  })
+
+  test('[strict] 点击中间级节点不会自动确认，点击确认按钮后提交当前路径', async () => {
+    const wrapper = mount(WdCascader, {
+      props: {
+        modelValue: '',
+        options,
+        checkStrictly: true
+      }
+    })
+
+    await wrapper.setProps({ visible: true })
+    await sleep(60)
+
+    await wrapper.findAll('.wd-cascader__list')[0].findAll('.wd-cascader__list-item')[0].trigger('click')
+    await sleep(60)
+
+    expect((wrapper.vm as any).activeTab).toBe(1)
+    expect(wrapper.emitted('update:modelValue')).toBeFalsy()
+    expect(wrapper.find('.wd-cascader__action-confirm').exists()).toBe(true)
+
+    await wrapper.find('.wd-cascader__action-confirm').trigger('click')
+    await sleep(60)
+
+    expect(wrapper.emitted('update:modelValue')).toBeTruthy()
+    expect(wrapper.emitted('update:modelValue')![0]).toEqual(['130000'])
+    const confirmPayload = wrapper.emitted('confirm')![0][0] as { selectedOptions: unknown[] }
+    expect(confirmPayload.selectedOptions).toHaveLength(1)
+  })
+
+  test('[strict] 点击静态叶子节点后自动确认', async () => {
+    const wrapper = mount(WdCascader, {
+      props: {
+        modelValue: '',
+        options,
+        checkStrictly: true
+      }
+    })
+
+    await wrapper.setProps({ visible: true })
+    await sleep(60)
+
+    await wrapper.findAll('.wd-cascader__list')[0].findAll('.wd-cascader__list-item')[0].trigger('click')
+    await sleep(60)
+    await wrapper.findAll('.wd-cascader__list')[1].findAll('.wd-cascader__list-item')[0].trigger('click')
+    await sleep(60)
+    await wrapper.findAll('.wd-cascader__list')[2].findAll('.wd-cascader__list-item')[0].trigger('click')
+    await sleep(60)
+
+    expect(wrapper.emitted('update:modelValue')).toBeTruthy()
+    expect(wrapper.emitted('update:modelValue')![0]).toEqual(['130204'])
+    const confirmPayload = wrapper.emitted('confirm')![0][0] as { selectedOptions: unknown[] }
+    expect(confirmPayload.selectedOptions).toHaveLength(3)
+  })
+
+  test('[strict][async] resolve 空数组后自动确认并提交路径数组', async () => {
+    const lazyLoad = vi.fn((option: any, _tabIndex: number, resolve: (c: any[]) => void) => {
+      if (option === null) {
+        resolve([{ value: '130000', text: '河北省' }])
+      } else {
+        resolve([])
+      }
+    })
+
+    const wrapper = mount(WdCascader, {
+      props: {
+        modelValue: [],
+        lazyLoad,
+        checkStrictly: true
+      }
+    })
+
+    await wrapper.setProps({ visible: true })
+    await sleep(60)
+
+    await wrapper.findAll('.wd-cascader__list')[0].findAll('.wd-cascader__list-item')[0].trigger('click')
+    await sleep(60)
+
+    expect(wrapper.emitted('update:modelValue')).toBeTruthy()
+    expect(wrapper.emitted('update:modelValue')![0]).toEqual([['130000']])
+  })
+
+  test('[strict] 点击已选中的项可取消选中并清除后续列', async () => {
+    const wrapper = mount(WdCascader, {
+      props: {
+        modelValue: '',
+        options,
+        checkStrictly: true
+      }
+    })
+
+    await wrapper.setProps({ visible: true })
+    await sleep(60)
+
+    // 选中"河北省"，展开第二列
+    await wrapper.findAll('.wd-cascader__list')[0].findAll('.wd-cascader__list-item')[0].trigger('click')
+    await sleep(60)
+    expect((wrapper.vm as any).tabs).toHaveLength(2)
+
+    // 再次点击"河北省"，应取消选中并清除第二列
+    await wrapper.findAll('.wd-cascader__list')[0].findAll('.wd-cascader__list-item')[0].trigger('click')
+    await sleep(60)
+
+    expect((wrapper.vm as any).tabs).toHaveLength(1)
+    expect((wrapper.vm as any).tabs[0].selectedOption).toBeNull()
+    // 取消选中不应触发 confirm
+    expect(wrapper.emitted('update:modelValue')).toBeFalsy()
   })
 })

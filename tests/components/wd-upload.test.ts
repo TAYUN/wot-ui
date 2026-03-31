@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
 import WdUpload from '@/uni_modules/wot-design-uni/components/wd-upload/wd-upload.vue'
 import { describe, expect, test, vi, beforeEach } from 'vitest'
-import { UploadFile } from '@/uni_modules/wot-design-uni/components/wd-upload/types'
+import { type UploadFile } from '@/uni_modules/wot-design-uni/components/wd-upload/types'
 import { nextTick } from 'vue'
 
 describe('WdUpload', () => {
@@ -318,6 +318,17 @@ describe('WdUpload', () => {
     })
 
     expect((wrapper.vm as any).successStatus).toBe(201)
+  })
+
+  test('支持多个成功状态码', async () => {
+    const wrapper = mount(WdUpload, {
+      props: {
+        successStatus: [200, 201],
+        action: 'https://example.com/upload'
+      }
+    })
+
+    expect((wrapper.vm as any).successStatus).toEqual([200, 201])
   })
 
   // 测试customEvokeClass和customPreviewClass属性

@@ -1,5 +1,5 @@
-@use '../styles/mixin/mixin.scss'as *;
-@use '../styles/variable.scss'as *;
+@use '../../styles/mixin/mixin.scss'as *;
+@use '../../styles/variable.scss'as *;
 
 // 选择器视图背景色
 $picker-view-bg: var(--wot-picker-view-bg, $filled-oppo) !default;
@@ -14,7 +14,7 @@ $picker-view-mask-bg: var(--wot-picker-view-mask-bg, linear-gradient(180deg, $pi
 // 禁用态透明度
 $picker-view-disabled-opacity: var(--wot-picker-view-disabled-opacity, $opacity-disabled) !default;
 // 列项高度
-$picker-view-column-item-height: var(--wot-picker-view-column-item-height, $n44) !default;
+$picker-view-column-item-height: var(--wot-picker-view-column-item-height, $n-44) !default;
 // 列项字号
 $picker-view-column-item-font-size: var(--wot-picker-view-column-item-font-size, $typography-body-size-extra-large) !default;
 // 列项文字颜色

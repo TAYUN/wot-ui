@@ -291,21 +291,6 @@
           }
         },
         {
-          "path": "messageBox/Index",
-          "name": "messageBox",
-          "style": {
-            "mp-alipay": {
-              "allowsBounceVertical": "NO"
-            },
-            // #ifdef MP
-            "navigationBarTitleText": "MessageBox 弹框",
-            // #endif
-            // #ifndef MP
-            "navigationBarTitleText": "%messagebox-title%"
-            // #endif
-          }
-        },
-        {
           "path": "dialog/Index",
           "name": "dialog",
           "style": {
@@ -381,17 +366,17 @@
           }
         },
         {
-          "path": "statusTip/Index",
-          "name": "statusTip",
+          "path": "empty/Index",
+          "name": "empty",
           "style": {
             "mp-alipay": {
               "allowsBounceVertical": "NO"
             },
             // #ifdef MP
-            "navigationBarTitleText": "StatusTip 缺省提示",
+            "navigationBarTitleText": "Empty 缺省提示",
             // #endif
             // #ifndef MP
-            "navigationBarTitleText": "%statustip-title%"
+            "navigationBarTitleText": "%empty-title%"
             // #endif
           }
         },
@@ -1233,21 +1218,6 @@
             // #endif
             // #ifndef MP
             "navigationBarTitleText": "%keyboard-title%"
-            // #endif
-          }
-        },
-        {
-          "path": "numberKeyboard/Index",
-          "name": "numberKeyboard",
-          "style": {
-            "mp-alipay": {
-              "allowsBounceVertical": "NO"
-            },
-            // #ifdef MP
-            "navigationBarTitleText": "NumberKeyboard 数字键盘",
-            // #endif
-            // #ifndef MP
-            "navigationBarTitleText": "%numberkeyboard-title%"
             // #endif
           }
         },

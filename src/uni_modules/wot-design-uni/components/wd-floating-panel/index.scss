@@ -1,5 +1,5 @@
-@use '../styles/mixin/mixin.scss' as *;
-@use '../styles/variable.scss' as *;
+@use '../../styles/mixin/mixin.scss' as *;
+@use '../../styles/variable.scss' as *;
 
 // 面板背景色
 $floating-panel-bg: var(--wot-floating-panel-bg, $filled-oppo) !default;
@@ -8,11 +8,11 @@ $floating-panel-radius: var(--wot-floating-panel-radius, $radius-large) !default
 // 面板 z-index
 $floating-panel-z-index: var(--wot-floating-panel-z-index, 99) !default;
 // 头部高度
-$floating-panel-header-height: var(--wot-floating-panel-header-height, $n32) !default;
+$floating-panel-header-height: var(--wot-floating-panel-header-height, $n-32) !default;
 // 拖拽条宽度
-$floating-panel-bar-width: var(--wot-floating-panel-bar-width, $n36) !default;
+$floating-panel-bar-width: var(--wot-floating-panel-bar-width, $n-36) !default;
 // 拖拽条高度
-$floating-panel-bar-height: var(--wot-floating-panel-bar-height, $n4) !default;
+$floating-panel-bar-height: var(--wot-floating-panel-bar-height, $n-4) !default;
 // 拖拽条背景色
 $floating-panel-bar-bg: var(--wot-floating-panel-bar-bg, $filled-strong) !default;
 // 拖拽条圆角

@@ -59,7 +59,7 @@ abort()
 | name | Key corresponding to the file | string | 'file' | - |
 | formData | Other form data | Record<string, any> | {} | - |
 | fileType | File type | 'image' \| 'video' \| 'audio' | 'image' | - |
-| statusCode | Success status code | number | 200 | - |
+| statusCode | Success status code | number \| number[] | 200 | - |
 | uploadMethod | Custom upload method | UploadMethod | - | - |
 | onSuccess | Upload success callback | Function | - | - |
 | onError | Upload failure callback | Function | - | - |

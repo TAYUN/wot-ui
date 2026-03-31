@@ -1,21 +1,32 @@
 <template>
   <page-wraper>
-    <view>
-      <demo-block :title="$t('ji-ben-shi-yong')" transparent>
-        <wd-gap bg-color="#FFFFFF"></wd-gap>
-      </demo-block>
-      <demo-block :title="$t('zi-ding-yi-bei-jing-yan-se')" transparent>
-        <wd-gap bg-color="#4D80F0"></wd-gap>
-      </demo-block>
-      <demo-block :title="$t('zi-ding-yi-gao-du')" transparent>
-        <wd-gap bg-color="#4D80F0" height="120rpx"></wd-gap>
-      </demo-block>
-      <demo-block :title="$t('ziDingYiYangShi')" transparent>
-        <wd-gap custom-class="custom-gap"></wd-gap>
-      </demo-block>
-      <demo-block custom-class="custom-safe-area-bottom" :title="$t('di-bu-an-quan-qu')" transparent>
-        <wd-gap bg-color="#FFFFFF" safe-area-bottom height="120rpx"></wd-gap>
-      </demo-block>
+    <view class="page-gap">
+      <demo-group title="组件类型">
+        <demo-group-item :title="$t('ji-ben-shi-yong')">
+          <wd-gap bg-color="red"></wd-gap>
+        </demo-group-item>
+      </demo-group>
+
+      <demo-group title="组件变体">
+        <demo-group-item :title="$t('zi-ding-yi-bei-jing-yan-se')">
+          <wd-gap bg-color="#4D80F0"></wd-gap>
+        </demo-group-item>
+        <demo-group-item :title="$t('zi-ding-yi-gao-du')">
+          <wd-gap bg-color="#4D80F0" height="120rpx"></wd-gap>
+        </demo-group-item>
+      </demo-group>
+
+      <demo-group title="组件样式">
+        <demo-group-item :title="$t('ziDingYiYangShi')">
+          <wd-gap custom-class="custom-gap"></wd-gap>
+        </demo-group-item>
+      </demo-group>
+
+      <demo-group title="特殊样式">
+        <demo-group-item custom-class="custom-safe-area-bottom" :title="$t('di-bu-an-quan-qu')">
+          <wd-gap bg-color="#FFFFFF" safe-area-bottom height="120rpx"></wd-gap>
+        </demo-group-item>
+      </demo-group>
     </view>
   </page-wraper>
 </template>

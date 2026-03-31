@@ -36,7 +36,7 @@ export default {
 <script lang="ts" setup>
 import { computed, type CSSProperties } from 'vue'
 
-import { objToStyle, addUnit, isDef } from '../common/util'
+import { objToStyle, addUnit, isDef } from '../../common/util'
 import { loadingProps } from './types'
 
 const props = defineProps(loadingProps)

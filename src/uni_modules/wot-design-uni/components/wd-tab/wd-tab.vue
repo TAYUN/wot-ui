@@ -19,8 +19,8 @@ export default {
 </script>
 <script lang="ts" setup>
 import { getCurrentInstance, ref, watch, type CSSProperties } from 'vue'
-import { isDef, isNumber, isString, objToStyle } from '../common/util'
-import { useParent } from '../composables/useParent'
+import { isDef, isNumber, isString, objToStyle } from '../../common/util'
+import { useParent } from '../../composables/useParent'
 import { TABS_KEY } from '../wd-tabs/types'
 import { computed } from 'vue'
 import { tabProps } from './types'

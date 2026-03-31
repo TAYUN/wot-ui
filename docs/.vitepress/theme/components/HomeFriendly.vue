@@ -2,7 +2,6 @@
 import { computed } from 'vue'
 import { useFriendly } from '../composables/friendly'
 import { useData } from 'vitepress'
-import VPFeature from 'vitepress/dist/client/theme-default/components/VPFeature.vue'
 
 const { data } = useFriendly()
 const { lang } = useData()
@@ -10,65 +9,42 @@ const { lang } = useData()
 const links = computed(() => {
   return lang.value === 'en-US' ? [] : (data.value.length ? data.value : [])
 })
-
-const grid = computed(() => {
-  const length = links.value.length || 0
-  if (!length) {
-    return
-  } else {
-    return 'grid-4'
-  }
-})
 </script>
 
 <template>
-  <div v-if="links && links.length" class="VPFeatures">
+  <div v-if="links && links.length" class="VPFriendly">
     <div class="container">
-      <h1 class="friendly-title">友情链接</h1>
-
-      <div class="items">
-        <div v-for="feature in links" :key="feature.title" class="item" :class="[grid]">
-          <VPFeature
-            :icon="{ src: feature.icon, height: '48px', width: 'auto' }"
-            :title="feature.title"
-            :details="feature.details"
-            :link="feature.link"
-          />
-        </div>
+      <h2 class="friendly-title">友情链接</h2>
+      <div class="links">
+        <a
+          v-for="link in links"
+          :key="link.title"
+          :href="link.link"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="link-item"
+        >
+          <img v-if="link.icon" :src="link.icon" :alt="link.title" class="link-icon" />
+          <span class="link-title">{{ link.title }}</span>
+        </a>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.VPFeatures {
-  position: relative;
+.VPFriendly {
   padding: 0 24px;
 }
 
-:deep(.VPImage) {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 20px;
-  border-radius: 6px;
-  /* background-color: var(--vp-c-default-soft); */
-  width: 48px;
-  height: 48px;
-  font-size: 24px;
-  transition: background-color 0.25s;
-}
-
- 
-
 @media (min-width: 640px) {
-  .VPFeatures {
+  .VPFriendly {
     padding: 0 48px;
   }
 }
 
 @media (min-width: 960px) {
-  .VPFeatures {
+  .VPFriendly {
     padding: 0 64px;
   }
 }
@@ -80,45 +56,48 @@ const grid = computed(() => {
 
 .friendly-title {
   text-align: center;
-  margin-bottom: 50px;
-  margin-top: 50px;
-  font-size: 24px;
+  margin: 32px 0 20px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--vp-c-text-2);
 }
 
-.items {
+.links {
   display: flex;
   flex-wrap: wrap;
-  margin: -8px;
+  justify-content: center;
+  gap: 10px;
 }
 
-.item {
-  padding: 8px;
-  width: 100%;
+.link-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 20px;
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-2);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
-@media (min-width: 640px) {
-  .item.grid-2,
-  .item.grid-4,
-  .item.grid-6 {
-    width: calc(100% / 2);
-  }
+.link-item:hover {
+  border-color: var(--vp-c-brand-1);
+  color: var(--vp-c-brand-1);
+  background: var(--vp-c-brand-soft);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-@media (min-width: 768px) {
-  .item.grid-2 {
-    width: calc(100% / 2);
-  }
-
-  .item.grid-3,
-  .item.grid-4,
-  .item.grid-6 {
-    width: calc(100% / 3);
-  }
-}
-
-@media (min-width: 960px) {
-  .item.grid-4 {
-    width: calc(100% / 4);
-  }
+.link-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  border-radius: 3px;
+  flex-shrink: 0;
 }
 </style>

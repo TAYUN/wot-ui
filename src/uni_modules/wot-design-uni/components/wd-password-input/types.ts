@@ -7,7 +7,7 @@
  * @FilePath: \wot-design-uni\src\uni_modules\wot-design-uni\components\wd-password-input\types.ts
  * 记得注释
  */
-import { baseProps, makeBooleanProp, makeNumberProp, makeNumericProp, makeStringProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeNumberProp, makeNumericProp, makeStringProp } from '../../common/props'
 
 export const passwordInputProps = {
   ...baseProps,

@@ -12,12 +12,12 @@ function readFileSafe(p: string): string {
 
 function resolvePaths() {
   const rootDir = path.resolve(__dirname, '..')
-  const themeDir = path.join(rootDir, 'src/uni_modules/wot-design-uni/components/styles/theme')
+  const themeDir = path.join(rootDir, 'src/uni_modules/wot-design-uni/styles/theme')
   const baseDir = path.join(themeDir, 'base')
   const indexScss = path.join(themeDir, 'index.scss')
   const lightScss = path.join(themeDir, 'light.scss')
   const darkScss = path.join(themeDir, 'dark.scss')
-  const variableScss = path.join(rootDir, 'src/uni_modules/wot-design-uni/components/styles/variable.scss')
+  const variableScss = path.join(rootDir, 'src/uni_modules/wot-design-uni/styles/variable.scss')
   return { rootDir, themeDir, baseDir, indexScss, lightScss, darkScss, variableScss }
 }
 
@@ -287,7 +287,7 @@ function getNumericFromRaw(it: ParsedVar): number {
   if (m1) return parseFloat(m1[1])
   const m2 = it.rawValue.match(/var\(\s*--wot-n(\d+)\s*\)/)
   if (m2) return parseFloat(m2[1])
-  const m05 = it.rawValue.match(/var\(\s*--wot-n0?5\s*\)/)
+  const m05 = it.rawValue.match(/var\(\s*--wot-n-0?5\s*\)/)
   if (m05) return 0.5
   return NaN
 }

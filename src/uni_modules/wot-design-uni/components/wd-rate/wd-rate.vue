@@ -40,7 +40,7 @@ export default {
 import wdIcon from '../wd-icon/wd-icon.vue'
 import { computed, getCurrentInstance, ref, watch } from 'vue'
 import { rateProps } from './types'
-import { addUnit, getRect, isDef } from '../common/util'
+import { addUnit, getRect, isDef } from '../../common/util'
 const { proxy } = getCurrentInstance() as any
 
 const props = defineProps(rateProps)

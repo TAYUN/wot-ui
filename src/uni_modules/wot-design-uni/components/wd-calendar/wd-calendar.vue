@@ -101,10 +101,11 @@ import wdButton from '../wd-button/wd-button.vue'
 import wdTabs from '../wd-tabs/wd-tabs.vue'
 import wdTab from '../wd-tab/wd-tab.vue'
 import wdTag from '../wd-tag/wd-tag.vue'
-import { formatDate } from '../common/formatDate'
-import { deepClone, isArray, isEqual, padZero, pause } from '../common/util'
+import { callInterceptor } from '../../common/interceptor'
+import { formatDate } from '../../common/formatDate'
+import { deepClone, isArray, isEqual, padZero, pause } from '../../common/util'
 import { getWeekNumber, isRange } from '../wd-calendar-view/utils'
-import { useTranslate } from '../composables/useTranslate'
+import { useTranslate } from '../../composables/useTranslate'
 import { calendarProps, type CalendarExpose } from './types'
 import type { CalendarType } from '../wd-calendar-view/types'
 
@@ -291,16 +292,10 @@ function handleChange({ value }: { value: number | number[] | null }) {
 }
 
 function handleConfirm() {
-  if (props.beforeConfirm) {
-    props.beforeConfirm({
-      value: calendarValue.value,
-      resolve: (isPass: boolean) => {
-        isPass && onConfirm()
-      }
-    })
-  } else {
-    onConfirm()
-  }
+  callInterceptor(props.beforeConfirm, {
+    args: [calendarValue.value],
+    done: onConfirm
+  })
 }
 
 function onConfirm() {

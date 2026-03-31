@@ -1,7 +1,7 @@
 import { computed } from 'vue'
-import { formatDate } from '../common/formatDate'
-import { isArray } from '../common/util'
-import { useTranslate } from '../composables/useTranslate'
+import { formatDate } from '../../common/formatDate'
+import { isArray } from '../../common/util'
+import { useTranslate } from '../../composables/useTranslate'
 import type { CalendarDayType, CalendarType } from './types'
 const { translate } = useTranslate('calendar-view')
 

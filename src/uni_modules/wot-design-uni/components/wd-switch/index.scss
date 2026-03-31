@@ -1,5 +1,5 @@
-@use '../styles/mixin/mixin.scss'as *;
-@use '../styles/variable.scss'as *;
+@use '../../styles/mixin/mixin.scss'as *;
+@use '../../styles/variable.scss'as *;
 // 操作块背景色
 $switch-color-action-bg: var(--wot-switch-color-action-bg, $base-white) !default;
 // 操作块图标颜色
@@ -23,7 +23,7 @@ $switch-left-right-padding: var(--wot-switch-left-right-padding, $padding-tight)
 $switch-top-bottom-padding: var(--wot-switch-top-bottom-padding, $padding-ultra-tight) !default;
 
 // 组件尺寸
-$switch-size: var(--wot-switch-size, $n26) !default;
+$switch-size: var(--wot-switch-size, $n-26) !default;
 // 内部图标尺寸
 $switch-size-icon: var(--wot-switch-size-icon, 0.5em) !default;
 // 操作块高度

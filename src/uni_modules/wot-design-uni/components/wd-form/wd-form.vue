@@ -21,8 +21,8 @@ export default {
 <script lang="ts" setup>
 import wdToast from '../wd-toast/wd-toast.vue'
 import { reactive, watch } from 'vue'
-import { isArray, isDef } from '../common/util'
-import { useChildren } from '../composables/useChildren'
+import { isArray, isDef } from '../../common/util'
+import { useChildren } from '../../composables/useChildren'
 import { useToast } from '../wd-toast'
 import { FORM_KEY, type ErrorMessage, formProps, type FormExpose, type FormSchemaIssue } from './types'
 

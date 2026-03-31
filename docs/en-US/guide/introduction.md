@@ -1,6 +1,6 @@
 # Introduction
 
-The `wot-design-uni` component library is built on `vue3` + `Typescript`, following the design specifications of `wot design`. It provides 70+ high-quality components, supports dark mode, internationalization, and custom themes, aiming to provide developers with unified UI interactions while improving development efficiency.
+The `wot-ui` component library is built on `vue3` + `Typescript`, following the design specifications of `wot design`. It provides 80+ high-quality components, supports dark mode, internationalization, and custom themes, aiming to provide developers with unified UI interactions while improving development efficiency.
 
 ## Quick Start
 
@@ -33,7 +33,7 @@ Please refer to the [Quick Start](/en-US/guide/quick-use.html) documentation.
 ## ✨ Features
 
 - 🎯 Multi-platform coverage, supporting WeChat Mini Program, Alipay Mini Program, DingTalk Mini Program, H5, APP, etc.
-- 🚀 70+ high-quality components covering mainstream mobile scenarios.
+- 🚀 80+ high-quality components covering mainstream mobile scenarios.
 - 💪 Built with Typescript, providing a robust component type system.
 - 🌍 Internationalization support with 15 built-in language packs.
 - 📖 Comprehensive documentation and component examples.
@@ -65,7 +65,7 @@ After donation, your nickname and message will be displayed in the [donation lis
 | [wot-ui-intellisense](https://github.com/wot-ui/wot-ui-intellisense) | wot-ui vscode code completion plugin |
 | [Wot UI Snippets](https://marketplace.visualstudio.com/items?itemName=kiko.wot-design-uni-snippets) | Wot UI code snippets |
 | [uni-mini-ci](https://github.com/Moonofweisheng/uni-mini-ci) | A plugin that supports CI (Continuous Integration) for uni-app mini program after build |
-| [uni-mini-router](https://github.com/Moonofweisheng/uni-mini-router) | A lightweight uni-app router library based on vue3 and Typescript |
+| [my-uni](https://github.com/wot-ui/my-uni) | A lightweight uni-app router library based on vue3 and Typescript |
 | [unibest](https://github.com/unibest-tech/unibest) | A uni-app template based on wot-design-uni |
 | [wot-design-uni AI Assistant](https://www.coze.cn/store/bot/7347916532258701363) | An intelligent assistant that can answer your questions about the wot-design-uni component library |
 | [uni-ku-root](https://github.com/uni-ku/root) | A root component plugin that simulates App.vue's original capabilities |

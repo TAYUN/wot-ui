@@ -51,7 +51,8 @@ export default {
   cascader: {
     title: 'تاللاڭ',
     placeholder: 'تاللاڭ',
-    select: 'تاللاڭ'
+    select: 'تاللاڭ',
+    confirm: 'جەزملە'
   },
   datetimePicker: {
     start: 'باشلىنىش ۋاقتى',

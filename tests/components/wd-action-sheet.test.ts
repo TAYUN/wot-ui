@@ -6,8 +6,7 @@ import WdIcon from '@/uni_modules/wot-design-uni/components/wd-icon/wd-icon.vue'
 import WdLoading from '@/uni_modules/wot-design-uni/components/wd-loading/wd-loading.vue'
 import { describe, expect, test } from 'vitest'
 import type { Action, Panel } from '@/uni_modules/wot-design-uni/components/wd-action-sheet/types'
-
-import { nextTick } from 'vue'
+import { h, nextTick } from 'vue'
 
 describe('WdActionSheet', () => {
   // 测试基本渲染
@@ -711,5 +710,34 @@ describe('WdActionSheet', () => {
     await nextTick()
 
     expect(wrapper.findComponent(WdPopup).props('lazyRender')).toBe(false)
+  })
+
+  test('支持通过 close 插槽替换关闭区域', async () => {
+    const wrapper = mount(WdActionSheet, {
+      props: {
+        modelValue: true,
+        title: '标题'
+      },
+      slots: {
+        close: ({ close }: { close: () => void }) => h('button', { class: 'custom-close', onClick: close }, '确认')
+      },
+      global: {
+        components: {
+          WdPopup,
+          WdIcon,
+          WdLoading
+        }
+      }
+    })
+
+    await nextTick()
+
+    expect(wrapper.find('.custom-close').exists()).toBe(true)
+    expect(wrapper.find('.custom-close').text()).toBe('确认')
+
+    await wrapper.find('.custom-close').trigger('click')
+
+    expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([false])
+    expect(wrapper.emitted('close')).toBeTruthy()
   })
 })

@@ -2,82 +2,93 @@
   <page-wraper>
     <wd-toast />
     <view @click="closeOutside" class="page-popover">
-      <demo-block :title="$t('wei-zhi')">
-        <wd-radio-group v-model="placement" direction="horizontal" type="dot">
-          <wd-radio value="bottom" custom-class="page-popover__radio">bottom</wd-radio>
-          <wd-radio value="bottom-start" custom-class="page-popover__radio">bottom-start</wd-radio>
-          <wd-radio value="bottom-end" custom-class="page-popover__radio">bottom-end</wd-radio>
-          <wd-radio value="top" custom-class="page-popover__radio">top</wd-radio>
-          <wd-radio value="top-start" custom-class="page-popover__radio">top-start</wd-radio>
-          <wd-radio value="top-end" custom-class="page-popover__radio">top-end</wd-radio>
-          <wd-radio value="left" custom-class="page-popover__radio">left</wd-radio>
-          <wd-radio value="left-start" custom-class="page-popover__radio">left-start</wd-radio>
-          <wd-radio value="left-end" custom-class="page-popover__radio">left-end</wd-radio>
-          <wd-radio value="right" custom-class="page-popover__radio">right</wd-radio>
-          <wd-radio value="right-start" custom-class="page-popover__radio">right-start</wd-radio>
-          <wd-radio value="right-end" custom-class="page-popover__radio">right-end</wd-radio>
-        </wd-radio-group>
-      </demo-block>
-      <demo-block custom-class="page-popover__demo" :title="$t('jiBenYongFa')">
-        <view class="page-popover__center">
-          <wd-popover id="pop1" :content="$t('zhe-shi-yi-duan-nei-rong')" :placement="placement" v-model="show1" @change="handleChange1">
-            <wd-button data-id="pop1">{{ $t('dian-ji-zhan-shi') }}</wd-button>
-          </wd-popover>
-        </view>
-      </demo-block>
+      <demo-group title="组件类型">
+        <demo-group-item :title="$t('jiBenYongFa')">
+          <view class="page-popover__center">
+            <wd-popover id="pop1" :content="$t('zhe-shi-yi-duan-nei-rong')" :placement="placement" v-model="show1">
+              <wd-button data-id="pop1">{{ $t('dian-ji-zhan-shi') }}</wd-button>
+            </wd-popover>
+          </view>
+        </demo-group-item>
+        <demo-group-item :title="$t('lie-biao-zhan-shi')">
+          <view class="page-popover__center">
+            <wd-popover v-model="show3" mode="menu" :placement="placement" :content="menu" @menuclick="link">
+              <wd-button>{{ $t('lie-biao') }}</wd-button>
+            </wd-popover>
+          </view>
+        </demo-group-item>
+      </demo-group>
 
-      <demo-block custom-class="page-popover__demo" :title="$t('qian-tao-xin-xi')">
-        <view class="page-popover__center">
-          <wd-popover v-model="show2" :placement="placement" @change="handleChange2">
-            <template #content>
-              <view class="page-popover__content">{{ $t('zhe-shi-yi-duan-zi-ding-yi-yang-shi-de-nei-rong') }}</view>
-            </template>
-            <wd-button>{{ $t('dian-ji-zhan-shi-0') }}</wd-button>
-          </wd-popover>
-        </view>
-      </demo-block>
+      <demo-group title="组件变体">
+        <demo-group-item :title="$t('wei-zhi')">
+          <wd-radio-group v-model="placement" direction="horizontal" type="dot">
+            <wd-radio v-for="item in placementItems" :key="item" :value="item" custom-class="page-popover__radio">{{ item }}</wd-radio>
+          </wd-radio-group>
+        </demo-group-item>
+      </demo-group>
 
-      <demo-block custom-class="page-popover__demo" :title="$t('lie-biao-zhan-shi')">
-        <view class="page-popover__center">
-          <wd-popover v-model="show3" mode="menu" :placement="placement" :content="menu" @menuclick="link" @change="handleChange3">
-            <wd-button>{{ $t('lie-biao') }}</wd-button>
-          </wd-popover>
-        </view>
-      </demo-block>
+      <demo-group title="组件样式">
+        <demo-group-item :title="$t('qian-tao-xin-xi')">
+          <view class="page-popover__center">
+            <wd-popover v-model="show2" :placement="placement">
+              <template #content>
+                <view class="page-popover__content">{{ $t('zhe-shi-yi-duan-zi-ding-yi-yang-shi-de-nei-rong') }}</view>
+              </template>
+              <wd-button>{{ $t('dian-ji-zhan-shi-0') }}</wd-button>
+            </wd-popover>
+          </view>
+        </demo-group-item>
+        <demo-group-item :title="$t('xian-shi-guan-bi-an-niu')">
+          <view class="page-popover__center">
+            <wd-popover v-model="show5" :content="$t('zhe-shi-yi-duan-nei-rong')" :placement="placement" show-close>
+              <wd-button>{{ $t('xian-shi-guan-bi-an-niu') }}</wd-button>
+            </wd-popover>
+          </view>
+        </demo-group-item>
+      </demo-group>
 
-      <demo-block custom-class="page-popover__demo" title="动态内容与位置更新">
-        <view class="page-popover__center">
-          <wd-popover v-model="show4" ref="popoverRef" :placement="placement">
-            <template #content>
-              <view class="page-popover__content" :style="{ width: dynamicWidth + 'px' }">
-                <view style="margin-bottom: 10px">当前宽度: {{ dynamicWidth }}px</view>
-                <wd-button custom-class="page-popover__btn" size="small" @click="changeSize">改变大小并更新</wd-button>
-              </view>
-            </template>
-            <wd-button>动态内容</wd-button>
-          </wd-popover>
-        </view>
-      </demo-block>
-
-      <demo-block custom-class="page-popover__demo" :title="$t('xian-shi-guan-bi-an-niu')">
-        <view class="page-popover__center">
-          <wd-popover v-model="show5" :content="$t('zhe-shi-yi-duan-nei-rong')" :placement="placement" show-close>
-            <wd-button>{{ $t('xian-shi-guan-bi-an-niu') }}</wd-button>
-          </wd-popover>
-        </view>
-      </demo-block>
+      <demo-group title="特殊样式">
+        <demo-group-item title="动态内容与位置更新">
+          <view class="page-popover__center">
+            <wd-popover v-model="show4" ref="popoverRef" :placement="placement">
+              <template #content>
+                <view class="page-popover__content" :style="{ width: dynamicWidth + 'px' }">
+                  <view class="page-popover__status">当前宽度: {{ dynamicWidth }}px</view>
+                  <wd-button custom-class="page-popover__btn" size="small" @click="changeSize">改变大小并更新</wd-button>
+                </view>
+              </template>
+              <wd-button>动态内容</wd-button>
+            </wd-popover>
+          </view>
+        </demo-group-item>
+      </demo-group>
     </view>
   </page-wraper>
 </template>
 <script lang="ts" setup>
 import { useToast } from '@/uni_modules/wot-design-uni'
-import { ref } from 'vue'
+import { nextTick, ref } from 'vue'
 import { useQueue } from '@/uni_modules/wot-design-uni'
-import type { PlacementType, PopoverMenuItem } from '@/uni_modules/wot-design-uni/components/wd-popover/types'
+import type { PlacementType, PopoverInstance, PopoverMenuItem } from '@/uni_modules/wot-design-uni/components/wd-popover/types'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 const { closeOutside } = useQueue()
 const toast = useToast()
+
+const placementItems = [
+  'bottom',
+  'bottom-start',
+  'bottom-end',
+  'top',
+  'top-start',
+  'top-end',
+  'left',
+  'left-start',
+  'left-end',
+  'right',
+  'right-start',
+  'right-end'
+] as const
 
 const placement = ref<PlacementType>('bottom')
 
@@ -87,7 +98,7 @@ const show3 = ref<boolean>(false)
 const show4 = ref<boolean>(false)
 const show5 = ref<boolean>(false)
 const dynamicWidth = ref<number>(150)
-const popoverRef = ref()
+const popoverRef = ref<PopoverInstance | null>(null)
 
 const menu = ref<Array<PopoverMenuItem>>([
   {
@@ -114,24 +125,13 @@ function link(e: any) {
 
 function changeSize() {
   dynamicWidth.value = dynamicWidth.value === 150 ? 250 : 150
-  setTimeout(() => {
-    popoverRef.value && popoverRef.value.updatePosition()
-  }, 50)
-}
-
-function handleChange1() {
-  // show1.value = event.detail.show
-}
-
-function handleChange2() {
-  // show2.value = event.detail.show
-}
-function handleChange3() {
-  // show3.value = event.detail.show
+  nextTick(() => {
+    popoverRef.value?.updatePosition()
+  })
 }
 </script>
 <style lang="scss">
-@use '@/uni_modules/wot-design-uni/components/styles/variable.scss' as *;
+@use '@/uni_modules/wot-design-uni/styles/variable.scss' as *;
 
 .page-popover {
   width: 100%;
@@ -139,6 +139,10 @@ function handleChange3() {
   &__center {
     text-align: center;
     padding-bottom: $spacing-super-loose;
+  }
+
+  &__status {
+    margin-bottom: 10px;
   }
 
   &__content {
@@ -160,8 +164,8 @@ function handleChange3() {
   }
 
   :deep(.page-popover__radio) {
-    height: $n32 !important;
-    line-height: $n32 !important;
+    height: $n-32 !important;
+    line-height: $n-32 !important;
   }
 
   :deep(.page-popover__btn) {

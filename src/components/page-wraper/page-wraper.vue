@@ -1,12 +1,14 @@
 <template>
-  <wd-config-provider :custom-class="customClass" :custom-style="customStyle" :theme="theme">
+  <wd-config-provider :custom-class="customClass" :custom-style="customStyle" :theme="configProviderTheme">
     <view class="page-wraper" @click="closeOutside">
-      <wd-cell :title="$t('qie-huan-an-hei')" title-width="240px" center v-if="showDarkMode">
-        <wd-switch v-model="isDark" />
-      </wd-cell>
-      <wd-cell :title="$t('qie-huan-zhu-ti-se')" title-width="240px" center v-if="showDarkMode">
-        <wd-switch v-model="isRed" />
-      </wd-cell>
+      <wd-cell
+        title="调整主题"
+        title-width="240px"
+        is-link
+        :value="currentThemeLabel"
+        v-if="showThemeSelector"
+        @click="showPresetThemeSheet = true"
+      ></wd-cell>
       <slot />
       <!-- #ifdef MP-WEIXIN -->
       <!-- 横幅广告和格子广告可以共存，但插屏广告展示时，不显示横幅广告和格子广告 -->
@@ -24,6 +26,13 @@
     </view>
     <wd-notify />
     <wd-toast />
+    <wd-action-sheet
+      v-model="showPresetThemeSheet"
+      :actions="presetThemeActions"
+      :cancel-text="$t('qu-xiao')"
+      :title="$t('qie-huan-zhu-ti-se')"
+      @select="handlePresetThemeSelect"
+    />
     <!-- #ifdef MP-WEIXIN -->
     <wd-fab v-model:active="fabActive" draggable type="danger" :gap="{ bottom: 58 }" direction="left" v-if="enableRewardFab">
       <wd-button type="danger" round @click="goToReward">
@@ -49,15 +58,30 @@ export default {
 </script>
 <script lang="ts" setup>
 import { computed, ref, onMounted, nextTick } from 'vue'
-import { setNotifyDefaultOptions, useQueue, type ConfigProviderThemeVars, useConfigProvider } from '@/uni_modules/wot-design-uni'
+import { setNotifyDefaultOptions, useConfigProvider, useQueue } from '@/uni_modules/wot-design-uni'
+import type { Action } from '@/uni_modules/wot-design-uni/components/wd-action-sheet/types'
+import type { ConfigProviderTheme } from '@/uni_modules/wot-design-uni/components/wd-config-provider/types'
 import { useDark } from '../../store'
 import { useRewardAd } from '@/store/useRewardAd'
+
+const presetThemeOptions = [
+  { label: 'Shadcn', value: 'shadcn' },
+  { label: 'Illustration', value: 'illustration' },
+  { label: 'Cartoon', value: 'cartoon' },
+  { label: 'NutUI', value: 'nutui' },
+  { label: 'TDesign', value: 'tdesign' },
+  { label: 'Vant', value: 'vant' }
+] as const
+
+type PresetThemeName = (typeof presetThemeOptions)[number]['value'] | 'default'
+type SelectableThemeName = PresetThemeName | 'dark'
 
 interface Props {
   showDarkMode?: boolean
   safeAreaInsetBottom?: boolean
   useWxAd?: boolean
   useRewardFab?: boolean
+  enablePresetTheme?: boolean
   customClass?: string
   customStyle?: string
 }
@@ -66,7 +90,8 @@ const props = withDefaults(defineProps<Props>(), {
   showDarkMode: false,
   safeAreaInsetBottom: true,
   useWxAd: process.env.NODE_ENV === 'development' ? false : true,
-  useRewardFab: false
+  useRewardFab: false,
+  enablePresetTheme: false
 })
 
 const enableRewardFab = computed(() => {
@@ -75,8 +100,8 @@ const enableRewardFab = computed(() => {
 const { isFree } = useRewardAd()
 const darkMode = useDark()
 const { closeOutside } = useQueue()
-const isDark = ref<boolean>(false)
-const isRed = ref<boolean>(false)
+const showPresetThemeSheet = ref(false)
+const currentTheme = ref<SelectableThemeName>('default')
 // #ifdef MP-WEIXIN
 const fabActive = ref<boolean>(false)
 // 横幅广告和格子广告可以共存，但插屏广告展示时，不显示横幅广告和格子广告
@@ -86,15 +111,57 @@ const showWxAd3 = ref<boolean>(Math.random() > 0.66) // 插屏广告
 let interstitialAd: UniApp.InterstitialAdContext | null = null
 // #endif
 
-const themeVars = computed<ConfigProviderThemeVars>(() => {
-  return isRed.value ? { colorTheme: 'red' } : {}
+const showThemeSelector = computed(() => props.showDarkMode || props.enablePresetTheme)
+
+const presetThemeSelections = computed<Array<{ label: string; value: SelectableThemeName }>>(() => {
+  const options: Array<{ label: string; value: SelectableThemeName }> = [{ label: 'Default', value: 'default' }]
+
+  if (props.showDarkMode) {
+    options.push({ label: 'Dark', value: 'dark' })
+  }
+
+  if (props.enablePresetTheme) {
+    options.push(...presetThemeOptions)
+  }
+
+  return options
 })
 
-useConfigProvider({ themeVars })
-
-const theme = computed(() => {
-  return darkMode.isDark.value || isDark.value ? 'dark' : 'light'
+const presetThemeActions = computed<Action[]>(() => {
+  return presetThemeSelections.value.map((option) => ({
+    name: option.label,
+    value: option.value
+  }))
 })
+
+const currentThemeLabel = computed(() => {
+  if (currentTheme.value === 'default') {
+    return resolvedTheme.value === 'dark' ? 'Dark' : 'Default'
+  }
+  return presetThemeSelections.value.find((item) => item.value === currentTheme.value)?.label || 'Default'
+})
+
+const resolvedTheme = computed<string>(() => {
+  if (currentTheme.value === 'default') {
+    return darkMode.isDark.value ? 'dark' : 'light'
+  }
+
+  return currentTheme.value
+})
+
+const configProviderTheme = computed<ConfigProviderTheme>(() => {
+  return resolvedTheme.value as ConfigProviderTheme
+})
+
+useConfigProvider({ theme: configProviderTheme })
+
+function handlePresetThemeSelect({ item }: { item: Action }) {
+  const selectedTheme = item.value as SelectableThemeName | undefined
+
+  if (selectedTheme && presetThemeSelections.value.some((option) => option.value === selectedTheme)) {
+    currentTheme.value = selectedTheme
+  }
+}
 
 function goToReward() {
   fabActive.value = false

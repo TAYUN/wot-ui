@@ -19,8 +19,8 @@ applyTo: "**/*.scss"
 
 | 旧版 | 新版 |
 |------|------|
-| `@import "./../common/abstracts/_mixin.scss";` | `@use '../styles/mixin/mixin.scss' as *;` |
-| `@import "./../common/abstracts/variable.scss";` | `@use '../styles/variable.scss' as *;` |
+| `@import "./../common/abstracts/_mixin.scss";` | `@use '../../styles/mixin/mixin.scss' as *;` |
+| `@import "./../common/abstracts/variable.scss";` | `@use '../../styles/variable.scss' as *;` |
 
 ### 变量命名规范
 
@@ -48,8 +48,8 @@ applyTo: "**/*.scss"
 @import "./../common/abstracts/variable.scss";
 
 // 新版
-@use '../styles/mixin/mixin.scss' as *;
-@use '../styles/variable.scss' as *;
+@use '../../styles/mixin/mixin.scss' as *;
+@use '../../styles/variable.scss' as *;
 ```
 
 ---
@@ -70,7 +70,7 @@ $组件名-元素-属性-变体-状态: var(--wot-组件名-元素-属性-变体
 
 ```scss
 // 基础变量（无元素无变体）
-$badge-height: var(--wot-badge-height, $n16) !default;
+$badge-height: var(--wot-badge-height, $n-16) !default;
 $badge-padding: var(--wot-badge-padding, $padding-zero $padding-super-tight) !default;
 $badge-color: var(--wot-badge-color, $text-white) !default;
 
@@ -78,7 +78,7 @@ $badge-color: var(--wot-badge-color, $text-white) !default;
 $badge-danger-bg: var(--wot-badge-danger-bg, $danger-main) !default;
 
 // 有元素时：元素在属性前（dot 是元素，size 是属性）
-$badge-dot-size: var(--wot-badge-dot-size, $n8) !default;
+$badge-dot-size: var(--wot-badge-dot-size, $n-8) !default;
 ```
 
 ---
@@ -170,17 +170,17 @@ $badge-dot-size: var(--wot-badge-dot-size, $n8) !default;
 ### 迁移后 (navbar)
 
 ```scss
-@use '../styles/mixin/mixin.scss' as *;
-@use '../styles/variable.scss' as *;
+@use '../../styles/mixin/mixin.scss' as *;
+@use '../../styles/variable.scss' as *;
 
 // 组件级 CSS 变量定义
-$navbar-height: var(--wot-navbar-height, $n48) !default;
+$navbar-height: var(--wot-navbar-height, $n-48) !default;
 $navbar-bg: var(--wot-navbar-bg, $filled-oppo) !default;
 $navbar-color: var(--wot-navbar-color, $text-main) !default;
 $navbar-title-font-weight: var(--wot-navbar-title-font-weight, $font-weight-medium) !default;
 $navbar-title-font-size: var(--wot-navbar-title-font-size, $typography-body-size-extra-large) !default;
 $navbar-disabled-opacity: var(--wot-navbar-disabled-opacity, $opacity-disabled) !default;
-$navbar-arrow-size: var(--wot-navbar-arrow-size, $n22) !default;
+$navbar-arrow-size: var(--wot-navbar-arrow-size, $n-22) !default;
 $navbar-desc-font-size: var(--wot-navbar-desc-font-size, $typography-body-size-main) !default;
 $navbar-desc-color: var(--wot-navbar-desc-color, $text-secondary) !default;
 

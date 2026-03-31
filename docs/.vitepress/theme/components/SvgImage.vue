@@ -8,13 +8,13 @@ defineProps<{ svg: string }>()
 
 <style>
 .svg-image-root {
-  background-color: #eee;
+  background-color: var(--vp-c-bg-soft);
   border-radius: 8px;
   padding: 1ch;
   margin: 1ch 0;
 }
 html.dark .svg-image-root {
-  background-color: #313641;
+  background-color: var(--vp-c-bg-soft);
 }
 .svg-image-root svg text {
   font-family: var(--vp-font-family-base);

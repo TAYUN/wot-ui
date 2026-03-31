@@ -18,7 +18,7 @@ import VPNavBarSearch from 'vitepress/dist/client/theme-default/components/VPNav
 import VPNavBarSocialLinks from 'vitepress/dist/client/theme-default/components/VPNavBarSocialLinks.vue'
 import VPNavBarTitle from 'vitepress/dist/client/theme-default/components/VPNavBarTitle.vue'
 import VPNavBarTranslations from 'vitepress/dist/client/theme-default/components/VPNavBarTranslations.vue'
-import { useSidebar } from 'vitepress/theme'
+import { useLayout } from 'vitepress/theme'
 import { useData } from 'vitepress'
 
 const props = defineProps<{
@@ -30,7 +30,7 @@ defineEmits<{
 }>()
 
 const { y } = useWindowScroll()
-const { hasSidebar } = useSidebar()
+const { hasSidebar } = useLayout()
 const { frontmatter } = useData()
 
 const classes = ref<Record<string, boolean>>({})

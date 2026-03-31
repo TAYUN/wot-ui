@@ -21,9 +21,9 @@ export default {
 </script>
 <script lang="ts" setup>
 import { type CSSProperties, computed, ref } from 'vue'
-import { isDef, objToStyle, isOdd, isFunction } from '../common/util'
+import { isDef, objToStyle, isOdd, isFunction } from '../../common/util'
 import { tableColumnProps, type SortDirection } from './types'
-import { useParent } from '../composables/useParent'
+import { useParent } from '../../composables/useParent'
 import { TABLE_KEY } from '../wd-table/types'
 import type { SpanMethodResult } from '../wd-table/types'
 

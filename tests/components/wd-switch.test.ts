@@ -13,7 +13,7 @@ describe('WdSwitch', () => {
     })
 
     expect(wrapper.classes()).toContain('wd-switch')
-    expect(wrapper.find('.wd-switch__circle').exists()).toBe(true)
+    expect(wrapper.find('.wd-switch__action').exists()).toBe(true)
   })
 
   // 测试选中状态
@@ -24,7 +24,7 @@ describe('WdSwitch', () => {
       }
     })
 
-    expect(wrapper.classes()).toContain('is-checked')
+    expect(wrapper.classes()).toContain('is-active')
   })
 
   // 测试开关状态切换
@@ -77,9 +77,7 @@ describe('WdSwitch', () => {
       }
     })
 
-    // 浏览器可能会将十六进制颜色转换为 RGB 格式，所以只检查是否包含 background 和 border-color
-    expect(activeWrapper.attributes('style')).toContain('background:')
-    expect(activeWrapper.attributes('style')).toContain('border-color:')
+    expect(activeWrapper.find('.wd-switch__inner').attributes('style')).toContain('background:')
 
     // 测试非激活状态颜色
     const inactiveWrapper = mount(WdSwitch, {
@@ -90,9 +88,7 @@ describe('WdSwitch', () => {
       }
     })
 
-    // 浏览器可能会将十六进制颜色转换为 RGB 格式，所以只检查是否包含 background 和 border-color
-    expect(inactiveWrapper.attributes('style')).toContain('background:')
-    expect(inactiveWrapper.attributes('style')).toContain('border-color:')
+    expect(inactiveWrapper.find('.wd-switch__inner').attributes('style')).toContain('background:')
   })
 
   // 测试自定义值
@@ -165,9 +161,7 @@ describe('WdSwitch', () => {
 
   // 测试 beforeChange 钩子
   test('beforeChange钩子', async () => {
-    const beforeChange = vi.fn(({ value, resolve }) => {
-      resolve(true)
-    })
+    const beforeChange = vi.fn((value) => value === true)
 
     const wrapper = mount(WdSwitch, {
       props: {
@@ -179,7 +173,7 @@ describe('WdSwitch', () => {
     await wrapper.trigger('click')
 
     expect(beforeChange).toHaveBeenCalled()
-    expect(beforeChange.mock.calls[0][0].value).toBe(true)
+    expect(beforeChange).toHaveBeenCalledWith(true)
 
     const emitted = wrapper.emitted() as Record<string, any[]>
     expect(emitted['update:modelValue']).toBeTruthy()
@@ -191,9 +185,7 @@ describe('WdSwitch', () => {
 
   // 测试 beforeChange 钩子拒绝切换
   test('beforeChange钩子拒绝切换', async () => {
-    const beforeChange = vi.fn(({ value, resolve }) => {
-      resolve(false)
-    })
+    const beforeChange = vi.fn(() => false)
 
     const wrapper = mount(WdSwitch, {
       props: {
@@ -205,11 +197,31 @@ describe('WdSwitch', () => {
     await wrapper.trigger('click')
 
     expect(beforeChange).toHaveBeenCalled()
-    expect(beforeChange.mock.calls[0][0].value).toBe(true)
+    expect(beforeChange).toHaveBeenCalledWith(true)
 
     const emitted = wrapper.emitted() as Record<string, any[]> | undefined
     expect(emitted?.['update:modelValue']).toBeFalsy()
     expect(emitted?.['change']).toBeFalsy()
+  })
+
+  test('beforeChange支持Promise', async () => {
+    const beforeChange = vi.fn(() => Promise.resolve(true))
+
+    const wrapper = mount(WdSwitch, {
+      props: {
+        modelValue: false,
+        beforeChange
+      }
+    })
+
+    await wrapper.trigger('click')
+    await nextTick()
+
+    expect(beforeChange).toHaveBeenCalledWith(true)
+
+    const emitted = wrapper.emitted() as Record<string, any[]>
+    expect(emitted['update:modelValue']).toBeTruthy()
+    expect(emitted['update:modelValue'][0][0]).toBe(true)
   })
 
   // 测试初始值不在 activeValue 和 inactiveValue 之间的情况
@@ -236,28 +248,22 @@ describe('WdSwitch', () => {
     expect(emitted['change'][0][0]).toEqual({ value: inactiveValue })
   })
 
-  // 测试圆形按钮样式
-  test('应用圆形样式', () => {
-    const activeColor = '#ff0000'
-
-    // 激活状态
-    const activeWrapper = mount(WdSwitch, {
+  test('应用形状样式', () => {
+    const roundWrapper = mount(WdSwitch, {
       props: {
-        modelValue: true,
-        activeColor
+        modelValue: false,
+        shape: 'round'
       }
     })
+    expect(roundWrapper.classes()).toContain('wd-switch--round')
 
-    expect(activeWrapper.find('.wd-switch__circle').attributes('style')).toBe('box-shadow: none;')
-
-    // 非激活状态，无自定义颜色
-    const defaultWrapper = mount(WdSwitch, {
+    const squareWrapper = mount(WdSwitch, {
       props: {
-        modelValue: false
+        modelValue: false,
+        shape: 'square'
       }
     })
-
-    expect(defaultWrapper.find('.wd-switch__circle').attributes('style')).toBe('')
+    expect(squareWrapper.classes()).toContain('wd-switch--square')
   })
 
   // 测试数字类型的值

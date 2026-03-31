@@ -67,7 +67,7 @@ function handleChange({ value, label }) {
 
 ## Asynchronous Switching
 
-Through the `before-change` property, you can execute specific logic before switching tabs. It receives `{ value, resolve }` parameters, continues execution through `resolve`, and `resolve` accepts 1 boolean parameter.
+Through the `before-change` property, you can execute specific logic before switching tabs. It receives the target `value`, returns `false` to prevent switching, and supports returning `Promise<boolean>`.
 
 ```html
 <wd-sidebar v-model="active" :before-change="beforeChange">
@@ -86,12 +86,14 @@ const { loading: showLoading, close: closeLoading } = useToast()
 const toast = useToast()
 const active = ref<number>(1)
 
-const beforeChange: SidebarBeforeChange = ({ value, resolve }) => {
+const beforeChange: SidebarBeforeChange = (value) => {
   showLoading('Switching')
-  setTimeout(() => {
-    closeLoading()
-    resolve(true)
-  }, 2000)
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      closeLoading()
+      resolve(true)
+    }, 2000)
+  })
 }
 ```
 
@@ -122,7 +124,7 @@ The anchor usage of the sidebar component can help users quickly navigate to spe
 ```typescript [typescript]
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
-import { getRect, isArray } from '@/uni_modules/wot-design-uni/components/common/util'
+import { getRect, isArray } from '@/uni_modules/wot-design-uni/common/util'
 
 const active = ref<number>(1)
 const scrollTop = ref<number>(0)
@@ -216,7 +218,7 @@ function onScroll(e) {
 | Parameter          | Description                                                                                                                                                                     | Type             | Accepted Values | Default | Version |
 |-------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------|-----------------|---------|---------|
 | modelValue/v-model | Index of current navigation item                                                                                                                                                | string / number  | -               | 0       | 0.1.49  |
-| before-change     | Hook before switching navigation items. Can execute specific logic before switching tabs. Receives { value, resolve } parameters, continue execution through resolve               | function         | -               | -       | 1.4.0   |
+| before-change     | Hook before switching navigation items. Receives the target value, returns `false` to prevent switching, and supports returning `Promise<boolean>`                                  | function         | -               | -       | 1.4.0   |
 
 ## Events
 

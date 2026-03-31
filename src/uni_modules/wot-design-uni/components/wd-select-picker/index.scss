@@ -1,15 +1,16 @@
-@use '../styles/mixin/mixin.scss' as *;
-@use '../styles/variable.scss' as *;
+@use '../../styles/mixin/mixin.scss' as *;
+@use '../../styles/variable.scss' as *;
 
+// 选择器背景色
 $select-picker-bg: var(--wot-select-picker-bg, $filled-oppo) !default;
 // loading 状态下透明度
 $select-picker-loading-opacity: var(--wot-select-picker-loading-opacity, $opacity-disabled) !default;
 // loading 图标尺寸
-$select-picker-loading-icon-size: var(--wot-select-picker-loading-icon-size, $n48) !default;  
+$select-picker-loading-icon-size: var(--wot-select-picker-loading-icon-size, $n-48) !default;  
 // 内容区水平内边距
 $select-picker-wrapper-padding-horizontal: var(--wot-select-picker-wrapper-padding-horizontal, $padding-main) !default;
 // 内容区最大高度
-$select-picker-wrapper-max-height: var(--wot-select-picker-wrapper-max-height, $n375) !default;
+$select-picker-wrapper-max-height: var(--wot-select-picker-wrapper-max-height, $n-375) !default;
 // 选中态文字颜色
 $select-picker-text-active-color: var(--wot-select-picker-text-active-color, $primary-6) !default;
 // 底部内边距

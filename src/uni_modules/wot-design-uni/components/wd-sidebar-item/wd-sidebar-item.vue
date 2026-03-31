@@ -33,11 +33,11 @@ export default {
 import wdIcon from '../wd-icon/wd-icon.vue'
 import wdBadge from '../wd-badge/wd-badge.vue'
 import { computed } from 'vue'
-import { useParent } from '../composables/useParent'
+import { useParent } from '../../composables/useParent'
 import { SIDEBAR_KEY } from '../wd-sidebar/types'
 import { sidebarItemProps } from './types'
 import type { BadgeProps } from '../wd-badge/types'
-import { deepAssign, isDef, isUndefined, omitBy } from '../common/util'
+import { deepAssign, isDef, isUndefined, omitBy } from '../../common/util'
 
 const props = defineProps(sidebarItemProps)
 

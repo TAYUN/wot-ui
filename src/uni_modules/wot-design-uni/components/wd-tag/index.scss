@@ -1,6 +1,6 @@
 @use "sass:map";
-@use '../styles/variable.scss' as *;
-@use '../styles/mixin/mixin.scss' as *;
+@use '../../styles/variable.scss' as *;
+@use '../../styles/mixin/mixin.scss' as *;
 
 // 基础文字颜色
 $tag-color: var(--wot-tag-color, $text-white) !default;
@@ -15,7 +15,7 @@ $tag-mark-radius: var(--wot-tag-mark-radius, $radius-large $radius-main) !defaul
 // 图标间距
 $tag-icon-spacing: var(--wot-tag-icon-spacing, $spacing-ultra-tight) !default;
 // 输入态宽度
-$tag-input-width: var(--wot-tag-input-width, $n64) !default;
+$tag-input-width: var(--wot-tag-input-width, $n-64) !default;
 // 主色浅色背景
 $tag-primary-light-bg: var(--wot-tag-primary-light-bg, $primary-1) !default;
 // 主色背景
@@ -85,47 +85,47 @@ $tag-small-padding: var(--wot-tag-small-padding, $padding-zero $padding-super-ti
 // 小尺寸圆角态内边距
 $tag-small-round-padding: var(--wot-tag-small-round-padding, $padding-zero $padding-tight) !default;
 // 小尺寸图标尺寸
-$tag-small-icon-size: var(--wot-tag-small-icon-size, $n10) !default;
+$tag-small-icon-size: var(--wot-tag-small-icon-size, $n-10) !default;
 // 中尺寸字号
 $tag-medium-font-size: var(--wot-tag-medium-font-size, $typography-label-size-main) !default;
 // 中尺寸行高
 $tag-medium-line-height: var(--wot-tag-medium-line-height, $typography-label-line--height-size-main) !default;
 // 中尺寸内边距
-$tag-medium-padding: var(--wot-tag-medium-padding, $n1 $padding-super-tight) !default;
+$tag-medium-padding: var(--wot-tag-medium-padding, $n-1 $padding-super-tight) !default;
 // 中尺寸圆角态内边距
-$tag-medium-round-padding: var(--wot-tag-medium-round-padding, $n1 $padding-tight) !default;
+$tag-medium-round-padding: var(--wot-tag-medium-round-padding, $n-1 $padding-tight) !default;
 // 中尺寸图标尺寸
-$tag-medium-icon-size: var(--wot-tag-medium-icon-size, $n10) !default;
+$tag-medium-icon-size: var(--wot-tag-medium-icon-size, $n-10) !default;
 // 默认尺寸字号
 $tag-default-font-size: var(--wot-tag-default-font-size, $typography-label-size-main) !default;
 // 默认尺寸行高
 $tag-default-line-height: var(--wot-tag-default-line-height, $typography-label-line--height-size-main) !default;
 // 默认尺寸内边距
-$tag-default-padding: var(--wot-tag-default-padding, $n3 $padding-extra-tight) !default;
+$tag-default-padding: var(--wot-tag-default-padding, $n-3 $padding-extra-tight) !default;
 // 默认尺寸圆角态内边距
-$tag-default-round-padding: var(--wot-tag-default-round-padding, $n3 $padding-loose) !default;
+$tag-default-round-padding: var(--wot-tag-default-round-padding, $n-3 $padding-loose) !default;
 // 默认尺寸图标尺寸
-$tag-default-icon-size: var(--wot-tag-default-icon-size, $n12) !default;
+$tag-default-icon-size: var(--wot-tag-default-icon-size, $n-12) !default;
 // 大尺寸字号
 $tag-large-font-size: var(--wot-tag-large-font-size, $typography-label-size-large) !default;
 // 大尺寸行高
 $tag-large-line-height: var(--wot-tag-large-line-height, $typography-label-line--height-size-large) !default;
 // 大尺寸内边距
-$tag-large-padding: var(--wot-tag-large-padding, $n3 $padding-extra-tight) !default;
+$tag-large-padding: var(--wot-tag-large-padding, $n-3 $padding-extra-tight) !default;
 // 大尺寸圆角态内边距
-$tag-large-round-padding: var(--wot-tag-large-round-padding, $n3 $padding-loose) !default;
+$tag-large-round-padding: var(--wot-tag-large-round-padding, $n-3 $padding-loose) !default;
 // 大尺寸图标尺寸
-$tag-large-icon-size: var(--wot-tag-large-icon-size, $n12) !default;
+$tag-large-icon-size: var(--wot-tag-large-icon-size, $n-12) !default;
 // 超大尺寸字号
 $tag-extra-large-font-size: var(--wot-tag-extra-large-font-size, $typography-body-size-main) !default;
 // 超大尺寸行高
 $tag-extra-large-line-height: var(--wot-tag-extra-large-line-height, $typography-body-line--height-size-main) !default;
 // 超大尺寸内边距
-$tag-extra-large-padding: var(--wot-tag-extra-large-padding, $n3 $padding-extra-tight) !default;
+$tag-extra-large-padding: var(--wot-tag-extra-large-padding, $n-3 $padding-extra-tight) !default;
 // 超大尺寸圆角态内边距
-$tag-extra-large-round-padding: var(--wot-tag-extra-large-round-padding, $n3 $padding-loose) !default;
+$tag-extra-large-round-padding: var(--wot-tag-extra-large-round-padding, $n-3 $padding-loose) !default;
 // 超大尺寸图标尺寸
-$tag-extra-large-icon-size: var(--wot-tag-extra-large-icon-size, $n12) !default;
+$tag-extra-large-icon-size: var(--wot-tag-extra-large-icon-size, $n-12) !default;
 
 $tag-types: (
   "default": (

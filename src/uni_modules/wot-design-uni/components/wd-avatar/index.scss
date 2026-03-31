@@ -1,14 +1,14 @@
-@use '../styles/mixin/mixin.scss'as *;
-@use '../styles/variable.scss'as *;
+@use '../../styles/mixin/mixin.scss'as *;
+@use '../../styles/variable.scss'as *;
 
 // 默认尺寸
-$avatar-size-normal: var(--wot-avatar-size-normal, $n36) !default;
+$avatar-size-normal: var(--wot-avatar-size-normal, $n-36) !default;
 // 大尺寸
-$avatar-size-large: var(--wot-avatar-size-large, $n56) !default;
+$avatar-size-large: var(--wot-avatar-size-large, $n-56) !default;
 // 中尺寸
-$avatar-size-medium: var(--wot-avatar-size-medium, $n48) !default;
+$avatar-size-medium: var(--wot-avatar-size-medium, $n-48) !default;
 // 小尺寸
-$avatar-size-small: var(--wot-avatar-size-small, $n24) !default;
+$avatar-size-small: var(--wot-avatar-size-small, $n-24) !default;
 // 头像文字颜色
 $avatar-text-color: var(--wot-avatar-text-color, $text-white) !default;
 // 头像文字字重

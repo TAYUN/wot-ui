@@ -1,6 +1,6 @@
 import { inject, provide, ref } from 'vue'
 import type { Toast, ToastOptions } from './types'
-import { deepMerge } from '../common/util'
+import { deepMerge } from '../../common/util'
 
 /**
  * useToast 用到的key

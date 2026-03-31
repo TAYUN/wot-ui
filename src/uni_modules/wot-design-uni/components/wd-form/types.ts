@@ -8,7 +8,7 @@
  * 记得注释
  */
 import { type ComponentPublicInstance, type ExtractPropTypes, type InjectionKey, type PropType } from 'vue'
-import { baseProps, makeBooleanProp, makeRequiredProp, numericProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeRequiredProp, numericProp } from '../../common/props'
 import type { CellLayout, CellSize, CellValueAlign, CellAsteriskPosition } from '../wd-cell/types'
 
 export type FormSchemaIssue = {

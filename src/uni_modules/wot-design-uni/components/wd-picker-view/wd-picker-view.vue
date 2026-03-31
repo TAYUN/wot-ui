@@ -36,11 +36,11 @@ export default {
 </script>
 <script lang="ts" setup>
 import { watch, nextTick, computed } from 'vue'
-import { addUnit, isDef, isEqual, isArray, isObj } from '../common/util'
+import { addUnit, isDef, isEqual, isArray, isObj } from '../../common/util'
 import { pickerViewProps, type PickerViewExpose, type PickerOption } from './types'
 
 import { useSelection } from './useSelection'
-import { type Numeric } from '../common/props'
+import { type Numeric } from '../../common/props'
 
 const props = defineProps(pickerViewProps)
 const emit = defineEmits(['change', 'pickstart', 'pickend', 'update:modelValue'])

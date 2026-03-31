@@ -1,57 +1,60 @@
 <template>
   <page-wraper>
-    <demo-block :title="$t('ji-chu-yong-fa-0')">
-      <wd-slider v-model="value1" />
-    </demo-block>
+    <view class="page-slider">
+      <demo-group title="组件类型">
+        <demo-group-item :title="$t('ji-chu-yong-fa-0')">
+          <wd-slider v-model="value1" />
+        </demo-group-item>
+        <demo-group-item :title="$t('shuang-xiang-hua-kuai')">
+          <wd-slider v-model="value4" range />
+        </demo-group-item>
+      </demo-group>
 
-    <demo-block title="显示极值">
-      <wd-slider v-model="value3" show-extreme-value />
-    </demo-block>
+      <demo-group title="组件状态">
+        <demo-group-item :title="$t('jin-yong-zhuang-tai')">
+          <wd-slider v-model="value13" disabled />
+        </demo-group-item>
+      </demo-group>
 
-    <demo-block :title="$t('shuang-xiang-hua-kuai')">
-      <wd-slider v-model="value4" range />
-    </demo-block>
+      <demo-group title="组件样式">
+        <demo-group-item title="显示极值">
+          <wd-slider v-model="value3" show-extreme-value />
+        </demo-group-item>
+        <demo-group-item title="管道样式">
+          <wd-slider v-model="value6" theme="capsule" />
+        </demo-group-item>
+        <demo-group-item :title="$t('zhi-ding-bu-chang')">
+          <wd-slider v-model="value9" :step="10" />
+        </demo-group-item>
+        <demo-group-item :title="$t('zhi-ding-xuan-ze-fan-wei')">
+          <wd-slider v-model="value10" :min="-10" :max="10" show-extreme-value />
+        </demo-group-item>
+        <demo-group-item title="刻度标记">
+          <wd-slider v-model="value11" :marks="marks1" :step="25" />
+        </demo-group-item>
+        <demo-group-item title="刻度标记（管道）">
+          <wd-slider v-model="value12" :marks="marks1" :step="25" theme="capsule" />
+        </demo-group-item>
+      </demo-group>
 
-    <demo-block title="管道样式">
-      <wd-slider v-model="value6" theme="capsule" />
-    </demo-block>
-
-    <demo-block :title="$t('zhi-ding-bu-chang')">
-      <wd-slider v-model="value9" :step="10" />
-    </demo-block>
-
-    <demo-block :title="$t('zhi-ding-xuan-ze-fan-wei')">
-      <wd-slider v-model="value10" :min="-10" :max="10" show-extreme-value />
-    </demo-block>
-
-    <demo-block title="刻度标记">
-      <wd-slider v-model="value11" :marks="marks1" :step="25" />
-    </demo-block>
-
-    <demo-block title="刻度标记（管道）">
-      <wd-slider v-model="value12" :marks="marks1" :step="25" theme="capsule" />
-    </demo-block>
-
-    <demo-block :title="$t('jin-yong-zhuang-tai')">
-      <wd-slider v-model="value13" disabled />
-    </demo-block>
-
-    <demo-block title="垂直方向">
-      <view class="vertical-demo">
-        <wd-slider v-model="value14" vertical />
-        <wd-slider v-model="value16" vertical show-extreme-value />
-        <wd-slider v-model="value17" vertical range />
-        <wd-slider v-model="value19" vertical :marks="marks1" :step="25" />
-      </view>
-    </demo-block>
-
-    <demo-block title="垂直 + 管道">
-      <view class="vertical-demo">
-        <wd-slider v-model="value18" vertical theme="capsule" />
-        <wd-slider v-model="value20b" vertical theme="capsule" range show-extreme-value />
-        <wd-slider v-model="value21" vertical theme="capsule" :marks="marks1" :step="25" />
-      </view>
-    </demo-block>
+      <demo-group title="布局能力">
+        <demo-group-item title="垂直方向">
+          <view class="vertical-demo">
+            <wd-slider v-model="value14" vertical />
+            <wd-slider v-model="value16" vertical show-extreme-value />
+            <wd-slider v-model="value17" vertical range />
+            <wd-slider v-model="value19" vertical :marks="marks1" :step="25" />
+          </view>
+        </demo-group-item>
+        <demo-group-item title="垂直 + 管道">
+          <view class="vertical-demo">
+            <wd-slider v-model="value18" vertical theme="capsule" />
+            <wd-slider v-model="value20b" vertical theme="capsule" range show-extreme-value />
+            <wd-slider v-model="value21" vertical theme="capsule" :marks="marks1" :step="25" />
+          </view>
+        </demo-group-item>
+      </demo-group>
+    </view>
   </page-wraper>
 </template>
 
@@ -96,11 +99,13 @@ const value20b = ref<number[]>([20, 60])
 </script>
 
 <style lang="scss" scoped>
-.vertical-demo {
-  display: flex;
-  gap: 40px;
-  align-items: stretch;
-  padding: 20px;
-  height: 250px;
+.page-slider {
+  .vertical-demo {
+    display: flex;
+    gap: 40px;
+    align-items: stretch;
+    padding: 20px;
+    height: 250px;
+  }
 }
 </style>

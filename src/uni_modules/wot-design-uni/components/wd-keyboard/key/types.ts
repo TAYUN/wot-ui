@@ -1,5 +1,5 @@
 import type { ExtractPropTypes } from 'vue'
-import { makeBooleanProp, makeNumericProp, makeStringProp } from '../../common/props'
+import { makeBooleanProp, makeNumericProp, makeStringProp } from '../../../common/props'
 
 export type NumberKeyType = '' | 'delete' | 'extra' | 'close'
 

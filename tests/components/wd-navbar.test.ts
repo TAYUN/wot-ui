@@ -52,8 +52,8 @@ describe('WdNavbar', () => {
     })
     // 检查是否渲染了 wd-icon 组件，而不是直接检查 .wd-navbar__arrow 类
     expect(wrapper.findComponent({ name: 'wd-icon' }).exists()).toBe(true)
-    // 检查 wd-icon 组件的 name 属性是否为 'arrow-left'
-    expect(wrapper.findComponent({ name: 'wd-icon' }).props('name')).toBe('arrow-left')
+    // 检查 wd-icon 组件的 name 属性是否为 'left'
+    expect(wrapper.findComponent({ name: 'wd-icon' }).props('name')).toBe('left')
   })
 
   // 测试边框

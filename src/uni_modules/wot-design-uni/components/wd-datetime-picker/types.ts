@@ -1,5 +1,5 @@
 import type { ComponentPublicInstance, ExtractPropTypes, PropType } from 'vue'
-import { baseProps, makeBooleanProp, makeNumberProp, makeRequiredProp, makeStringProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeNumberProp, makeRequiredProp, makeStringProp } from '../../common/props'
 import type { DateTimeType, DatetimePickerViewFilter, DatetimePickerViewFormatter } from '../wd-datetime-picker-view/types'
 
 const now = new Date()
@@ -137,7 +137,7 @@ export const datetimePickerProps = {
    */
   formatter: Function as PropType<DatetimePickerViewFormatter>,
   /**
-   * 确定前校验函数，接收 (value, resolve, picker) 参数，通过 resolve 继续执行 picker，resolve 接收1个boolean参数
+   * 确定前校验函数，接收 (value) 参数，返回 boolean 或 Promise<boolean>
    * 类型: function
    */
   beforeConfirm: Function as PropType<DatetimePickerBeforeConfirm>,
@@ -178,11 +178,7 @@ export const datetimePickerProps = {
   visible: makeBooleanProp(false)
 }
 
-export type DatetimePickerBeforeConfirm = (
-  value: number | string | (number | string)[],
-  resolve: (isPass: boolean) => void,
-  picker: DatetimePickerInstance
-) => void
+export type DatetimePickerBeforeConfirm = (value: number | string | (number | string)[]) => boolean | Promise<boolean>
 
 export type DatetimePickerDisplayFormatTabLabel = (items: Record<string, any>[]) => string
 

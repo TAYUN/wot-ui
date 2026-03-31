@@ -31,10 +31,10 @@ export default {
 </script>
 <script lang="ts" setup>
 import { computed, type CSSProperties, getCurrentInstance, onBeforeMount, onMounted, onUnmounted, ref, watch } from 'vue'
-import { addUnit, isObj, objToStyle, uuid, getSystemInfo } from '../common/util'
+import { addUnit, isObj, objToStyle, uuid, getSystemInfo } from '../../common/util'
 import { circleProps } from './types'
 // #ifdef MP-WEIXIN
-import { canvas2dAdapter } from '../common/canvasHelper'
+import { canvas2dAdapter } from '../../common/canvasHelper'
 // #endif
 
 // 大于等于0且小于等于100

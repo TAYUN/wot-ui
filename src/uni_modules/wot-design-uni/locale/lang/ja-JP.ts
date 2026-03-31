@@ -47,7 +47,8 @@ export default {
   cascader: {
     title: '選択してください',
     placeholder: '選択してください',
-    select: '選択'
+    select: '選択',
+    confirm: '確認'
   },
   datetimePicker: {
     start: '開始時間',

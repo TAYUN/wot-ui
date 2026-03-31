@@ -1,5 +1,5 @@
 import type { ExtractPropTypes, InjectionKey, ComputedRef } from 'vue'
-import { baseProps, makeBooleanProp, makeNumericProp, makeRequiredProp, numericProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeNumericProp, makeRequiredProp, numericProp } from '../../common/props'
 import type { TableColumnProps } from '../wd-table-column/types'
 import type { PropType } from 'vue'
 

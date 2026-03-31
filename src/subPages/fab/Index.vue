@@ -1,61 +1,72 @@
 <template>
-  <wd-toast />
-  <view class="fab" @click="closeOutside">
+  <view class="page-fab" @click="closeOutside">
     <page-wraper>
-      <demo-block :title="$t('xuan-fu-an-niu-zhu-ti-se')">
-        <wd-radio-group v-model="type" type="dot">
-          <wd-radio value="primary" custom-class="custom-radio">{{ $t('zhu-yao-an-niu') }}</wd-radio>
-          <wd-radio value="success" custom-class="custom-radio">{{ $t('cheng-gong-an-niu-0') }}</wd-radio>
-          <wd-radio value="warning" custom-class="custom-radio">{{ $t('jing-gao-an-niu-0') }}</wd-radio>
-          <wd-radio value="error" custom-class="custom-radio">{{ $t('wei-xian-an-niu') }}</wd-radio>
-          <wd-radio value="info" custom-class="custom-radio">{{ $t('xin-xi-an-niu') }}</wd-radio>
-        </wd-radio-group>
-      </demo-block>
-      <demo-block :title="$t('xuan-fu-an-niu-wei-zhi')">
-        <wd-radio-group v-model="position" type="dot">
-          <wd-radio value="left-top" custom-class="custom-radio">{{ $t('zuo-shang') }}</wd-radio>
-          <wd-radio value="right-top" custom-class="custom-radio">{{ $t('you-shang') }}</wd-radio>
-          <wd-radio value="left-center" custom-class="custom-radio">{{ $t('zuo-zhong') }}</wd-radio>
-          <wd-radio value="right-center" custom-class="custom-radio">{{ $t('you-zhong') }}</wd-radio>
-          <wd-radio value="top-center" custom-class="custom-radio">{{ $t('shang-zhong') }}</wd-radio>
-          <wd-radio value="bottom-center" custom-class="custom-radio">{{ $t('xia-zhong') }}</wd-radio>
-          <wd-radio value="left-bottom" custom-class="custom-radio">{{ $t('zuo-xia') }}</wd-radio>
-          <wd-radio value="right-bottom" custom-class="custom-radio">{{ $t('you-xia') }}</wd-radio>
-        </wd-radio-group>
-      </demo-block>
-      <demo-block :title="$t('cai-dan-dan-chu-fang-xiang')">
-        <wd-radio-group v-model="direction" type="dot">
-          <wd-radio value="top" custom-class="custom-radio">{{ $t('xiang-shang') }}</wd-radio>
-          <wd-radio value="bottom" custom-class="custom-radio">{{ $t('xiang-xia') }}</wd-radio>
-          <wd-radio value="right" custom-class="custom-radio">{{ $t('xiang-you') }}</wd-radio>
-          <wd-radio value="left" custom-class="custom-radio">{{ $t('xiang-zuo') }}</wd-radio>
-        </wd-radio-group>
-      </demo-block>
-      <demo-block :title="$t('jinYong')">
-        <view @click.stop="">
-          <wd-switch v-model="disabled" size="22px" />
-        </view>
-      </demo-block>
-      <demo-block :title="$t('ke-tuo-dong')">
-        <view @click.stop="">
-          <wd-switch v-model="draggable" size="22px" />
-        </view>
-      </demo-block>
+      <demo-group title="组件类型">
+        <demo-group-item :title="$t('xuan-fu-an-niu-zhu-ti-se')">
+          <wd-radio-group v-model="type" type="dot" direction="horizontal">
+            <wd-radio value="primary" custom-class="custom-radio">{{ $t('zhu-yao-an-niu') }}</wd-radio>
+            <wd-radio value="success" custom-class="custom-radio">{{ $t('cheng-gong-an-niu-0') }}</wd-radio>
+            <wd-radio value="warning" custom-class="custom-radio">{{ $t('jing-gao-an-niu-0') }}</wd-radio>
+            <wd-radio value="error" custom-class="custom-radio">{{ $t('wei-xian-an-niu') }}</wd-radio>
+            <wd-radio value="info" custom-class="custom-radio">{{ $t('xin-xi-an-niu') }}</wd-radio>
+          </wd-radio-group>
+        </demo-group-item>
+      </demo-group>
 
-      <demo-block :title="$t('qie-huan-zhan-shi')">
-        <view @click.stop="">
-          <wd-button type="primary" @click="active = !active">{{ $t('qie-huan') }}</wd-button>
-        </view>
-      </demo-block>
+      <demo-group title="组件变体">
+        <demo-group-item :title="$t('xuan-fu-an-niu-wei-zhi')">
+          <wd-radio-group v-model="position" type="dot" direction="horizontal">
+            <wd-radio value="left-top" custom-class="custom-radio">{{ $t('zuo-shang') }}</wd-radio>
+            <wd-radio value="right-top" custom-class="custom-radio">{{ $t('you-shang') }}</wd-radio>
+            <wd-radio value="left-center" custom-class="custom-radio">{{ $t('zuo-zhong') }}</wd-radio>
+            <wd-radio value="right-center" custom-class="custom-radio">{{ $t('you-zhong') }}</wd-radio>
+            <wd-radio value="top-center" custom-class="custom-radio">{{ $t('shang-zhong') }}</wd-radio>
+            <wd-radio value="bottom-center" custom-class="custom-radio">{{ $t('xia-zhong') }}</wd-radio>
+            <wd-radio value="left-bottom" custom-class="custom-radio">{{ $t('zuo-xia') }}</wd-radio>
+            <wd-radio value="right-bottom" custom-class="custom-radio">{{ $t('you-xia') }}</wd-radio>
+          </wd-radio-group>
+        </demo-group-item>
 
-      <demo-block :title="$t('zi-ding-yi-chu-fa-qi')">
-        <wd-radio-group v-model="customType" type="dot" @click.stop="">
-          <wd-radio value="default" custom-class="custom-radio">默认样式</wd-radio>
-          <wd-radio value="withText" custom-class="custom-radio">带文字按钮</wd-radio>
-          <wd-radio value="plain" custom-class="custom-radio">plain 变体</wd-radio>
-          <wd-radio value="text" custom-class="custom-radio">text 变体</wd-radio>
-        </wd-radio-group>
-      </demo-block>
+        <demo-group-item :title="$t('cai-dan-dan-chu-fang-xiang')">
+          <wd-radio-group v-model="direction" type="dot" direction="horizontal">
+            <wd-radio value="top" custom-class="custom-radio">{{ $t('xiang-shang') }}</wd-radio>
+            <wd-radio value="bottom" custom-class="custom-radio">{{ $t('xiang-xia') }}</wd-radio>
+            <wd-radio value="right" custom-class="custom-radio">{{ $t('xiang-you') }}</wd-radio>
+            <wd-radio value="left" custom-class="custom-radio">{{ $t('xiang-zuo') }}</wd-radio>
+          </wd-radio-group>
+        </demo-group-item>
+      </demo-group>
+
+      <demo-group title="组件状态">
+        <demo-group-item :title="$t('jinYong')">
+          <view @click.stop="">
+            <wd-switch v-model="disabled" size="22px" />
+          </view>
+        </demo-group-item>
+
+        <demo-group-item :title="$t('ke-tuo-dong')">
+          <view @click.stop="">
+            <wd-switch v-model="draggable" size="22px" />
+          </view>
+        </demo-group-item>
+
+        <demo-group-item :title="$t('qie-huan-zhan-shi')">
+          <view @click.stop="">
+            <wd-button type="primary" @click="active = !active">{{ $t('qie-huan') }}</wd-button>
+          </view>
+        </demo-group-item>
+      </demo-group>
+
+      <demo-group title="特殊样式">
+        <demo-group-item :title="$t('zi-ding-yi-chu-fa-qi')">
+          <wd-radio-group v-model="customType" type="dot" direction="horizontal" @click.stop="">
+            <wd-radio value="default" custom-class="custom-radio">默认样式</wd-radio>
+            <wd-radio value="withText" custom-class="custom-radio">带文字按钮</wd-radio>
+            <wd-radio value="plain" custom-class="custom-radio">plain 变体</wd-radio>
+            <wd-radio value="text" custom-class="custom-radio">text 变体</wd-radio>
+          </wd-radio-group>
+        </demo-group-item>
+      </demo-group>
 
       <!-- 默认 FAB 示例 -->
       <wd-fab
@@ -137,13 +148,14 @@ function handleCustomClick() {
 }
 </script>
 <style lang="scss" scoped>
-.fab {
+.page-fab {
   position: relative;
   height: 100%;
   width: 100%;
   min-height: 100vh;
   box-sizing: border-box;
-  padding-bottom: 88rpx;
+  padding-bottom: $n-98;
+  background: $filled-oppo;
   :deep(.custom-button) {
     min-width: auto !important;
     box-sizing: border-box;

@@ -1,54 +1,51 @@
-<!--
- * @Author: weisheng
- * @Date: 2025-07-17 10:27:32
- * @LastEditTime: 2026-01-30 17:26:18
- * @LastEditors: weisheng
- * @Description: 
- * @FilePath: /wot-design-uni/src/subPages/pagination/Index.vue
- * 记得注释
--->
 <template>
   <page-wraper>
-    <demo-block :title="$t('jiBenYongFa')" transparent>
-      <wd-pagination v-model="page1" :total="total1" @change="handleChange1"></wd-pagination>
-    </demo-block>
-    <demo-block title="幽灵按钮" transparent>
-      <wd-pagination v-model="page4" :total="total4" button-variant="plain" @change="handleChange4"></wd-pagination>
-    </demo-block>
-    <demo-block title="虚线边框" transparent>
-      <wd-pagination v-model="page5" :total="total5" button-variant="dashed" @change="handleChange5"></wd-pagination>
-    </demo-block>
+    <view class="page-pagination">
+      <demo-group title="组件类型" transparent>
+        <demo-group-item :title="$t('jiBenYongFa')" no-padding>
+          <wd-pagination v-model="page1" :total="total1" @change="handleChange1" />
+        </demo-group-item>
+      </demo-group>
 
-    <demo-block title="基础按钮" transparent>
-      <wd-pagination v-model="page6" :total="total6" button-variant="base" @change="handleChange6"></wd-pagination>
-    </demo-block>
-    <demo-block :title="$t('icon-tu-biao-0')" transparent>
-      <wd-pagination v-model="page2" :total="total2" show-icon @change="handleChange2"></wd-pagination>
-    </demo-block>
-    <demo-block :title="$t('wen-zi-ti-shi')" transparent>
-      <wd-pagination v-model="page3" :total="total3" :page-size="pageSize3" @change="handleChange3" show-icon show-message></wd-pagination>
-    </demo-block>
-
-    <demo-block title="Custom Slots (自定义插槽)" transparent>
-      <wd-pagination v-model="page7" :total="total7" show-message @change="handleChange7">
-        <template #prev="{ modelValue }">
-          <wd-button :disabled="modelValue <= 1" @click="page7 -= 1" size="small" type="danger">上一页</wd-button>
-        </template>
-        <template #next="{ modelValue, totalPageNum }">
-          <wd-button :disabled="modelValue >= totalPageNum" @click="page7 += 1" size="small" type="danger">下一页</wd-button>
-        </template>
-        <template #size="{ modelValue, totalPageNum }">
-          <view class="custom-pagination__content">
-            <text class="custom-pagination__page">{{ modelValue }}</text>
-            <text class="custom-pagination__separator">/</text>
-            <text class="custom-pagination__total">{{ totalPageNum }}</text>
+      <demo-group title="组件变体" transparent>
+        <demo-group-item title="按钮风格" no-padding>
+          <view class="page-pagination__stack">
+            <wd-pagination v-model="page4" :total="total4" button-variant="plain" @change="handleChange4" />
+            <wd-pagination v-model="page5" :total="total5" button-variant="dashed" @change="handleChange5" />
+            <wd-pagination v-model="page6" :total="total6" button-variant="base" @change="handleChange6" />
           </view>
-        </template>
-        <template #message="{ total }">
-          <view class="custom-pagination__message">当前第{{ page7 }}页，共{{ total }}条数据</view>
-        </template>
-      </wd-pagination>
-    </demo-block>
+        </demo-group-item>
+        <demo-group-item :title="$t('icon-tu-biao-0')" no-padding>
+          <wd-pagination v-model="page2" :total="total2" show-icon @change="handleChange2" />
+        </demo-group-item>
+        <demo-group-item :title="$t('wen-zi-ti-shi')" no-padding>
+          <wd-pagination v-model="page3" :total="total3" :page-size="pageSize3" @change="handleChange3" show-icon show-message />
+        </demo-group-item>
+      </demo-group>
+
+      <demo-group title="内容形态" transparent>
+        <demo-group-item title="自定义插槽" no-padding>
+          <wd-pagination v-model="page7" :total="total7" show-message @change="handleChange7">
+            <template #prev="{ modelValue }">
+              <wd-button :disabled="modelValue <= 1" @click="page7 -= 1" size="small" type="danger">上一页</wd-button>
+            </template>
+            <template #next="{ modelValue, totalPageNum }">
+              <wd-button :disabled="modelValue >= totalPageNum" @click="page7 += 1" size="small" type="danger">下一页</wd-button>
+            </template>
+            <template #size="{ modelValue, totalPageNum }">
+              <view class="custom-pagination__content">
+                <text class="custom-pagination__page">{{ modelValue }}</text>
+                <text class="custom-pagination__separator">/</text>
+                <text class="custom-pagination__total">{{ totalPageNum }}</text>
+              </view>
+            </template>
+            <template #message="{ total }">
+              <view class="custom-pagination__message">当前第{{ page7 }}页，共{{ total }}条数据</view>
+            </template>
+          </wd-pagination>
+        </demo-group-item>
+      </demo-group>
+    </view>
   </page-wraper>
 </template>
 <script lang="ts" setup>
@@ -100,6 +97,18 @@ function handleChange7({ value }: any) {
 }
 </script>
 <style lang="scss" scoped>
+.page-pagination {
+  :deep(.demo-group-item__content) {
+    overflow: hidden;
+  }
+}
+
+.page-pagination__stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 .button-block {
   margin-right: 0;
 }

@@ -1,5 +1,5 @@
 import type { ComponentPublicInstance, ExtractPropTypes, PropType } from 'vue'
-import { baseProps, makeArrayProp, makeBooleanProp, makeNumberProp, makeStringProp, type Numeric } from '../common/props'
+import { baseProps, makeArrayProp, makeBooleanProp, makeNumberProp, makeStringProp, type Numeric } from '../../common/props'
 import type { PickerOption, PickerViewInstance } from '../wd-picker-view/types'
 
 export const pickerProps = {
@@ -30,7 +30,7 @@ export const pickerProps = {
    */
   confirmButtonText: String,
   /**
-   * 确定前校验函数，接收 (value, resolve, picker) 参数，通过 resolve 继续执行 picker，resolve 接收1个boolean参数
+   * 确定前校验函数，接收 (value) 参数，返回 boolean 或 Promise<boolean>
    * 类型: PickerBeforeConfirm
    * 默认值: -
    */
@@ -125,7 +125,7 @@ export type PickerProps = ExtractPropTypes<typeof pickerProps>
 
 export type PickerDisplayFormat = (item: PickerOption | PickerOption[], vl: { valueKey: string; labelKey: string }) => string
 
-export type PickerBeforeConfirm = (value: Numeric[], resolve: (isPass: boolean) => void, picker: PickerInstance) => void
+export type PickerBeforeConfirm = (value: Numeric[]) => boolean | Promise<boolean>
 
 export type PickerExpose = {
   /**

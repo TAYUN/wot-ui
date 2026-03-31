@@ -47,7 +47,7 @@ import wdOverlay from '../wd-overlay/wd-overlay.vue'
 import { reactive, ref, inject, watch, computed } from 'vue'
 import { videoPreviewProps, type PreviewVideo, type VideoPreviewOptions, type VideoPreviewExpose } from './types'
 import { defaultOptions, getVideoPreviewOptionKey } from './index'
-import { isDef, isFunction } from '../common/util'
+import { isDef, isFunction } from '../../common/util'
 
 const props = defineProps(videoPreviewProps)
 

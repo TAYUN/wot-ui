@@ -59,7 +59,7 @@ abort()
 | name | 文件对应的 key | string | 'file' | - |
 | formData | 其它表单数据 | Record<string, any> | {} | - |
 | fileType | 文件类型 | 'image' \| 'video' \| 'audio' | 'image' | - |
-| statusCode | 成功状态码 | number | 200 | - |
+| statusCode | 成功状态码 | number \| number[] | 200 | - |
 | uploadMethod | 自定义上传方法 | UploadMethod | - | - |
 | onSuccess | 上传成功回调 | Function | - | - |
 | onError | 上传失败回调 | Function | - | - |

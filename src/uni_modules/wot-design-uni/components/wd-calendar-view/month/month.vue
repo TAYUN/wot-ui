@@ -54,8 +54,8 @@ import {
   getWeekRange
 } from '../utils'
 import { useToast } from '../../wd-toast'
-import { deepClone, isArray, isFunction, objToStyle } from '../../common/util'
-import { useTranslate } from '../../composables/useTranslate'
+import { deepClone, isArray, isFunction, objToStyle } from '../../../common/util'
+import { useTranslate } from '../../../composables/useTranslate'
 import type { CalendarDayItem, CalendarDayType } from '../types'
 import { monthProps } from './types'
 

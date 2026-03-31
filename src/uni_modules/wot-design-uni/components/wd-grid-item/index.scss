@@ -1,5 +1,5 @@
-@use '../styles/mixin/mixin.scss'as *;
-@use '../styles/variable.scss'as *;
+@use '../../styles/mixin/mixin.scss'as *;
+@use '../../styles/variable.scss'as *;
 
 // 网格项文字字号
 $grid-item-font-size: var(--wot-grid-item-font-size, $typography-body-size-extra-large) !default;
@@ -12,7 +12,7 @@ $grid-item-padding: var(--wot-grid-item-padding, $padding-loose $padding-loose) 
 // 网格项悬浮背景色
 $grid-item-hover-bg: var(--wot-grid-item-hover-bg, $feedback-hover) !default;
 // 网格项图标尺寸
-$grid-item-icon-size: var(--wot-grid-item-icon-size, $n32) !default;
+$grid-item-icon-size: var(--wot-grid-item-icon-size, $n-32) !default;
 // 网格项图标颜色
 $grid-item-icon-color: var(--wot-grid-item-icon-color, $icon-secondary) !default;
 // 网格项边框宽度
@@ -166,9 +166,14 @@ $grid-item-text-spacing: var(--wot-grid-item-text-spacing, $spacing-super-tight)
   }
 
   @include e(text) {
+    width: 100%;
     font-size: $grid-item-font-size;
     line-height: $grid-item-line-height;
     color: $grid-item-text-color;
+
+    @include when(ellipsis) {
+      @include lineEllipsis;
+    }
   }
 
   @include edeep(icon) {

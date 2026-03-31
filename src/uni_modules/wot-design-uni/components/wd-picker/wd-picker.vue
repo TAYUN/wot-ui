@@ -59,11 +59,12 @@ export default {
 import wdPopup from '../wd-popup/wd-popup.vue'
 import wdPickerView from '../wd-picker-view/wd-picker-view.vue'
 import { getCurrentInstance, onBeforeMount, ref, watch, onMounted } from 'vue'
-import { deepClone, isFunction } from '../common/util'
+import { deepClone } from '../../common/util'
+import { callInterceptor } from '../../common/interceptor'
 import { type PickerOption, type PickerViewExpose } from '../wd-picker-view/types'
-import { useTranslate } from '../composables/useTranslate'
+import { useTranslate } from '../../composables/useTranslate'
 import { pickerProps, type PickerExpose } from './types'
-import { type Numeric } from '../common/props'
+import { type Numeric } from '../../common/props'
 const { translate } = useTranslate('picker')
 
 const props = defineProps(pickerProps)
@@ -168,17 +169,12 @@ function onConfirm() {
   }
 
   const { beforeConfirm } = props
-  if (beforeConfirm && isFunction(beforeConfirm)) {
-    beforeConfirm(
-      pickerValue.value,
-      (isPass: boolean) => {
-        isPass && handleConfirm()
-      },
-      proxy.$.exposed
-    )
-  } else {
-    handleConfirm()
-  }
+  callInterceptor(beforeConfirm, {
+    args: [pickerValue.value],
+    done: () => {
+      handleConfirm()
+    }
+  })
 }
 function handleConfirm() {
   const values = pickerViewRef.value?.getSelectedValues() || pickerValue.value

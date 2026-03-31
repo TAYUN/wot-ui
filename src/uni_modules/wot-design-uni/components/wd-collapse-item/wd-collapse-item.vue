@@ -32,8 +32,9 @@ export default {
 <script lang="ts" setup>
 import wdIcon from '../wd-icon/wd-icon.vue'
 import { computed, getCurrentInstance, onMounted, ref, watch, type CSSProperties } from 'vue'
-import { addUnit, getRect, isArray, isDef, isPromise, isString, objToStyle, pause, uuid } from '../common/util'
-import { useParent } from '../composables/useParent'
+import { addUnit, getRect, isArray, isDef, isString, objToStyle, pause, uuid } from '../../common/util'
+import { callInterceptor } from '../../common/interceptor'
+import { useParent } from '../../composables/useParent'
 import { COLLAPSE_KEY } from '../wd-collapse/types'
 import { collapseItemProps, type CollapseItemExpose } from './types'
 
@@ -155,16 +156,13 @@ function handleBeforeExpand() {
   return new Promise<void>((resolve, reject) => {
     const { name } = props
     const nextexpanded = !expanded.value
-    if (nextexpanded && props.beforeExpend) {
-      const response = props.beforeExpend(name)
-      if (!response) {
-        reject()
-      }
-      if (isPromise(response)) {
-        response.then(() => resolve()).catch(reject)
-      } else {
-        resolve()
-      }
+    if (nextexpanded) {
+      callInterceptor(props.beforeExpend as any, {
+        args: [name],
+        done: resolve,
+        canceled: reject,
+        error: reject
+      })
     } else {
       resolve()
     }

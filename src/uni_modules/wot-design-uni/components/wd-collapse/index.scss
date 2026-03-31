@@ -1,5 +1,5 @@
-@use '../styles/mixin/mixin.scss'as *;
-@use '../styles/variable.scss'as *;
+@use '../../styles/mixin/mixin.scss'as *;
+@use '../../styles/variable.scss'as *;
 
 // 折叠面板背景颜色
 $collapse-bg: var(--wot-collapse-bg, $filled-oppo) !default;
@@ -16,7 +16,7 @@ $collapse-title-color: var(--wot-collapse-title-color, $text-main) !default;
 // 折叠标题文字字号
 $collapse-title-font-size: var(--wot-collapse-title-font-size, $typography-body-size-extra-large) !default;
 // 折叠箭头尺寸
-$collapse-arrow-size: var(--wot-collapse-arrow-size, $n16) !default;
+$collapse-arrow-size: var(--wot-collapse-arrow-size, $n-16) !default;
 // 折叠箭头颜色
 $collapse-arrow-color: var(--wot-collapse-arrow-color, $icon-main) !default;
 // 更多按钮文字字号

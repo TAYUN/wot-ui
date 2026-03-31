@@ -1,4 +1,4 @@
-import { useUpload } from '@/uni_modules/wot-design-uni/components/composables/useUpload'
+import { useUpload } from '@/uni_modules/wot-design-uni/composables/useUpload'
 import type { UploadFileItem } from '@/uni_modules/wot-design-uni/components/wd-upload/types'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -217,6 +217,28 @@ describe('useUpload', () => {
     // 由于mock返回200，使用201作为成功状态码应该触发错误回调
     expect(onError).toHaveBeenCalled()
     expect(onSuccess).not.toHaveBeenCalled()
+  })
+
+  it('should handle status code array', async () => {
+    const file: UploadFileItem = {
+      url: 'file://temp/image.png',
+      status: UPLOAD_STATUS.PENDING,
+      percent: 0,
+      uid: 1
+    }
+
+    const onSuccess = vi.fn()
+    const onError = vi.fn()
+
+    await startUpload(file, {
+      action: 'https://api.example.com/success',
+      statusCode: [200, 201],
+      onSuccess,
+      onError
+    })
+
+    expect(onSuccess).toHaveBeenCalled()
+    expect(onError).not.toHaveBeenCalled()
   })
 
   // 测试自定义状态字段

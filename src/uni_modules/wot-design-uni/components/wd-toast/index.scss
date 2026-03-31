@@ -1,5 +1,5 @@
-@use '../styles/mixin/mixin.scss' as *;
-@use '../styles/variable.scss' as *;
+@use '../../styles/mixin/mixin.scss' as *;
+@use '../../styles/variable.scss' as *;
 
 // ==================== Toast 组件变量 ====================
 
@@ -18,7 +18,7 @@ $toast-font-size: var(--wot-toast-font-size, $typography-body-size-extra-large) 
 // 行高
 $toast-line-height: var(--wot-toast-line-height, $typography-body-line--height-size-extra-large) !default;
 // 图标大小
-$toast-icon-size: var(--wot-toast-icon-size, $n24) !default;
+$toast-icon-size: var(--wot-toast-icon-size, $n-24) !default;
 // 消息内容左边距
 $toast-msg-margin-left: var(--wot-toast-msg-margin-left, $spacing-tight) !default;
 // 图标下边距

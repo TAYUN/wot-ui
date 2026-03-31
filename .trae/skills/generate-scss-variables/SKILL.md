@@ -51,7 +51,7 @@ $组件名-元素-属性-变体-状态: var(--wot-组件名-元素-属性-变体
     *   ✅ `var(--wot-button-color)`
 3.  **[语义化] Fallback**: CSS 变量的默认值必须优先使用**语义化 Token**（详见 `@rules/scss-variable-naming.rule.md` 第六节）。
     *   ❌ `16px`, `#fff` (除非是特定的魔术值)
-    *   ✅ `$n16`, `$base-white`
+    *   ✅ `$n-16`, `$base-white`
 4.  **[默认值] Default**: 必须包含 `!default` 标记，以便用户覆盖。
 5.  **[全称属性] Full Name**: 禁止使用缩写，必须使用 CSS 属性全称。
     *   ❌ `fs`, `bg`, `lh`
@@ -73,7 +73,7 @@ $search-padding: var(--wot-search-padding, $padding-main) !default;
 
 // 有元素时：元素在属性前（icon 是元素，color 是属性）
 $search-icon-color: var(--wot-search-icon-color, $text-secondary) !default;
-$search-icon-size: var(--wot-search-icon-size, $n16) !default;
+$search-icon-size: var(--wot-search-icon-size, $n-16) !default;
 
 // 有变体时：变体在属性前（primary 是变体，bg 是属性）
 $search-primary-bg: var(--wot-search-primary-bg, $primary-6) !default;
@@ -100,7 +100,7 @@ $search-primary-color: var(--wot-search-primary-color, $base-white) !default;
 >
 > 1.  `$test-comp-height: 100px;`
 >     *   🔴 **错误**：未使用 CSS 变量且使用了硬编码值。
->     *   🟢 **建议**：`$test-comp-height: var(--wot-test-comp-height, $n100) !default;` (假设 $n100 存在)
+>     *   🟢 **建议**：`$test-comp-height: var(--wot-test-comp-height, $n-100) !default;` (假设 $n-100 存在)
 >
 > 2.  `$test-comp-color: var(--test-comp-color, $text-main);`
 >     *   🔴 **错误**：CSS 变量缺少 `--wot-` 前缀，且缺少 `!default`。

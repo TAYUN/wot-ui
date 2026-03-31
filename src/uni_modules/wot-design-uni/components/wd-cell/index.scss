@@ -1,5 +1,5 @@
-@use '../styles/variable.scss' as *;
-@use '../styles/mixin/mixin.scss' as *;
+@use '../../styles/variable.scss' as *;
+@use '../../styles/mixin/mixin.scss' as *;
 
 // 单元格背景色
 $cell-bg: var(--wot-cell-bg, $filled-oppo) !default;
@@ -28,9 +28,9 @@ $cell-required-color: var(--wot-cell-required-color, $danger-main) !default;
 // 占位符颜色
 $cell-placeholder-color: var(--wot-cell-placeholder-color, $text-placeholder) !default;
 // 箭头图标尺寸
-$cell-arrow-size: var(--wot-cell-arrow-size, $n20) !default;
+$cell-arrow-size: var(--wot-cell-arrow-size, $n-20) !default;
 // 图标尺寸
-$cell-icon-size: var(--wot-cell-icon-size, $n20) !default;
+$cell-icon-size: var(--wot-cell-icon-size, $n-20) !default;
 // 标题字号
 $cell-title-font-size: var(--wot-cell-title-font-size, $typography-body-size-main) !default;
 // 标题行高

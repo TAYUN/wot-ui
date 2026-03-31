@@ -1,5 +1,5 @@
 import type { CSSProperties, ExtractPropTypes, PropType } from 'vue'
-import { baseProps, makeBooleanProp, makeNumberProp, makeArrayProp } from '../common/props'
+import { baseProps, makeBooleanProp, makeNumberProp, makeArrayProp } from '../../common/props'
 
 /** 缺失目标元素时的处理策略 */
 export type MissingStrategy = 'skip' | 'stop' | 'hide'

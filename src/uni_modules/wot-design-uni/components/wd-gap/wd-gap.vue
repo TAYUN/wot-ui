@@ -17,7 +17,7 @@ export default {
 
 <script setup lang="ts">
 import { type CSSProperties, computed } from 'vue'
-import { addUnit, isDef, objToStyle } from '../common/util'
+import { addUnit, isDef, objToStyle } from '../../common/util'
 import { gapProps } from './types'
 
 const props = defineProps(gapProps)

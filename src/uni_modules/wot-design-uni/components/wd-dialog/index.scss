@@ -1,5 +1,5 @@
-@use '../styles/mixin/mixin.scss'as *;
-@use '../styles/variable.scss'as *;
+@use '../../styles/mixin/mixin.scss'as *;
+@use '../../styles/variable.scss'as *;
 
 // 对话框背景色
 $dialog-bg: var(--wot-dialog-bg, $filled-oppo) !default;
@@ -46,7 +46,7 @@ $dialog-content-input-padding-top: var(--wot-dialog-content-input-padding-top, $
 // 滚动条颜色
 $dialog-scrollbar-color: var(--wot-dialog-scrollbar-color, $border-main) !default;
 // 滚动条宽度
-$dialog-scrollbar-width: var(--wot-dialog-scrollbar-width, $n2) !default;
+$dialog-scrollbar-width: var(--wot-dialog-scrollbar-width, $stroke-blod) !default;
 // 滚动条圆角
 $dialog-scrollbar-radius: var(--wot-dialog-scrollbar-radius, $radius-small) !default;
 // 默认图标颜色
@@ -58,11 +58,11 @@ $dialog-warning-color: var(--wot-dialog-warning-color, $warning-main) !default;
 // 危险图标颜色
 $dialog-error-color: var(--wot-dialog-error-color, $danger-main) !default;
 // 图标尺寸
-$dialog-icon-size: var(--wot-dialog-icon-size, $n48) !default;
+$dialog-icon-size: var(--wot-dialog-icon-size, $n-48) !default;
 // 图标底部外边距
 $dialog-icon-margin-bottom: var(--wot-dialog-icon-margin-bottom, $spacing-tight) !default;
 // 关闭图标尺寸
-$dialog-close-icon-size: var(--wot-dialog-close-icon-size, $n18) !default;
+$dialog-close-icon-size: var(--wot-dialog-close-icon-size, $n-18) !default;
 // 关闭图标颜色
 $dialog-close-icon-color: var(--wot-dialog-close-icon-color, $icon-secondary) !default;
 // 关闭图标顶部偏移

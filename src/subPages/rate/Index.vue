@@ -1,80 +1,98 @@
 <template>
   <page-wraper>
-    <demo-block :title="$t('jiBenYongFa')">
-      <wd-rate v-model="value1" @change="changeValue1" />
-    </demo-block>
+    <view class="page-rate">
+      <demo-group title="组件类型">
+        <demo-group-item :title="$t('jiBenYongFa')">
+          <wd-rate v-model="basicValue" @change="handleChange" />
+        </demo-group-item>
+      </demo-group>
 
-    <demo-block :title="$t('zhi-du-zhuang-tai-readonly')">
-      <wd-rate v-model="value2" readonly />
-    </demo-block>
+      <demo-group title="组件状态">
+        <demo-group-item :title="$t('zhi-du-zhuang-tai-readonly')">
+          <wd-rate v-model="readonlyValue" readonly />
+        </demo-group-item>
+        <demo-group-item :title="$t('jin-yong-zhuang-tai')">
+          <wd-rate v-model="disabledValue" disabled />
+        </demo-group-item>
+      </demo-group>
 
-    <demo-block :title="$t('jin-yong-zhuang-tai')">
-      <wd-rate v-model="value3" disabled />
-    </demo-block>
+      <demo-group title="组件样式">
+        <demo-group-item :title="$t('xiu-gai-xuan-zhong-yan-se')">
+          <view class="demo-row">
+            <wd-rate
+              v-model="colorValue"
+              active-color="linear-gradient(180deg, rgba(255, 238, 0, 1) 0%, rgba(250, 176, 21, 1) 100%)"
+              @change="handleChange"
+            />
+          </view>
+          <view class="demo-row">
+            <wd-rate
+              v-model="gradientValue"
+              :active-color="[
+                'linear-gradient(180deg, rgba(255, 238, 0, 1) 0%, rgba(250, 176, 21, 1) 100%)',
+                'linear-gradient(315deg, rgba(245, 34, 34, 1) 0%, rgba(255, 117, 102, 1) 100%)'
+              ]"
+            />
+          </view>
+        </demo-group-item>
+        <demo-group-item :title="$t('xiu-gai-icon-he-xuan-zhong-yan-se')">
+          <view class="demo-row">
+            <wd-rate v-model="fireValue" block icon="Fire" active-icon="Fire" active-color="var(--wot-red-6)" />
+          </view>
+          <view class="demo-row">
+            <wd-rate v-model="thumbValue" block icon="thumb-down-fill" active-icon="thumb-up-fill" active-color="var(--wot-green-6)" />
+          </view>
+        </demo-group-item>
+        <demo-group-item :title="$t('xiu-gai-sizespace')">
+          <wd-rate v-model="sizeValue" space="12px" size="36" />
+        </demo-group-item>
+      </demo-group>
 
-    <demo-block :title="$t('xiu-gai-xuan-zhong-yan-se')">
-      <view style="margin-bottom: 10px">
-        <wd-rate v-model="value4" active-color="linear-gradient(180deg, rgba(255,238,0,1) 0%,rgba(250,176,21,1) 100%)" @change="changeValue2" />
-      </view>
-      <wd-rate
-        v-model="value5"
-        :active-color="[
-          'linear-gradient(180deg, rgba(255,238,0,1) 0%,rgba(250,176,21,1) 100%)',
-          'linear-gradient(315deg, rgba(245,34,34,1) 0%,rgba(255,117,102,1) 100%)'
-        ]"
-      />
-    </demo-block>
-
-    <demo-block :title="$t('xiu-gai-icon-he-xuan-zhong-yan-se')">
-      <wd-rate v-model="value6" block icon="Fire" active-icon="Fire" active-color="var(--wot-red-6)" custom-style="margin-bottom: 10px" />
-      <wd-rate
-        v-model="value6_1"
-        block
-        icon="thumb-down-fill"
-        active-icon="thumb-up-fill"
-        active-color="var(--wot-green-6)"
-        custom-style="margin-bottom: 10px"
-      />
-    </demo-block>
-
-    <demo-block :title="$t('xiu-gai-sizespace')">
-      <wd-rate v-model="value7" space="12px" size="36" />
-    </demo-block>
-
-    <demo-block :title="$t('yun-xu-ban-xuan')">
-      <wd-rate v-model="value8" allow-half />
-    </demo-block>
-
-    <demo-block :title="$t('yun-xu-qing-kong-ping-fen')">
-      <view style="margin-bottom: 24rpx">
-        <wd-rate v-model="value9" clearable />
-      </view>
-      <view>
-        <wd-rate v-model="value10" clearable allow-half />
-      </view>
-    </demo-block>
+      <demo-group title="特殊样式">
+        <demo-group-item :title="$t('yun-xu-ban-xuan')">
+          <wd-rate v-model="halfValue" allow-half />
+        </demo-group-item>
+        <demo-group-item :title="$t('yun-xu-qing-kong-ping-fen')">
+          <view class="demo-row">
+            <wd-rate v-model="clearableValue" clearable />
+          </view>
+          <view class="demo-row">
+            <wd-rate v-model="clearableHalfValue" clearable allow-half />
+          </view>
+        </demo-group-item>
+      </demo-group>
+    </view>
   </page-wraper>
 </template>
+
 <script lang="ts" setup>
 import { ref } from 'vue'
 
-const value1 = ref<number>(5)
-const value2 = ref<number>(3)
-const value3 = ref<number>(2)
-const value4 = ref<number>(3)
-const value5 = ref<number>(4)
-const value6 = ref<number>(3)
-const value6_1 = ref<number>(3)
+const basicValue = ref<number>(5)
+const readonlyValue = ref<number>(3)
+const disabledValue = ref<number>(2)
+const colorValue = ref<number>(3)
+const gradientValue = ref<number>(4)
+const fireValue = ref<number>(3)
+const thumbValue = ref<number>(3)
+const sizeValue = ref<number>(5)
+const halfValue = ref<number>(2.5)
+const clearableValue = ref<number>(3)
+const clearableHalfValue = ref<number>(3.5)
 
-const value7 = ref<number>(5)
-const value8 = ref<number>(2.5)
-const value9 = ref<number>(3)
-const value10 = ref<number>(3.5)
-
-function changeValue1({ value }: any) {
-  console.log(value)
-}
-function changeValue2({ value }: any) {
-  console.log(value)
+function handleChange(event: { value: number }) {
+  console.log(event.value)
 }
 </script>
+
+<style lang="scss" scoped>
+.page-rate {
+  .demo-row {
+    margin-bottom: 12px;
+  }
+
+  .demo-row:last-child {
+    margin-bottom: 0;
+  }
+}
+</style>

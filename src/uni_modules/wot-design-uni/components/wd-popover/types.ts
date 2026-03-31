@@ -1,6 +1,6 @@
 import type { ComponentPublicInstance, ExtractPropTypes, PropType } from 'vue'
-import { baseProps, makeBooleanProp, makeStringProp } from '../common/props'
-import type { PlacementType, PopoverMenuItem, PopoverOffset } from '../composables/usePopover'
+import { baseProps, makeBooleanProp, makeStringProp } from '../../common/props'
+import type { PlacementType, PopoverMenuItem, PopoverOffset } from '../../composables/usePopover'
 
 export type { PlacementType, PopoverMenuItem, PopoverOffset }
 
