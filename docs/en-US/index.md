@@ -14,16 +14,16 @@ hero:
   actions:
     - theme: brand
       text: Get Started 🚀
-      link: /guide/introduction
+      link: /en-US/guide/introduction
     - theme: alt
       text: Common Problems
-      link: /guide/common-problems
+      link: /en-US/guide/common-problems
     - theme: alt
       text: Components
-      link: /component/button
+      link: /en-US/component/button
     - theme: brand
       text: 🥤 Buy Us a Coffee
-      link: /reward/reward
+      link: /en-US/reward/reward
 
 features:
   - icon: 🎯
@@ -52,7 +52,7 @@ features:
   - icon: 🍿
     title: Practice Sharing
     details: The WeChat public account '不如摸鱼去' (Why Not Go Slack Off) occasionally shares best practices related to wot-ui and AI programming.
-    link: "./guide/join-group.html#微信公众号"
+    link: "./en-US/guide/join-group.html#微信公众号"
     linkText: "View Public Account"
 
 footer: false

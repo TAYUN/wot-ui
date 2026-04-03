@@ -7,7 +7,6 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    DemoBlock: typeof import('./src/components/demo-block/demo-block.vue')['default']
     DemoGroup: typeof import('./src/components/demo-group/demo-group.vue')['default']
     DemoGroupItem: typeof import('./src/components/demo-group-item/demo-group-item.vue')['default']
     PageWraper: typeof import('./src/components/page-wraper/page-wraper.vue')['default']
