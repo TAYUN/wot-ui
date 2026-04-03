@@ -1,301 +1,206 @@
-# Picker Selector
+# Picker
 
-The Picker component is a combination of popup and pickerView.
+Picker includes a popup layer (`wd-popup`) and a picker view (`wd-picker-view`), but does not include an outer trigger element (such as Input, Cell, etc.). It usually needs to be combined with `wd-cell` or form-related components to trigger display.
 
 ## Basic Usage
 
-Set the `columns` property to configure the option data source. Options can be strings or objects. If they are objects, the `label` property is used by default for rendering the option content. The `label` property sets the left-side text content, and `v-model` sets the selected value. The `label` can be omitted. The title width can be set via `label-width`, which defaults to '33%'. Listen to the `confirm` event to get the selected value, which returns an event object: `event = { value, selectedItems }`. `value` is the bound value, and `selectedItems` is the selected option object(s).
+Needs to be combined with an external trigger, such as `wd-cell`, and uses `v-model` binding to save the selected content array, and `v-model:visible` to control the display or hiding of the Picker.
+
+::: code-group
 
 ```html
-<wd-picker :columns="columns" label="Single Column" v-model="value" @confirm="handleConfirm" />
+<wd-cell title="Single Column" placeholder="Please select" :value="value[0]" is-link @click="show = true" />
+<wd-picker v-model="value" v-model:visible="show" :columns="columns" />
 ```
 
 ```typescript
-const columns = ref(['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5', 'Option 6', 'Option 7'])
-const value = ref('Option 1')
+import { ref } from 'vue'
 
-function handleConfirm({ value }) {
-  value.value = value
-}
-```
-
-When `columns` options are objects, their data structure is as follows:
-
-| Parameter | Type                      | Description                                                                 | Minimum Version |
-| --------- | ------------------------- | --------------------------------------------------------------------------- | --------------- |
-| value     | string / number / boolean | Option value. If the `value` property is missing, `label` is used as the value. | -               |
-| label     | string                    | Option text content                                                        | -               |
-| disabled  | boolean                   | Whether the option is disabled                                              | -               |
-
-## Disabled
-
-Set the `disabled` property.
-
-```html
-<wd-picker :columns="columns" label="Disabled" v-model="value" disabled />
-```
-
-```typescript
-const value = ref('Option 3')
-
-const columns = ref(['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5', 'Option 6', 'Option 7'])
-```
-
-## Readonly
-
-Set the `readonly` property.
-
-```html
-<wd-picker :columns="columns" label="Readonly" v-model="value" readonly />
-```
-
-## Clear Button
-
-Set the `clearable` property.
-
-```html
-<wd-picker :columns="columns" label="Clear" v-model="value" clearable />
-```
-
-## Title
-
-Set the `title` property.
-
-```html
-<wd-picker label="Title" :columns="columns" title="Picker Title"/>
-```
-
-## Loading
-
-Set the `loading` property.
-
-```html
-<wd-picker-view :columns="columns" loading />
-```
-
-## Multiple Columns
-
-Set the `columns` property as a two-dimensional array, and `value` as an array.
-
-```html
-<wd-picker :columns="columns" label="Multiple Columns" v-model="value" />
-```
-
-```typescript
-const value = ref(['Central South University', 'Software Engineering'])
-
+const show = ref(false)
+const value = ref<string[]>([])
 const columns = ref([
-  ['Sun Yat-sen University', 'Central South University', 'South China University of Technology'],
-  ['Computer Science', 'Software Engineering', 'Communication Engineering', 'Law', 'Economics']
+  { label: 'Option 1', value: '1' },
+  { label: 'Option 2', value: '2' },
+  { label: 'Option 3', value: '3' }
 ])
 ```
 
-## Cascading
+:::
 
-Pass the `column-change` property, which is a `function` that receives the pickerView instance, selected item, current column index, and `resolve` as parameters. Based on the selected item and column index, modify the data source of other columns using the `setColumnData` method exposed by the pickerView instance. After modification, call `resolve()` to notify the component that the modification is complete. If `column-change` contains asynchronous operations, the component will execute them in order.
+## Multiple Columns
 
-> `resolve()` must be called after each modification.
+Pass a two-dimensional array to the `columns` property. At this time, `value` is a one-dimensional array of selected item `value` for the corresponding columns.
+
+::: code-group
 
 ```html
-<wd-picker
-  :columns="columns"
-  label="Cascading"
-  v-model="value"
-  :column-change="onChangeDistrict"
-  :display-format="displayFormat"
- />
+<wd-cell title="Multiple Columns" :value="displayValue" is-link @click="show = true" />
+<wd-picker v-model="value" v-model:visible="show" :columns="columns" @confirm="handleConfirm" />
 ```
 
 ```typescript
-const district = {
-  '0': [{ label: 'Beijing', value: '110000' }, { label: 'Guangdong', value: '440000' }],
-  '110000': [{ label: 'Beijing', value: '110100' }],
-  '440000': [{ label: 'Guangzhou', value: '440100' }, { label: 'Shaoguan', value: '440200' }, { label: 'Shenzhen', value: '440300' }, { label: 'Zhuhai', value: '440400' }, { label: 'Shantou', value: '440500' }],
-  '110100': [{ label: 'Dongcheng District', value: '110101' }, { label: 'Xicheng District', value: '110102' }, { label: 'Chaoyang District', value: '110105' }, { label: 'Fengtai District', value: '110106' }, { label: 'Shijingshan District', value: '110107' }],
-  '440100': [{ label: 'Liwan District', value: '440103' }, { label: 'Yuexiu District', value: '440104' }, { label: 'Haizhu District', value: '440105'}],
-  '440200': [{ label: 'Wujiang District', value: '440203'}],
-  '440300': [{ label: 'Luohu District', value: '440303' }, { label: 'Futian District', value: '440304' }],
-  '440400': [{ label: 'Xiangzhou District', value: '440402' }, { label: 'Doumen District', value: '440403' }, { label: 'Jinwan District', value: '440404' }],
-  '440500': [{ label: 'Longhu District', value: '440507' }, { label: 'Jinping District', value: '440511' }]
-}
+import { ref } from 'vue'
 
+const show = ref(false)
+const value = ref([])
+const displayValue = ref('')
+
+const columns = ref([
+  [
+    { label: 'Sun Yat-sen University', value: '1' },
+    { label: 'Central South University', value: '2' },
+    { label: 'South China University of Technology', value: '3' }
+  ],
+  [
+    { label: 'Computer Science and Technology', value: '1' },
+    { label: 'Software Engineering', value: '2' },
+    { label: 'Communication Engineering', value: '3' }
+  ]
+])
+
+const handleConfirm = ({ selectedItems }: any) => {
+  displayValue.value = selectedItems.map((item: any) => item.label).join(', ')
+}
+```
+
+:::
+
+## Multi-level Cascade
+
+Set the `cascade` property and set `columns` to a hierarchical tree structure (nesting child items through `children`).
+Can be combined with custom display functions for page backfill formatting.
+
+::: code-group
+
+```html
+<wd-cell title="Multi-level Cascade" :value="displayValue" is-link @click="show = true" />
+<wd-picker v-model="value" v-model:visible="show" :columns="columns" cascade @confirm="handleConfirm" />
+```
+
+```typescript
+import { ref } from 'vue'
+
+const show = ref(false)
 const value = ref(['110000', '110100', '110102'])
+const displayValue = ref('Beijing - Beijing City - Xicheng District')
 
-const columns = ref([district[0], district[district[0][0].value], district[district[district[0][0].value][0].value]])
-
-const onChangeDistrict = (pickerView, value, columnIndex, resolve) => {
-  const item = value[columnIndex]
-  if (columnIndex === 0) {
-    pickerView.setColumnData(1, district[item.value])
-    pickerView.setColumnData(2, district[district[item.value][0].value])
-  } else if (columnIndex === 1) {
-    pickerView.setColumnData(2, district[item.value])
+const columns = ref([
+  {
+    label: 'Beijing',
+    value: '110000',
+    children: [
+      {
+        label: 'Beijing City',
+        value: '110100',
+        children: [
+          { label: 'Dongcheng District', value: '110101' },
+          { label: 'Xicheng District', value: '110102' },
+          { label: 'Chaoyang District', value: '110105' }
+        ]
+      }
+    ]
   }
-  resolve()
-}
+])
 
-const displayFormat = (items) => {
-  return items
-    .map((item) => {
-      return item.label
-    })
-    .join('-')
+function handleConfirm({ selectedItems }: any) {
+  displayValue.value = selectedItems.map((item: any) => item.label).join(' - ')
 }
 ```
 
-## Picker Size
+:::
 
-Modify the picker size by setting `size`. When `size` is set to 'large', the font size becomes 16px.
+## Custom Popup Title
 
-```html
-<wd-picker label="Single Column" size="large" v-model="value" :columns="columns" />
-```
+You can configure the top hint text title for the internal popup through the `title` property.
 
-## Required
-
-Set the `required` property to display the required style.
+::: code-group
 
 ```html
-<wd-picker label="Required" error :columns="columns" v-model="value" required/>
+<wd-cell title="Title" :value="value[0]" is-link @click="showTitle = true" />
+<wd-picker v-model="value" v-model:visible="showTitle" :columns="columns" title="Please select your preferred option" />
 ```
 
-## Error State
+:::
 
-Set the `error` property to display the picker value in red.
+## Pre-confirmation Validation
 
-```html
-<wd-picker label="Single Column" error :columns="columns" v-model="value"/>
-```
+Set the `before-confirm` function to intercept when the user clicks the "Complete" button in the top right corner of the popup layer. Supports returning `boolean` or `Promise<boolean>` to control whether to allow selection and close the popup.
 
-## Right-Aligned Value
-
-Set the `align-right` property to right-align the picker value.
-
-```html
-<wd-picker label="Single Column" align-right :columns="columns" v-model="value"/>
-```
-
-## Pre-Confirmation Validation
-
-Set the `before-confirm` function. When the user clicks the "Confirm" button, the `before-confirm` function is executed, receiving the `value` parameter. You can return a `boolean` or `Promise<boolean>` to control whether the option passes. The picker popup won't close if it is not approved.
+::: code-group
 
 ```html
 <wd-toast />
-
-<wd-picker label="Before Confirm" :columns="columns" v-model="value" :before-confirm="beforeConfirm" @confirm="handleConfirm" />
+<wd-cell title="Option Interception" :value="value[0]" is-link @click="show = true" />
+<wd-picker :columns="columns" v-model="value" v-model:visible="show" :before-confirm="beforeConfirm" />
 ```
 
 ```typescript
+import { ref } from 'vue'
 import { useToast } from '@/uni_modules/wot-ui'
 
 const toast = useToast()
-const columns = ref(['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5', 'Option 6', 'Option 7'])
-const value = ref('')
+const show = ref(false)
+const columns = ref([
+  { label: 'Option 1', value: '1' },
+  { label: 'Option 2', value: '2' },
+  { label: 'Option 3', value: '3' }
+])
+const value = ref<string[]>([])
 
-const beforeConfirm = (value) => {
+const beforeConfirm = (value: string[]) => {
   return new Promise<boolean>((resolve) => {
     setTimeout(() => {
-      if (['Option 2', 'Option 3'].indexOf(value) > -1) {
-        toast.error('Validation failed. Please reselect.')
+      // Assume options 2 and 3 are judged as invalid selections
+      if (['2', '3'].includes(value[0])) {
+        toast.error('This option validation failed, please reselect')
         resolve(false)
       } else {
         resolve(true)
       }
-    }, 2000)
+    }, 1000)
   })
 }
-
-function handleConfirm({ value: val }) {
-  value.value = val
-}
 ```
 
-## Trigger Slot
-
-Enable `use-default-slot` and use the default slot to customize the picker trigger component.
-
-```html
-<wd-picker :columns="columns" v-model="value" use-default-slot>
-  <wd-button>Slot Trigger</wd-button>
-</wd-picker>
-```
+:::
 
 ## Attributes
 
-| Parameter | Description | Type | Options | Default | Minimum Version |
-|-----------|-------------|------|---------|---------|-----------------|
-| v-model | Selected value. For multi-column pickers, this should be an array. | string/number/boolean/array | - | - | - |
-| columns | Picker data. Can be an array of strings or objects. If a 2D array, it becomes a multi-column picker. | array | - | - | - |
-| loading | Loading state | boolean | - | false | - |
-| loading-color | Loading color (hexadecimal format, no shorthand). | string | - | #4D80F0 | - |
-| columns-height | Internal picker roller height | number | - | 231 | - |
-| value-key | Key for the `value` property in option objects | string | - | value | - |
-| label-key | Key for the `label` property in option objects | string | - | label | - |
-| title | Popup title | string | - | - | - |
-| cancel-button-text | Cancel button text | string | - | Cancel | - |
-| confirm-button-text | Confirm button text | string | - | Confirm | - |
-| label | Left-side text label | string | - | - | - |
-| placeholder | Placeholder text | string | - | Select | - |
-| disabled | Disabled state | boolean | - | false | - |
-| readonly | Readonly state | boolean | - | false | - |
-| display-format | Custom display text formatting function (returns a string) | function | - | - | - |
-| column-change | Function to handle column changes (receives pickerView instance, selected item, column index, and resolve) | function | - | - | - |
-| size | Picker size | string | large | - | - |
-| label-width | Left-side label width | string | - | 33% | - |
-| error | Error state (displays value in red) | boolean | - | false | - |
-| required | Required field style | boolean | - | false | - |
-| marker-side | Position of the required marker | 'before' \| 'after' | - | 'before' | 1.12.0 |
-| align-right | Right-align the picker value | boolean | - | false | - |
-| use-label-slot | Use label slot | boolean | - | false | - |
-| use-default-slot | Use default slot | boolean | - | false | - |
-| before-confirm | Pre-confirmation validation function, receives (value) parameter, returns a `boolean` or `Promise<boolean>` | function | - | - | - |
-| close-on-click-modal | Close popup when clicking the mask | boolean | - | true | - |
-| z-index | Popup z-index | number | - | 15 | - |
-| safe-area-inset-bottom | Enable bottom safe area for iPhone X-type devices | boolean | - | true | - |
-| ellipsis | Enable text overflow ellipsis | boolean | - | false | - |
-| prop | Form model field name (required for form validation) | string | - | - | - |
-| rules | Form validation rules (used with `wd-form`) | `FormItemRule []` | - | `[]` | - |
-| immediate-change | Trigger picker-view change event immediately on touch release (supported in WeChat Mini Program and Alipay Mini Program from v1.2.25) | boolean | - | false | 1.2.25 |
-| clearable | Show clear button | boolean | - | false | 1.11.0 |
-| root-portal | Detach from page to resolve fixed positioning issues | boolean | - | false | 1.11.0 |
-
-### FormItemRule Structure
-
-| Key       | Description                                                                 | Type                                  |
-| --------- | --------------------------------------------------------------------------- | ------------------------------------- |
-| required  | Whether the field is required                                               | `boolean`                             |
-| message   | Error message text                                                          | `string`                              |
-| validator | Custom validation function (can return a `Promise` for async validation)   | `(value, rule) => boolean \| Promise` |
-| pattern   | Validate using a regular expression (fails if no match)                     | `RegExp`                              |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| v-model | Selected items. Single column picker is an array of length 1, multiple columns is an array of multiple values | `(string \| number)[]` | `[]` |
+| v-model:visible | Controls the display and hiding of the picker popup layer | `boolean` | `false` |
+| columns | Option data structure array configuration, for multiple columns use two-dimensional array, multi-level cascade combines cascade nested children | `PickerOption[] \| PickerOption[][]` | `[]` |
+| cascade | Whether to enable cascade mode | `boolean` | `false` |
+| title | Popup layer main title | `string` | - |
+| cancel-button-text | Top action bar left cancel button text | `string` | - |
+| confirm-button-text | Top action bar right confirm button text | `string` | - |
+| value-key | Key name responsible for identifying values in the option object | `string` | `'value'` |
+| label-key | Key name responsible for displaying text in the option object | `string` | `'label'` |
+| children-key | Key name for the next level child in cascade mode | `string` | `'children'` |
+| item-height | Height of each option in the internal roller (px) | `number` | `44` |
+| visible-item-count | Maximum number of options visible in a single screen viewport | `number` | `6` |
+| before-confirm | Pre-confirmation validation function, receives `(value)` parameter, returns `boolean` or `Promise<boolean>` | `Function` | - |
+| close-on-click-modal | Whether to close the popup when clicking the mask layer | `boolean` | `true` |
+| z-index | Popup layer z-index depth | `number` | `15` |
+| safe-area-inset-bottom | Whether the popup panel sets the default bottom safe distance | `boolean` | `true` |
+| immediate-change | Whether to trigger `change` immediately when finger is released instead of after scrolling ends ^(1.2.25) | `boolean` | `false` |
+| root-portal | Whether to enable `root-portal` to detach the component from the current node for rendering ^(1.11.0) | `boolean` | `false` |
+| custom-class | Root node custom class name | `string` | `''` |
+| custom-style | Root node custom style | `string` | `''` |
+| custom-view-class | External custom style class for pickerView component | `string` | `''` |
 
 ## Events
 
-| Event Name | Description                  | Parameters                                                                                               | Minimum Version |
-| ---------- | ---------------------------- | -------------------------------------------------------------------------------------------------------- | --------------- |
-| confirm    | Triggered on confirm button click | { value, selectedItems }, where `value` is the selected value (array for multi-column), and `selectedItems` is the selected option(s) | -               |
-| cancel     | Triggered on cancel button click | -                                                                                                        | -               |
-| open       | Triggered when picker popup opens | -                                                                                                        | -               |
-| clear      | Triggered on clear button click | -                                                                                                        | 1.11.0 |
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| confirm | Triggered when clicking the complete button | `{ value, selectedItems }` |
+| cancel | Triggered when clicking cancel or mask layer closes | - |
+| open | Triggered when opening the popup layer picker | - |
 
 ## Methods
 
-| Method Name | Description          | Parameters | Minimum Version |
-| ----------- | -------------------- | ---------- | --------------- |
-| open        | Open picker popup    | -          | -               |
-| close       | Close picker popup   | -          | -               |
-
-## Slots
-
-| Name    | Description          | Minimum Version |
-| ------- | -------------------- | --------------- |
-| default | Default slot content | -               |
-| label   | Left-side label slot | -               |
-
-## External Classes
-
-| Class Name          | Description                     | Minimum Version |
-| ------------------- | ------------------------------- | --------------- |
-| custom-class       | Root node styles                | -               |
-| custom-view-class  | Custom styles for pickerView    | -               |
-| custom-label-class | Custom styles for label         | -               |
-| custom-value-class | Custom styles for value         | -               |
+| Method Name | Description | Parameters |
+| --- | --- | --- |
+| open | Open Picker popup | - |
+| close | Close Picker popup | - |

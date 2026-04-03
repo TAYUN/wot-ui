@@ -1,59 +1,50 @@
+---
+version: 1.3.8
+---
+
 # CountTo Number Animation
 
-Number animation component.
+Used for animated number display, supporting themes, prefixes/suffixes, decimal precision, and manual control.
 
-## Basic Usage
+## Component Type
 
-Set the `endVal` property to specify the final value.
-Set the `startVal` property to specify the starting value.
-Set the `duration` property to specify the time for number animation from start to end.
-Set the `autoplay` property to specify whether to play automatically.
-Set the `decimals` property to specify the number of decimal places to retain.
-Set the `decimal` property to specify the decimal point symbol.
-Set the `prefix` property to specify the number prefix.
-Set the `suffix` property to specify the number suffix.
-Set the `fontSize` property to specify the font size.
-Set the `color` property to specify the text color.
+### Basic Usage
 
-```vue
-<wd-count-to :endVal="2024" suffix="year" color="#16baaa"></wd-count-to>
-<wd-count-to prefix="￥" :startVal="0" :decimals="2" :endVal="186.321" :fontSize="32" suffix="%" color="#1e9fff"></wd-count-to>
-<wd-count-to prefix="￥" :startVal="0" :decimals="2" :endVal="21286.321" :fontSize="32" suffix="%" color="#ff5722"></wd-count-to>
-<wd-count-to prefix="￥" :startVal="0" :decimals="2" :endVal="21286.321" :fontSize="32" suffix="%" color="#ffb800" :duration="2000"></wd-count-to>
-```
-
-## Set Theme
-
-Set the text theme through the <code>type</code> parameter. We provide five types: <code>primary</code> <code>error</code> <code>success</code> <code>warning</code> <code>default</code>.
+Set `end-val` to specify the final value, `start-val` for the starting value, and `duration` for the animation duration (ms).
 
 ```html
-<wd-count-to type="primary" prefix="￥" :startVal="0" :endVal="888888" suffix="%"></wd-count-to>
-<wd-count-to type="error" prefix="￥" :startVal="0" :endVal="888888" suffix="%"></wd-count-to>
-<wd-count-to type="success" prefix="￥" :startVal="0" :endVal="888888" suffix="%"></wd-count-to>
-<wd-count-to type="warning" prefix="￥" :startVal="0" :endVal="888888" suffix="%"></wd-count-to>
-<wd-count-to type="info" prefix="￥" :startVal="0" :endVal="888888" suffix="%"></wd-count-to>
+<wd-count-to :end-val="2024" suffix="Year" color="#16baaa" />
+<wd-count-to prefix="￥" :start-val="0" :decimals="2" :end-val="186.321" suffix="%" color="#1e9fff" />
+<wd-count-to prefix="￥" :start-val="0" :decimals="2" :end-val="21286.321" suffix="%" color="#ff5722" />
+<wd-count-to prefix="￥" :start-val="0" :decimals="2" :end-val="21286.321" suffix="%" color="#ffb800" :duration="2000" />
 ```
 
-## Manual Control
+## Component Style
 
-Start the animation using the `start` method, pause it using the `pause` method, and reset it using the `reset` method.
+### Set Theme
+
+Set the text theme via `type`. Optional values are `default`, `primary`, `success`, `warning`, `error`.
 
 ```html
-<wd-count-to
-  ref="countTo"
-  :auto-start="false"
-  prefix="￥"
-  :startVal="1000"
-  :decimals="3"
-  :endVal="9999.32"
-  :fontSize="32"
-  suffix="%"
-  color="#1e9fff"
-></wd-count-to>
+<wd-count-to type="primary" prefix="￥" :start-val="0" :end-val="888888" suffix="%" />
+<wd-count-to type="error" prefix="￥" :start-val="0" :end-val="888888" suffix="%" />
+<wd-count-to type="success" prefix="￥" :start-val="0" :end-val="888888" suffix="%" />
+<wd-count-to type="warning" prefix="￥" :start-val="0" :end-val="888888" suffix="%" />
+<wd-count-to type="default" prefix="￥" :start-val="0" :end-val="888888" suffix="%" />
+```
+
+## Special Style
+
+### Manual Control
+
+After setting `auto-start="false"`, you can manually start, pause, and reset via instance methods.
+
+```html
+<wd-count-to ref="countTo" :auto-start="false" prefix="￥" :start-val="1000" :decimals="3" :end-val="9999.32" suffix="%" color="#1e9fff" />
 <wd-grid clickable border>
-  <wd-grid-item text="Start" icon="play-circle-stroke" @itemclick="start" />
-  <wd-grid-item text="Pause" icon="pause-circle" @itemclick="pause" />
-  <wd-grid-item text="Reset" icon="refresh" @itemclick="reset" />
+  <wd-grid-item text="Start" icon="play-circle" @click="start" />
+  <wd-grid-item text="Pause" icon="pause-circle" @click="pause" />
+  <wd-grid-item text="Reset" icon="refresh" @click="reset" />
 </wd-grid>
 ```
 
@@ -62,61 +53,49 @@ import type { CountToInstance } from '@/uni_modules/wot-ui/components/wd-count-t
 
 const countTo = ref<CountToInstance>()
 
-const start = () => {
-  countTo.value!.start()
-}
-const pause = () => {
-  countTo.value!.pause()
-}
-const reset = () => {
-  countTo.value!.reset()
-}
+const start = () => countTo.value?.start()
+const pause = () => countTo.value?.pause()
+const reset = () => countTo.value?.reset()
 ```
 
 ## Attributes
 
-| Parameter  | Description                                   | Type    | Options                                      | Default | Version |
-| ---------- | --------------------------------------------- | ------- | -------------------------------------------- | ------- | ------- |
-| fontSize   | Font size                                     | number  | 16                                           | default | 1.3.8   |
-| color      | Text color                                    | string  | -                                            | ''      | 1.3.8   |
-| type       | Theme type                                    | string  | 'primary' / 'error' / 'warning' / 'success'  | default | 1.3.9   |
-| startVal   | Starting value                                | number  | -                                            | 0       | 1.3.8   |
-| endVal     | Final value                                   | number  | -                                            | 2024    | 1.3.8   |
-| duration   | Animation duration from start to end          | number  | -                                            | 3000    | 1.3.8   |
-| autoplay   | Auto play                                     | boolean | -                                            | true    | 1.3.8   |
-| decimals   | Number of decimal places (must be >= 0)       | number  | -                                            | 0       | 1.3.8   |
-| decimal    | Decimal point symbol                          | string  | -                                            | '.'     | 1.3.8   |
-| separator  | Thousands separator                           | string  | -                                            | ','     | 1.3.8   |
-| prefix     | Prefix                                        | string  | -                                            | -       | 1.3.8   |
-| suffix     | Suffix                                        | string  | -                                            | -       | 1.3.8   |
-| useEasing  | Use easing animation                          | boolean | -                                            | true    | 1.3.8   |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| color | Text color | string | `''` |
+| type ^(1.3.9) | Theme type, optional values are `default`, `primary`, `success`, `warning`, `error` | string | default |
+| start-val | Starting value | number | 0 |
+| end-val | Final value | number | 2024 |
+| duration | Animation duration from start to end value (milliseconds) | number | 3000 |
+| auto-start | Whether to start automatically | boolean | true |
+| decimals | Number of decimal places to retain, must be >= 0 | number | 0 |
+| decimal | Decimal point symbol | string | `.` |
+| separator | Thousands separator | string | `,` |
+| prefix | Prefix text | string | `''` |
+| suffix | Suffix text | string | `''` |
+| use-easing | Whether to use easing animation | boolean | true |
+| custom-class | Custom class name for root node | string | `''` |
+| custom-style | Custom style for root node | string | `''` |
 
 ## Events
 
-| Event Name | Description                           | Parameters | Version |
-| ---------- | ------------------------------------- | ---------- | ------- |
-| finish     | Triggered when animation completes    | —          | 1.3.8   |
-| mounted    | Triggered when component is mounted   | -          | 1.3.8   |
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| mounted | Triggered when component loading is complete | - |
+| finish | Triggered when animation is complete | - |
 
 ## Methods
 
-| Method Name | Description                                                      | Parameters | Version |
-| ----------- | ---------------------------------------------------------------- | ---------- | ------- |
-| start       | Start animation                                                  | —          | 1.3.8   |
-| pause       | Pause animation                                                  | —          | 1.3.8   |
-| reset       | Reset animation, auto-starts if `auto-start` is `true`           | —          | 1.3.8   |
+| Method Name | Description | Parameters |
+| --- | --- | --- |
+| start | Start animation | - |
+| pause | Pause animation | - |
+| reset | Reset animation; if `auto-start` is `true`, automatically starts after reset | - |
 
 ## Slots
 
-| Name    | Description    | Version |
-| ------- | -------------- | ------- |
-| default | Default slot   | 1.3.8   |
-| prefix  | Prefix slot    | 1.3.8   |
-| suffix  | Suffix slot    | 1.3.8   |
-
-## External Classes
-
-| Class Name    | Description      | Version |
-| ------------- | ---------------- | ------- |
-| custom-class  | Root node style  | 1.3.8   |
-| custom-style  | Root node style  | 1.3.8   |
+| Name | Description | Parameters |
+| --- | --- | --- |
+| default | Main number content | - |
+| prefix | Prefix content | - |
+| suffix | Suffix content | - |

@@ -1,173 +1,185 @@
 # Toast
 
-A lightweight feedback component that appears in the middle of the page.
+Lightweight prompt component for message notifications, loading prompts, and operation result feedback. Supports component mounting point with `useToast()` for functional calls.
 
-:::tip Note
-`Toast` supports controlling component styles through the `props` attribute since version 1.7.0. See [props](#props) for fields. Note that the `options` priority of functional call API is higher than `props`.
+::: tip Tip
+`Toast` supports controlling default styles through component `props` since `1.7.0`. When calling functionally, the passed `options` take priority over component `props`.
 
-For global calling solutions, see [wot-starter](https://starter.wot-ui.cn/guide/feedback.html), which supports globally callable feedback components for use in scenarios like route navigation guards and network request interceptors.
+Global calling solution can refer to [wot-starter](https://starter.wot-ui.cn/guide/feedback.html), suitable for use in route guards or request interceptors.
 :::
 
-## Basic Usage
+## Component Types
 
-The Toast component is a functional component that can be used by calling the `$toast` method on the current instance.
+### Basic Usage
 
-```html
-<wd-button @click="open">Text Toast</wd-button>
+First place a `wd-toast` in the page as a mounting point, then call the prompt through `useToast()`.
+
+::: code-group
+
+```html [vue]
+<wd-toast />
+<wd-button @click="showToast">toast</wd-button>
 ```
 
-```typescript
-import { useToast } from '@wot-ui/ui'
+```ts [ts]
+import { useToast } from '@/uni_modules/wot-ui'
 
-export default {
-  setup() {
-    const toast = useToast()
+const toast = useToast()
 
-    const open = () => {
-      toast.show('This is a toast')
-    }
-
-    return {
-      open
-    }
-  }
+function showToast() {
+  toast.show('Prompt message')
 }
 ```
 
-## Success Toast
+:::
 
-Set the `type` parameter to 'success' to display a success toast.
+### Type Prompt
 
-```typescript
-const open = () => {
-  toast.success('Success')
-}
+Supports four quick prompts: success, error, warning, and info.
+
+```ts
+toast.success('Operation successful')
+toast.error('Mobile verification code input error, please re-enter')
+toast.warning('Prompt message')
+toast.info('Regular prompt message')
 ```
 
-## Error Toast
+## Component States
 
-Set the `type` parameter to 'error' to display an error toast.
+### Loading Prompt
 
-```typescript
-const open = () => {
-  toast.error('Error')
-}
+`loading()` does not auto-close by default, suitable for waiting for async requests to complete before manually calling `close()`.
+
+```ts
+toast.loading('Auto-close after 3s')
+
+setTimeout(() => {
+  toast.close()
+}, 3000)
 ```
 
-## Warning Toast
+### Loading Type
 
-Set the `type` parameter to 'warning' to display a warning toast.
+Switch different loading styles through `loadingType`, supports `circular`, `spinner`, `dots`.
 
-```typescript
-const open = () => {
-  toast.warning('Warning')
-}
+```ts
+toast.loading({
+  msg: 'Auto-close after 3s',
+  loadingType: 'spinner',
+  loadingColor: '#fff'
+})
 ```
 
-## Loading Toast
+## Component Styles
 
-Set the `type` parameter to 'loading' to display a loading toast.
+### Use Icon
 
-```typescript
-const open = () => {
-  toast.loading('Loading')
-}
+You can use built-in icons through `iconClass`, or use custom icons with `classPrefix`.
+
+::: code-group
+
+```ts [Built-in Icon]
+toast.show({
+  iconClass: 'star',
+  msg: 'Using component library internal icon'
+})
 ```
 
-## Custom Icon
-
-Set the `icon` parameter to customize the icon of the toast.
-
-```typescript
-const open = () => {
-  toast.show({
-    msg: 'Custom Icon',
-    icon: 'check-outline'
-  })
-}
+```ts [Custom Icon]
+toast.show({
+  iconClass: 'kehuishouwu',
+  classPrefix: 'fish',
+  msg: 'Using custom icon'
+})
 ```
 
-## Custom Image
+:::
 
-Set the `icon` parameter to customize the image of the toast.
+### Prompt Position
 
-```typescript
-const open = () => {
-  toast.show({
-    msg: 'Custom Image',
-    icon: 'https://example.com/image.png'
-  })
-}
+Adjust prompt position through `position`, supports `top`, `middle-top`, `middle`, `bottom`.
+
+```ts
+toast.show({
+  position: 'top',
+  msg: 'Prompt message'
+})
+
+toast.show({
+  position: 'middle',
+  msg: 'Prompt message'
+})
+
+toast.show({
+  position: 'bottom',
+  msg: 'Prompt message'
+})
 ```
 
-## Custom Duration
+### Layout Direction
 
-Set the `duration` parameter to customize the display duration of the toast, in milliseconds. If set to 0, the toast will not automatically close.
+Control horizontal or vertical layout through `direction`, often used for long text or loading prompts.
 
-```typescript
-const open = () => {
-  toast.show({
-    msg: 'Custom Duration',
-    duration: 5000
-  })
-}
+```ts
+toast.success({
+  msg: 'Vertical layout',
+  direction: 'vertical'
+})
 ```
 
-## Custom Position
+## Toast Attributes
 
-Set the `position` parameter to customize the position of the toast, which can be 'top', 'middle', 'bottom', default is 'middle'.
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| selector | Unique mounting identifier, used to distinguish different toasts in multi-instance scenarios | `string` | `''` |
+| msg ^(1.7.0) | Default prompt text | `string` | `''` |
+| direction ^(1.7.0) | Default layout direction, optional values are `horizontal`, `vertical` | `ToastDirection` | `horizontal` |
+| icon-name ^(1.7.0) | Default icon type, optional values are `success`, `error`, `warning`, `loading`, `info` | `ToastIconType` | `''` |
+| icon-size ^(1.7.0) | Default icon size | `number` | - |
+| loading-type ^(1.7.0) | Default loading icon type, optional values are `circular`, `spinner`, `dots` | `ToastLoadingType` | `circular` |
+| loading-color ^(1.7.0) | Default loading icon color | `string` | `#ffffff` |
+| loading-size ^(1.7.0) | Default loading icon size | `number` | - |
+| icon-color ^(1.7.0) | Default icon color | `string` | - |
+| position ^(1.7.0) | Default prompt position, optional values are `top`, `middle-top`, `middle`, `bottom` | `ToastPositionType` | `middle` |
+| z-index ^(1.7.0) | Default z-index level | `number` | `100` |
+| cover ^(1.7.0) | Whether to show transparent mask layer | `boolean` | `false` |
+| icon-class ^(1.7.0) | Default icon class name | `string` | `''` |
+| class-prefix ^(1.7.0) | Icon class name prefix | `string` | `wd-icon` |
+| opened ^(1.7.0) | Callback after fully displayed | `() => void` | - |
+| closed ^(1.7.0) | Callback after fully closed | `() => void` | - |
+| custom-class | Root node custom class name | `string` | `''` |
+| custom-style | Root node custom style | `string` | `''` |
 
-```typescript
-const open = () => {
-  toast.show({
-    msg: 'Custom Position',
-    position: 'top'
-  })
-}
-```
+## Toast Options
 
-## Close Toast
-
-Call the `close` method to close the toast.
-
-```typescript
-const open = () => {
-  toast.loading('Loading')
-  setTimeout(() => {
-    toast.close()
-  }, 2000)
-}
-```
-
-## Composables
-
-| Name | Description | Parameters | Return Value |
-|---------|---------|---------|------|
-| useToast | Get the toast instance | - | Toast instance |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| msg | Prompt text | `string` | `''` |
+| duration | Duration in milliseconds, `0` means no auto-close | `number` | `2000` |
+| direction | Layout direction, optional values are `horizontal`, `vertical` | `ToastDirection` | `horizontal` |
+| iconName | Icon type, optional values are `success`, `error`, `warning`, `loading`, `info` | `ToastIconType` | - |
+| iconSize | Icon size | `number` | - |
+| loadingType | Loading icon type, optional values are `circular`, `spinner`, `dots` | `ToastLoadingType` | - |
+| loadingColor | Loading icon color | `string` | - |
+| loadingSize | Loading icon size | `number` | - |
+| iconColor | Icon color | `string` | - |
+| position | Prompt position, optional values are `top`, `middle-top`, `middle`, `bottom` | `ToastPositionType` | `middle` |
+| show | Whether to show, for internal state use only | `boolean` | - |
+| zIndex | Z-index level | `number` | `100` |
+| cover | Whether to show transparent mask layer | `boolean` | `false` |
+| iconClass | Custom icon class name | `string` | `''` |
+| classPrefix | Custom icon class name prefix | `string` | `wd-icon` |
+| opened | Callback after fully displayed | `() => void` | - |
+| closed | Callback after fully closed | `() => void` | - |
 
 ## Toast Methods
 
 | Method Name | Description | Parameters | Return Value |
-|---------|---------|---------|------|
-| show | Show toast | options: ToastOptions / msg: string | - |
-| success | Show success toast | options: ToastOptions / msg: string | - |
-| error | Show error toast | options: ToastOptions / msg: string | - |
-| warning | Show warning toast | options: ToastOptions / msg: string | - |
-| loading | Show loading toast | options: ToastOptions / msg: string | - |
-| close | Close toast | - | - |
-
-## ToastOptions
-
-| Attribute | Description | Type | Default | Version |
-|---------|---------|---------|---------|------|
-| msg | Toast content | string | - | - |
-| duration | Toast display duration, in milliseconds, 0 means not automatically close | number | 2000 | - |
-| iconName | Icon name, see Icon component for optional values | string | - | - |
-| icon | Custom image url | string | - | - |
-| iconSize | Icon size | string | - | - |
-| loadingType | Loading type, valid when type is loading | string | circular | - |
-| loadingColor | Loading color, valid when type is loading | string | #4D80F0 | - |
-| position | Toast position | string | middle | - |
-| zIndex | Toast z-index | number | 100 | - |
-| id | Toast id | string | - | - |
-| className | Custom class name | string | - | - |
+| --- | --- | --- | --- |
+| show | Show regular prompt | `(options: ToastOptions \| string)` | - |
+| success | Show success prompt | `(options: ToastOptions \| string)` | - |
+| error | Show error prompt | `(options: ToastOptions \| string)` | - |
+| warning | Show warning prompt | `(options: ToastOptions \| string)` | - |
+| info | Show regular prompt | `(options: ToastOptions \| string)` | - |
+| loading | Show loading prompt | `(options: ToastOptions \| string)` | - |
+| close | Manually close current prompt | - | - |

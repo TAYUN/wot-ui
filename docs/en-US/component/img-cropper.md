@@ -1,12 +1,14 @@
 # ImgCropper
 
-Image cropping component, used for image cropping, supporting drag, zoom, rotation, and other operations.
+Image cropping component for image cropping, supporting drag, zoom, rotate, and other operations.
 
-## Basic Usage
+## Component Type
 
-The image cropping component needs to bind `v-model` to control the component's display and hide, and control the displayed image resource through the `img-src` property. After entering the component, you can perform operations such as dragging, two-finger zooming, rotating, etc., and listen to the `confirm` event to get the cropping result.
+### Basic Usage
 
-> *Note: It is recommended to use the image cropping component in a new page, keep `show` as true, and return to the previous page after cropping is completed.*
+The image cropping component needs to bind `v-model` to control the component's display and hide, and control the displayed image resource through the `img-src` property. After entering the component, you can drag, pinch-zoom, rotate, and other operations on the image. Listen to the `confirm` event to get the cropping result.
+
+> *Note: It is recommended to use the image cropping component in a new page, keeping `show` as true, and return to the previous page after cropping is complete.*
 
 ```html
 <wd-img-cropper
@@ -55,11 +57,13 @@ function handleCancel(event) {
 }
 ```
 
-## Custom Cropping Ratio
+## Component Configuration
 
-You can set the aspect ratio of the cropping box through the `aspect-ratio` property, in the format of `width:height`.
+### Custom Crop Ratio
 
-### 3:2 Suitable for Photography
+Set the crop frame's aspect ratio through the `aspect-ratio` property, in the format `width:height`.
+
+#### 3:2 Suitable for Photography
 
 ```html
 <wd-img-cropper
@@ -72,7 +76,7 @@ You can set the aspect ratio of the cropping box through the `aspect-ratio` prop
 </wd-img-cropper>
 ```
 
-### 16:9 Cinema Ratio
+#### 16:9 Film Ratio
 
 ```html
 <wd-img-cropper
@@ -85,7 +89,7 @@ You can set the aspect ratio of the cropping box through the `aspect-ratio` prop
 </wd-img-cropper>
 ```
 
-### 16:10 Wide and Stylish
+#### 16:10 So Wide, Very Stylish
 
 The 16:10 display ratio is very suitable for displaying landscape photos or movie posters and other widescreen content.
 
@@ -100,9 +104,11 @@ The 16:10 display ratio is very suitable for displaying landscape photos or movi
 </wd-img-cropper>
 ```
 
-## Upload After Cropping
+## Special Usage
 
-Combined with `useUpload`, you can implement automatic image upload after cropping is completed.
+### Upload After Cropping
+
+Combined with `useUpload`, you can achieve automatic image upload after cropping is complete.
 
 ```html
 <wd-img-cropper
@@ -164,41 +170,42 @@ async function handleConfirmUpload(event) {
 
 ## Attributes
 
-| Parameter | Description | Type | Options | Default | Version |
-|-----------|-------------|------|----------|---------|----------|
-| v-model | Open image cropping component | boolean | - | false | - |
-| img-src | Image resource link | string | - | - | - |
-| img-width | Initial width of screenshot preview image; `1. Set width without height for proportional scaling; 2. If neither is set, preview image size will scale proportionally based on crop box size and lock edges;`; string type only supports % unit, number type unit is px | number / string | - | - | - |
-| img-height | Initial height of screenshot preview image; `1. Set height without width for proportional scaling; 2. If neither is set, preview image size will scale proportionally based on crop box size and lock edges;`; string type only supports % unit, number type unit is px | number / string | - | - | - |
-| disabled-rotate | Disable image rotation | boolean | - | false | - |
-| export-scale | Set exported image size | number | - | 2 | - |
-| max-scale | Maximum zoom scale | number | - | 3 | - |
-| cancel-button-text | Cancel button text | string | - | Cancel | - |
-| confirm-button-text | Confirm button text | string | - | Complete | - |
-| quality | Generated image quality [wx.canvasToTempFilePath property introduction](https://developers.weixin.qq.com/miniprogram/dev/api/canvas/wx.canvasToTempFilePath.html#%E5%8F%82%E6%95%B0) | number | 0/1 | 1 | - |
-| file-type | Target file type, [wx.canvasToTempFilePath property introduction](https://developers.weixin.qq.com/miniprogram/dev/api/canvas/wx.canvasToTempFilePath.html#%E5%8F%82%E6%95%B0) | string | - | png | - |
-| aspect-ratio | Crop box aspect ratio, format is width:height | string | - | 1:1 | 1.9.0 |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| v-model | Open image cropping component | `boolean` | `false` |
+| img-src | Image resource link | `string` | - |
+| img-width | Initial width of the screenshot preview image; `1. If width is set but height is not, scale proportionally according to width; 2. If neither is set, the preview image size will be scaled proportionally according to the crop frame size, with edge locking processing;`; `string` type only supports `%` unit, `number` type unit is `px` | `number \| string` | - |
+| img-height | Initial height of the screenshot preview image; `1. If height is set but width is not, scale proportionally according to height; 2. If neither is set, the preview image size will be scaled proportionally according to the crop frame size, with edge locking processing;`; `string` type only supports `%` unit, `number` type unit is `px` | `number \| string` | - |
+| disabled-rotate | Disable image rotation | `boolean` | `false` |
+| export-scale | Set exported image size | `number` | `2` |
+| max-scale | Maximum zoom multiple | `number` | `3` |
+| cancel-button-text | Cancel button text | `string` | `Cancel` |
+| confirm-button-text | Confirm button text | `string` | `Done` |
+| quality | Generated image quality [wx.canvasToTempFilePath property introduction](https://developers.weixin.qq.com/miniprogram/dev/api/canvas/wx.canvasToTempFilePath.html#%E5%8F%82%E6%95%B0) | `number` | `1` |
+| file-type | Target file type, [wx.canvasToTempFilePath property introduction](https://developers.weixin.qq.com/miniprogram/dev/api/canvas/wx.canvasToTempFilePath.html#%E5%8F%82%E6%95%B0) | `string` | `png` |
+| aspect-ratio ^(1.9.0) | Crop frame aspect ratio, format is `width:height` | `string` | `1:1` |
 
 ## Events
 
-| Event Name | Description | Parameters | Version |
-|------------|-------------|------------|----------|
-| confirm | Triggered when screenshot is completed | `{tempFilePath, width, height}` are the temporary path (local path), generated image width, and generated image height respectively | - |
-| cancel | Triggered when screenshot is cancelled | - | - |
-| imgloaderror | Triggered when image loading fails | `{err}` | - |
-| imgloaded | Triggered when image loading completes | `{res}` | - |
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| confirm | Triggered when screenshot is complete | `{tempFilePath, width, height}` are the temporary path (local path) of the generated file, the width of the generated image, and the height of the generated image respectively |
+| cancel | Triggered when screenshot is cancelled | - |
+| imgloaderror | Triggered when image loading fails | `{err}` |
+| imgloaded | Triggered when image loading is complete | `{res}` |
 
 ## Methods
 
-Externally exposed functions
+Expose internal component functions through `ref`:
 
-| Method Name | Description | Parameters | Version |
-|------------|-------------|------------|----------|
-| setRoate | Set image rotation angle | deg (set rotation angle) | - |
+| Method Name | Description | Parameters | Return Value |
+| --- | --- | --- | --- |
+| setRotate | Set image rotation angle | `deg` (the rotation angle to be set) | - |
 | resetImg | Reset image angle, zoom, and position | - | - |
+| revertIsAnimation | Toggle image transition animation effect | `animation` (whether to enable animation) | - |
 
-## External Classes
+## External Style Classes
 
-| Class Name | Description | Version |
-|------------|-------------|----------|
-| custom-class | Custom style class | - |
+| Class Name | Description |
+| --- | --- |
+| custom-class | Root node style |

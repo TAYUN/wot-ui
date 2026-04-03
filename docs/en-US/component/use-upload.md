@@ -9,7 +9,7 @@ import { useUpload } from '@/uni_modules/wot-ui'
 
 const { startUpload, abort, chooseFile, UPLOAD_STATUS } = useUpload()
 
-// Choose files
+// Select files
 const files = await chooseFile({
   accept: 'image',
   multiple: true,
@@ -45,18 +45,18 @@ abort()
 ### Methods
 
 | Method Name | Description | Parameters | Return Value | Minimum Version |
-|-------|------|------|--------|----------|
+|-------|------|------|--------|---------|
 | startUpload | Start uploading file | file: UploadFileItem, options: UseUploadOptions | UniApp.UploadTask \| void | - |
 | abort | Abort upload | task?: UniApp.UploadTask | void | - |
-| chooseFile | Choose file | options: ChooseFileOption | Promise<ChooseFile[]> | - |
+| chooseFile | Select file | options: ChooseFileOption | Promise<ChooseFile[]> | - |
 
 ### UseUploadOptions
 
-| Parameter | Description | Type | Default | Minimum Version |
-|-----|------|------|--------|----------|
-| action | Upload URL | string | - | - |
+| Parameter | Description | Type | Default Value | Minimum Version |
+|-----|------|------|--------|---------|
+| action | Upload address | string | - | - |
 | header | Request headers | Record<string, any> | {} | - |
-| name | Key corresponding to the file | string | 'file' | - |
+| name | File corresponding key | string | 'file' | - |
 | formData | Other form data | Record<string, any> | {} | - |
 | fileType | File type | 'image' \| 'video' \| 'audio' | 'image' | - |
 | statusCode | Success status code | number \| number[] | 200 | - |
@@ -67,60 +67,50 @@ abort()
 
 ### ChooseFileOption
 
-| Parameter | Description | Type | Default | Minimum Version |
-|-----|------|------|--------|----------|
+| Parameter | Description | Type | Default Value | Minimum Version |
+|-----|------|------|--------|---------|
 | multiple | Whether to support multiple file selection | boolean | false | - |
-| sizeType | Size of selected images | Array | ['original', 'compressed'] | - |
-| sourceType | Source of file selection | Array | ['album', 'camera'] | - |
-| maxCount | Maximum number of selections | number | 9 | - |
+| sizeType | Selected image size | Array | ['original', 'compressed'] | - |
+| sourceType | File selection source | Array | ['album', 'camera'] | - |
+| maxCount | Maximum selectable quantity | number | 9 | - |
 | accept | Accepted file types | 'image' \| 'video' \| 'media' \| 'file' \| 'all' | 'image' | - |
 | compressed | Whether to compress video | boolean | true | - |
 | maxDuration | Maximum video duration (seconds) | number | 60 | - |
 | camera | Camera direction | 'back' \| 'front' | 'back' | - |
-| extension | Filter by file extension (H5 supports all types; WeChat Mini Program supports filtering when accept is 'all' or 'file'; other platforms do not support) | string[] | - | - |
-
-
+| extension | Filter by file extension (H5 supports all type filtering, WeChat mini program supports filtering when all and file, other platforms not supported) | string[] | - |
 
 ## File Selection Quantity Limits
 
-Different platforms have different file selection methods with varying maximum quantity limits, which are determined by the uni-app platform APIs:
+Different platforms have different limits on file selection quantity, which are determined by the uni-app platform API itself:
 
 ### WeChat Platform
 
-WeChat Mini Program platform offers richer file selection capabilities with higher quantity limits:
-
-| Selection Method | Maximum Count | Description | Applicable File Types |
-| ---------------- | ------------- | ----------- | -------------------- |
-| `chooseMedia` | 20 | Maximum selection count for images and videos | Used when accept is `image`, `video`, or `media` |
-| `chooseMessageFile` | 100 | Maximum selection count for files from client sessions | Used when accept is `file` or `all` |
+| Selection Method | Maximum Quantity | Description | Applicable Scenario |
+|---------|---------|------|----------|
+| `chooseMedia` | 20 | Maximum quantity limit when selecting images and videos | Used when accept is `image`, `video`, `media` |
+| `chooseMessageFile` | 100 | Maximum quantity limit when selecting files | Used when accept is `file`, `all` |
 
 ### H5 Platform
 
-H5 platform supports multiple file selection methods:
+| Selection Method | Maximum Quantity | Description | Applicable Scenario |
+|---------|---------|------|----------|
+| `chooseImage` | 9 | Maximum quantity limit when selecting images | Used when accept is `image` |
+| `chooseVideo` | 1 | Does not support multiple selection, can only select single video file | Used when accept is `video` |
+| `chooseFile` | 100 | Maximum quantity limit when selecting files | Used when accept is `all` |
 
-| Selection Method | Maximum Count | Description | Applicable File Types |
-| ---------------- | ------------- | ----------- | -------------------- |
-| `chooseImage` | 9 | Maximum selection count for images | Used when accept is `image` |
-| `chooseVideo` | 1 | Does not support multiple selection, single video file only | Used when accept is `video` |
-| `chooseFile` | 100 | Maximum selection count for files | Used when accept is `all` |
+::: warning H5 Platform Special Note
+The count value on H5 platform is based on browser specifications. Current test results show that it can only limit single/multiple selection, but cannot limit specific quantity. Moreover, in actual mobile browsers, few support multiple selection.
+:::
 
 ### Other Platforms
 
-Other platforms (such as Alipay Mini Program, DingTalk Mini Program, App, etc.) have relatively limited file selection capabilities:
+| Selection Method | Maximum Quantity | Description | Applicable Scenario |
+|---------|---------|------|----------|
+| `chooseImage` | 9 | Maximum quantity limit when selecting images | Used when accept is `image` |
+| `chooseVideo` | 1 | Does not support multiple selection, can only select single video file | Used when accept is `video` |
 
-| Selection Method | Maximum Count | Description | Applicable File Types |
-| ---------------- | ------------- | ----------- | -------------------- |
-| `chooseImage` | 9 | Maximum selection count for images | Used when accept is `image` |
-| `chooseVideo` | 1 | Does not support multiple selection, single video file only | Used when accept is `video` |
-
-::: tip Tips
-- When the set `maxCount` exceeds the above platform limits, the actual selection count will be subject to platform limits
-- The `chooseFile` function will automatically choose the optimal method based on platform capabilities
-- WeChat Mini Program platform prioritizes using `chooseMedia` for selecting images and videos, which has higher selection count limits
-- Video selection on non-WeChat platforms is limited by the `chooseVideo` API and only supports single selection
-- Platform capability priority: WeChat Platform > H5 Platform > Other Platforms
-:::
-
-::: warning maxCount Parameter Limitation
-The `maxCount` parameter in `ChooseFileOption` is limited by the underlying platform APIs. Setting a value higher than the platform limit will be automatically capped to the maximum supported value.
+::: tip Hint
+- WeChat platform prioritizes using `chooseMedia` and `chooseMessageFile`, with higher selection quantity limits
+- Video selection does not support multiple selection on most platforms
+- Actual selectable quantity is also further limited by the `maxCount` parameter
 :::

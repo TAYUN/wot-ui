@@ -1,112 +1,74 @@
 ---
 version: 1.6.0
 ---
+
 # Signature
 
-A signature component based on Canvas for signature scenarios. Provides basic signature, history record, and pressure effect features.
+Used for signature scenarios, a signature component based on Canvas, supporting image export, history records, pen pressure effects, custom bottom operations, and more.
 
 :::tip Reminder
-If you encounter unclear exported images, you can set `exportScale` to `2` or higher.
+If you encounter unclear exported images, you can set `export-scale` to `2` or higher.
 :::
 
-## Basic Usage
+## Component Types
 
-Basic electronic signature functionality. After signing, the signature image will be displayed using the preview component.
+### Basic Usage
+
+Set `@confirm` to listen for confirmation events and get signature results after confirmation.
 
 ```html
-<wd-signature @confirm="confirm" @clear="clear" :export-scale="2" background-color="#ffffff" />
+<wd-signature :export-scale="2" background-color="#ffffff" @confirm="handleConfirm" />
 ```
 
-```typescript
-const img = ref<Partial<SignatureResult>>({})
+```ts
+import type { SignatureResult } from '@/uni_modules/wot-ui/components/wd-signature/types'
 
-function confirm(result: SignatureResult) {
+function handleConfirm(result: SignatureResult) {
   if (result.success) {
     uni.previewImage({
       urls: [result.tempFilePath]
     })
   }
 }
-
-function clear() {
-  img.value = {}
-}
 ```
 
-## History Record
+### History Records
 
-Enable history record functionality through `enable-history`, allowing undo and redo operations.
+After setting `enable-history`, undo and redo capabilities can be used.
 
 ```html
 <wd-signature enable-history background-color="#f5f5f5" />
 ```
 
-## Pressure Mode
+## Component Variants
 
-Enable pressure mode through `pressure` to simulate real writing effects. In pressure mode, stroke thickness varies with writing speed.
+### Pressure Mode
 
-### Basic Pressure Effect
+Set `pressure` to enable pressure-sensitive pen effects.
 
 ```html
 <wd-signature pressure :height="300" />
 ```
 
-:::tip Usage Suggestions
-1. Recommended parameter ranges for pressure mode:
-   - min-width: 1-2
-   - max-width: 4-6
-   - min-speed: 1-2
-2. The difference between max-width and min-width should be kept between 3-5
-3. The smaller the min-speed value, the more sensitive the pressure, adjust according to actual writing habits
-4. For signature scenarios, it's recommended to set the canvas height between 300-400
-:::
+### Pressure Mode Combined with History
 
-### Custom Pressure Parameters
-
-You can precisely control the pressure effect through these properties:
-- `min-width`: Minimum stroke width, line thickness when writing quickly
-- `max-width`: Maximum stroke width, line thickness when writing slowly
-- `min-speed`: Speed threshold, used to adjust pressure sensitivity
+The signature component supports enabling both `pressure` and `enable-history` for more complete signature scenarios.
 
 ```html
-<wd-signature 
-  pressure 
-  :height="300" 
-  :min-width="1" 
-  :max-width="6" 
-  :min-speed="1.5"
-  background-color="#f5f5f5"
-/>
-<view class="tip-text">Fast writing produces thin lines, slow writing produces thick lines</view>
+<wd-signature pressure enable-history :height="300" :min-width="1" :max-width="6" background-color="#f5f5f5" />
 ```
 
-### Pressure Mode + History Record
+## Component Styles
 
-Pressure mode can be combined with history record functionality, supporting undo and redo operations for strokes with pressure effects.
+### Custom Bottom Buttons
 
-```html
-<wd-signature 
-  pressure 
-  enable-history 
-  :height="300" 
-  :min-width="1" 
-  :max-width="6"
-  background-color="#f5f5f5" 
-/>
-<view class="tip-text">Combined with history record, supporting undo and redo of pressure effects</view>
-```
-
-## Custom Features
-
-### Custom Buttons
-
-Customize bottom buttons through the `footer` slot.
+After setting the `footer` slot, the bottom operation area can be fully customized.
 
 ```html
 <wd-signature :disabled="disabled" enable-history :step="3">
   <template #footer="{ clear, confirm, currentStep, restore, revoke, historyList }">
-    <wd-button block @click="changeDisabled" v-if="disabled">Start Signing</wd-button>
-    <block v-if="!disabled">
+    <wd-button v-if="disabled" block @click="disabled = false">Start Signature</wd-button>
+    <block v-else>
       <wd-button size="small" plain @click="revoke" :disabled="currentStep <= 0">Undo</wd-button>
       <wd-button size="small" plain @click="restore" :disabled="currentStep >= historyList.length">Redo</wd-button>
       <wd-button size="small" plain @click="clear">Clear</wd-button>
@@ -116,60 +78,50 @@ Customize bottom buttons through the `footer` slot.
 </wd-signature>
 ```
 
-```typescript
+```ts
 const disabled = ref(true)
-
-function changeDisabled() {
-  disabled.value = false
-}
 ```
 
 ### Custom Pen
 
-You can customize the pen color and width.
+Set pen color and width through `pen-color` and `line-width`.
 
 ```html
 <wd-signature pen-color="#0083ff" :line-width="4" />
 ```
 
+## Special Styles
+
 ### Using in Popup
 
-Use the signature pad in a popup by combining with the `wd-popup` component. It's recommended to call the signature pad's `init` method in the `after-enter` event to ensure proper initialization.
+The signature component can be combined with `wd-popup`. It is recommended to call the instance's `init` method after the popup is displayed.
 
-```html
-<wd-button type="primary" @click="show = true">Open Signature Pad</wd-button>
+::: code-group
 
-<wd-popup 
-  v-model="show" 
+```html [vue]
+<wd-button type="primary" @click="showPopup = true">Open Signature Board</wd-button>
+
+<wd-popup
+  v-model="showPopup"
   closable
   safe-area-inset-bottom
   position="bottom"
   custom-style="padding: 48px 20px 20px 20px; border-radius: 16px 16px 0 0;"
   @after-enter="signatureRef?.init()"
 >
-  <wd-signature 
-    ref="signatureRef"
-    :height="300"
-    enable-history
-    pressure
-    background-color="#f5f5f5"
-    @confirm="handleConfirm" 
-  />
+  <wd-signature ref="signatureRef" :height="300" enable-history pressure background-color="#f5f5f5" @confirm="handlePopupConfirm" />
 </wd-popup>
-
-<wd-img v-if="img.tempFilePath" mode="widthFix" width="100%" :src="img.tempFilePath" />
 ```
 
-```typescript
+```ts [ts]
 import { ref } from 'vue'
 import type { SignatureInstance, SignatureResult } from '@/uni_modules/wot-ui/components/wd-signature/types'
 
-const show = ref(false)
-const img = ref<Partial<SignatureResult>>({})
+const showPopup = ref(false)
 const signatureRef = ref<SignatureInstance>()
 
-function handleConfirm(result: SignatureResult) {
-  show.value = false
+function handlePopupConfirm(result: SignatureResult) {
+  showPopup.value = false
   if (result.success) {
     uni.previewImage({
       urls: [result.tempFilePath]
@@ -178,73 +130,256 @@ function handleConfirm(result: SignatureResult) {
 }
 ```
 
-```scss
-.popup-footer {
-  margin-top: 16px;
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
+:::
+
+:::tip Tip
+When using the signature board in a popup, it is recommended to:
+1. Enable `closable` to show the close button.
+2. Set `safe-area-inset-bottom` to adapt to the bottom safe area.
+3. Use `custom-style` to adjust popup padding and leave space for the close button.
+4. Call the signature board's `init` method in the popup's `after-enter` event to ensure correct initialization.
+:::
+
+### Landscape Signature
+
+Supports the following two landscape signature implementation solutions:
+
+#### 1. Universal Landscape Solution (Recommended)
+
+Achieve landscape effects through custom layout and button rotation, suitable for all platforms.
+
+:::tip Implementation Notes
+Universal landscape solution features:
+1. Uses fixed layout with rotation to achieve left-side vertical button bar
+2. Customizes operation buttons through footer slot
+3. Uses transform to achieve button rotation effects
+4. Consistent implementation across all platforms
+5. It is recommended to use the `inited` variable with delayed loading to avoid canvas initialization issues
+:::
+
+::: code-group
+
+```html [vue]
+<template>
+  <view class="landscape-signature">
+    <wd-signature
+      v-if="inited"
+      :height="height"
+      :width="width"
+      enable-history
+      pressure
+      background-color="#f5f5f5"
+      @confirm="handleConfirm"
+    >
+      <template #footer="{ clear, confirm, restore, revoke, canUndo, canRedo }">
+        <view class="custom-actions">
+          <view class="button-group">
+            <wd-button size="small" plain @click="revoke" :disabled="!canUndo">Undo</wd-button>
+            <wd-button size="small" plain @click="restore" :disabled="!canRedo">Redo</wd-button>
+            <wd-button size="small" plain @click="clear">Clear</wd-button>
+            <wd-button size="small" type="primary" @click="confirm">Done</wd-button>
+          </view>
+        </view>
+      </template>
+    </wd-signature>
+  </view>
+</template>
+```
+
+```ts [ts]
+import { pause } from '@/uni_modules/wot-ui/common/util'
+
+const height = ref(0)
+const width = ref(0)
+const inited = ref(false)
+
+onMounted(() => {
+  const { windowWidth, windowHeight } = uni.getSystemInfoSync()
+  width.value = windowWidth - 48
+  height.value = windowHeight - 48
+  
+  pause(100).then(() => {
+    inited.value = true
+  })
+})
+```
+
+```scss [css]
+.landscape-signature {
+  height: 100vh;
+  // #ifdef H5
+  height: calc(100vh - 44px);
+  // #endif
+  background: #fff;
+  position: relative;
+  padding: 24px 0;
+  padding-left: 48px;
+  box-sizing: border-box;
+
+  .custom-actions {
+    position: fixed;
+    left: 0;
+    top: 50%;
+    width: 48px;
+    transform: translateY(-50%) rotate(90deg);
+    transform-origin: center;
+    z-index: 10;
+
+    .button-group {
+      display: flex;
+      flex-direction: row;
+      gap: 12px;
+      white-space: nowrap;
+      width: max-content;
+      transform: translateX(-50%);
+    }
+  }
+}
+```
+:::
+
+
+#### 2. Native Landscape Solution (WeChat Mini Program Only)
+
+WeChat Mini Program provides native landscape support. When using it, you need to distinguish between platforms:
+
+:::warning Notes
+1. The `pageOrientation` configuration only takes effect in WeChat Mini Program
+2. Use conditional compilation to distinguish layout structures for different platforms
+3. WeChat Mini Program pages will rotate automatically, button layout does not require special handling
+4. When reserving space for bottom buttons, consider the landscape layout
+5. For other platforms, please use the universal landscape solution
+:::
+
+::: code-group
+
+```json [json]
+{
+  "path": "pages/signature/landscape",
+  "style": {
+    "navigationBarTitleText": "Landscape Signature",
+    // #ifdef MP-WEIXIN
+    "pageOrientation": "landscape"
+    // #endif
+  }
 }
 ```
 
-:::tip Tips
-When using the signature pad in a popup, it's recommended to:
-1. Enable `closable` to show the close button
-2. Set `safe-area-inset-bottom` to adapt to the bottom safe area
-3. Use `custom-style` to adjust popup padding, leaving space for the close button
-4. Call the signature pad's `init` method in the popup's `after-enter` event to ensure proper initialization
+```html [vue]
+<template>
+  <view class="landscape-signature">
+    <wd-signature
+      v-if="inited"
+      ref="signatureRef"
+      :height="height" 
+      :width="width"
+      enable-history
+      pressure
+      background-color="#f5f5f5"
+      @confirm="handleConfirm"
+    >
+    </wd-signature>
+  </view>
+</template>
+```
+
+```ts [ts]
+import { pause } from '@/uni_modules/wot-ui/common/util'
+
+const height = ref(0)
+const width = ref(0)
+const inited = ref(false)
+
+onMounted(() => {
+  const { windowWidth, windowHeight } = uni.getSystemInfoSync()
+  width.value = windowWidth
+  height.value = windowHeight - 60 // Reserve space for bottom buttons
+
+  pause(100).then(() => {
+    inited.value = true
+  })
+})
+```
+
+```scss [css]
+.landscape-signature {
+  height: 100vh;
+  background: #fff;
+  position: relative;
+  box-sizing: border-box;
+
+  // #ifdef MP-WEIXIN
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+
+  .weixin-actions {
+    padding: 12px;
+    background-color: #f8f8f8;
+    
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+  }
+  // #endif
+}
+```
 :::
 
-### Landscape Signature Page
-
-You can create a landscape signature page by configuring the page's `pageOrientation`.
 
 ## Attributes
 
-| Attribute | Description | Type | Default | Version |
-|-----------|-------------|------|---------|------|
-| height | Canvas height | number | 200 | - |
-| line-width | Line width | number | 3 | - |
-| pen-color | Pen color | string | '#000000' | - |
-| background-color | Background color | string | '#ffffff' | - |
-| export-scale | Export scale | number | 1 | - |
-| pressure | Enable pressure mode | boolean | false | - |
-| min-width | Minimum line width in pressure mode | number | 2 | - |
-| max-width | Maximum line width in pressure mode | number | 6 | - |
-| min-speed | Speed threshold in pressure mode | number | 1.5 | - |
-| enable-history | Enable history record | boolean | false | - |
-| step | Maximum number of history records | number | 20 | - |
-| disabled | Whether to disable | boolean | false | - |
-| width | Canvas width | number | 300 | - |
-| clear-text | Clear button text | string | - | - |
-| confirm-text | Confirm button text | string | - | - |
-| file-type | Export image type | string | png | - |
-| quality | Export image quality(0-1) | number | 1 | - |
-| disable-scroll | Whether to disable canvas scroll | boolean | true | - |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| pen-color | Signature pen color | `string` | `'#000'` |
+| line-width | Signature pen width | `number` | `3` |
+| confirm-text | Confirm button text | `string` | Built-in text |
+| clear-text | Clear button text | `string` | Built-in text |
+| revoke-text | Revoke button text | `string` | Built-in text |
+| restore-text | Restore button text | `string` | Built-in text |
+| file-type | Exported image type, optional values are `png`, `jpg` | `'png' \| 'jpg'` | `'png'` |
+| quality | Exported image quality, value range is `0` to `1` | `number` | `1` |
+| export-scale | Exported image scale ratio | `number` | `1` |
+| disabled | Whether to disable the signature board | `boolean` | `false` |
+| height | Canvas height | `string \| number` | - |
+| width | Canvas width | `string \| number` | - |
+| background-color | Canvas background color | `string` | - |
+| disable-scroll | Whether to disable canvas scrolling | `boolean` | `true` |
+| enable-history | Whether to enable history records | `boolean` | `false` |
+| step | Undo and redo step size | `number` | `1` |
+| undo-text | Undo button text | `string` | Built-in text |
+| redo-text | Redo button text | `string` | Built-in text |
+| pressure | Whether to enable pressure mode | `boolean` | `false` |
+| max-width | Maximum stroke width in pressure mode | `number` | `6` |
+| min-width | Minimum stroke width in pressure mode | `number` | `2` |
+| min-speed | Minimum speed threshold in pressure mode | `number` | `1.5` |
+| custom-class | Root node custom class name | `string` | `''` |
+| custom-style | Root node custom style | `string` | `''` |
 
 ## Events
 
-| Event | Description | Parameters | Version |
-|-------|-------------|------------|------|
-| confirm | Triggered when confirming signature | result: SignatureResult | - |
-| clear | Triggered when clearing signature | - | - |
-| change | Triggered when content changes | - | - |
-| start | Triggered when starting signature | event: TouchEvent | - |
-| end | Triggered when ending signature | event: TouchEvent | - |
-| signing | Triggered during signature | event: TouchEvent | - |
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| start | Triggered when signature starts | event |
+| end | Triggered when signature ends | event |
+| signing | Continuously triggered during signature process | event |
+| confirm | Triggered when signature is confirmed | `SignatureResult` |
+| clear | Triggered when signature is cleared | - |
 
 ## Methods
 
-| Method | Description | Parameters | Version |
-|--------|-------------|------------|------|
-| init | Initialize signature pad | forceUpdate?: boolean | - |
-| clear | Clear the signature | - | - |
-| confirm | Confirm and export the signature | - | - |
-| revoke | Undo operation | - | - |
-| restore | Redo operation | - | - |
+| Method Name | Description | Parameters |
+| --- | --- | --- |
+| init | Initialize signature board | `forceUpdate?: boolean` |
+| confirm | Confirm and export signature image | - |
+| clear | Clear signature | - |
+| restore | Restore previous step | - |
+| revoke | Revoke previous step | - |
 
 ## Slots
 
-| Name | Description | Parameters | Version |
-|------|-------------|------------|------|
-| footer | Custom footer content | `{ clear, confirm, restore, revoke, currentStep, historyList }` | - |
+| Name | Description | Parameters |
+| --- | --- | --- |
+| footer | Custom bottom operation area | `{ clear, confirm, currentStep, revoke, restore, canUndo, canRedo, historyList }` |

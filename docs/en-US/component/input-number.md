@@ -1,159 +1,191 @@
- # InputNumber
+# InputNumber
 
-Composed of increase button, decrease button and input box, used for inputting and adjusting numbers within a certain range.
+Composed of increase button, decrease button, and input box, used for entering or adjusting numbers within a certain range.
 
-## Basic Usage
+## Component Type
 
-Bind the input value through `v-model`, and you can listen to the change of input value through the `change` event.
+### Basic Usage
+
+Bind the input value through `v-model`, and listen to value changes through the `change` event.
 
 ```html
 <wd-input-number v-model="value" @change="handleChange" />
 ```
 
 ```typescript
+import { ref } from 'vue'
+
 const value = ref<number>(1)
+
 function handleChange({ value }) {
   console.log(value)
 }
 ```
 
-## Set Step
+## Component State
 
-Set `step` as the step size, which is the absolute value of each value change.
+### Disabled
+
+After setting `disabled`, both buttons and the input box are inoperable.
 
 ```html
-<wd-input-number v-model="value" @change="handleChange" :step="2" />
+<wd-input-number v-model="value" disabled />
 ```
 
-## Set Minimum and Maximum Values
+### Disable Input Box
 
-Set `min` as the minimum value and `max` as the maximum value. The default value of `min` is 1.
+After setting `disable-input`, only adjusting values through buttons is allowed.
 
 ```html
-<wd-input-number v-model="value" @change="handleChange" :min="3" :max="10" />
+<wd-input-number v-model="value" disable-input @change="handleChange" />
 ```
 
-## Disabled
+### Disable Minus Button
 
-Set the `disabled` property.
+The minus button can be disabled separately.
 
 ```html
-<wd-input-number v-model="value" @change="handleChange" disabled />
+<wd-input-number v-model="value" disable-minus @change="handleChange" />
 ```
 
-## Disable Input Box
+### Disable Plus Button
 
-Set the `disable-input` property.
+The plus button can be disabled separately.
 
 ```html
-<wd-input-number v-model="value" @change="handleChange" disable-input />
+<wd-input-number v-model="value" disable-plus @change="handleChange" />
 ```
 
-## Disable Buttons
+## Component Variant
 
-You can disable the increase or decrease buttons individually.
+### Theme Style
+
+Switch different visual styles through `theme`, optional values are `default`, `primary`, `outline-split`, `outline`.
 
 ```html
-<!-- Disable minus button -->
-<wd-input-number v-model="value" @change="handleChange" disable-minus />
-
-<!-- Disable plus button -->
-<wd-input-number v-model="value" @change="handleChange" disable-plus />
+<wd-input-number v-model="value1" theme="default" />
+<wd-input-number v-model="value2" theme="primary" />
+<wd-input-number v-model="value3" theme="outline-split" />
+<wd-input-number v-model="value4" theme="outline" />
 ```
 
-## Without Input Box
+### Rounded Style
 
-Set `without-input` to hide the input box.
+After setting `round`, the buttons can be displayed in a rounded style.
 
 ```html
-<wd-input-number v-model="value" @change="handleChange" without-input />
+<wd-input-number v-model="value" round theme="primary" />
 ```
 
-## Set Decimal Precision
+## Component Style
 
-Set the `precision` property, default is 0.
+### Set Step
+
+After setting `step`, each increase or decrease will change according to the corresponding step.
 
 ```html
-<wd-input-number v-model="value" @change="handleChange" :precision="2" :step="0.1" />
+<wd-input-number v-model="value" :step="2" @change="handleChange" />
 ```
 
-## Strict Step Multiple
+### Set Minimum and Maximum Values
 
-Set the `step-strictly` property to force the input box content to be a multiple of `step` (when the user completes the input and triggers change, the input box content will be corrected).
+Control the inputtable range through `min` and `max`.
 
 ```html
-<wd-input-number v-model="value" @change="handleChange" step-strictly :step="2" />
+<wd-input-number v-model="value" :min="3" :max="10" @change="handleChange" />
 ```
 
-## Modify Input Box Width
+### Set Decimal Precision
 
-Set `input-width` to set the width. This value accepts a string and can be any unit that represents size.
+Control the result precision through `precision`.
 
 ```html
-<wd-input-number v-model="value" @change="handleChange" input-width="70px" />
+<wd-input-number v-model="value" :precision="1" :step="0.1" @change="handleChange" />
 ```
 
-## Allow Empty Value, Set Placeholder
+### Strict Step
 
-Set the `allow-null` property to allow empty values, set `placeholder` to prompt filling.
+After setting `step-strictly`, the input value will be corrected to a multiple of `step` when the change is completed.
 
 ```html
-<wd-input-number v-model="value" allow-null placeholder="No limit" @change="handleChange" />
+<wd-input-number v-model="value" step-strictly :step="2" @change="handleChange" />
+```
+
+### Strict Step and Boundary Limit
+
+When setting `step-strictly`, `min`, and `max` at the same time, the component will automatically correct to the closest step value within the legal range.
+
+```html
+<wd-input-number v-model="value" step-strictly :step="2" :min="3" :max="15" @change="handleChange" />
+```
+
+### Modify Input Box Width
+
+Set the input box width through `input-width`, supporting numbers and strings with units.
+
+```html
+<wd-input-number v-model="value" input-width="70px" @change="handleChange" />
+```
+
+## Special Usage
+
+### No Input Box
+
+After setting `without-input`, only plus and minus buttons are displayed.
+
+```html
+<wd-input-number v-model="value" without-input @change="handleChange" />
+```
+
+### Allow Null Value
+
+After setting `allow-null`, the input box allows empty values, which can be used with `placeholder`.
+
+```html
+<wd-input-number v-model="value" allow-null placeholder="Unlimited" input-width="70px" @change="handleChange" />
 ```
 
 ```typescript
-const value = ref<number|string>('')
-function handleChange({ value }) {
-  console.log(value)
-}
+const value = ref<number | string>('')
 ```
 
-## Non-Immediate Update Mode
+### Not Allow Null Value but Can Be Temporarily Deleted
 
-Set `immediate-change` to `false`, the `change` event will not be triggered immediately when the input box content changes, only when it loses focus or buttons are clicked.
+When `allow-null` is `false`, the input box can be temporarily cleared, but it will be automatically corrected back to a legal value after blurring.
 
 ```html
-<!-- Immediate update mode (default) -->
-<wd-input-number v-model="value1" @change="handleChange" :immediate-change="true" />
-
-<!-- Non-immediate update mode -->
-<wd-input-number v-model="value2" @change="handleChange" :immediate-change="false" />
+<wd-input-number v-model="value" :allow-null="false" :min="1" @change="handleChange" />
 ```
 
-```typescript
-const value1 = ref<number>(1)
-const value2 = ref<number>(1)
-function handleChange({ value }) {
-  console.log(value)
-}
-```
+### Keyboard Pops Up Without Pushing Page Up
 
-## Auto-update on Initialization
-
-Set the `update-on-init` property to control whether to update the `v-model` with the corrected value during initialization.
-
-- When `update-on-init="true"` (default), the initial value will be corrected to comply with `min`, `max`, `step`, `precision` and other rules, and the `v-model` will be updated synchronously
-- When `update-on-init="false"`, the initial value will not be corrected (v-model unchanged), but display formatting (such as precision) will still be applied
+After setting `adjust-position="false"`, the page is not automatically pushed up when the keyboard pops up.
 
 ```html
-<!-- Auto-update initial value (default) -->
-<wd-input-number v-model="value1" @change="handleChange" :update-on-init="true" :min="3" :max="15" :step="2" step-strictly />
-
-<!-- Don't update initial value, keep original value -->
-<wd-input-number v-model="value2" @change="handleChange" :update-on-init="false" :min="3" :max="15" :step="2" step-strictly />
+<wd-input-number v-model="value" :adjust-position="false" @change="handleChange" />
 ```
 
-```typescript
-const value1 = ref<number>(1) // Will be auto-corrected to 4 (minimum multiple of 2 that is ≥3)
-const value2 = ref<number>(1) // Remains 1, will not be corrected but will be formatted for display
-function handleChange({ value }) {
-  console.log(value)
-}
+### Non-Immediate Update Mode
+
+After setting `immediate-change="false"`, the input box content change will not immediately trigger `change`, only triggered on blur or button click.
+
+```html
+<wd-input-number v-model="value1" :immediate-change="true" @change="handleChange" />
+<wd-input-number v-model="value2" :immediate-change="false" @change="handleChange" />
 ```
 
-## Asynchronous Change
+### Auto Correct on Initialization
 
-Through `before-change`, you can validate and intercept before the input value changes.
+Set `update-on-init` to control whether the component corrects the value to a result that conforms to the rules during initialization.
+
+```html
+<wd-input-number v-model="value1" :update-on-init="true" :min="3" :max="15" :step="2" step-strictly @change="handleChange" />
+<wd-input-number v-model="value2" :update-on-init="false" :min="3" :max="15" :step="2" step-strictly @change="handleChange" />
+```
+
+### Async Change
+
+Validation and interception can be performed before the value changes through `before-change`.
 
 ```html
 <wd-input-number v-model="value" :before-change="beforeChange" />
@@ -163,10 +195,10 @@ Through `before-change`, you can validate and intercept before the input value c
 import { ref } from 'vue'
 import { useToast } from '@/uni_modules/wot-ui'
 import type { InputNumberBeforeChange } from '@/uni_modules/wot-ui/components/wd-input-number/types'
-const { loading, close } = useToast()
 
+const { loading, close } = useToast()
 const value = ref<number>(1)
- 
+
 const beforeChange: InputNumberBeforeChange = (value) => {
   loading({ msg: `Updating to ${value}...` })
   return new Promise((resolve) => {
@@ -178,9 +210,9 @@ const beforeChange: InputNumberBeforeChange = (value) => {
 }
 ```
 
-## Long Press for Increment/Decrement
+### Long Press to Add/Subtract
 
-Set the `long-press` property to allow long press for increment/decrement.
+After setting `long-press`, support long pressing the button to continuously increase or decrease.
 
 ```html
 <wd-input-number v-model="value" long-press @change="handleChange" />
@@ -188,39 +220,44 @@ Set the `long-press` property to allow long press for increment/decrement.
 
 ## Attributes
 
-| Parameter | Description | Type | Options | Default | Version |
-|-----------|-------------|------|----------|---------|----------|
-| v-model | Binding value | number / string | - | - | - |
-| min | Minimum value | number | - | 1 | - |
-| max | Maximum value | number | - | Infinity | - |
-| step | Step size | number | - | 1 | - |
-| step-strictly | Strictly value as multiple of step | boolean | - | false | - |
-| precision | Decimal precision | number | - | 0 | - |
-| disabled | Disabled | boolean | - | false | - |
-| without-input | Hide input box | boolean | - | false | - |
-| input-width | Input box width | string | - | 36px | - |
-| allow-null | Whether to allow empty value, when set to `true`, allows passing empty string | boolean | - | false | - |
-| placeholder | Placeholder text | string | - | - | - |
-| disable-input | Disable input box | boolean | - | false | 0.2.14 |
-| disable-plus | Disable increase button | boolean | - | false | 0.2.14 |
-| disable-minus | Disable decrease button | boolean | - | false | 0.2.14 |
-| adjustPosition | Native property, whether to automatically push up the page when keyboard pops up | boolean | - | true | 1.3.11 |
-| before-change | Triggered before input box value changes, returning false will prevent input box value from changing, supports returning `Promise` | `(value: number \| string) => boolean \| Promise<boolean>` | - | - | 1.6.0 |
-| long-press | Whether to allow long press for increment/decrement | boolean | - | false | 1.8.0 |
-| immediate-change | Whether to respond to input changes immediately, false will only update on blur and button clicks | boolean | - | true | 1.10.0 |
-| update-on-init | Whether to update v-model with corrected value during initialization | boolean | - | true | 1.10.0 |
-| input-type | Input field type | string | number / digit | digit | 1.10.0 |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| v-model | Binding value | `number \| string` | - |
+| min | Minimum value | `number` | `1` |
+| max | Maximum value | `number` | `Number.MAX_SAFE_INTEGER` |
+| step | Step value | `number` | `1` |
+| step-strictly | Whether to strictly increase or decrease by step value | `boolean` | `false` |
+| precision | Numeric precision | `number \| string` | `0` |
+| disabled | Whether to disable | `boolean` | `false` |
+| disable-input ^(0.2.14) | Whether to disable the input box | `boolean` | `false` |
+| disable-minus ^(0.2.14) | Whether to disable the minus button | `boolean` | `false` |
+| disable-plus ^(0.2.14) | Whether to disable the plus button | `boolean` | `false` |
+| without-input | Whether to not display the input box | `boolean` | `false` |
+| input-width | Input box width, supporting numbers and strings with units | `number \| string` | - |
+| allow-null | Whether to allow input value to be empty, set to `true` to allow passing empty string | `boolean` | `false` |
+| placeholder | Input box placeholder text | `string` | `''` |
+| adjust-position ^(1.3.11) | Whether to automatically push up the page when the keyboard pops up | `boolean` | `true` |
+| before-change ^(1.6.0) | Triggered before value change, return `false` to prevent value update, support returning `Promise<boolean>` | `(value: number \| string) => boolean \| Promise<boolean>` | - |
+| long-press ^(1.8.0) | Whether to allow long press to add/subtract | `boolean` | `false` |
+| immediate-change ^(1.10.0) | Whether to immediately respond to input changes, when `false`, only update on blur or button click | `boolean` | `true` |
+| update-on-init ^(1.10.0) | Whether to update `v-model` to the corrected value during initialization | `boolean` | `true` |
+| input-type ^(1.10.0) | Input box type, optional values are `number`, `digit` | `'number' \| 'digit'` | `digit` |
+| theme | Theme style, optional values are `default`, `outline`, `outline-split`, `primary` | `InputNumberTheme` | `default` |
+| round | Whether to enable rounded style | `boolean` | `false` |
+| custom-class | Root node custom class name | `string` | `''` |
+| custom-style | Root node custom style | `string` | `''` |
 
 ## Events
 
-| Event Name | Description | Parameters | Version |
-|------------|-------------|------------|----------|
-| change | Value modification event | `{ value }` | - |
-| focus | Input box focus event | `{ value, height }` | - |
-| blur | Input box blur event | `{ value }` | - |
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| change | Triggered when value is modified | `{ value }` |
+| focus | Triggered when the input box gets focus | `{ value, height }` |
+| blur | Triggered when the input box loses focus | `{ value }` |
+| update:modelValue | Triggered when `v-model` is updated | `number \| string` |
 
-## External Classes
+## External Style Classes
 
-| Class Name | Description | Version |
-|------------|-------------|----------|
-| custom-class | Root node style | - |
+| Class Name | Description |
+| --- | --- |
+| custom-class | Root node style class |

@@ -2,63 +2,57 @@
 layout: home
 
 title: Wot UI
-titleTemplate: A uni-app component library based on Vue3+TS, providing 80+ high-quality components, supporting dark mode, internationalization, and custom themes.
+titleTemplate: An AI-friendly uni-app component library, providing 80+ high-quality components with dark mode, internationalization, and custom theme support.
 
 hero:
   name: Wot UI
-  text: A Beautiful and Lightweight uni-app Component Library
-  tagline: Built with Vue3+TS, providing 80+ high-quality components, supporting dark mode, internationalization, and custom themes.
+  text: "Beautiful, AI-friendly\nuni-app Component Library"
+  tagline: AI-friendly design system, providing 80+ high-quality components with dark mode, internationalization, and custom theme support.
   image:
     src: /logo.png
-    alt: Wot Design
+    alt: Wot UI
   actions:
     - theme: brand
       text: Get Started 🚀
-      link: /en-US/guide/introduction
+      link: /guide/introduction
     - theme: alt
       text: Common Problems
-      link: /en-US/guide/common-problems
+      link: /guide/common-problems
     - theme: alt
       text: Components
-      link: /en-US/component/button
+      link: /component/button
     - theme: brand
-      text: 🥤Buy Me a Coffee
-      link: /en-US/reward/reward
-    - theme: brand
-      text: ✨Starter
-      link: "https://starter.wot-ui.cn/"
-    - theme: brand
-      text: 🐟 About Author
-      link: "https://blog.wot-ui.cn/about"
+      text: 🥤 Buy Us a Coffee
+      link: /reward/reward
 
 features:
   - icon: 🎯
-    title: Multi-Platform Support
-    details: Supports WeChat Mini Program, Alipay Mini Program, DingTalk Mini Program, H5, APP, and more platforms.
+    title: Multi-Platform Coverage
+    details: Supports WeChat Mini Program, Alipay Mini Program, DingTalk Mini Program, H5, APP, and other platforms.
   - icon: 🚀
     title: 80+ Components
     details: Over 80 high-quality components covering mainstream mobile scenarios.
   - icon: 💖
-    title: Quick Start Template
-    details: Wot UI provides a quick start template based on vitesse-uni-app with deep integration of Wot UI component library.
+    title: Quick Start
+    details: Provides a quick start template wot-starter based on vitesse-uni-app deeply integrated with wot-ui.
     link: "https://starter.wot-ui.cn/"
     linkText: "View Wot Starter"
   - icon: 💪
     title: TypeScript Support
-    details: Built with TypeScript, providing a robust component type system.
+    details: Built with TypeScript, providing a good component type system.
   - icon: 🌍
-    title: Internationalization
+    title: Internationalization Support
     details: Supports internationalization with 15 built-in language packs.
-  - icon: 📖
-    title: Rich Documentation and Examples
-    details: Comprehensive documentation and component examples provide stable support for developers.
+  - icon: 🤖
+    title: AI-Friendly
+    details: Provides an AI-friendly design system, continuously updating AI programming practices.
   - icon: 🍭
-    title: Dark Mode and Theme Customization
-    details: Customize CSS variables and component styles for your needs.
+    title: Dark Mode & Theme Customization
+    details: Can customize CSS variables and component styles.
   - icon: 🍿
-    title: Best Practices Sharing
-    details: Regularly share best practices related to using Wot UI through the WeChat public account 'A Yu Talks Frontend'.
-    link: "./guide/join-group.html#wechat-official-account"
+    title: Practice Sharing
+    details: The WeChat public account '不如摸鱼去' (Why Not Go Slack Off) occasionally shares best practices related to wot-ui and AI programming.
+    link: "./guide/join-group.html#微信公众号"
     linkText: "View Public Account"
 
 footer: false

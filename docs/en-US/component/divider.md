@@ -2,39 +2,29 @@
 
 Used to separate content into multiple areas.
 
-:::danger Please Note
-The `hairline`, `dashed`, `content-position`, and `vertical` properties are newly supported in version 1.5.0. Before this version, only default slot text display and custom `color` were supported.
-:::
+## Component Type
 
-## Basic Usage
+### Basic Usage
 
-By default, renders a horizontal dividing line.
+Default renders a horizontal divider line.
 
 ```html
-<wd-divider></wd-divider>
+<wd-divider />
 ```
 
-## Display Text
+### Display Text
 
-Use the default slot to insert content in the middle of the dividing line.
+Use default slot to insert content in the middle of the divider.
 
 ```html
 <wd-divider>Display Text</wd-divider>
 ```
 
-## Custom Render Content
+## Component Variant
 
-Use the default slot to insert custom content in the middle of the dividing line.
+### Content Position
 
-```html
-<wd-divider>
-  <wd-icon name="arrow-down" size="20" color="#1989fa" />
-</wd-divider>
-```
-
-## Content Position
-
-Specify the content position through `content-position`.
+Specify content position through `content-position`.
 
 ```html
 <wd-divider>Center</wd-divider>
@@ -42,25 +32,39 @@ Specify the content position through `content-position`.
 <wd-divider content-position="right">Right</wd-divider>
 ```
 
-## Dashed Line
+### Dashed Line
 
-Add the `dashed` property to render the dividing line as a dashed line.
+Add `dashed` to render divider as dashed line.
 
 ```html
 <wd-divider dashed>Dashed Divider</wd-divider>
 ```
 
-## Custom Color
+## Component Style
 
-Set the `color` property.
+### Custom Render Content
+
+Use default slot to render custom content.
+
+```html
+<wd-divider>
+  <wd-icon name="down" size="20" />
+</wd-divider>
+```
+
+### Custom Color
+
+Set `color` to customize divider color.
 
 ```html
 <wd-divider color="#4D80F0">Custom Color</wd-divider>
 ```
 
-## Vertical Divider
+## Special Style
 
-Add the `vertical` property to render the dividing line as a vertical divider.
+### Vertical Divider
+
+Add `vertical` to render divider as vertical direction, default slot does not take effect in vertical mode.
 
 ```html
 <view class="content">
@@ -84,22 +88,24 @@ Add the `vertical` property to render the dividing line as a vertical divider.
 
 ## Attributes
 
-| Attribute | Description | Type | Options | Default | Version |
-|-----------|-------------|------|----------|---------|----------|
-| color | Custom color, supports all color writing formats | string | - | - | - |
-| hairline | Whether to show border | boolean | - | true | 1.5.0 |
-| dashed | Whether to show as dashed line | boolean | - | false | 1.5.0 |
-| content-position | Content position | string | `left`/`center`/`right` | `center` | 1.5.0 |
-| vertical | Whether to show as vertical divider | boolean | - | false | 1.5.0 |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| color | Custom color, supports all valid color values | `string` | - |
+| content-position ^(1.5.0) | Content position, optional values are `left`, `center`, `right` | `DividerPosition` | `'center'` |
+| dashed ^(1.5.0) | Whether to display as dashed line | `boolean` | `false` |
+| vertical ^(1.5.0) | Whether to display as vertical divider | `boolean` | `false` |
+| hairline ^(1.5.0) | Whether to display as 0.5px thin line | `boolean` | `true` |
+| custom-class | Root node custom class name | `string` | `''` |
+| custom-style | Root node custom style | `string` | `''` |
 
-## Slot
+## Slots
 
-| Name | Description | Version |
-|------|-------------|----------|
-| default | Content, only effective when `vertical` is `false` | - |
+| Name | Description | Parameters |
+| --- | --- | --- |
+| default | Divider content, only takes effect when `vertical` is `false` | - |
 
-## External Classes
+## External Style Classes
 
-| Class Name | Description | Version |
-|------------|-------------|----------|
-| custom-class | Root node style | - |
+| Class Name | Description |
+| --- | --- |
+| custom-class | Root node style class |

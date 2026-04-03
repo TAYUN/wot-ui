@@ -1,12 +1,14 @@
 # IndexBar
 
-Used for displaying index classification and quick positioning of lists.
+Used for index classification display and quick positioning of lists.
 
-## Basic Usage
+## Component Type
 
-Wrap the `wd-index-bar` component with a fixed-height element. The component's width and height will be the same as the wrapper element.
+### Basic Usage
 
-Use `wd-index-anchor` as a child component. Anchors and sidebar will be generated based on the `index` property of the anchor component.
+Use a fixed-height element to wrap the `wd-index-bar` component. The component's width and height will be the same as the wrapping element.
+
+Use `wd-index-anchor` as a child component. It will generate anchors and a sidebar based on the anchor component's `index` property.
 
 ```vue
 <template>
@@ -22,7 +24,6 @@ Use `wd-index-anchor` as a child component. Anchors and sidebar will be generate
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { onMounted } from 'vue'
 
 const data = ref([
   {
@@ -42,7 +43,7 @@ const data = ref([
       'Changchun',
       'Cangzhou',
       'Changde',
-      'Changdu',
+      'Chamdo',
       'Changzhi',
       'Changzhou',
       'Chaohu',
@@ -63,7 +64,7 @@ const data = ref([
   },
   {
     index: 'E',
-    data: ['Erdos', 'Enshi', 'Ezhou']
+    data: ['Ordos', 'Enshi', 'Ezhou']
   },
   {
     index: 'F',
@@ -71,7 +72,7 @@ const data = ref([
   },
   {
     index: 'G',
-    data: ['Guangzhou', 'Guilin', 'Guiyang', 'Gannan', 'Ganzhou', 'Ganzi', 'Guangan', 'Guangyuan', 'Guigang', 'Golog']
+    data: ['Guangzhou', 'Guilin', 'Guiyang', 'Gannan', 'Ganzhou', 'Ganzi', 'Guangan', 'Guangyuan', 'Guigang', 'Guoluo']
   },
   {
     index: 'H',
@@ -96,7 +97,7 @@ const data = ref([
       'Heyuan',
       'Hezhou',
       'Honghe',
-      'Huaian',
+      'Huai'an',
       'Huaibei',
       'Huaihua',
       'Huainan',
@@ -112,6 +113,10 @@ const data = ref([
     ]
   }
 ])
+
+function handleClick(index: string, city: string) {
+  console.log(`Current clicked item: ${index}, City: ${city}`)
+}
 </script>
 
 <style lang="scss">
@@ -123,15 +128,18 @@ const data = ref([
 </style>
 ```
 
-## Update List Data
+## Special Usage
 
-If the list data needs to be updated, you can refer to this example
+### Update List Data
+
+The current example page only provides basic usage demonstrations. If your list data needs to be dynamically updated, you can refer to the following extended example, used in conjunction with the `wd-search` component:
 
 ::: details View Update List Data Example
 ::: code-group
 
-```html [vue]
+```html [vue/html]
 <template>
+  <view>
     <wd-search hide-cancel placeholder="Where do I want to go?" v-model="keyword" @search="handleSearch" @clear="handleClear" />
     <view class="wraper">
       <wd-index-bar sticky v-if="showList.length">
@@ -141,6 +149,7 @@ If the list data needs to be updated, you can refer to this example
         </view>
       </wd-index-bar>
     </view>
+  </view>
 </template>
 ```
 
@@ -148,14 +157,9 @@ If the list data needs to be updated, you can refer to this example
 <script lang="ts" setup>
 import { useToast } from '@/uni_modules/wot-ui'
 import { nextTick, onMounted, ref } from 'vue'
+
 const { show: showToast } = useToast()
-
-onMounted(() => {
-  handleSearch()
-})
-
 const keyword = ref('')
-
 const showList = ref<any>([])
 
 const indexList = [
@@ -176,7 +180,7 @@ const indexList = [
       'Changchun',
       'Cangzhou',
       'Changde',
-      'Changdu',
+      'Chamdo',
       'Changzhi',
       'Changzhou',
       'Chaohu',
@@ -190,55 +194,125 @@ const indexList = [
       'Chuzhou',
       'Chaoyang'
     ]
+  },
+  {
+    index: 'D',
+    data: ['Dalian', 'Dongguan', 'Dali', 'Dandong', 'Daqing', 'Datong', 'Daxinganling', 'Dehong', 'Deyang', 'Dezhou', 'Dingxi', 'Diqing', 'Dongying']
+  },
+  {
+    index: 'E',
+    data: ['Ordos', 'Enshi', 'Ezhou']
+  },
+  {
+    index: 'F',
+    data: ['Fuzhou', 'Fangchenggang', 'Foshan', 'Fushun', 'Fuzhou', 'Fuxin', 'Fuyang']
+  },
+  {
+    index: 'G',
+    data: ['Guangzhou', 'Guilin', 'Guiyang', 'Gannan', 'Ganzhou', 'Ganzi', 'Guangan', 'Guangyuan', 'Guigang', 'Guoluo']
+  },
+  {
+    index: 'H',
+    data: [
+      'Hangzhou',
+      'Harbin',
+      'Hefei',
+      'Haikou',
+      'Hohhot',
+      'Haibei',
+      'Haidong',
+      'Hainan',
+      'Haixi',
+      'Handan',
+      'Hanzhong',
+      'Hebi',
+      'Hechi',
+      'Hegang',
+      'Heihe',
+      'Hengshui',
+      'Hengyang',
+      'Heyuan',
+      'Hezhou',
+      'Honghe',
+      'Huai\'an',
+      'Huaibei',
+      'Huaihua',
+      'Huainan',
+      'Huanggang',
+      'Huangnan',
+      'Huangshan',
+      'Huangshi',
+      'Huizhou',
+      'Huludao',
+      'Hulunbuir',
+      'Huzhou',
+      'Heze'
+    ]
   }
 ]
 
+onMounted(() => {
+  handleSearch()
+})
+
+function handleClick(index: string, city: string) {
+  showToast(`Current clicked item: ${index}, City: ${city}`)
+}
+
 function handleSearch() {
-  if (!keyword.value) {
-    showList.value = indexList
-    return
-  }
-  const list = indexList.map((item) => {
-    return {
-      index: item.index,
-      data: item.data.filter((city) => city.toLowerCase().includes(keyword.value.toLowerCase()))
+  showList.value = []
+  nextTick(() => {
+    if (keyword.value) {
+      showList.value = indexList.filter((item) => {
+        return item.data.some((city) => {
+          return city.includes(keyword.value)
+        })
+      })
+    } else {
+      showList.value = indexList
     }
   })
-  showList.value = list.filter((item) => item.data.length)
 }
 
 function handleClear() {
+  keyword.value = ''
   handleSearch()
-}
-
-function handleClick(index: string, city: string) {
-  showToast({
-    msg: `${index}-${city}`
-  })
 }
 </script>
 ```
 
+```css [css]
+.wraper {
+  height: calc(100vh - var(--window-top) - 54px);
+  height: calc(100vh - var(--window-top) - constant(safe-area-inset-bottom) - 54px);
+  height: calc(100vh - var(--window-top) - env(safe-area-inset-bottom) - 54px);
+}
+```
+
 :::
 
-## IndexBar Attributes
+## Attributes
 
-| Attribute | Description | Type | Default | Version |
-|-----------|-------------|------|---------|----------|
-| sticky | Whether to enable sticky mode | boolean | false | - |
-| sticky-offset-top | Offset from top in sticky mode | number | 0 | - |
-| z-index | z-index of sticky mode | number | 1 | - |
-| highlight-color | Index character highlight color | string | #1989fa | - |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| sticky | Whether the index sticks to the top | `boolean` | `false` |
+
+## Slots
+
+| name | Description |
+| --- | --- |
+| default | Customize index list content |
 
 ## IndexAnchor Attributes
 
-| Attribute | Description | Type | Default | Version |
-|-----------|-------------|------|---------|----------|
-| index | Index character | string / number | - | - |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| index | Index character | `string \| number` | - |
+| custom-style | Root node custom style | `string` | - |
+| custom-class | Root node custom class name | `string` | - |
 
-## IndexBar Events
+## IndexAnchor Slots
 
-| Event Name | Description | Parameters | Version |
-|------------|-------------|------------|----------|
-| select | Triggered when an index is selected | index: string / number | - |
-| change | Triggered when index changes during scrolling | index: string / number | - |
+| name | Description |
+| --- | --- |
+| default | Customize content |

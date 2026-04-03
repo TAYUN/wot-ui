@@ -1,82 +1,133 @@
 # PickerView
 
-Picker view component, used to select single or multiple values from a set of data.
+Picker view, used to select single or multiple values from a set of data.
 
-## Basic Usage
+`wd-picker-view` is only responsible for the roller selection area itself, and does not include the popup layer and top action bar; if you need a complete popup selector, you can use [Picker](./picker.md).
 
-Single column picker, pass a numeric array to `columns` and set `v-model` for binding value. Options can be strings or objects. If an option is an object, by default the option's `label` property is used as the display content for rendering, and the `v-model` gets the value of the option's `value` property. If the option's `value` property doesn't exist, the option's `label` value is used.
+When the options in `columns` are objects, the component defaults to reading `label` as the display text and `value` as the selected value; you can also customize field mapping through `label-key`, `value-key`, and `children-key`.
+
+## Component Types
+
+### Basic Usage
+
+Single column picker can directly pass a string array or object array. `v-model` is recommended to always use array form to save the current selected value.
+
+::: code-group
 
 ```html
-<wd-picker-view :columns="columns" v-model="value" @change="onChange" />
+<wd-picker-view v-model="value" :columns="columns" />
 ```
+
 ```typescript
-import { useToast } from '@/uni_modules/wot-ui'
-const toast = useToast()
-const columns = ref(['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5', 'Option 6', 'Option 7'])
-const value3 = ref<string>('')
-function onChange({ selectedValues, columnIndex }) {
-  toast.show(`Current selected: ${selectedValues}, Index: ${columnIndex}`)
+import { ref } from 'vue'
+
+const value = ref<string[]>(['Option 1'])
+const columns = ref(['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5'])
+```
+
+:::
+
+When `columns` is an object array, the single item data structure is as follows:
+
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| value | Option value | `string \| number` | - |
+| label | Option text | `string \| number` | - |
+| disabled | Whether disabled | `boolean` | `false` |
+| children | Sub-option list, used for cascade mode | `PickerOption[]` | - |
+
+## Component States
+
+### Disabled Options
+
+By setting `disabled` on the option object, you can prevent an item from being selected.
+
+::: code-group
+
+```html
+<wd-picker-view v-model="value" :columns="columns" />
+```
+
+```typescript
+import { ref } from 'vue'
+
+const value = ref<string[]>(['Option 1'])
+const columns = ref([
+  { label: 'Option 1', value: 'Option 1' },
+  { label: 'Option 2', value: 'Option 2' },
+  { label: 'Option 3', value: 'Option 3', disabled: true },
+  { label: 'Option 4', value: 'Option 4' }
+])
+```
+
+:::
+
+## Component Variants
+
+### Immediate Trigger
+
+Set `immediate-change` to trigger the `change` event when the finger is released; by default, it will trigger after the scrolling animation ends.
+
+::: code-group
+
+```html
+<wd-picker-view v-model="value" :columns="columns" immediate-change @change="handleChange" />
+```
+
+```typescript
+import { ref } from 'vue'
+
+const value = ref<string[]>(['Option 1'])
+const columns = ref([
+  { label: 'Option 1', value: 'Option 1' },
+  { label: 'Option 2', value: 'Option 2' },
+  { label: 'Option 3', value: 'Option 3' }
+])
+
+function handleChange({ selectedValues, selectedLabels, columnIndex }: any) {
+  console.log(selectedValues, selectedLabels, columnIndex)
 }
 ```
 
-When `columns` options are objects, their data structure is:
+:::
 
-| Parameter | Type | Description | Version |
-|-----------|------|-------------|----------|
-| value | string / number / boolean | Option value, if value property doesn't exist, label is used as the option's value | - |
-| label | string | Option text content | - |
-| disabled | boolean | Whether the option is disabled | - |
+### Multiple Columns
 
-## Disabled Options
+Set `columns` to a two-dimensional array to display a multi-column picker. The corresponding `v-model` is still a one-dimensional array, saving the selected value of each column in column order.
 
-Options can be objects with a `disabled` property set.
+::: code-group
 
 ```html
-<wd-picker-view :columns="columns" v-model="value" disabled />
+<wd-picker-view v-model="value" :columns="columns" />
 ```
+
 ```typescript
-const columns = ref(['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5', 'Option 6', 'Option 7'])
-const value = ref('Option 3')
-```
+import { ref } from 'vue'
 
-## Loading
-
-Set the `loading` property.
-
-```html
-<wd-picker-view :columns="columns" loading />
-```
-
-## Multiple Columns
-
-Set `columns` property as a two-dimensional array, and `value` as an array.
-
-```html
-<wd-picker-view :columns="columns" v-model="value" />
-```
-```typescript
 const value = ref(['Central South University', 'Software Engineering'])
-
 const columns = ref([
   ['Sun Yat-sen University', 'Central South University', 'South China University of Technology'],
   ['Computer Science and Technology', 'Software Engineering', 'Communication Engineering', 'Law', 'Economics']
 ])
 ```
 
-## Multi-level Linkage
+:::
 
-> Starting from version 2.0, multi-level linkage uses a new implementation. It's recommended to use the `cascade` property with tree-structured data (containing `children` field) for cascading selection.
+### Multi-level Cascade
 
-Set the `cascade` property to `true` and pass tree-structured data with a `children` field. The component will automatically expand corresponding child data based on the selected item.
+Set `cascade`, and `columns` should be passed in tree structure data. The component will automatically expand subsequent columns based on the current selected value.
+
+::: code-group
 
 ```html
-<wd-picker-view :columns="cascadeColumns" v-model="value" cascade />
+<wd-picker-view v-model="value" :columns="columns" cascade />
 ```
 
 ```typescript
-const value = ref(['110000', '110100', '110102'])
+import { ref } from 'vue'
 
-const cascadeColumns = ref([
+const value = ref(['110000', '110100', '110102'])
+const columns = ref([
   {
     label: 'Beijing',
     value: '110000',
@@ -87,9 +138,7 @@ const cascadeColumns = ref([
         children: [
           { label: 'Dongcheng District', value: '110101' },
           { label: 'Xicheng District', value: '110102' },
-          { label: 'Chaoyang District', value: '110105' },
-          { label: 'Fengtai District', value: '110106' },
-          { label: 'Shijingshan District', value: '110107' }
+          { label: 'Chaoyang District', value: '110105' }
         ]
       }
     ]
@@ -106,69 +155,93 @@ const cascadeColumns = ref([
           { label: 'Yuexiu District', value: '440104' },
           { label: 'Haizhu District', value: '440105' }
         ]
-      },
-      {
-        label: 'Shenzhen City',
-        value: '440300',
-        children: [
-          { label: 'Luohu District', value: '440303' },
-          { label: 'Futian District', value: '440304' }
-        ]
       }
-      // ... more cities
     ]
   }
 ])
 ```
 
+:::
+
+## Special Usage
+
+### Custom Field Names
+
+You can adapt to non-standard field name data structures through `value-key`, `label-key`, and `children-key`.
+
+::: code-group
+
+```html
+<wd-picker-view v-model="value" :columns="columns" value-key="id" label-key="text" />
+```
+
+```typescript
+import { ref } from 'vue'
+
+const value = ref<number[]>([1])
+const columns = ref([
+  { id: 1, text: 'Option One' },
+  { id: 2, text: 'Option Two' },
+  { id: 3, text: 'Option Three' }
+])
+```
+
+:::
+
 ## Attributes
 
-| Parameter | Description | Type | Options | Default | Version |
-|-----------|-------------|------|----------|---------|----------|
-| v-model | Selected value, should be array for multiple column picker | string / number / boolean / array | - | - | - |
-| columns | Picker data, can be string array or object array, two-dimensional array for multiple column picker; if cascade is enabled, should be tree-structured data (with children) | array | - | - | - |
-| loading | Loading state | boolean | - | false | - |
-| loading-color | Loading color, can only use hexadecimal color values and cannot use abbreviated form | string | - | #4D80F0 | - |
-| columns-height | Height of picker's internal cylinder | number | - | 231 | - |
-| item-height | Height of picker item | number | - | 35 | 1.13.0 |
-| value-key | Key for value in option object | string | - | value | - |
-| label-key | Key for display text in option object | string | - | label | - |
-| cascade | Enable cascade mode, columns should be tree-structured data (with children) when enabled | boolean | - | false | 2.0.0 |
-| children-key | Key for children in option object in cascade mode | string | - | children | 2.0.0 |
-| immediate-change | Whether to trigger picker-view's change event immediately when finger is released. If not enabled, change event will be triggered after scroll animation ends. Available since version 1.2.25, only supported on WeChat Mini Program and Alipay Mini Program. | boolean | - | false | 1.2.25 |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| v-model | Current selected value; usually an array of length 1 for single column, saves selected values of each column in column order for multiple columns and cascade | `(string \| number)[]` | `[]` |
+| columns | Picker data; can pass one-dimensional array, object array, two-dimensional array, tree data in cascade mode | `Array<string \| number \| PickerOption> \| Array<Array<string \| number \| PickerOption>>` | `[]` |
+| item-height | Height of each option | `number` | `44` |
+| visible-item-count | Number of visible options | `number` | `6` |
+| value-key | Key name for the value field in the option object | `string` | `'value'` |
+| label-key | Key name for the text field in the option object | `string` | `'label'` |
+| immediate-change ^(1.2.25) | Whether to trigger `change` event immediately when finger is released; if not enabled, triggers after scrolling animation ends | `boolean` | `false` |
+| cascade ^(2.0.0) | Whether to enable cascade mode; when enabled, `columns` should be passed tree data | `boolean` | `false` |
+| children-key ^(2.0.0) | Key name for child nodes in cascade mode | `string` | `'children'` |
+| custom-class | Root node custom class name | `string` | `''` |
+| custom-style | Root node custom style | `string` | `''` |
 
 ## Methods
 
-| Method Name | Description | Parameters | Version |
-|------------|-------------|------------|----------|
-| getSelectedLabels | Get text of all columns' selected items, returns an array | - | - |
-| getColumnIndex | Get selected item index of a column | columnIndex | - |
-| getColumnData | Get options of a column | columnIndex | - |
-| getColumnsData | Get options data of all columns | - | - |
-| getSelectedOptions | Get selected items of all columns | - | - |
-| getSelectedValues | Get selected values of all columns | - | - |
-| getSelectedIndex | Get selected indexes of all columns | - | - |
-| resetColumns | Reset column data to specified column data | columns (same type as columns in props) | 1.3.9 |
+| Method Name | Description | Parameters |
+| --- | --- | --- |
+| getSelectedOptions | Get all column selected items | - |
+| getSelectedValues | Get all column selected values | - |
+| getColumnsData | Get all column data | - |
+| getColumnData | Get specified column data | `columnIndex: number` |
+| getColumnIndex | Get selected index of specified column | `columnIndex: number` |
+| getSelectedLabels | Get text of all column selected items | - |
+| getSelectedIndex | Get selected index of all columns | - |
+| resetColumns | Reset column data | `columns: PickerOption[] \| PickerOption[][]` |
 
 ## Events
 
-| Event Name | Description | Parameters | Version |
-|------------|-------------|------------|----------|
-| change | Triggered when option value is modified | { selectedValues, selectedOptions, selectedIndexes, columnIndex } | - |
-| pickstart | Triggered when scroll selection starts | - | - |
-| pickend | Triggered when scroll selection ends | - | - |
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| change | Triggered when selected value changes | `{ selectedValues, selectedOptions, selectedLabels, selectedIndexes, columnIndex }` |
+| pickstart | Triggered when starting to scroll selection | - |
+| pickend | Triggered when ending scroll selection | - |
+| update:modelValue | Triggered when `v-model` updates | `value: (string \| number)[]` |
 
-**change Event Parameters:**
+### change Event Parameters
 
-| Parameter | Description | Type |
-|-----------|-------------|------|
-| selectedValues | Array of selected values from all columns | `Array<string \| number>` |
-| selectedOptions | Array of selected option objects from all columns | `Array<PickerOption>` |
-| selectedIndexes | Array of selected indexes from all columns | `Array<number>` |
-| columnIndex | Index of the column that changed (for single column, it's the selected item index) | number |
+| Parameter Name | Description | Type |
+| --- | --- | --- |
+| selectedValues | Array of selected values for all columns | `Array<string \| number>` |
+| selectedOptions | Array of selected item objects for all columns | `Array<PickerOption>` |
+| selectedLabels | Array of selected text for all columns | `Array<string>` |
+| selectedIndexes | Array of selected indexes for all columns | `Array<number>` |
+| columnIndex | Index of the column where the change occurred; for single column, it's the current option index | `number` |
+
+## Slots
+
+The component does not provide slots.
 
 ## External Classes
 
-| Class Name | Description | Version |
-|------------|-------------|----------|
-| custom-class | Root node style | - |
+| Class Name | Description |
+| --- | --- |
+| custom-class | Root node style |

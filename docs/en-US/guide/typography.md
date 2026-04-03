@@ -13,9 +13,9 @@
       <td>
         <div class="typo-PingFang-Medium-text">PingFang</div>
         <div class="typo-content-demo">
-          <div class="typo-PingFang-Semibold">苹方</div>
-          <div class="typo-PingFang-Medium">苹方</div>
-          <div class="typo-PingFang">苹方</div>
+          <div class="typo-PingFang-Semibold">PingFang</div>
+          <div class="typo-PingFang-Medium">PingFang</div>
+          <div class="typo-PingFang">PingFang</div>
         </div>
         <div>
           <div class="typo-PingFang-Semibold">PingFang SC(font-weight:600)</div>
@@ -45,9 +45,9 @@
       <td>
         <div class="typo-PingFang-Medium-text">San Francisco / JDZhengHT-EN</div>
         <div class="typo-content-demo">
-          <div class="typo-JDZhengHT-Semibold">1234567890 ￥ % + - = .</div>
-          <div class="typo-JDZhengHT-Medium">1234567890 ￥ % + - = .</div>
-          <div class="typo-JDZhengHT">1234567890 ￥ % + - = .</div>
+          <div class="typo-JDZhengHT-Semibold">1234567890 ¥ % + - = .</div>
+          <div class="typo-JDZhengHT-Medium">1234567890 ¥ % + - = .</div>
+          <div class="typo-JDZhengHT">1234567890 ¥ % + - = .</div>
         </div>
         <div>
           <div class="typo-PingFang-Semibold">JDZhengHT-Bold</div>
@@ -72,9 +72,9 @@
       <td>
         <div class="typo-PingFang-Medium-text">Source Han Sans</div>
         <div class="typo-content-demo">
-          <div class="typo-Source-Medium">思源黑体</div>
-          <div class="typo-Source-Normal">思源黑体</div>
-          <div class="typo-Source">思源黑体</div>
+          <div class="typo-Source-Medium">Source Han Sans</div>
+          <div class="typo-Source-Normal">Source Han Sans</div>
+          <div class="typo-Source">Source Han Sans</div>
         </div>
         <div>
           <div class="typo-Source-Medium">Noto SansCJK(font-weight:600)</div>
@@ -104,9 +104,9 @@
       <td>
         <div class="typo-PingFang-Medium-text">Roboto / JDZhengHT-EN</div>
         <div class="typo-content-demo">
-          <div class="typo-JDZhengHT-Semibold">1234567890 ￥ % + - = .</div>
-          <div class="typo-JDZhengHT-Medium">1234567890 ￥ % + - = .</div>
-          <div class="typo-JDZhengHT">1234567890 ￥ % + - = .</div>
+          <div class="typo-JDZhengHT-Semibold">1234567890 ¥ % + - = .</div>
+          <div class="typo-JDZhengHT-Medium">1234567890 ¥ % + - = .</div>
+          <div class="typo-JDZhengHT">1234567890 ¥ % + - = .</div>
         </div>
         <div>
           <div class="typo-PingFang-Semibold">JDZhengHT-Bold</div>
@@ -123,7 +123,8 @@
 font-family: "San Francisco", Rotobo, arial, "PingFang SC", "Noto SansCJK", "Microsoft Yahei", sans-serif;
 ```
 
-## JD Zheng HT Font-family
+
+## JDZhengHT Font-family
 
 CDN:
 
@@ -161,16 +162,16 @@ Usage:
 }
 ```
 
-## Font Usage Specifications
+## Font Usage Guidelines
 
 <table>
   <thead>
     <tr>
       <th>Level</th>
       <th>Font Size</th>
-      <th>Size Variable</th>
+      <th>Font Size Variable</th>
       <th>Font Color</th>
-      <th>Color Variable</th>
+      <th>Font Color Variable</th>
     </tr>
   </thead>
   <tbody>
@@ -196,18 +197,11 @@ Usage:
       <td>$-color-content</td>
     </tr>
     <tr>
-      <td style="font-size: 14px;">Normal Body Text</td>
+      <td style="font-size: 14px;">Normal Body</td>
       <td>14px</td>
       <td>$-fs-content</td>
       <td style="color: rgba(0, 0, 0, 0.85);">rgba(0, 0, 0, 0.85)</td>
       <td>$-color-content</td>
-    </tr>
-    <tr>
-      <td style="font-size: 12px;">Auxiliary Text</td>
-      <td>12px</td>
-      <td>$-fs-secondary</td>
-      <td style="color: rgba(0, 0, 0, 0.45);">rgba(0, 0, 0, 0.45)</td>
-      <td>$-color-secondary</td>
     </tr>
   </tbody>
 </table>

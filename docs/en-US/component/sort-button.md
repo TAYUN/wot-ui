@@ -1,64 +1,67 @@
 # SortButton
 
-Used to display sorting buttons, supporting three states: ascending, descending, and reset.
+A sorting button component that supports three states: ascending, descending, and reset.
 
-## Basic Usage
+## Component Types
 
-Use `v-model` to bind the component's display state, with values: `-1, 0, 1`, representing: descending order, unselected state, ascending order respectively. `title` is the display text, and the button is in an unselected state by default.
+### Basic Usage
+
+Use `v-model` to bind the current sorting state. Values are `-1`, `0`, and `1`, representing descending, reset state, and ascending respectively.
 
 ```html
-<wd-sort-button title="Price" v-model="value" @change="handleChange" />
+<wd-sort-button v-model="value" title="Price" @change="handleChange" />
 ```
 
-```typescript
-const value = ref<number>(0)
+```ts
+const value = ref(0)
 
 function handleChange({ value }) {
   console.log(value)
 }
 ```
 
-## Button Reset
+## Component Variants
 
-In double arrow state (default state), allow resetting the button to unselected state by setting `allow-reset`
+### Allow Reset
+
+Setting `allow-reset` allows the sort button to return to the reset state.
 
 ```html
-<wd-sort-button title="Price" allow-reset/>
+<wd-sort-button v-model="value" title="Price" allow-reset />
 ```
 
-## Priority Switch to Descending Order
+### Descending First
 
-Set `desc-first` to prioritize switching to descending order, ascending order by default.
+Setting `desc-first` makes the first switch prioritize entering descending order.
 
 ```html
-<wd-sort-button v-model="value" desc-first title="Price" />
+<wd-sort-button v-model="value" title="Price" desc-first />
 ```
 
-## Hide Underline
+## Component Styles
 
-When there is only one sort button, the underline should not be displayed. Set the `line` property to `false`.
+### Show Underline
+
+Setting `line` displays an underline.
 
 ```html
-<wd-sort-button v-model="value" :line="false" title="Price" />
+<wd-sort-button v-model="value" title="Price" line />
 ```
 
 ## Attributes
 
-| Parameter | Description | Type | Options | Default | Version |
-|-----------|-------------|------|----------|---------|----------|
-| v-model | Selected arrow direction: 1 ascending, 0 reset state, -1 descending | number | -1,0,1 | 0 or -1 | - |
-| title | Text displayed on the sort button | string | - | - | - |
-| allow-reset | When showing double arrows, allow manual reset of the button | boolean | - | false | - |
-| desc-first | Priority switch to descending order, default is ascending order if not enabled | boolean | - | false | - |
-| line | Display underline, should not display when there is only one sort button | boolean | - | true | - |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| model-value / v-model | Current sort direction value. `1` for ascending, `0` for reset state, `-1` for descending | `SortButtonValue` | `0` |
+| title | Sort button text | `string` | `''` |
+| allow-reset | Whether to allow reset to unselected state | `boolean` | `false` |
+| desc-first | Whether to prioritize switching to descending order | `boolean` | `false` |
+| line | Whether to show underline | `boolean` | `false` |
+| custom-class | Root node custom class name | `string` | `''` |
+| custom-style | Root node custom style | `string` | `''` |
 
 ## Events
 
-| Event Name | Description | Parameters | Version |
-|------------|-------------|------------|----------|
-| change | Listen for sort modifications | `{ value }` | - |
-
-## External Style Classes
-| Class Name | Description | Version |
-|------------|-------------|----------|
-| custom-class | Root node style | - |
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| change | Triggered when sort direction changes | `{ value }` |

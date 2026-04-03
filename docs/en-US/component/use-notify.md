@@ -1,10 +1,10 @@
 # useNotify
 
-Used for conveniently calling the Notify notification component.
+Used to conveniently call the Notify message notification component.
 
 ## Basic Usage
 
-You need to import the wd-notify component in the page as a mounting point.
+Need to import wd-notify component in the page as the mount point.
 
 ```html
 <wd-notify />
@@ -21,9 +21,9 @@ function showNotify() {
 }
 ```
 
-## Notification Type
+## Notification Types
 
-Supports four types of notifications: `primary`, `success`, `warning`, `danger`, with `danger` as the default.
+Supports `primary`, `success`, `warning`, `danger` four notification types, default is `danger`.
 
 ```ts
 // Primary notification
@@ -39,7 +39,7 @@ showNotify({ type: 'danger', message: 'Notification content' })
 showNotify({ type: 'warning', message: 'Notification content' })
 ```
 
-## Custom Style
+## Custom Styles
 
 ```ts
 showNotify({
@@ -65,23 +65,23 @@ showNotify({
 
 | Method Name | Description | Parameters | 
 |---------|------|------|
-| showNotify | Show notification | `NotifyOptions` / `string` |
-| closeNotify | Close notification | - |
+| showNotify | Show prompt | `NotifyOptions` / `string` |
+| closeNotify | Close prompt | - |
 | setNotifyDefaultOptions | Modify default configuration, affects all `showNotify` calls | `NotifyOptions` |
 | resetNotifyDefaultOptions | Reset default configuration, affects all `showNotify` calls | - |
 
 ### Options
 
-| Parameter | Description | Type | Accepted Values | Default |
+| Parameter | Description | Type | Optional Values | Default Value |
 |-----|------|------|--------|--------|
 | type | Type | NotifyType | `primary` `success` `warning` `danger` | `danger` |
-| message | Display text, supports line breaks with `\n` | string | - | - |
+| message | Display text, supports line breaks via \n | string | - | - |
 | duration | Display duration (ms), when value is 0, notify will not disappear | number | - | 3000 |
-| zIndex | Layer level | number | - | 99 |
-| position | Pop-up position | NotifyPosition | `top` `bottom` | `top` |
+| zIndex | z-index | number | - | 99 |
+| position | Popup position | NotifyPosition | `top` `bottom` | `top` |
 | color | Font color | string | - | - |
 | background | Background color | string | - | - |
 | safeHeight | Top safe height | number / string | - | - |
 | onClick | Callback function when clicked | (event: MouseEvent) => void | - | - |
 | onClosed | Callback function when closed | () => void | - | - |
-| onOpened | Callback function after display | () => void | - | - |
+| onOpened | Callback function after displayed | () => void | - | - |

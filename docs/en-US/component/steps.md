@@ -1,34 +1,77 @@
 # Steps
 
-Used to guide users to complete tasks according to a process or show current status to users.
+Used to guide users through completing tasks in a process, or to show users the current step status.
 
-:::tip Breaking Change Notice
-In version `1.2.10`, the `step` component deprecated the `title-slot`, `icon-slot`, and `description-slot` fields that controlled slot usage, and added direct support for `title`, `icon`, and `description` slots. The `default` slot was also deprecated.
+:::tip Tip
+`wd-step` now directly supports `title`, `icon`, and `description` slots. No need to set the old `*-slot` control fields.
 :::
 
-## Basic Usage
+## Component Types
 
-`active` represents the step progress, it's a number type indicating the step index.
+### Basic Usage
+
+`active` is the current step progress, corresponding to the step index.
 
 ```html
-<wd-steps :active="active">
+<wd-steps :active="0">
   <wd-step />
   <wd-step />
   <wd-step />
 </wd-steps>
 ```
 
+### Title and Description
+
+Set the title and description for each step via `title` and `description`.
+
+```html
+<wd-steps :active="active" align-center>
+  <wd-step title="Step 1" description="Register an account" />
+  <wd-step title="Step 2" description="Log in and bind phone" />
+  <wd-step title="Step 3" description="Complete personal information" />
+</wd-steps>
+<wd-button size="small" @click="nextStep">Next Step</wd-button>
+```
+
 ```ts
-const active = ref<number>(0)
+const active = ref(0)
 
 function nextStep() {
-  active.value = active.value + 1
+  active.value += 1
 }
 ```
 
-## Horizontal Center
+### Custom Icon
 
-Set `align-center` for horizontal centering, only effective for horizontal step bars.
+Set the step icon via `icon`.
+
+```html
+<wd-steps :active="1" align-center>
+  <wd-step icon="settings" />
+  <wd-step icon="list" />
+  <wd-step icon="clock-circle" />
+</wd-steps>
+```
+
+## Component States
+
+### Modify Status
+
+Set the status of a specific step via `status`.
+
+```html
+<wd-steps :active="1" align-center>
+  <wd-step title="Bind Phone" />
+  <wd-step title="Rebind Phone" status="error" />
+  <wd-step title="Step 3" />
+</wd-steps>
+```
+
+## Component Styles
+
+### Horizontal Center
+
+Setting `align-center` centers horizontally. Only effective for horizontal step bars.
 
 ```html
 <wd-steps :active="0" align-center>
@@ -38,112 +81,91 @@ Set `align-center` for horizontal centering, only effective for horizontal step 
 </wd-steps>
 ```
 
-## Set Title and Description
+## Layout Capabilities
 
-You can set the title and description of steps through `title` and `description`. If no title is set, default text will be used.
+### Vertical Steps
 
-```html
-<wd-steps :active="active" align-center>
-  <wd-step title="Step 1" description="Register an account" />
-  <wd-step title="Step 2" description="Login and bind phone number" />
-  <wd-step title="Step 3" description="Complete personal information" />
-</wd-steps>
-<wd-button size="small" @click="nextStep">Next Step</wd-button>
-```
-```ts
-const active = ref<number>(0)
-
-function nextStep() {
-  active.value = active.value + 1
-}
-```
-
-## Modify Icon
-
-You can set the step icon through the `icon` property by passing the icon name, or customize the icon through the `icon` slot. When using slots, you need to set `icon-slot` to `true`.
-
-```html
-<wd-steps :active="1" align-center>
-  <wd-step icon="invite" />
-  <wd-step icon="link" />
-  <wd-step icon="clock" />
-</wd-steps>
-```
-
-## Vertical Steps
-
-Set the `vertical` property.
+Setting `vertical` displays in vertical direction.
 
 ```html
 <wd-steps :active="1" vertical>
   <wd-step description="Register an account" />
-  <wd-step description="Login and bind phone number" />
+  <wd-step description="Log in and bind phone" />
   <wd-step description="Complete personal information" />
 </wd-steps>
 ```
 
-## Dot Steps
+## Special Styles
 
-Set the `dot` property.
+### Dot Steps
+
+Setting `dot` uses dot-style steps.
+
+```html
+<wd-steps :active="1" align-center dot>
+  <wd-step title="Step 1" description="Register an account" />
+  <wd-step title="Step 2" description="Log in and bind phone" />
+  <wd-step title="Step 3" description="Complete personal information" />
+</wd-steps>
+```
+
+### Controllable Dot Steps
+
+Dot-style steps support controlling the current step via external `active`.
+
+```html
+<wd-steps :active="dotActive" align-center dot>
+  <wd-step title="Step 1" description="Register an account" />
+  <wd-step title="Step 2" description="Log in and bind phone" />
+  <wd-step title="Step 3" description="Complete personal information" />
+</wd-steps>
+```
+
+### Vertical Dot Steps
+
+`vertical` and `dot` can be combined.
 
 ```html
 <wd-steps :active="1" vertical dot>
   <wd-step description="Register an account" />
-  <wd-step description="Login and bind phone number" />
+  <wd-step description="Log in and bind phone" />
   <wd-step description="Complete personal information" />
-</wd-steps>
-```
-
-## Modify Status
-
-Set `status`, supports three states: 'finished', 'process', and 'error'.
-
-```html
-<wd-steps :active="1" align-center>
-  <wd-step title="Bind Phone" status="error" />
-  <wd-step title="Rebind Phone" />
-  <wd-step title="Step 3" />
 </wd-steps>
 ```
 
 ## Steps Attributes
 
-| Parameter | Description | Type | Options | Default | Version |
-|-----------|-------------|------|----------|---------|----------|
-| active | Step progress | number | - | 0 | - |
-| vertical | Vertical direction | boolean | - | false | - |
-| dot | Dot step bar | dot | - | false | - |
-| space | Step bar spacing, automatically calculated by default | string | - | - | - |
-| align-center | Whether to center horizontally, only effective for horizontal step bars | boolean | - | false | - |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| active | Current active step index | `number` | `0` |
+| vertical | Whether to display vertically | `boolean` | `false` |
+| dot | Whether to use dot-style steps | `boolean` | `false` |
+| space | Step bar spacing, automatically calculated by default | `string` | `''` |
+| align-center | Whether to center horizontally, only effective for horizontal step bars | `boolean` | `false` |
+| custom-class | Root node custom class name | `string` | `''` |
+| custom-style | Root node custom style | `string` | `''` |
 
 ## Step Attributes
 
-| Parameter | Description | Type | Options | Default | Version |
-|-----------|-------------|------|----------|---------|----------|
-| title | Title, uses default text if not set. When there's only title without description, title font size will be 2 sizes smaller | string | - | - | - |
-| <s>title-slot</s> | <s>Need to set this property when using title slot</s>, deprecated, use title slot directly | boolean | - | false | - |
-| description | Description | string | - | - | - |
-| <s>description-slot</s> | <s>Need to set this property when using description slot</s>, deprecated, use description slot directly | boolean | - | false | - |
-| icon | Icon | string | - | - | - |
-| <s>icon-slot</s> | <s>Need to set this property when using icon slot</s>, deprecated, use icon slot directly | boolean | - | false | - |
-| status | Step status | string | finished / process / error | - | - |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| title | Step title, displays default text when not passed | `string` | - |
+| description | Step description | `string` | - |
+| icon | Step icon | `string` | - |
+| status | Step status, optional values are `finished`, `process`, `error`, `wait` | `StepStatus` | - |
+| custom-class | Root node custom class name | `string` | `''` |
+| custom-style | Root node custom style | `string` | `''` |
 
-## Step Slot
+## Steps Slots
 
-| Name | Description | Version |
-|------|-------------|----------|
-| icon | Icon | 1.2.10 |
-| title | Title | 1.2.10 |
-| description | Description | 1.2.10 |
+| name | Description |
+| --- | --- |
+| default | Step list |
 
-## Steps External Style Classes
+## Step Slots
 
-| Class Name | Description | Version |
-|------------|-------------|----------|
-| custom-class | Root node style | - |
-
-## Step External Style Classes
-
-| Class Name | Description | Version |
-|------------|-------------|----------|
-| custom-class | Root node style | - |
+| name | Description |
+| --- | --- |
+| icon | Custom step icon |
+| title | Custom step title |
+| description | Custom step description |

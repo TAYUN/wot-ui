@@ -1,12 +1,12 @@
-# FloatingPanel
+# FloatingPanel Floating Panel
 
-A panel floating at the bottom of the page, users can drag the panel up and down to browse content, allowing access to more information without leaving the current view. Commonly used in map navigation.
+A panel floating at the bottom of the page. Users can drag the panel up and down to browse content, allowing access to more information without leaving the current view. Commonly used for map navigation.
 
 ## Component Type
 
 ### Basic Usage
 
-The initial height of FloatingPanel will take the value of `anchors[0]`, which is `100px`. Users can drag to expand the panel to reach 60% of the screen height.
+The initial height of FloatingPanel takes the value of `anchors[0]`, which is `100px`. Users can drag to expand the panel to reach `60%` of the screen height.
 
 ::: code-group
 ```html [vue/html]
@@ -23,13 +23,13 @@ const data = ref<string[]>(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K
 ```
 :::
 
-## Component Variant
+## Component Variants
 
 ### Custom Anchors
 
-You can set the anchor positions of <b>FloatingPanel</b> through the `anchors` property and control the current panel display height through `v-model:height`.
+You can set the anchor positions of <b>FloatingPanel</b> via the `anchors` attribute, and control the current display height of the panel via `v-model:height`.
 
-For example, make the panel height dock at three positions: `100px`, `40%` of screen height, and `70%` of screen height:
+For example, to make the panel height dock at three positions: `100px`, `40%` of screen height, and `70%` of screen height:
 
 ::: code-group
 ```html [vue/html]
@@ -67,13 +67,13 @@ onLoad(() => {
 
 ## Component State
 
-### Header Only Draggable
+### Header Drag Only
 
-By default, both the header area and content area of <b>FloatingPanel</b> can be dragged. You can disable content area dragging through the `contentDraggable` property.
+By default, both the header area and content area of <b>FloatingPanel</b> can be dragged. You can disable dragging of the content area via the `contentDraggable` attribute.
 
 ::: code-group
 ```html [vue/html]
-<wd-floating-panel :contentDraggable="false">
+<wd-floating-panel :content-draggable="false">
   <view class="inner-content">Content area cannot be dragged</view>
 </wd-floating-panel>
 ```
@@ -89,30 +89,25 @@ By default, both the header area and content area of <b>FloatingPanel</b> can be
 
 ## Attributes
 
-| Parameter | Description | Type | Default |
+| Parameter | Description | Type | Default Value |
 | --- | --- | --- | --- |
-| v-model:height ^(1.3.12) | Current panel display height | number | `0` |
-| anchors ^(1.3.12) | Set custom anchors, unit `px` | number[] | `[100, windowHeight * 0.6]` |
-| duration ^(1.3.12) | Animation duration, unit `ms`, set to `0` to disable animation| number | `300` |
-| contentDraggable ^(1.3.12) | Allow dragging content container | boolean | `true` |
-| safeAreaInsetBottom ^(1.3.12) | Enable bottom safe area adaptation | boolean | `false` |
-| showScrollbar ^(1.3.12) | Enable scrollbar | boolean | `true` |
+| v-model:height ^(1.3.12) | Current display height of the panel | `number` | `0` |
+| anchors ^(1.3.12) | Set custom anchors, unit `px` | `number[]` | `[100, windowHeight * 0.6]` |
+| duration ^(1.3.12) | Animation duration, unit `ms`. Set to `0` to disable animation | `number` | `300` |
+| content-draggable ^(1.3.12) | Allow dragging content container | `boolean` | `true` |
+| safe-area-inset-bottom ^(1.3.12) | Whether to enable bottom safe area adaptation | `boolean` | `false` |
+| show-scrollbar ^(1.3.12) | Whether to enable scrollbar | `boolean` | `true` |
+| custom-class | Custom class name for root node | `string` | `''` |
+| custom-style | Custom style for root node | `string` | `''` |
 
 ## Slots
 
 | Name | Description |
-| ---- | ------------ |
-| default | Default slot ^(1.3.12) |
+| ---- | -------- |
+| default | Default content area slot ^(1.3.12) |
 
 ## Events
 
-| Event Name | Description | Parameters |
-| ------------ | ------------------------------------------------------------ | ------------------- |
-| heightChange | Triggered when panel display height changes and dragging ends ^(1.3.12) | `{ height: number }` |
-
-## External Classes
-
-| Class Name | Description |
-| ------------ | ---------------- |
-| custom-class | Root node style ^(1.3.12) |
-| custom-style | Root node style ^(1.3.12) |
+| Method Name | Description | Parameters |
+| --- | --- | --- |
+| heightChange | Triggered after panel display height changes and dragging ends ^(1.3.12) | `{ height: number }` |

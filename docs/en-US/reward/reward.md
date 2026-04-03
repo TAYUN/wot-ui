@@ -1,16 +1,22 @@
-# 🥤A Cup of Coffee
+# 🥤 Buy Us a Coffee
 
-If you find this project helpful for your work, you can support the development of the component library through the following ways. Your contribution will help this project continue to grow. After donating, your avatar, nickname, and homepage will be displayed on the donor list in the `Wot UI` documentation.
+~~Please, give us something!~~
+
+If you believe this project has helped your work, you can support our development work through the following methods to ensure the continued development of this project. After donating, your nickname and homepage will be displayed on the `wot ui` documentation's donor list.
+
+If you ~~have too much money to spend~~ are generous, you can open a [Sponsorship Slot](./sponsor) with us. We ~~will kowtow to you~~ greatly appreciate it!
 
 :::tip Reminder
-After making a donation, you can send an email to 1780903673@qq.com or contact through social platforms like GitHub or WeChat groups to provide your donor name, message, and link (the link can be your blog, GitHub, personal website, company product, etc.). If possible, please make sure to leave your Github username.
+After donating, you can send an email to 1780903673@qq.com or notify us through social platforms like GitHub or WeChat groups about the donor name, message, and link you would like to display (the link can be your blog, GitHub, personal website, company product, etc.). If possible, please be sure to leave your GitHub username.
 :::
 
-### Afdian Donation
+### Aifadian Donation
 
-<a href="https://afdian.com/a/weisheng233">https://afdian.com/a/weisheng233</a>
+[https://afdian.com/a/weisheng233](https://afdian.com/a/weisheng233)
 
-### Scan to Donate
+
+### QR Code Donation
+
 
 <div style="display: inline-block; margin-right: 120px;">
   <img style="width: 250px; height: 250px;" :src="WxQrcode" />

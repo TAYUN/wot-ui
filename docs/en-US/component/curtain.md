@@ -1,171 +1,94 @@
 # Curtain
 
-Generally used for announcement-type image popups.
+Generally used for announcement image popup display.
 
-## Basic Usage
+## Component Type
 
-Set display and hide through the `v-model` property, which is required.
+### Basic Usage
 
-`src` is the curtain image URL (only online URLs are supported), value type is `string`, required.
-
-`to` is the link to visit when clicking the curtain, value type is `string`, optional.
-
-Set `width`, the default height is calculated based on the original image ratio and the input `width`, required.
+Control display and hide through `v-model`; `src` is the curtain image address; `to` is the jump link after clicking the image; `width` is the image width (height is automatically calculated according to original image ratio).
 
 ```html
-<wd-button @click="handleClick">Show Curtain</wd-button>
-<wd-curtain v-model="value" :src="img" :to="link" :width="280"></wd-curtain>
+<wd-button @click="open = true">Show Curtain</wd-button>
+<wd-curtain v-model="open" :src="img" :to="link" :width="280" />
 ```
 
-```typescript
-import { ref } from 'vue'
+## Component Style
 
-const value = ref<boolean>(false)
-const img = ref<string>('https://img20.360buyimg.com/da/jfs/t1/141592/25/8861/261559/5f68d8c1E33ed78ab/698ad655bfcfbaed.png')
-const link = ref<string>('/pages/index/index')
+### Modify Close Button Position
 
-function handleClick() {
-  value.value = true
-}
-```
-
-## Modify Close Button Position
-
-Set `close-position`, default is 'inset', available values are `top`, `bottom`, `top-left`, `top-right`, `bottom-left`, `bottom-right`.
+`close-position` optional values are `inset`, `top`, `bottom`, `top-left`, `top-right`, `bottom-left`, `bottom-right`.
 
 ```html
-<wd-button @click="handleClick1">Top Left</wd-button>
-<wd-button @click="handleClick2">Top</wd-button>
-<wd-button @click="handleClick3">Top Right</wd-button>
-
-<wd-curtain v-model="value1" :src="img" :to="link" close-position="top-left" :width="280"></wd-curtain>
-<wd-curtain v-model="value2" :src="img" :to="link" close-position="top" :width="280"></wd-curtain>
-<wd-curtain v-model="value3" :src="img" :to="link" close-position="top-right" :width="280"></wd-curtain>
+<wd-curtain v-model="showTopLeft" :src="img" :to="link" close-position="top-left" :width="280" />
+<wd-curtain v-model="showTop" :src="img" :to="link" close-position="top" :width="280" />
+<wd-curtain v-model="showTopRight" :src="img" :to="link" close-position="top-right" :width="280" />
 ```
 
-```typescript
-import { ref } from 'vue'
+## Component State
 
-const value1 = ref<boolean>(false)
-const value2 = ref<boolean>(false)
-const value3 = ref<boolean>(false)
-const img = ref<string>('https://img20.360buyimg.com/da/jfs/t1/141592/25/8861/261559/5f68d8c1E33ed78ab/698ad655bfcfbaed.png')
-const link = ref<string>('/pages/index/index')
+### Click Mask to Close
 
-function handleClick1() {
-  value1.value = true
-}
-function handleClick2() {
-  value2.value = true
-}
-function handleClick3() {
-  value3.value = true
-}
-```
-
-## Set Mask Click to Close Curtain
-
-Set the `close-on-click-modal` property.
+Set `close-on-click-modal`, clicking mask will close curtain.
 
 ```html
-<wd-button @click="handleClick">Close on Mask Click</wd-button>
-<wd-curtain v-model="value" :src="img" :to="link" close-position="bottom-right" :width="280" close-on-click-modal></wd-curtain>
+<wd-curtain v-model="open" :src="img" :to="link" close-position="bottom-right" :width="280" close-on-click-modal />
 ```
 
-```typescript
-import { ref } from 'vue'
+## Special Style
 
-const value = ref<boolean>(false)
-const img = ref<string>('https://img20.360buyimg.com/da/jfs/t1/141592/25/8861/261559/5f68d8c1E33ed78ab/698ad655bfcfbaed.png')
-const link = ref<string>('/pages/index/index')
+### Custom Close Button
 
-function handleClick() {
-  value.value = true
-}
-```
-
-## Custom Close Button
-
-By using `close` slot you can customize close position.
+Customize close button content and interaction through `close` slot.
 
 ```html
-<wd-button @click="handleClick">Custom Close Button</wd-button>
-<wd-curtain v-model="value" :src="img" :width="280">
+<wd-curtain v-model="open" :src="img" :width="280">
   <template #close>
-    <view class="custom-close" @click="handleClose">Close</view>
+    <view class="custom-close" @click="open = false">Close</view>
   </template>
 </wd-curtain>
 ```
 
-```typescript
-import { ref } from 'vue'
-
-const value = ref<boolean>(false)
-const img = ref<string>('https://img20.360buyimg.com/da/jfs/t1/141592/25/8861/261559/5f68d8c1E33ed78ab/698ad655bfcfbaed.png')
-
-function handleClick() {
-  value.value = true
-}
-
-function handleClose() {
-  value.value = false
-}
-```
-
-```css
-.custom-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  color: #ffffff;
-  font-size: 16px;
-}
-```
-
 ## Attributes
 
-| Parameter | Description | Type | Default |
+| Parameter | Description | Type | Default Value |
 | --- | --- | --- | --- |
-| v-model / modelValue | Binding value, show/hide curtain ^(1.7.0) | boolean | `false` |
-| value | Binding value, show/hide curtain (deprecated, use modelValue) | boolean | `false` |
-| src | Curtain image URL, must use online URL | string | - |
+| v-model / modelValue ^(1.7.0) | Binding value, controls curtain display and close | boolean | false |
+| value | Binding value (deprecated, please use `modelValue`) | boolean | false |
+| src | Curtain image address, must use network address | string | - |
 | width | Curtain image width, default unit px | number | - |
 | to | Curtain image click link | string | - |
-| close-position | Close button position, available values are `inset`, `top`, `bottom`, `top-left`, `top-right`, `bottom-left`, `bottom-right` | string | `inset` |
-| close-on-click-modal | Close on mask click | boolean | `false` |
-| hide-when-close | Hide popup layer when closed (display: none) | boolean | `true` |
-| z-index | Set layer level ^(1.4.0) | number | `10` |
-| root-portal | Whether to detach from the page, used to solve various fixed positioning issues ^(1.11.0) | boolean | `false` |
-| show-menu-by-longpress | Enable long press image to show Mini Program code recognition menu, only supported in WeChat Mini Program ^(1.13.0) | boolean | `false` |
-| close-on-click | Whether clicking the image should close the curtain ^(1.13.0) | boolean | `true` |
+| close-position | Close button position, optional values are `inset`, `top`, `bottom`, `top-left`, `top-right`, `bottom-left`, `bottom-right` | string | `inset` |
+| close-on-click-modal | Whether to close when clicking mask | boolean | false |
+| hide-when-close | Whether to hide popup when closing (`display: none`) | boolean | true |
+| z-index ^(1.4.0) | Set z-index | number | 10 |
+| custom-close-class ^(1.5.0) | Close button custom class name | string | `''` |
+| custom-close-style ^(1.5.0) | Close button custom style | string | `''` |
+| root-portal ^(1.11.0) | Whether to detach from page, used to solve fixed invalidation problem (H5: teleport, App: renderjs, Mini Program: root-portal) | boolean | false |
+| show-menu-by-longpress ^(1.13.0) | Enable long press image to show recognition mini program code menu, only WeChat Mini Program supports | boolean | false |
+| close-on-click ^(1.13.0) | Whether to close curtain when clicking image | boolean | true |
+| custom-class | Root node custom class name | string | `''` |
+| custom-style | Root node custom style | string | `''` |
 
 ## Events
 
 | Event Name | Description | Parameters |
 | --- | --- | --- |
-| click | Triggered when clicking the curtain | - |
-| close | Triggered when popup layer closes | - |
-| closed | Triggered after popup layer closes | - |
-| click-modal | Triggered when clicking the mask | - |
-| beforeenter | Triggered before enter | - |
-| enter | Triggered during enter | - |
-| afterenter | Triggered after enter | - |
-| beforeleave | Triggered before leave | - |
-| leave | Triggered during leave | - |
-| afterleave | Triggered after leave | - |
-| load | Image load complete event | event |
-| error | Image load failure event, if image fails to load, curtain component won't show even if `modelValue` is `true` | - |
+| click | Triggered when clicking curtain image | - |
+| close | Triggered when popup closes | - |
+| closed | Triggered when popup close animation ends | - |
+| click-modal | Triggered when clicking mask | - |
+| beforeenter | Triggered before entering | - |
+| enter | Triggered when entering | - |
+| afterenter | Triggered after entering | - |
+| beforeleave | Triggered before leaving | - |
+| leave | Triggered when leaving | - |
+| afterleave | Triggered after leaving | - |
+| load | Triggered when image loads | `event` |
+| error | Triggered when image load fails. Even if `modelValue` is `true`, curtain will not display after image load fails | - |
 
 ## Slots
 
-| Name | Description |
-| --- | --- |
-| close | Close button slot ^(1.5.0) |
-
-## External Classes
-
-| Class Name | Description |
-| --- | --- |
-| custom-class | Root node style |
-| custom-close-class | Close button style ^(1.5.0) |
-| custom-close-style | Close button style ^(1.5.0) |
+| name | Description | Parameters |
+| --- | --- | --- |
+| close ^(1.5.0) | Custom close button | - |

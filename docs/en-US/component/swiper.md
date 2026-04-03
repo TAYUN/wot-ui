@@ -1,21 +1,27 @@
 # Swiper
 
-Used to create carousels, supporting horizontal and vertical sliding, customizable styles and indicator positions, supports video and image resource carousels, and allows setting carousel titles and custom title styles.
+Used to create carousels, supporting horizontal and vertical sliding, custom indicators, image and video resource display, and title rendering based on object data.
 
-:::danger Please Note
-Embedded video is only supported in `h5`, `WeChat Mini Program`, and `DingTalk Mini Program`. Other platforms do not support it, please be aware before using.
+::: danger Please Note
+Embedded videos are only supported on H5, WeChat Mini Program, and DingTalk Mini Program. Other platforms do not support this feature. Please understand before using.
 :::
 
-## Basic Usage
+## Component Types
 
-Control whether the carousel automatically plays through the `autoplay` property, initialize the displayed slide with the `v-model:current` property, handle click events by listening to the slide's `click`, and trigger the `change` event after each page carousel ends.
+### Dot Indicator
 
-```html
-<wd-swiper :list="swiperList" autoplay v-model:current="current" @click="handleClick" @change="onChange"></wd-swiper>
+Basic carousel can display dot indicators through `indicator` configuration.
+
+::: code-group
+
+```html [vue]
+<wd-swiper :list="swiperList" autoplay v-model:current="current" :indicator="{ type: 'dots' }"></wd-swiper>
 ```
 
-```ts
-const current = ref<number>(0)
+```ts [ts]
+import { ref } from 'vue'
+
+const current = ref(0)
 
 const swiperList = ref([
   'https://wot-ui.cn/assets/redpanda.jpg',
@@ -24,21 +30,17 @@ const swiperList = ref([
   'https://wot-ui.cn/assets/moon.jpg',
   'https://wot-ui.cn/assets/meng.jpg'
 ])
-function handleClick(e) {
-  console.log(e)
-}
-function onChange(e) {
-  console.log(e)
-}
 ```
 
-## Dots Bar Indicator
+:::
+
+### Dots-Bar Indicator
 
 ```html
-<wd-swiper :list="swiperList" autoplay v-model:current="current" :indicator="{ type: 'dots-bar' }" @click="handleClick" @change="onChange"></wd-swiper>
+<wd-swiper :list="swiperList" autoplay v-model:current="current" :indicator="{ type: 'dots-bar' }"></wd-swiper>
 ```
 
-## Fraction Indicator
+### Fraction Indicator
 
 ```html
 <wd-swiper
@@ -46,67 +48,15 @@ function onChange(e) {
   autoplay
   v-model:current="current"
   :indicator="{ type: 'fraction' }"
-  indicatorPosition="bottom-right"
-  @click="handleClick"
-  @change="onChange"
+  indicator-position="bottom-right"
 ></wd-swiper>
 ```
 
-## Video Carousel<el-tag text style="vertical-align: middle;margin-left:8px;" effect="plain">1.3.13</el-tag>
+## Component Variants
 
-:::danger Please Note
-Embedded video is only supported in `h5`, `WeChat Mini Program`, and `DingTalk Mini Program`. Other platforms do not support it, please be aware before using.
-:::
+### Manual Switching
 
-```html
-<wd-swiper :list="videoList" autoplay :indicator="false" indicator-position="bottom-right"></wd-swiper>
-```
-
-```ts
-const videoList = ref([
-  'https://unpkg.com/wot-design-uni-assets@1.0.3/VID_115503.mp4',
-  'https://unpkg.com/wot-design-uni-assets@1.0.3/VID_150752.mp4',
-  'https://unpkg.com/wot-design-uni-assets@1.0.3/VID_155516.mp4',
-  'https://wot-ui.cn/assets/moon.jpg'
-])
-```
-
-## Manual Video Playback
-
-```html
-<wd-swiper :list="videoList" autoplay :autoplayVideo="false" :indicator="{ type: 'fraction' }" indicator-position="top-right"></wd-swiper>
-```
-
-```ts
-const videoList = ref([
-  'https://unpkg.com/wot-design-uni-assets/VID_115503.mp4',
-  'https://unpkg.com/wot-design-uni-assets/VID_150752.mp4',
-  'https://unpkg.com/wot-design-uni-assets/VID_155516.mp4'
-])
-```
-
-## Stop Carousel When Playing Video
-
-```html
-<wd-swiper
-  :list="videoList"
-  autoplay
-  stopAutoplayWhenVideoPlay
-  :autoplayVideo="false"
-  :indicator="{ type: 'fraction' }"
-  indicator-position="top-right"
-></wd-swiper>
-```
-
-```ts
-const videoList = ref([
-  'https://unpkg.com/wot-design-uni-assets/VID_115503.mp4',
-  'https://unpkg.com/wot-design-uni-assets/VID_150752.mp4',
-  'https://unpkg.com/wot-design-uni-assets/VID_155516.mp4'
-])
-```
-
-## Manual Switching
+Turn off `autoplay` and enable `showControls` to manually switch carousel items through control buttons.
 
 ```html
 <wd-swiper
@@ -115,131 +65,125 @@ const videoList = ref([
   v-model:current="current"
   :indicator="{ showControls: true }"
   :loop="false"
-  @click="handleClick"
-  @change="onChange"
 ></wd-swiper>
 ```
 
-## Card Style
-
-Set `previousMargin` and `nextMargin` to achieve card carousel style.
-
-```html
-<view class="card-swiper">
-  <wd-swiper
-    autoplay
-    v-model:current="current"
-    custom-indicator-class="custom-indicator-class"
-    custom-image-class="custom-image"
-    custom-next-image-class="custom-image-prev"
-    custom-prev-image-class="custom-image-prev"
-    :indicator="{ type: 'dots' }"
-    :list="swiperList"
-    previousMargin="24px"
-    nextMargin="24px"
-  ></wd-swiper>
-</view>
-```
-
-```scss
-.card-swiper {
-  --wot-swiper-radius: 0;
-  --wot-swiper-item-padding: 0 24rpx;
-  --wot-swiper-nav-dot-color: #e7e7e7;
-  --wot-swiper-nav-dot-active-color: #4d80f0;
-  padding-bottom: 24rpx;
-  :deep(.custom-indicator-class) {
-    bottom: -16px;
-  }
-  :deep(.custom-image) {
-    border-radius: 12rpx;
-  }
-  :deep(.custom-image-prev) {
-    height: 168px !important;
-  }
-}
-```
-
-## Display Multiple Items
-
-Set the `display-multiple-items` property to control the number of slides displayed simultaneously.
-
-```html
-<view class="card-swiper">
-  <wd-swiper
-    autoplay
-    v-model:current="current"
-    :display-multiple-items="2"
-    custom-indicator-class="custom-indicator-class"
-    custom-image-class="custom-image"
-    custom-next-image-class="custom-image-prev"
-    custom-prev-image-class="custom-image-prev"
-    :indicator="{ type: 'dots' }"
-    :list="swiperList"
-    previousMargin="24px"
-    nextMargin="24px"
-  ></wd-swiper>
-</view>
-```
-
-```scss
-.card-swiper {
-  --wot-swiper-radius: 0;
-  --wot-swiper-item-padding: 0 24rpx;
-  --wot-swiper-nav-dot-color: #e7e7e7;
-  --wot-swiper-nav-dot-active-color: #4d80f0;
-  padding-bottom: 24rpx;
-  :deep(.custom-indicator-class) {
-    bottom: -16px;
-  }
-  :deep(.custom-image) {
-    border-radius: 12rpx;
-  }
-  :deep(.custom-image-prev) {
-    height: 168px !important;
-  }
-}
-```
-
-## Vertical Direction
-
-Set `direction` to `vertical` to arrange slides vertically.
+### Vertical Direction
 
 ```html
 <wd-swiper
   :list="swiperList"
   direction="vertical"
-  indicatorPosition="right"
+  indicator-position="right"
   autoplay
   v-model:current="current"
   :indicator="{ type: 'dots-bar' }"
-  @click="handleClick"
-  @change="onChange"
 ></wd-swiper>
 ```
 
-## Custom Indicator
+### Specifying value-key and text-key
 
-Use the `indicator` slot to customize the indicator style.
+When `list` is an object array, you can specify the image address field and title field through `value-key` and `text-key`.
+
+::: code-group
+
+```html [vue]
+<wd-swiper value-key="url" text-key="title" :list="customSwiperList" autoplay v-model:current="current"></wd-swiper>
+```
+
+```ts [ts]
+import { ref } from 'vue'
+
+const current = ref(0)
+
+const customSwiperList = ref([
+  { url: 'https://wot-ui.cn/assets/redpanda.jpg', title: 'Red Panda' },
+  { url: 'https://wot-ui.cn/assets/capybara.jpg', title: 'Capybara' },
+  { url: 'https://wot-ui.cn/assets/panda.jpg', title: 'Giant Panda' },
+  { url: 'https://wot-ui.cn/assets/moon.jpg', title: 'Poetic China' }
+])
+```
+
+:::
+
+## Component Styles
+
+### Card Style
+
+Set `previous-margin` and `next-margin`, combined with custom class names, to achieve card carousel style.
+
+```html
+<view class="card-swiper">
+  <wd-swiper
+    autoplay
+    v-model:current="current"
+    :indicator="{ type: 'dots' }"
+    :list="swiperList"
+    previous-margin="24px"
+    next-margin="24px"
+    custom-indicator-class="custom-indicator-class"
+    custom-image-class="custom-image"
+    custom-next-image-class="custom-image-prev"
+    custom-prev-image-class="custom-image-prev"
+  ></wd-swiper>
+</view>
+```
+
+```scss
+.card-swiper {
+  --wot-swiper-radius: 0;
+  --wot-swiper-item-padding: 0 24rpx;
+  --wot-swiper-nav-dot-color: #e7e7e7;
+  --wot-swiper-nav-dot-active-color: #4d80f0;
+  padding-bottom: 24rpx;
+
+  :deep(.custom-indicator-class) {
+    bottom: -16px;
+  }
+
+  :deep(.custom-image) {
+    border-radius: 12rpx;
+  }
+
+  :deep(.custom-image-prev) {
+    height: 168px !important;
+  }
+}
+```
+
+### Display 2 Items Simultaneously
+
+Control the number of items displayed simultaneously through `display-multiple-items`.
 
 ```html
 <wd-swiper
-  :list="swiperList"
-  direction="vertical"
-  indicatorPosition="right"
   autoplay
   v-model:current="current"
-  @click="handleClick"
-  @change="onChange"
->
+  :display-multiple-items="2"
+  :indicator="{ type: 'dots' }"
+  :list="swiperList"
+  previous-margin="24px"
+  next-margin="24px"
+></wd-swiper>
+```
+
+### Custom Indicator
+
+Fully customize indicator display through the `indicator` slot.
+
+```html
+<wd-swiper :list="swiperList" direction="vertical" indicator-position="right" autoplay v-model:current="current">
   <template #indicator="{ current, total }">
-    <view class="custom-indicator" style="position: absolute; bottom: 24rpx; right: 24rpx">{{ current + 1 }}/{{ total }}</view>
+    <view class="custom-indicator">{{ current + 1 }}/{{ total }}</view>
   </template>
 </wd-swiper>
 ```
 
 ```scss
 .custom-indicator {
+  position: absolute;
+  right: 24rpx;
+  bottom: 24rpx;
   padding: 0 12rpx;
   height: 48rpx;
   line-height: 48rpx;
@@ -250,36 +194,51 @@ Use the `indicator` slot to customize the indicator style.
 }
 ```
 
-## Specify valueKey and textKey
+## Special Styles
 
-Use `value-key` to specify the image address field in each object of the `list`, default is `value`.
-
-Use `text-key` to specify the title field in each object of the `list`, default is `text`.
+### Video Carousel ^(1.3.13)
 
 ```html
-<wd-swiper
-  value-key="url"
-  text-key="title"
-  :list="customSwiperList"
-  autoplay
-  v-model:current="current"
-  @click="handleClick"
-  @change="onChange"
-></wd-swiper>
+<wd-swiper :list="videoList" autoplay :indicator="{ type: 'fraction' }" indicator-position="top-right"></wd-swiper>
 ```
 
 ```ts
-const current = ref<number>(0)
+import { ref } from 'vue'
 
-const customSwiperList = ref([
-  { url: 'https://wot-ui.cn/assets/redpanda.jpg', title: 'Red Panda!' },
-  { url: 'https://wot-ui.cn/assets/capybara.jpg', title: 'Capybara!' },
-  { url: 'https://wot-ui.cn/assets/panda.jpg', title: 'Giant Panda!' },
-  { url: 'https://wot-ui.cn/assets/moon.jpg', title: 'Poetic China!' }
+const videoList = ref([
+  'https://unpkg.com/wot-design-uni-assets@1.0.3/VID_115503.mp4',
+  'https://unpkg.com/wot-design-uni-assets@1.0.3/VID_150752.mp4',
+  'https://unpkg.com/wot-design-uni-assets@1.0.3/VID_155516.mp4',
+  'https://wot-ui.cn/assets/moon.jpg'
 ])
 ```
 
-## Property Control Switching
+### Manual Video Playback ^(1.3.13)
+
+```html
+<wd-swiper
+  :list="videoList"
+  autoplay
+  :autoplay-video="false"
+  :indicator="{ type: 'fraction' }"
+  indicator-position="top-right"
+></wd-swiper>
+```
+
+### Stop Carousel When Playing Video ^(1.3.13)
+
+```html
+<wd-swiper
+  :list="videoList"
+  autoplay
+  stop-autoplay-when-video-play
+  :autoplay-video="false"
+  :indicator="{ type: 'fraction' }"
+  indicator-position="top-right"
+></wd-swiper>
+```
+
+### Attribute Controlled Switching
 
 ```html
 <wd-swiper :loop="isLoop" :autoplay="false" :list="swiperList" v-model:current="current" />
@@ -296,24 +255,12 @@ const customSwiperList = ref([
 </view>
 ```
 
-```javascript
-const current = ref<number>(0)
-const isLoop = ref(false)
-```
+### Slot Usage
 
-## Slot Usage
-
-Use the default slot to customize the content of carousel items.
+Customize carousel item content through the default slot.
 
 ```html
-<wd-swiper
-  :list="swiperList"
-  autoplay
-  v-model:current="current"
-  :indicator="{ type: 'dots-bar' }"
-  @click="handleClick"
-  @change="onChange"
->
+<wd-swiper :list="swiperList" autoplay v-model:current="current" :indicator="{ type: 'dots-bar' }">
   <template #default="{ item }">
     <image :src="item as string" mode="aspectFill" style="width: 100%; height: 100%" />
   </template>
@@ -322,95 +269,103 @@ Use the default slot to customize the content of carousel items.
 
 ## Attributes
 
-| Parameter                 | Description                                                        | Type                              | Optional Values                                                                                        | Default Value | Minimum Version  |
-| ------------------------- | ------------------------------------------------------------------ | --------------------------------- | ------------------------------------------------------------------------------------------------------ | ------------- | ---------------- |
-| autoplay                  | Whether to enable auto-play                                        | `boolean`                         | -                                                                                                      | true          | 0.1.22           |
-| v-model:current           | Control which carousel item is currently displayed (index)         | `number`                          | -                                                                                                      | 0             | 0.1.22           |
-| direction                 | Carousel sliding direction                                         | `DirectionType`                   | `horizontal, vertical`                                                                                 | horizontal    | 0.1.22           |
-| displayMultipleItems      | Number of slides displayed simultaneously                          | `number`                          | -                                                                                                      | 1             | 0.1.22           |
-| duration                  | Slide animation duration                                           | `number`                          | -                                                                                                      | 300           | 0.1.22           |
-| easingFunction            | Switching easing animation type (WeChat Mini Program, Kuaishou Mini Program, JD Mini Program) | `EasingType`                      | -                                                                                                      | default       | 0.1.22           |
-| height                    | Height of the carousel                                             | `string / number`                 | -                                                                                                      | 192           | 0.1.22           |
-| interval                  | Carousel interval time                                             | `number`                          | -                                                                                                      | 5000          | 0.1.22           |
-| list                      | Image list                                                         | `string[] / SwiperItem[]`         | -                                                                                                      | -             | 0.1.22           |
-| loop                      | Whether to enable loop playback                                    | `boolean`                         | -                                                                                                      | true          | 0.1.22           |
-| nextMargin                | Next margin                                                        | `string / number`                 | -                                                                                                      | 0             | 0.1.22           |
-| indicatorPosition         | Indicator display position                                         | `IndicatorPositionType`           | `left, top-left, top, top-right, bottom-left, bottom, bottom-right, right`                            | bottom        | 0.1.22           |
-| previousMargin            | Previous margin                                                    | `string / number`                 | -                                                                                                      | 0             | 0.1.22           |
-| snapToEdge                | Whether margins should apply to first and last elements           | `boolean`                         | -                                                                                                      | false         | 0.1.22           |
-| indicator                 | Complete indicator configuration                                   | `SwiperIndicatorProps / boolean`  | -                                                                                                      | true          | 0.1.22           |
-| imageMode                 | Image cropping and scaling mode                                    | `string`                          | Refer to official documentation [mode](https://uniapp.dcloud.net.cn/component/image.html#mode-%E6%9C%89%E6%95%88%E5%80%BC) | `aspectFill`  | 0.1.55           |
-| autoplayVideo             | Whether videos auto-play, default is auto-play                    | `boolean`                         | -                                                                                                      | true          | 1.3.13           |
-| stopPreviousVideo         | Whether to stop previous video playback when switching carousel items, default stops previous video when switching | `boolean`                         | -                                                                                                      | true          | 1.3.13           |
-| stopAutoplayWhenVideoPlay | Whether to stop auto-carousel when video is playing               | `boolean`                         | -                                                                                                      | false         | 1.3.13           |
-| customStyle               | External custom style                                              | `string`                          | -                                                                                                      | ''            | 0.1.22           |
-| value-key                 | Key corresponding to value in option object                       | `string`                          | -                                                                                                      | `value`       | 1.3.7            |
-| text-key                  | Key corresponding to title text in option object                  | `string`                          | -                                                                                                      | `text`        | 1.3.13           |
-| adjust-height             | Automatically use specified slide height as entire container height. When vertical is true, default is not adjusted, only supported by Alipay Mini Program. | `string`                          | `'first' / 'current' / 'highest' / 'none'`                                                           | `highest`     | 1.3.13           |
-| adjust-vertical-height    | Force adjust-height to take effect when vertical is true. Only supported by Alipay Mini Program. | `boolean`                         | -                                                                                                      | `false`       | 1.3.13           |
-| muted                     | Whether video plays muted                                          | `boolean`                         | -                                                                                                      | `true`        | 1.6.0            |
-| videoLoop                 | Whether video loops                                                | `boolean`                         | -                                                                                                      | `true`        | 1.6.0            |
-
-### DirectionType
-
-Carousel sliding direction, optional values are `'horizontal'` and `'vertical'`.
-
-### EasingType
-
-Switching easing animation type, optional values are `'default'`, `'linear'`, `'easeInCubic'`, `'easeOutCubic'` and `'easeInOutCubic'`.
-
-### IndicatorPositionType
-
-Page information display position, optional values are `'left'`, `'top-left'`, `'top'`, `'top-right'`, `'bottom-left'`, `'bottom'`, `'bottom-right'` and `'right'`.
-
-### SwiperItem
-
-Carousel item list configuration, including image or video address `value`, video cover `poster`, file resource type `type` and other attributes, supports extended attributes. After specifying `type`, the component will not internally determine the file type and will use `type` as the standard.
-
-| name   | Description                    | Minimum Version |
-| ------ | ------------------------------ | --------------- |
-| value  | Image or video address         | -               |
-| poster | Video cover                    | -               |
-| type   | Used to specify file resource type, optional values `image`, `video` | 1.4.0           |
-
-### SwiperIndicatorProps
-
-| Parameter           | Description                    | Type                  | Optional Values                                                                    | Default Value | Minimum Version |
-| ------------------- | ------------------------------ | --------------------- | ---------------------------------------------------------------------------------- | ------------- | --------------- |
-| current             | Current carousel item (index)  | Number                | -                                                                                  | 0             | 0.1.22          |
-| direction           | Carousel sliding direction     | DirectionType         | `horizontal, vertical`                                                             | horizontal    | 0.1.22          |
-| min-show-num        | Won't show navigator below this number | Number                | -                                                                                  | 2             | 0.1.22          |
-| pagination-position | Page information display position | IndicatorPositionType | `left, top-left, top, top-right, bottom-left, bottom, bottom-right, right`        | bottom        | 0.1.22          |
-| show-controls       | Whether to show control buttons | Boolean               | -                                                                                  | false         | 0.1.22          |
-| total               | Total number of items          | Number                | -                                                                                  | 0             | 0.1.22          |
-| type                | Navigator type                 | SwiperIndicatorType   | `dots, dots-bar, fraction`                                                         | dots          | 0.1.22          |
-| autoplay            | Whether to enable auto-play    | boolean               | -                                                                                  | true          | 0.1.22          |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| autoplay | Whether to auto-play | `boolean` | `true` |
+| v-model:current | Current carousel item index | `number` | `0` |
+| direction | Carousel direction, optional values are `horizontal`, `vertical` | `DirectionType` | `horizontal` |
+| display-multiple-items | Number of items displayed simultaneously | `number` | `1` |
+| duration | Slide animation duration, unit is `ms` | `number` | `300` |
+| easing-function | Transition easing animation type, optional values are `default`, `linear`, `easeInCubic`, `easeOutCubic`, `easeInOutCubic` | `EasingType` | `default` |
+| height | Carousel height | <code>string &#124; number</code> | `192` |
+| interval | Auto-play interval time, unit is `ms` | `number` | `5000` |
+| list | Carousel data list, supports string array or object array | <code>string[] &#124; SwiperItem[]</code> | `[]` |
+| loop | Whether to loop playback | `boolean` | `true` |
+| video-loop ^(1.6.0) | Whether video loops playback | `boolean` | `true` |
+| muted ^(1.6.0) | Whether video plays muted | `boolean` | `true` |
+| next-margin | Rear margin | <code>string &#124; number</code> | `0` |
+| indicator-position | Indicator position, optional values are `left`, `top-left`, `top`, `top-right`, `bottom-left`, `bottom`, `bottom-right`, `right` | `IndicatorPositionType` | `bottom` |
+| previous-margin | Front margin | <code>string &#124; number</code> | `0` |
+| radius | Carousel border radius | <code>string &#124; number</code> | - |
+| snap-to-edge | Whether to apply margin to first and last elements | `boolean` | `false` |
+| indicator | Indicator configuration, pass `false` to hide indicator | <code>boolean &#124; Partial&lt;SwiperIndicatorProps&gt;</code> | `true` |
+| image-mode | Image cropping mode, refer to uni-app Image component `mode` | `ImageMode` | `aspectFill` |
+| show-menu-by-longpress | Whether to enable long-press image to show QR code recognition menu | `boolean` | `false` |
+| value-key ^(1.3.7) | Image address field name in option objects | `string` | `value` |
+| text-key ^(1.3.13) | Title field name in option objects | `string` | `text` |
+| autoplay-video ^(1.3.13) | Whether video auto-plays | `boolean` | `true` |
+| stop-previous-video ^(1.3.13) | Whether to stop previous video playback when switching carousel items | `boolean` | `true` |
+| stop-autoplay-when-video-play ^(1.3.13) | Whether to stop auto-play when video is playing | `boolean` | `false` |
+| adjust-height ^(1.3.13) | Automatically adjust container height based on item height, optional values are `first`, `current`, `highest`, `none`, only supported on Alipay Mini Program | `AdjustHeightType` | `highest` |
+| adjust-vertical-height ^(1.3.13) | Force `adjust-height` to take effect when `vertical` is `true`, only supported on Alipay Mini Program | `boolean` | `false` |
+| custom-indicator-class | Custom indicator class name | `string` | `''` |
+| custom-image-class | Custom image class name | `string` | `''` |
+| custom-prev-image-class | Custom previous image class name | `string` | `''` |
+| custom-next-image-class | Custom next image class name | `string` | `''` |
+| custom-item-class | Custom carousel item class name | `string` | `''` |
+| custom-prev-class | Custom previous carousel item class name | `string` | `''` |
+| custom-next-class | Custom next carousel item class name | `string` | `''` |
+| custom-text-class | Custom title class name | `string` | `''` |
+| custom-text-style | Custom title style | `string` | `''` |
+| custom-class | Root node custom style class | `string` | `''` |
+| custom-style | Root node custom style | `string` | `''` |
 
 ## Events
 
-| Event Name | Description              | Parameters                                                  | Minimum Version |
-| ---------- | ------------------------ | ----------------------------------------------------------- | --------------- |
-| click      | Triggered when clicking carousel item | `(index: number, item: SwiperItem \| string)`                                           | 0.1.22          |
-| change     | Triggered when carousel switches | `(current: number, source: 'autoplay' \| 'touch' \| 'nav')` | 0.1.22          |
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| click | Triggered when clicking carousel item | <code>{ index: number; item: SwiperItem &#124; string }</code> |
+| change | Triggered when carousel switches | <code>{ current: number; source: string }</code> |
+| animationfinish | Triggered when carousel animation ends | <code>{ current: number; source: string }</code> |
+| update:current | Triggered when current carousel item updates | `number` |
 
-## Slot
+## Slots
 
-| name      | Description         | Parameters                           | Minimum Version |
-| --------- | ------------------- | ------------------------------------ | --------------- |
-| indicator | Custom indicator    | `{ current: number, total: number }` | 1.13.0          |
-| default   | Item display content | `{ item: string \| SwiperItem, index: number }`       | 1.13.0          |
+| Name | Description |
+| --- | --- |
+| default | Custom carousel item content, parameters are <code>{ item, index }</code> |
+| indicator | Custom indicator content, parameters are <code>{ current, total }</code> |
 
-## External Style Classes
+## Type Definitions
 
-| Class Name           | Description                 | Minimum Version |
-| -------------------- | --------------------------- | --------------- |
-| customClass          | External custom class name  | 0.1.22          |
-| customIndicatorClass | Custom indicator class name | 0.1.22          |
-| customImageClass     | Custom image class name, will be deprecated in version 1.3, please use `customItemClass` instead | 0.1.22          |
-| customPrevImageClass | Custom previous image class name, will be deprecated in version 1.3, please use `customPrevClass` instead | 0.1.22          |
-| customNextImageClass | Custom next image class name, will be deprecated in version 1.3, please use `customNextClass` instead | 0.1.22          |
-| customItemClass      | Custom item class name      | 1.3.13          |
-| customPrevClass      | Custom previous item class name | 1.3.13          |
-| customNextClass      | Custom next item class name | 1.3.13          |
-| customTextClass      | Custom text title class name | 1.3.13          |
-| customTextStyle      | Custom text title style     | 1.3.13          |
+### DirectionType
+
+Carousel direction, optional values are `horizontal`, `vertical`.
+
+### EasingType
+
+Transition easing animation type, optional values are `default`, `linear`, `easeInCubic`, `easeOutCubic`, `easeInOutCubic`.
+
+### IndicatorPositionType
+
+Indicator position, optional values are `left`, `top-left`, `top`, `top-right`, `bottom-left`, `bottom`, `bottom-right`, `right`.
+
+### AdjustHeightType ^(1.3.13)
+
+Auto height strategy, optional values are `first`, `current`, `highest`, `none`.
+
+### SwiperIndicatorType
+
+Indicator type, optional values are `dots`, `dots-bar`, `fraction`.
+
+### SwiperItem
+
+Carousel item object configuration, supports extended fields.
+
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| value | Image or video address | `string` | - |
+| poster | Video cover address | `string` | - |
+| type ^(1.4.0) | Resource type, optional values are `image`, `video` | `SwiperItemType` | - |
+
+### SwiperIndicator Attributes
+
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| current | Current carousel item index | `number` | `0` |
+| direction | Carousel direction, optional values are `horizontal`, `vertical` | `DirectionType` | `horizontal` |
+| min-show-num | Do not show navigator when less than this number | `number` | `2` |
+| indicator-position | Indicator position, optional values are `left`, `top-left`, `top`, `top-right`, `bottom-left`, `bottom`, `bottom-right`, `right` | `IndicatorPositionType` | `bottom` |
+| show-controls | Whether to show control buttons on both sides | `boolean` | `false` |
+| total | Total number of carousel items | `number` | `0` |
+| type | Indicator type, optional values are `dots`, `dots-bar`, `fraction` | `SwiperIndicatorType` | `dots` |

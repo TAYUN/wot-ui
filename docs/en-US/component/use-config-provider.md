@@ -3,10 +3,10 @@ version: 1.14.0
 ---
 # useConfigProvider
 
-Used to inject global configuration (such as theme variables) in JS logic. This solves the issue where configuration from a parent `ConfigProvider` cannot be accessed in environments like WeChat Mini Program due to component rendering limitations (such as native slot scope isolation) or when using `root-portal`.
+Used to inject global configuration (such as theme variables) in JS logic, solving issues in environments like WeChat mini programs where parent `ConfigProvider` configuration cannot be obtained due to component rendering mechanism limitations (such as native slot scope isolation) or using `root-portal`.
 
-::: tip Tip
-Needs to be used together with the `ConfigProvider` component. Wrap your components with the `ConfigProvider` component. This solves the issue of dependency injection limitations on the mini program side, which prevents accessing parent `ConfigProvider` configuration in certain scenarios.
+::: tip Hint
+Needs to be used with the `ConfigProvider` component, using the `ConfigProvider` component to wrap your components. Used to solve the limitation of dependency injection in mini program side, causing the inability to obtain parent `ConfigProvider` configuration in some scenarios.
 :::
 
 ## Basic Usage
@@ -17,15 +17,15 @@ import { reactive, ref } from 'vue'
 
 // Use reactive
 const themeVars = reactive({
-  colorTheme: 'red',
-  buttonPrimaryBgColor: '#07c160'
+  primary6: '#ff4d4f',
+  buttonPrimaryBg: '#07c160'
 })
 
 useConfigProvider({ themeVars })
 
 // Or use ref
 const themeVarsRef = ref({
-  colorTheme: 'blue'
+  primary6: '#2c68ff'
 })
 
 useConfigProvider({ themeVars: themeVarsRef })
@@ -35,6 +35,6 @@ useConfigProvider({ themeVars: themeVarsRef })
 
 ### Parameters
 
-| Parameter | Description | Type | Default | Minimum Version |
+| Parameter | Description | Type | Default Value | Minimum Version |
 |-----|------|------|--------|---------|
 | themeVars | Theme variable object, supports reactive updates | `ConfigProviderThemeVars` \| `Ref<ConfigProviderThemeVars>` | - | 1.14.0 |

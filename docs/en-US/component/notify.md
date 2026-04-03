@@ -1,10 +1,15 @@
 # Notify
 
-Notification component, used to display notification information at the top of the page.
+A notification component used to display notification information at the top of the page.
 
-## Basic Usage
+## Component States
 
-You need to import this component in the page as a mounting point.
+### Basic Usage
+
+You need to import this component in the page as a mount point.
+
+::: code-group
+
 ```html
 <wd-notify />
 ```
@@ -14,15 +19,59 @@ import { useNotify } from '@/uni_modules/wot-ui'
 
 const { showNotify, closeNotify } = useNotify()
 
-// Automatically close after 3 seconds
+// Auto-close after 3 seconds
 showNotify('Notification content')
 
-// Actively close
+// Manually close
 closeNotify()
 ```
 
-## Notification Type
-Supports four types of notifications: `primary`, `success`, `warning`, `danger`, with `danger` as the default.
+:::
+
+### Custom Configuration
+
+Supports customizing colors, popup position, display duration, and whether to show the close button.
+
+::: code-group
+
+```ts
+// Custom colors
+showNotify({
+  message: 'Custom colors',
+  color: '#ad0000',
+  background: '#ffe1e1'
+})
+
+// Custom position
+showNotify({
+  message: 'Custom position',
+  position: 'bottom'
+})
+
+// Custom duration
+showNotify({
+  message: 'Custom duration',
+  duration: 1000
+})
+
+// Show close button
+showNotify({
+  message: 'Notification content',
+  closable: true,
+  duration: 0
+})
+```
+
+:::
+
+## Component Types
+
+### Notification Types
+
+Supports four notification types: `primary`, `success`, `warning`, and `danger`. The default is `danger`.
+
+::: code-group
+
 ```ts
 // Primary notification
 showNotify({ type: 'primary', message: 'Notification content' })
@@ -37,28 +86,35 @@ showNotify({ type: 'danger', message: 'Notification content' })
 showNotify({ type: 'warning', message: 'Notification content' })
 ```
 
-## Custom Notification
+:::
+
+## Component Styles
+
+### Floating Notification
+
+Set the `variant` property to `floating` to display a floating card-style notification. Floating notifications have independent margins, rounded corners, and shadows, and their prefix icons will automatically adapt to the current `type` status color.
+
+::: code-group
 
 ```ts
 showNotify({
-  message: 'Custom color',
-  color: '#ad0000',
-  background: '#ffe1e1'
-})
-
-showNotify({
-  message: 'Custom position',
-  position: 'bottom'
-})
-
-showNotify({
-  message: 'Custom duration',
-  duration: 1000
+  type: 'primary',
+  message: 'Notification content',
+  variant: 'floating',
+  closable: true
 })
 ```
 
-## Using Notify Component
-If you need to embed components or other custom content in Notify, you can directly use the Notify component and customize it using the default slot.
+:::
+
+## Content Forms
+
+### Using Notify Component
+
+If you need to embed components or other custom content within Notify, you can use the Notify component directly and customize it using the default slot.
+
+::: code-group
+
 ```html
 <wd-button type="primary" @click="showNotify">Call using Notify component</wd-button>
 <wd-notify type="success" :safe-height="safeHeight" v-model:visible="visible">
@@ -66,6 +122,7 @@ If you need to embed components or other custom content in Notify, you can direc
   Success notification
 </wd-notify>
 ```
+
 ```ts
 import { ref, onMounted } from 'vue'
 
@@ -98,106 +155,46 @@ export default {
 }
 ```
 
-## Advanced Demo
-```vue
-// App.vue
-<script setup lang="ts">
-  import { onLaunch } from '@dcloudio/uni-app'
-  import { setNotifyDefaultOptions } from '@/uni_modules/wot-ui'
-
-  onLaunch(() => {
-    setNotifyDefaultOptions({
-      // #ifdef H5
-      safeHeight: 44,
-      // #endif
-      onClick: (event) => console.log('onClick', event),
-      onClosed: () => console.log('onClosed'),
-      onOpened: () => console.log('onOpened')
-    })
-    // Hide native tabBar
-    uni.hideTabBar()
-  })
-</script>
-
-<style lang="scss">
-  :root, page {
-    // Brand color
-    --wot-color-theme: #1989fa;
-
-    // Module title/important text
-    --wot-color-title: #323233;
-    // // Subtitle
-    // --color-content: #969799;
-    // // Secondary content
-    // --nut-text-color: #c8c9cc;
-  }
-</style>
-```
-```vue
-// /components/layout/layout.vue
-<template>
-  <wd-config-provider>
-    <slot />
-    <TabBar />
-    <wd-notify />
-  </wd-config-provider>
-</template>
-
-<script lang="ts">
-  export default {
-    // #ifdef H5
-    name: 'Layout',
-    // #endif
-    options: { virtualHost: true, addGlobalClass: true, styleIsolation: 'shared' }
-  }
-</script>
-
-<script setup lang="ts">
-  import TabBar from './components/tabbar.vue'
-</script>
-```
-```vue
-// /pages/user.vue
-<template>
-  <layout>
-    <view>User</view>
-    <wd-button type="primary" @click="showNotify('Notification message')">Notification message</wd-button>
-  </layout>
-</template>
-
-<script lang="ts">
-  export default {
-    // #ifdef H5
-    name: 'User',
-    // #endif
-    options: { virtualHost: true, addGlobalClass: true, styleIsolation: 'shared' }
-  }
-</script>
-
-<script setup lang="ts">
-  import { useNotify } from '@/uni_modules/wot-ui'
-
-  const { showNotify } = useNotify()
-</script>
-```
+:::
 
 ## Attributes
-| Parameter | Description | Type | Accepted Values | Default | Version |
-|-----------|-------------|------|-----------------|---------|----------|
-| type | Type | NotifyType | `primary` `success` `warning` `danger` | `danger` | - |
-| message | Display text, supports line breaks with `\n` | string | - | - | - |
-| duration | Display duration (ms), when value is 0, notify will not disappear | number | - | `3000` | - |
-| zIndex | Layer level | number | - | `99` | - |
-| position | Pop-up position | NotifyPosition | `top` `bottom` | `top` | - |
-| color | Font color | string | - | - | - |
-| background | Background color | string | - | - | - |
-| safeHeight | Top safe height | number / string | - | - | - |
-| selector | Unique identifier | number | - | - | - |
-| root-portal | Whether to detach from the page, used to solve various fixed positioning issues | boolean | - | false | 1.11.0 |
+
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| type | Type, optional values are `primary` `success` `warning` `danger` | `NotifyType` | `danger` |
+| message | Display text, supports line breaks via `\n` | `string \| number` | - |
+| duration | Display duration (ms), when value is 0, notify will not disappear | `number` | `3000` |
+| visible | Display status (supports v-model) | `boolean` | `false` |
+| position | Popup position, optional values are `top` `bottom` | `NotifyPosition` | `top` |
+| color | Font color | `string` | - |
+| background | Background color | `string` | - |
+| z-index | Set the component's z-index level to a fixed value | `number` | `99` |
+| safe-height | Top safe height | `number \| string` | - |
+| selector | Specify unique identifier | `string` | - |
+| root-portal | Whether to detach from the page, used to solve various fixed positioning issues | `boolean` | `false` |
+| closable | Whether to show the close button | `boolean` | `false` |
+| variant | Display form, optional values are `filled` `floating` | `NotifyVariant` | `filled` |
+| custom-class | Root node style class name | `string` | - |
+| custom-style | Root node style | `string` | - |
 
 ## Events
-| Event Name | Description | Parameters | Version |
-|------------|-------------|------------|----------|
-| onClick | Triggered when clicking | event: MouseEvent | - |
-| onOpened | Triggered when fully displayed | - | - |
-| onClosed | Triggered when fully closed | - | - |
+
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| click | Callback function when clicked | `(event: MouseEvent) => void` |
+| closed | Callback function when closed | `() => void` |
+| opened | Callback function after displayed | `() => void` |
+
+## Slots
+
+| Name | Description |
+| --- | --- |
+| default | Custom notification content |
+
+## Methods
+
+| Method Name | Description | Parameters |
+| --- | --- | --- |
+| showNotify | Display notification | `NotifyOptions` / `string` |
+| closeNotify | Close notification | - |
+| setNotifyDefaultOptions | Modify default configuration, affecting all `showNotify` calls | `NotifyOptions` |

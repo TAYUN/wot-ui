@@ -1,9 +1,9 @@
 # Internationalization
 
-Wot UI uses Chinese by default and supports multi-language switching. If you want to use other languages, you can refer to the solutions below.
+Wot UI uses Chinese language by default and supports multi-language switching. If you want to use other languages, you can refer to the following solutions.
 
 :::warning Note
-Currently, the package published on npm is uncompiled `vue` and `ts`. Vite will cache [pre-built](https://vitejs.dev/guide/dep-pre-bundling.html) dependencies in `node_modules/.vite`. The component library's internationalization is implemented based on `reactive` for data sharing. During the `dev` stage, the page will use internationalization data from the pre-built product, while the component library uses its internal internationalization data. Therefore, when importing in non-`uni_modules` mode, you need to add the following configuration in `vite.config.ts`:
+Currently, Vite will cache pre-built dependencies to `node_modules/.vite`. The internationalization implementation of the component library is based on data sharing implemented by `reactive`. In the `dev` stage, the page will use internationalization data in pre-built products, while the component library uses internationalization data inside the component library, so when not introduced in `uni_modules` mode, you need to add the following configuration in `vite.config.ts`:
 
 ```ts
 import { defineConfig } from 'vite'
@@ -19,13 +19,13 @@ export default defineConfig({
 
 ```
 
-Use [optimizeDeps.exclude](https://cn.vitejs.dev/config/dep-optimization-options.html#optimizedeps-exclude) to forcibly exclude the `@wot-ui/ui` module from pre-building. In `uni_modules` mode, no processing is needed.
+Use [optimizeDeps.exclude](https://vitejs.dev/config/dep-optimization-options.html#optimizedeps-exclude) to force exclude the `@wot-ui/ui` module in pre-building. In `uni_modules` mode, no processing is required.
 
 :::
 
 ## Using Other Languages
 
-We implement multi-language support through the **Locale** component. You can use the **Locale.use** method to switch the current language.
+We implement multi-language support through the **Locale** component. Use the **Locale.use** method to switch the current language.
 
 ```typescript
 import { Locale } from '@wot-ui/ui'
@@ -35,9 +35,9 @@ import enUS from '@wot-ui/ui/locale/lang/en-US'
 Locale.use('en-US', enUS)
 ```
 
-## Override Language Pack
+## Overriding Language Packs
 
-You can modify and extend the text through the **Locale.add** method, for example:
+Copy modification and extension of copy can be achieved through the **Locale.add** method, as shown in the following example:
 
 ```typescript
 import { Locale } from '@wot-ui/ui'
@@ -55,7 +55,7 @@ Locale.add(messages)
 
 ## Supported Languages
 
-| Language | File Name | Version |
+| Language | Filename | Version |
 | ---------------- | --------- | --------- |
 | Simplified Chinese | zh-CN | `v0.2.20` |
 | Traditional Chinese (Taiwan) | zh-TW | `v0.2.20` |
@@ -73,4 +73,4 @@ Locale.add(messages)
 | Turkish | tr-TR | `v1.3.12` |
 | Russian | ru-RU | `v1.3.12` |
 
-If you need to use other languages, you are welcome to contribute a [PR](https://github.com/wot-ui/wot-ui/pulls). Just add a language configuration file [here](https://github.com/wot-ui/wot-ui/tree/master/src/uni_modules/wot-ui/locale/lang).
+If you need to use other languages, welcome to contribute [PR](https://github.com/Moonofweisheng/@wot-ui/ui/pulls). Just add a language configuration file [here](https://github.com/Moonofweisheng/@wot-ui/ui/tree/master/src/uni_modules/@wot-ui/ui/locale/lang).

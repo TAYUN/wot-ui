@@ -1,22 +1,24 @@
 # Text
 
-Text component, used to display text information.
+Text component for displaying text information.
 
-> Available since version 1.3.4
+## Component Types
 
-## Basic Usage
+### Basic Usage
 
-Set `text` to set the text content. It is recommended to use the form <code>:text='value'</code>.
+Pass text content through `text`.
 
 ```html
-<wd-text
-  text="Reed leaves fill the sandbar, cold sand carries shallow streams. Twenty years later, passing the south tower again. The boat tied under willows is not yet steady, how many days until mid-autumn comes again? Yellow crane at the broken cliff, has my old friend been here? The old rivers and mountains are all filled with new sorrows. Wanting to buy osmanthus flowers and bring wine, but it's never like the wanderings of youth."
-></wd-text>
+<wd-text :text="text"></wd-text>
 ```
 
-## Set Theme
+```ts
+const text = ref('Reeds fill the sandbar, cold sand with shallow streams. Twenty years since I last visited the South Tower.')
+```
 
-Set text theme through the <code>type</code> parameter. We provide five types: <code>primary</code> <code>error</code> <code>success</code> <code>warning</code> <code>default</code>.
+### Set Theme
+
+Set theme color through `type`, supports `primary`, `error`, `success`, `warning`, `default`.
 
 ```html
 <wd-text type="primary" text="Primary"></wd-text>
@@ -26,78 +28,91 @@ Set text theme through the <code>type</code> parameter. We provide five types: <
 <wd-text text="Default"></wd-text>
 ```
 
-## Custom Font Color
+### Mode
 
-Set the `color` property.
-
-```html
-<wd-text
-  text="Reed leaves fill the sandbar, cold sand carries shallow streams. Twenty years later, passing the south tower again. The boat tied under willows is not yet steady, how many days until mid-autumn comes again? Yellow crane at the broken cliff, has my old friend been here? The old rivers and mountains are all filled with new sorrows. Wanting to buy osmanthus flowers and bring wine, but it's never like the wanderings of youth."
-  color="#36B8C2"
-></wd-text>
-```
-
-## Bold Text
-
-Set the `bold` property.
+Format text through `mode`, supports `text`, `date`, `phone`, `name`, `price`.
 
 ```html
-<wd-text
-  text="Reed leaves fill the sandbar, cold sand carries shallow streams. Twenty years later, passing the south tower again. The boat tied under willows is not yet steady, how many days until mid-autumn comes again? Yellow crane at the broken cliff, has my old friend been here? The old rivers and mountains are all filled with new sorrows. Wanting to buy osmanthus flowers and bring wine, but it's never like the wanderings of youth."
-  bold
-></wd-text>
+<wd-text text="18888888888" mode="phone"></wd-text>
+<wd-text text="Wang San" mode="name"></wd-text>
+<wd-text text="1719976636911" mode="date"></wd-text>
 ```
 
-## Font Size
+### Price
 
-Set the `size` property.
+Set `mode="price"` to display price formatted text.
 
 ```html
-<wd-text
-  text="Reed leaves fill the sandbar, cold sand carries shallow streams. Twenty years later, passing the south tower again. The boat tied under willows is not yet steady, how many days until mid-autumn comes again? Yellow crane at the broken cliff, has my old friend been here? The old rivers and mountains are all filled with new sorrows. Wanting to buy osmanthus flowers and bring wine, but it's never like the wanderings of youth."
-  size="16px"
-></wd-text>
+<wd-text text="16354.156" mode="price" type="success" decoration="line-through" prefix="￥" />
 ```
 
-## Data Masking
+## Component Styles
 
-Set the `format` property, effective when `mode` is `phone` or `name`.
+### Custom Font Color
+
+Set text color through `color`.
 
 ```html
-<wd-text text="Li Si" mode="name" :format="true"></wd-text>
-<wd-text text="Zhang Chang San" mode="name" :format="true"></wd-text>
-<wd-text text="18888888888" mode="phone" :format="true"></wd-text>
+<wd-text :text="text" color="#36B8C2"></wd-text>
 ```
 
-## Lines
+### Bold
 
-Set the `lines` property to specify the number of lines of text to display. If set, an ellipsis will be shown when the text exceeds this number of lines. Maximum value is 5.
+Set `bold` to enable bold text.
+
+```html
+<wd-text :text="text" bold></wd-text>
+```
+
+### Font Size
+
+Set font size through `size`.
+
+```html
+<wd-text :text="text" size="16px"></wd-text>
+```
+
+### Lines
+
+Set `lines` to limit the number of displayed lines, showing ellipsis when exceeded.
 
 ```html
 <wd-text :text="text" :lines="2" size="16px"></wd-text>
 ```
 
-## Line Height
+### LineHeight
 
-Set `lineHeight` for text line height.
+Set line height through `lineHeight`.
 
 ```html
-<wd-text :text="text" lineHeight="20px"></wd-text>
+<wd-text :text="text" :lines="2" lineHeight="20px"></wd-text>
 ```
 
-## Prefix and Suffix Slots
+### Text Decoration
 
-Set `prefix` and `suffix` slots.
+Set text decoration line through `decoration`.
 
 ```html
-<wd-text
-  text="12345678901"
-  mode="phone"
-  format
-  type="primary"
-  prefix="Prefix"
-  suffix="Suffix"
-/>
+<wd-text :text="text" type="warning" decoration="underline" />
+```
+
+## Special Styles
+
+### Desensitization
+
+After setting `format`, desensitization display will be performed when `mode` is `phone` or `name`.
+
+```html
+<wd-text text="Zhang Changsan" mode="name" :format="true"></wd-text>
+<wd-text text="18888888888" mode="phone" :format="true"></wd-text>
+```
+
+### Prefix and Suffix Slots
+
+Extend front and back content through `prefix`, `suffix` properties or slots with the same name.
+
+```html
+<wd-text text="12345678901" mode="phone" format type="primary" prefix="Prefix" suffix="Suffix" />
 
 <wd-text text="12345678901" mode="phone" format type="primary">
   <template #prefix>
@@ -107,77 +122,42 @@ Set `prefix` and `suffix` slots.
 </wd-text>
 ```
 
-## Price
-
-Set `mode="price"`.
-
-```html
-<wd-text
-  text="16354.156"
-  mode="price"
-  type="success"
-  decoration="line-through"
-  prefix="￥"
-/>
-```
-
-## Text Decoration
-
-Set `decoration` for text decoration, such as underline, line-through, etc.
-
-```html
-<wd-text :text="text" type="warning" decoration="underline"/>
-```
-
-## Events
-
-```html
-<wd-text
-  text="Reed leaves fill the sandbar, cold sand carries shallow streams. Twenty years later, passing the south tower again. The boat tied under willows is not yet steady, how many days until mid-autumn comes again? Yellow crane at the broken cliff, has my old friend been here? The old rivers and mountains are all filled with new sorrows. Wanting to buy osmanthus flowers and bring wine, but it's never like the wanderings of youth."
-  @click="clickTest"
-></wd-text>
-```
-
-```typescript
-function clickTest() {
-  console.log(1)
-}
-```
-
 ## Attributes
 
-| Parameter | Description | Type | Options | Default | Version |
-|-----------|-------------|------|----------|---------|----------|
-| type | Theme type | string | 'primary' / 'error' / 'warning' / 'success' / 'default' | default | 1.3.4 |
-| text | Text content | string / number | - | - | 1.3.4 |
-| size | Font size | string | - | - | 1.3.4 |
-| mode | Text processing mode | string | 'text' / 'date' / 'phone' / 'name' / 'price' | text | 1.3.4+ |
-| bold | Whether bold, default normal | boolean | - | false | 1.3.4 |
-| format | Whether to mask data | boolean | Effective when mode is phone or name | false | 1.3.4 |
-| color | Text color | string | - | - | 1.3.4 |
-| lines | Number of lines to display, if set, ellipsis will show when exceeding. Max value is 5. | number | - | - | 1.3.4 |
-| lineHeight | Text line height | string | - | - | 1.3.4 |
-| decoration | Text decoration, underline, line-through, etc. | string | 'underline' / 'line-through' / 'overline' | none | 1.3.4+ |
-| prefix | Prefix content | string | - | - | 1.3.4+ |
-| suffix | Suffix content | string | - | - | 1.3.4+ |
-| call | Whether to make a call when clicking text in phone mode | boolean | - | false | 1.3.4 |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| type | Theme type, optional values are `default`, `primary`, `success`, `warning`, `error` | `TextType` | `default` |
+| text | Text content | `string \| number` | `''` |
+| size | Font size | `string` | `''` |
+| mode | Text processing mode, optional values are `text`, `date`, `phone`, `name`, `price` | `TextMode` | `text` |
+| decoration | Text decoration, optional values are `none`, `underline`, `line-through`, `overline` | `TextDecoration` | `none` |
+| call | Whether to dial when clicking text when `mode="phone"` | `boolean` | `false` |
+| bold | Whether bold | `boolean` | `false` |
+| format | Whether to desensitize, only effective when `mode` is `phone` and `name` | `boolean` | `false` |
+| color | Text color | `string` | `''` |
+| prefix | Prefix content | `string` | - |
+| suffix | Suffix content | `string` | - |
+| lines | Number of display lines, showing ellipsis when exceeded | `number` | - |
+| line-height | Text line height | `string` | `''` |
+| custom-class | Root node custom class name | `string` | `''` |
+| custom-style | Root node custom style | `string` | `''` |
 
 ## Events
 
-| Event Name | Description | Parameters | Version |
-|------------|-------------|------------|----------|
-| click | Triggered when text is clicked | event | 1.3.4 |
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| click | Triggered when clicking text | `Event` |
 
 ## Slots
 
-| Slot Name | Description | Version |
-|-----------|-------------|---------|
-| prefix | Prefix slot | 1.3.4 |
-| suffix | Suffix slot | 1.3.4 |
+| Name | Description |
+| --- | --- |
+| prefix | Prefix content |
+| suffix | Suffix content |
 
-## External Classes
+## External Style Classes
 
-| Class Name | Description | Version |
-|------------|-------------|----------|
-| custom-class | Root node style | 1.3.4 |
-| custom-style | Root node style | 1.3.4 |
+| Class Name | Description |
+| --- | --- |
+| custom-class | Root node style class |
+| custom-style | Root node inline style |

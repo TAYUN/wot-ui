@@ -18,7 +18,7 @@ Buttons are used to trigger an action, such as submitting a form or opening a li
 
 ### Disabled
 
-Set the `disabled` attribute.
+Set the `disabled` property.
 
 ```html
 <wd-button disabled>Default Button</wd-button>
@@ -26,7 +26,7 @@ Set the `disabled` attribute.
 
 ### Loading
 
-Set the `loading` attribute to make the button enter the loading state. A loading button is not clickable.
+Set the `loading` property to put the button in a loading state. Buttons in loading state are disabled from clicking.
 
 ```html
 <wd-button loading>Loading</wd-button>
@@ -62,7 +62,7 @@ Set `variant="text"`.
 
 ### Size
 
-Set the `size` attribute. Supported values are 'mini', 'small', 'medium', and 'large'. Default is 'medium'.
+Set `size`, supports 'mini', 'small', 'medium', 'large', default is 'medium'.
 
 ```html
 <wd-button size="mini">Mini Button</wd-button>
@@ -73,10 +73,10 @@ Set the `size` attribute. Supported values are 'mini', 'small', 'medium', and 'l
 
 ### Hairline and Round
 
-Set `hairline` and `round`.
+Set `hairline` and `round` properties.
 
 ```html
-<wd-button variant="plain" hairline>Hairline Button</wd-button>
+<wd-button variant="plain" hairline>Hairline</wd-button>
 <wd-button variant="plain" round>Round Button</wd-button>
 ```
 
@@ -84,7 +84,7 @@ Set `hairline` and `round`.
 
 ### custom-class Shadow
 
-Use `custom-class` and `custom-style` to customize button styles. Here `custom-class` is used to apply a `Material Design 3` style `box-shadow`.
+Customize button styles through `custom-class` and `custom-style` properties. Here we use `custom-class` to add `Material Design 3` style `box-shadow`.
 
 ```html
 <view class="page-class">
@@ -108,28 +108,28 @@ Use `custom-class` and `custom-style` to customize button styles. Here `custom-c
 
 ## Content Form
 
-### Icon-only Button
+### Icon Only Button
 
-Set the `icon` attribute to render an icon-only button.
+Set the `icon` property to display an icon button.
 
 ```html
 <wd-button icon="edit-outline"></wd-button>
 ```
 
-### Button with Icon and Text
+### Icon and Text Button
 
-Use both `icon` and button content. Combine with `classPrefix` to use custom icons. See [Icon Custom Icons](/component/icon#custom-icons).
+Combine `icon` with content to display an icon and text button; combine with `classPrefix` to use custom icons, see [Icon Custom Icon](/component/icon#custom-icon).
 
 ```html
 <wd-button icon="download">Download</wd-button>
 <wd-button classPrefix="fish" icon="kehuishouwu">Recyclable</wd-button>
 ```
 
-## Layout
+## Layout Capability
 
 ### Block Button
 
-Set the `block` attribute.
+Set the `block` property.
 
 ```html
 <wd-button block>Primary Button</wd-button>
@@ -137,73 +137,88 @@ Set the `block` attribute.
 
 ## Attributes
 
-<!-- prettier-ignore -->
-| Parameter | Description | Type | Accepted Values | Default | Min Version |
-| --- | --- | --- | --- | --- | --- |
-| type | Button type | string | primary/success/info/warning/danger | primary | - |
-| variant | Button variant | string | base/plain/dashed/text | base | - |
-| size | Button size | string | mini/small/medium/large | medium | - |
-| round | Round button | boolean | - | false | - |
-| disabled | Disabled button | boolean | - | false | - |
-| hairline | Hairline border | boolean | - | false | - |
-| block | Block button | boolean | - | false | - |
-| loading | Loading state | boolean | - | false | - |
-| text | Button text | string | - | - | - |
-| icon | Icon class name | string | - | - | - |
-| classPrefix | Icon class prefix | string | - | wd-icon | 0.1.27 |
-| loading-color | Loading icon color | string | - | - | - |
-| loading-props | Loading options | `Partial<LoadingProps>` | - | - | - |
-| open-type | WeChat open capability | ButtonOpenType | See ButtonOpenType below | - | - |
-| hover-stop-propagation | Prevent ancestor click state | boolean | - | false | - |
-| lang | User info language | string | zh_CN/zh_TW/en | - | - |
-| session-from | Session source | string | - | - | - |
-| send-message-title | Message card title | string | - | Current title | - |
-| send-message-path | Message card path | string | - | Current share path | - |
-| send-message-img | Message card image | string | - | Screenshot | - |
-| app-parameter | Parameters passed when launching APP | string | - | - | - |
-| show-message-card | Show message card in customer service chat | boolean | - | false | - |
-| button-id | Unique button identifier | string | - | - | 1.3.6 |
-| scope | Alipay authorization scope | ButtonScope | phoneNumber/userInfo | - | 1.3.14 |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| type | Button type, optional values are `primary`, `success`, `info`, `warning`, `danger` | string | primary |
+| variant | Button variant, optional values are `base`, `plain`, `dashed`, `text` | string | base |
+| size | Button size, optional values are `mini`, `small`, `medium`, `large` | string | medium |
+| round | Round button | boolean | false |
+| disabled | Disabled button | boolean | false |
+| hairline | Hairline border | boolean | false |
+| block | Block button | boolean | false |
+| loading | Loading button | boolean | false |
+| text | Button text | string | - |
+| icon | Icon class name | string | - |
+| classPrefix ^(0.1.27) | Icon class prefix | string | wd-icon |
+| loading-props | Loading configuration | `Partial<LoadingProps>` | - |
+| open-type | Open capability type, see `ButtonOpenType` below | string | - |
+| hover-stop-propagation | Stop ancestor node click state | boolean | false |
+| hover-start-time | How long after pressing to show click state (ms) | number | 20 |
+| hover-stay-time | How long after releasing to remove click state (ms) | number | 70 |
+| lang | User info language, optional values are `zh_CN`, `zh_TW`, `en` | string | - |
+| session-from | Session source (valid when `open-type=contact`) | string | - |
+| send-message-title | Conversation message card title (valid when `open-type=contact`) | string | Current title |
+| send-message-path | Conversation message card path (valid when `open-type=contact`) | string | Current share path |
+| send-message-img | Conversation message card image (valid when `open-type=contact`) | string | Screenshot |
+| app-parameter | Open APP parameter (valid when `open-type=launchApp`) | string | - |
+| show-message-card | Show conversation message card (valid when `open-type=contact`) | boolean | false |
+| button-id ^(1.3.6) | Button unique identifier | string | - |
+| scope ^(1.3.14) | Alipay authorization scope, optional values are `phoneNumber`, `userInfo` (valid when `open-type=getAuthorize`) | string | - |
+| loading-color | Loading icon color | string | - |
+| custom-class | Root node custom class name | string | - |
+| custom-style | Root node custom style | string | - |
 
 ### ButtonOpenType Open Capabilities
 
-WeChat Mini Program open capabilities, see [WeChat Mini Program Button](https://developers.weixin.qq.com/miniprogram/dev/component/button.html).
-
 <!-- prettier-ignore -->
-| Value | Description |
+| Property | Description |
 | --- | --- |
-| feedback | Open the feedback page |
-| share | Trigger sharing |
-| getUserInfo | Get user information |
-| contact | Open customer service chat |
+| feedback | Open "Feedback" page |
+| share | Trigger user forwarding |
+| getUserInfo | Get user info |
+| contact | Open customer service conversation |
 | getPhoneNumber | Get phone number |
-| getRealtimePhoneNumber | Get phone number in real time (WeChat only) |
-| launchApp | Launch APP from Mini Program |
-| openSetting | Open authorization settings |
+| getRealtimePhoneNumber | Get real-time phone number (WeChat only) |
+| launchApp | Open APP in mini program |
+| openSetting | Open authorization settings page |
 | chooseAvatar | Get user avatar |
-| getAuthorize | Alipay authorization with `scope` |
+| getAuthorize | Support Alipay authorization (with `scope`) |
 | lifestyle | Follow lifestyle account (Alipay) |
 | contactShare | Share to contacts (Alipay) |
-| agreePrivacyAuthorization | User agrees to privacy policy |
+| openGroupProfile | Open group profile card (WeChat) |
+| openGuildProfile | Open channel profile card (WeChat) |
+| openPublicProfile | Open official account profile card (WeChat) |
+| shareMessageToFriend | Share message to friend (WeChat) |
+| addFriend | Add friend (WeChat) |
+| addColorSign | Add color sign (WeChat) |
+| addGroupApp | Add group app (WeChat) |
+| addToFavorites | Add to favorites (WeChat) |
+| chooseAddress | Choose shipping address (WeChat) |
+| chooseInvoiceTitle | Choose invoice title (WeChat) |
+| login | Authorized login (platform capability) |
+| subscribe | Subscribe (platform capability) |
+| favorite | Favorite (platform capability) |
+| watchLater | Watch later (platform capability) |
+| openProfile | Open personal homepage (platform capability) |
+| agreePrivacyAuthorization | User agrees to privacy agreement |
 
 ## Events
 
-<!-- prettier-ignore -->
-| Event Name | Description | Parameters | Min Version |
-| --- | --- | --- | --- |
-| click | Click event | `event` | - |
-| getuserinfo | Get user information | `detail` | - |
-| contact | Customer service callback (`open-type=contact`) | `detail` | - |
-| getphonenumber | Phone number callback (`open-type=getPhoneNumber`) | `detail` | - |
-| getrealtimephonenumber | Real-time phone callback (`open-type=getRealtimePhoneNumber`) | `detail` | - |
-| error | Error callback (`open-type=launchApp`) | `detail` | - |
-| launchapp | APP launch success callback (`open-type=launchApp`) | `detail` | - |
-| opensetting | Settings page callback (`open-type=openSetting`) | `detail` | - |
-| chooseavatar | Avatar callback (`open-type=chooseAvatar`) | `detail` | - |
-| agreeprivacyauthorization | Privacy agreement callback (`open-type=agreePrivacyAuthorization`) | `detail` | - |
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| click | Click event | `event` |
+| getuserinfo | Get user info callback | `event` |
+| contact | Customer service message callback (`open-type=contact`) | `event` |
+| getphonenumber | Get phone number callback (`open-type=getPhoneNumber`) | `event` |
+| getrealtimephonenumber ^(1.13.0) | Get real-time phone number callback (`open-type=getRealtimePhoneNumber`) | `event` |
+| error | Open capability error callback (`open-type=launchApp`) | `event` |
+| launchapp | Open APP success callback (`open-type=launchApp`) | `event` |
+| opensetting | Open authorization settings page callback (`open-type=openSetting`) | `event` |
+| chooseavatar | Get user avatar callback (`open-type=chooseAvatar`) | `event` |
+| agreeprivacyauthorization | Agree to privacy agreement callback (`open-type=agreePrivacyAuthorization`) | `event` |
 
-## External Style Classes
+## Slots
 
-| Class Name   | Description     | Min Version |
-| ------------ | --------------- | ----------- |
-| custom-class | Root node style | -           |
+| name | Description |
+| --- | --- |
+| default | Button content |

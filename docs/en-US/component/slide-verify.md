@@ -4,25 +4,41 @@ version: 1.14.0
 
 # SlideVerify
 
-A slide verification component for human-machine verification scenarios.
+Slide verification component for human-machine verification scenarios.
 
-## Basic Usage
+## Component Types
+
+### Basic Usage
 
 ```html
 <wd-slide-verify @success="handleSuccess" @fail="handleFail" />
 ```
 
-```typescript
+```ts
+const toast = useToast()
+
 function handleSuccess() {
-  console.log('Verification successful')
+  toast.success('Verification successful')
 }
 
 function handleFail() {
-  console.log('Verification failed')
+  toast.error('Verification failed, please try again')
 }
 ```
 
-## Custom Text
+## Component States
+
+### Disabled State
+
+Set `disabled` to disable slide verification.
+
+```html
+<wd-slide-verify disabled />
+```
+
+## Component Styles
+
+### Custom Text
 
 Customize prompt text through `text` and `success-text` properties.
 
@@ -30,16 +46,7 @@ Customize prompt text through `text` and `success-text` properties.
 <wd-slide-verify text="Please drag the slider" success-text="Verification successful" />
 ```
 
-## Custom Size
-
-Customize the height of the slide bar through the CSS variable `--wot-slide-verify-height`. The width defaults to 100%.
-Set the corresponding icon sizes through `icon-size` and `success-icon-size` properties.
-
-```html
-<wd-slide-verify :custom-style="`--wot-slide-verify-height: 50px`" icon-size="60rpx" success-icon-size="30rpx" />
-```
-
-## Custom Color
+### Custom Colors
 
 Customize colors through `background-color` and `active-background-color` properties.
 
@@ -47,42 +54,36 @@ Customize colors through `background-color` and `active-background-color` proper
 <wd-slide-verify background-color="#E8F4FF" active-background-color="#4D94FF" />
 ```
 
-## Custom Icon
+### Custom Icons
 
-Customize icons through `icon` and `success-icon` properties, and set icon size with `icon-size` property.
+Customize icons through `icon` and `success-icon` properties.
 
 ```html
-<wd-slide-verify icon="arrow-right" success-icon="success" :icon-size="24" />
+<wd-slide-verify icon="arrow-right" success-icon="thumb-up-fill" />
 ```
 
-## Custom Tolerance
+## Special Styles
 
-Set the tolerance range (in pixels) through `tolerance` property, defaults to 10px.
+### Custom Tolerance Range
+
+Set the tolerance range (in px) through the `tolerance` property, default is 10px.
 
 ```html
 <wd-slide-verify :tolerance="20" />
 ```
 
-## Disabled State
-
-Set the `disabled` property to disable slide verification.
-
-```html
-<wd-slide-verify disabled />
-```
-
-## Reset Method
+### Reset Method
 
 Get the component instance through `ref` and call the `reset` method to reset the verification state.
 
 ```html
-<wd-slide-verify ref="slideVerifyRef" />
-<wd-button @click="handleReset">Reset</wd-button>
+<wd-slide-verify ref="slideVerifyRef" @success="handleSuccess" @fail="handleFail" />
+<wd-button type="primary" @click="handleReset">Reset</wd-button>
 ```
 
-```typescript
+```ts
 import { ref } from 'vue'
-import type { SlideVerifyInstance } from '@/uni_modules/wot-ui/components/wd-slide-verify/type'
+import type { SlideVerifyInstance } from '@/uni_modules/wot-ui/components/wd-slide-verify/types'
 
 const slideVerifyRef = ref<SlideVerifyInstance>()
 
@@ -91,7 +92,7 @@ function handleReset() {
 }
 ```
 
-## Slots
+### Slot Usage
 
 Supports customizing content through slots.
 
@@ -114,46 +115,45 @@ Supports customizing content through slots.
 
 ## Attributes
 
-| Parameter               | Description                                                                                           | Type            | Options | Default                              | Version          |
-| ----------------------- | ----------------------------------------------------------------------------------------------------- | --------------- | ------- | ------------------------------------ | ---------------- |
-| tolerance               | Tolerance range (unit: px), distance from endpoint within which verification is considered successful | number / string | -       | 10                                   | 1.14.0 |
-| text                    | Prompt text                                                                                           | string          | -       | Slide right to complete verification | 1.14.0 |
-| success-text            | Success prompt text                                                                                   | string          | -       | Verification passed                  | 1.14.0 |
-| disabled                | Whether to disable                                                                                    | boolean         | -       | false                                | 1.14.0 |
-| background-color        | Background color                                                                                      | string          | -       | #F5F7FA                              | 1.14.0 |
-| active-background-color | Active background color                                                                               | string          | -       | #49C75F                              | 1.14.0 |
-| icon                    | Slider icon name                                                                                      | string          | -       | a-chevron-rightdouble                | 1.14.0 |
-| success-icon            | Success icon name                                                                                     | string          | -       | check                                | 1.14.0 |
-| icon-size               | Icon size (unit: px)                                                                                  | number / string | -       | 20                                   | 1.14.0 |
-| success-icon-size       | Success icon size (unit: px)                                                                          | number / string | -       | 12                                   | 1.14.0 |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| tolerance | Tolerance range, unit is `px` | number | `10` |
+| text | Prompt text, displays built-in text when empty | string | `''` |
+| success-text | Verification success prompt text, displays built-in text when empty | string | `''` |
+| disabled | Whether to disable | boolean | `false` |
+| background-color | Background color | string | - |
+| active-background-color | Background color when active | string | - |
+| icon | Slider icon name | string | `double-right` |
+| success-icon | Success icon name | string | `check-circle-fill` |
+| icon-size | Icon size | string / number | - |
+| success-icon-size | Success icon size | string / number | - |
 
 ## Events
 
-| Event Name | Description                          | Parameters | Version          |
-| ---------- | ------------------------------------ | ---------- | ---------------- |
-| success    | Triggered when verification succeeds | -          | 1.14.0 |
-| fail       | Triggered when verification fails    | -          | 1.14.0 |
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| success | Triggered when verification succeeds | - |
+| fail | Triggered when verification fails | - |
 
 ## Methods
 
-You can get the component instance through ref and call the methods provided by the component:
+| Method Name | Description | Parameters |
+| --- | --- | --- |
+| init | Initialize size information | - |
+| reset | Reset verification component to initial state | - |
 
-| Method | Description                                           | Parameters | Version          |
-| ------ | ----------------------------------------------------- | ---------- | ---------------- |
-| reset  | Reset the verification component to its initial state | -          | 1.14.0 |
+## Slots
 
-## Slots API
-
-| Slot Name    | Description                        | Version          |
-| ------------ | ---------------------------------- | ---------------- |
-| text         | Custom prompt text content         | 1.14.0 |
-| success-text | Custom success prompt text content | 1.14.0 |
-| icon         | Custom slider icon                 | 1.14.0 |
-| success-icon | Custom success icon                | 1.14.0 |
+| Name | Description |
+| --- | --- |
+| text | Custom prompt text content |
+| success-text | Custom verification success prompt text content |
+| icon | Custom slider icon |
+| success-icon | Custom success icon |
 
 ## External Style Classes
 
-| Class Name   | Description     | Version          |
-| ------------ | --------------- | ---------------- |
-| custom-class | Root node style | 1.14.0 |
-| custom-style | Root node style | 1.14.0 |
+| Class Name | Description |
+| --- | --- |
+| custom-class | Root node style class |
+| custom-style | Root node style |

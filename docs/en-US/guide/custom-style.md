@@ -1,19 +1,19 @@
-# Custom Style
+# Style Override
 
-In this section, you will learn how to effectively override the default styles of Wot UI components.
+Through this chapter, you can learn how to effectively override the default styles of components when using Wot UI.
 
 ## Using External Style Classes
 
-We provide a large number of external style classes for developers to use, such as `custom-style` and `custom-class`. The specific style class names can be found in the documentation of the corresponding components.
+We have opened a large number of external style classes for developers to use, such as: `custom-style` and `custom-class`. The specific style class names can be found in the corresponding component documentation.
 
-When using them, simply pass your custom class name to the corresponding external style class attribute:
+When using, directly pass the custom class name to the corresponding external style class attribute:
 
 ```vue
 <wd-button custom-class="custom-button" type="primary">Primary Button</wd-button>
 ```
 
 ```scss
-/* Component Style */
+/* Component styles */
 :deep(.custom-button) {
   color: red !important;
 }
@@ -21,37 +21,36 @@ When using them, simply pass your custom class name to the corresponding externa
 
 ## Page-level Style Override
 
-When using Wot UI components in a page, you can directly override styles in the page's style file.
+When using Wot UI components on a page, you can directly override styles in the page's style file.
 
-Wot UI components usually have a characteristic class name starting with `wd-` at the outermost layer or key nodes. If you are in an ordinary style block without `scoped`, you can directly override styles through the class name:
+`Wot UI` components usually have feature class names starting with `wd-` at the outermost layer or key nodes. If you are in a normal style block without using `scoped`, you can directly override styles through class names:
 
 ```vue
 <wd-button type="primary">Primary Button</wd-button>
 ```
 
 ```scss
-/* Page Style (non-scoped) */
+/* Page styles (non-scoped) */
 .wd-button {
   color: red !important;
 }
 ```
 
-If you are in a `scoped` style block, you need to use the `:deep()` pseudo-class to penetrate the component for style overriding:
+If you are in a style block using `scoped`, you need to use the `:deep()` pseudo-class to penetrate the component for style override:
 
 ```vue
 <wd-button type="primary">Primary Button</wd-button>
 ```
 
 ```scss
-/* Page Style (scoped) */
+/* Page styles (scoped) */
 :deep(.wd-button) {
   color: red !important;
 }
 ```
-
 ### Deep Understanding of :deep()
 
-In most cases, you can override styles directly using class names. However, if you use `scoped` styles in **your own page**, your CSS will only affect elements on the current page. If you want to affect child components (i.e., Wot UI components) within `scoped` styles, you need to use the `:deep()` pseudo-class:
+In most cases, directly using class names can override styles. However, if you use `scoped` styles in **your own page**, your CSS will only affect elements on the current page. If you want to affect child components (i.e., Wot UI components) in `scoped` styles, you need to use the `:deep()` pseudo-class:
 
 ```css
 <style scoped>
@@ -61,7 +60,7 @@ In most cases, you can override styles directly using class names. However, if y
 </style>
 ```
 
-The above code will be compiled to something like this (with data attributes):
+The above code will be compiled into something like this (with data attributes):
 
 ```css
 .my-page[data-v-f3f3eg9] .wd-button {
@@ -69,20 +68,20 @@ The above code will be compiled to something like this (with data attributes):
 }
 ```
 
-For more details, please refer to [SFC CSS Features](https://vuejs.org/api/sfc-css-features.html).
+For details, see [Single File Component CSS Features](https://vuejs.org/api/sfc-css-features.html#sfc-css-features).
 
-## Disable Custom Component Style Isolation
+## Removing Custom Component Style Isolation
 
-If you use Wot UI components in **your custom components** and want to override Wot component styles within your custom component, you may find that the styles do not take effect.
+If you use Wot UI components in **custom components you write yourself**, and want to override Wot component styles within the custom component, you may find that styles do not take effect.
 
-This is because in the mini-program environment, custom components enable style isolation by default. You need to explicitly remove this restriction by enabling the `styleIsolation: 'shared'` option.
+This is because in mini-program environments, custom components have style isolation enabled by default. You need to explicitly remove this limitation: enable the `styleIsolation: 'shared'` option.
 
 ```vue
 <wd-button type="primary">Primary Button</wd-button>
 ```
 
-**Configuration for Vue 3.3+:**
-Using the `defineOptions` macro:
+**Vue 3.3+ Configuration Method:**
+Through the `defineOptions` macro:
 
 ```ts
 <script lang="ts" setup>
@@ -94,7 +93,7 @@ defineOptions({
 </script>
 ```
 
-**Configuration for Vue 3.2 and below:**
+**Vue 3.2 and below Configuration Method:**
 
 ```ts
 // vue
@@ -113,7 +112,7 @@ export default {
 After enabling `shared`, you can override Wot components in your component styles:
 
 ```scss
-/* Component Style */
+/* Component styles */
 :deep(.wd-button) {
   color: red !important;
 }
@@ -121,11 +120,11 @@ After enabling `shared`, you can override Wot components in your component style
 
 ## Using CSS Variables
 
-We have provided a customization solution based on CSS Variables for all components.
+We have opened CSS variable (CSS Variables) based customization solutions for all components.
 
-Compared to the mandatory override via class names or penetration introduced above, this approach is more elegant. It supports bulk modification of styles for multiple components at the page or application level for theme customization.
+Compared to the class name or penetration forced override introduced above, this solution is more elegant, supporting batch modification of multiple component styles at the page or application level for theme customization.
 
-Of course, using it to modify part of the styles of a single component is also more than enough:
+Of course, using it to modify partial styles of a single component is also more than sufficient:
 
 ```vue
 <template>
@@ -136,22 +135,22 @@ Of course, using it to modify part of the styles of a single component is also m
 
 <style>
 .custom-theme-wrapper {
-  /* Override the primary background color of the button */
+  /* Override button's primary background color */
   --wot-button-primary-bg: pink;
 }
 </style>
 ```
 
-For a complete list of CSS variables and a deeper guide to theme customization, please refer to [Custom Theme](./custom-theme.md).
+For the complete list of all CSS variables and more in-depth theme customization guides, please refer to [Custom Theme](./custom-theme.md).
 
-## Style Penetration Failure on Specific Platforms
+## Specific Platform Style Penetration Failure
 
-In some specific platform updates (such as Alipay mini-program), the default style isolation strategy might change, causing the original style penetration to fail.
+In some specific platforms (such as Alipay Mini Program) version updates, the default style isolation strategy may be changed, causing the original style penetration to fail.
 
-For example, uni-app changed the default value of `styleIsolation` for Alipay mini-programs to `apply-shared` in version `3.99.2023122704`, while the original default `styleIsolation` for Alipay mini-programs was `shared`. This causes the style penetration of components like masks to fail.
+For example, uni-app in version `3.99.2023122704` set the default `styleIsolation` of Alipay Mini Program to `apply-shared`, while Alipay Mini Program's original default `styleIsolation` was `shared`, causing style penetration of mask layers and other components to fail.
 
 **Solution:**
-Force `styleIsolation` to `shared` in the `manifest.json` at the root of the project.
+Force set `styleIsolation` to `shared` in `manifest.json` in the project root directory.
 
 ```json
 {

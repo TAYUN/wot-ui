@@ -1,154 +1,283 @@
-# Popover
+# Popover Popover
 
-Commonly used to display tooltip information.
+Commonly used for displaying prompt information or menu operations.
 
-## Basic Usage
-
-Popover's properties are very similar to [Tooltip](/component/tooltip.html). Therefore, for duplicate properties, please refer to the [Tooltip](/component/tooltip.html) documentation, which will not be explained in detail here.
-
-Since `uni-app` components cannot listen for clicks outside themselves, to automatically close the `popover` when clicking elsewhere on the page, it is recommended to use the component library's `useQueue` hook (which will close all dropmenu, popover, toast, swipeAction, fab) and listen for click event bubbling on the page's root element.
+Popover's positioning rules are consistent with [Tooltip](/component/tooltip.html), supporting 12 popup directions, and providing content slots and menu modes.
 
 :::warning
-If there is a scenario where users manually click somewhere outside the `popover` (like a button) to open the `popover`, you need to add click event propagation prevention on the clicked element (in this case, the button) to prevent the event from bubbling up to the root element and triggering `closeOutside`, which would close the `popover` that should be manually opened.
+Because `uni-app` components cannot listen to clicks outside themselves, in order to automatically close `popover` when clicking elsewhere on the page, it is recommended to use the component library's `useQueue` hook (which will close all dropmenu, popover, toast, swipeAction, fab) and listen for click event bubbling on the page root element.
+
+If there is a scenario where the user manually clicks outside the `popover` (such as a button) to pop up the `popover`, you need to add `@click.stop=""` to that element to prevent the event from bubbling to the root element, avoiding triggering `closeOutside` which would close the manually opened `popover`.
 :::
 
-```html
+## Component Type
+
+### Normal Mode
+
+Default uses `normal` mode, directly displaying a text content via `content`.
+
+::: code-group
+```html [vue/html]
 <view @click="closeOutside">
-  <wd-popover content="This is a message." @change="handleChange">
-    <wd-button>Click to show</wd-button>
+  <wd-popover v-model="showBasic" content="This is a piece of information.">
+    <wd-button>Click to Show</wd-button>
   </wd-popover>
 </view>
 ```
-
-```typescript
+```ts [typescript]
+import { ref } from 'vue'
 import { useQueue } from '@/uni_modules/wot-ui'
 
 const { closeOutside } = useQueue()
-function handleChange({ show }) {
-  console.log(show)
-}
+const showBasic = ref<boolean>(false)
 ```
+:::
 
-## Mode
+### Menu Mode
 
-Use the `mode` property to control the display mode of the current tooltip. `mode` can be either `normal` or `menu`:
+After setting `mode="menu"`, `content` needs to be passed as `PopoverMenuItem[]`. Clicking a menu item will automatically close the current popover and trigger the `menuclick` event.
 
-- **normal** (Normal text mode):
-
-  - When `mode` is in default state, pass the `String` to be displayed to the `content` property.
-
-- **menu** (List mode):
-  - The tooltip will be displayed in list form. In this case, the `content` property should be an `Array` type, with the object data structure in the array as shown in the list below.
-  - Bind the `menuclick` event, which executes operations and closes the list after selection.
-
-Data structure of objects in the `content` array for list mode:
-
-| Key | Description | Type | Required | Version |
-|-----|-------------|------|----------|----------|
-| content | Option name | string | Yes | - |
-| iconClass (if not set, only title is shown) | Option value | string | No | - |
-
-**Note: The iconClass property value should be an internal icon name from the component library.**
-
-```html
-<wd-popover mode="menu" :content="menu" @menuclick="link" @change="handleChange">
+::: code-group
+```html [vue/html]
+<wd-popover v-model="showMenu" mode="menu" :content="menuItems" @menuclick="handleMenuClick">
   <wd-button>List</wd-button>
 </wd-popover>
 ```
-
-```typescript
+```ts [typescript]
+import { ref } from 'vue'
 import { useToast } from '@/uni_modules/wot-ui'
+import type { PopoverMenuItem } from '@/uni_modules/wot-ui/components/wd-popover/types'
 
-const toast = useToast()
+const { show: showToast } = useToast()
+const showMenu = ref<boolean>(false)
+const menuItems: PopoverMenuItem[] = [
+  {
+    iconClass: 'check',
+    content: 'Mark all as read'
+  },
+  {
+    iconClass: 'delete',
+    content: 'Clear recent conversations'
+  },
+  {
+    iconClass: 'subscribe',
+    content: 'Message subscription settings'
+  },
+  {
+    iconClass: 'scan',
+    content: 'Message anomaly detection'
+  }
+]
 
-const menu = ref<Array<Record<string, any>>>([{
-  iconClass: 'read',
-  content: 'Mark all as read'
-}, {
-  iconClass: 'delete',
-  content: 'Clear recent conversations'
-}, {
-  iconClass: 'detection',
-  content: 'Message subscription settings'
-}, {
-  iconClass: 'subscribe',
-  content: 'Message anomaly detection'
-}])
-
-function link(e) {
-  toast.show('Selected ' + e.item.content)
+function handleMenuClick({ item }: { item: PopoverMenuItem }) {
+  showToast('Selected ' + item.content)
 }
 ```
-
-## Nested Information
-
-Enable the `use-content-slot` property and use the `content` slot to nest various types of information in the Popover.
-:::warning Note
-Currently, when using the `content` slot, the component cannot correctly obtain the bubble's width and height. In this case, offset `placement` settings like `bottom-end` will not take effect.
 :::
 
+### PopoverMenuItem
+
+When `mode="menu"`, the data structure for each item in the `content` array is as follows:
+
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| content | Menu item text | string | - |
+| iconClass | Menu item icon class name, only title is displayed when not set | string | - |
+
+## Component State
+
+### Controlled Visibility
+
+Control Popover's show/hide via `v-model`. External buttons and trigger targets can both drive visibility state changes.
+
+::: code-group
+```html [vue/html]
+<wd-button plain size="small" @click.stop="showControlled = !showControlled">
+  {{ showControlled ? 'Close' : 'Open' }}
+</wd-button>
+
+<wd-popover v-model="showControlled" content="Control visibility via v-model" placement="top">
+  <wd-button>Trigger Target</wd-button>
+</wd-popover>
+```
+```ts [typescript]
+import { ref } from 'vue'
+
+const showControlled = ref<boolean>(false)
+```
+:::
+
+### Disabled
+
+After setting `disabled`, clicking the trigger target will not open the popover.
+
 ```html
-<wd-popover use-content-slot>
-  <template #content>
-    <view class="pop-content">This is content with custom style.</view>
-  </template>
-  <wd-button>Click to show</wd-button>
+<wd-popover disabled content="Disabled state">
+  <wd-button>Disabled State</wd-button>
 </wd-popover>
 ```
 
-```scss
+## Component Variants
+
+### Popup Position
+
+Specify popup position via `placement`, supporting `top`, `bottom`, `left`, `right` and their respective `start`, `end` alignment methods.
+
+::: code-group
+```html [vue/html]
+<wd-radio-group v-model="placement" direction="horizontal" type="dot">
+  <wd-radio v-for="item in placementItems" :key="item" :value="item">{{ item }}</wd-radio>
+</wd-radio-group>
+
+<wd-popover v-model="showPlacement" :content="'Current direction: ' + placement" :placement="placement">
+  <wd-button>{{ placement }}</wd-button>
+</wd-popover>
+```
+```ts [typescript]
+import { ref } from 'vue'
+import type { PlacementType } from '@/uni_modules/wot-ui/components/wd-popover/types'
+
+const placement = ref<PlacementType>('bottom')
+const showPlacement = ref<boolean>(false)
+const placementItems = [
+  'bottom',
+  'bottom-start',
+  'bottom-end',
+  'top',
+  'top-start',
+  'top-end',
+  'left',
+  'left-start',
+  'left-end',
+  'right',
+  'right-start',
+  'right-end'
+] as const
+```
+:::
+
+## Component Style
+
+### Content Slot
+
+You can customize the popover content structure and style through the `content` slot without needing to enable additional switch properties.
+
+::: code-group
+```html [vue/html]
+<wd-popover v-model="showCustom">
+  <template #content>
+    <view class="pop-content">This is a custom styled content.</view>
+  </template>
+  <wd-button>Click to Show</wd-button>
+</wd-popover>
+```
+```ts [typescript]
+import { ref } from 'vue'
+
+const showCustom = ref<boolean>(false)
+```
+```scss [scss]
 .pop-content {
-  /* Required start */
   position: relative;
   z-index: 500;
   border-radius: 4px;
-  /* Required end */
   background: #fff;
   color: #8268de;
-  font-weight: bolder;
+  font-weight: 600;
   padding: 10px;
   width: 150px;
 }
 ```
+:::
 
-## Popover Attributes
+### Show Close Button
 
-| Parameter | Description | Type | Options | Default | Version |
-|-----------|-------------|------|----------|---------|----------|
-| v-model | Manual visibility state | boolean | - | false | - |
-| content | Content to display, can also be passed through `slot#content` | string/array (when in menu mode, content property format is Array) | - | - | - |
-| mode | Current display mode, determines content presentation form | string | normal (normal mode) / menu (menu mode) | normal | - |
-| placement | Popover appearance position | string | top / top-start / top-end / bottom / bottom-start / bottom-end / left / left-start / left-end / right / right-start / right-end | bottom | - |
-| visible-arrow | Whether to show popover arrow | boolean | - | true | - |
-| disabled | Whether popover is disabled | boolean | - | false | - |
-| offset | Offset of appearance position | number | - | 0 | - |
+After setting `show-close`, a close button will be displayed in the upper right corner of the popover content area.
 
-## Slot
+```html
+<wd-popover v-model="showClosable" content="This is a piece of information." show-close>
+  <wd-button>Show Close Button</wd-button>
+</wd-popover>
+```
 
-| Name | Description | Version |
-|------|-------------|----------|
-| content | Multi-line content or user-defined style | - |
+## Special Style
+
+### Dynamic Content and Position Update
+
+When using the `content` slot and the slot content size changes, you can re-measure and update positioning through the component instance's `updatePosition`.
+
+::: code-group
+```html [vue/html]
+<wd-popover v-model="showDynamic" ref="popoverRef" :placement="placement">
+  <template #content>
+    <view class="pop-content" :style="{ width: `${dynamicWidth}px` }">
+      <view class="status">Current width: {{ dynamicWidth }}px</view>
+      <wd-button size="small" @click="changeSize">Change size and update</wd-button>
+    </view>
+  </template>
+  <wd-button>Dynamic content</wd-button>
+</wd-popover>
+```
+```ts [typescript]
+import { nextTick, ref } from 'vue'
+import type { PlacementType, PopoverInstance } from '@/uni_modules/wot-ui/components/wd-popover/types'
+
+const placement = ref<PlacementType>('bottom')
+const showDynamic = ref<boolean>(false)
+const dynamicWidth = ref<number>(150)
+const popoverRef = ref<PopoverInstance | null>(null)
+
+function changeSize() {
+  dynamicWidth.value = dynamicWidth.value === 150 ? 250 : 150
+  nextTick(() => {
+    popoverRef.value?.updatePosition()
+  })
+}
+```
+```scss [scss]
+.status {
+  margin-bottom: 10px;
+}
+```
+:::
+
+## Attributes
+
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| v-model | Whether to show popover | `boolean` | `false` |
+| content | Display content, string in `normal` mode, `PopoverMenuItem[]` in `menu` mode, can also be passed via `content` slot | `string \| PopoverMenuItem[]` | - |
+| mode | Current display mode, optional values are `normal`, `menu` | `PopoverMode` | `normal` |
+| placement | Popup position, optional values are `top`, `top-start`, `top-end`, `bottom`, `bottom-start`, `bottom-end`, `left`, `left-start`, `left-end`, `right`, `right-start`, `right-end` | `PlacementType` | `bottom` |
+| offset | Offset, supports number, number[] or `{ x: number, y: number }` | `PopoverOffset` | `0` |
+| visible-arrow | Whether to show arrow | `boolean` | `true` |
+| disabled | Whether disabled | `boolean` | `false` |
+| show-close | Whether to show close button | `boolean` | `false` |
+| custom-class | Custom class name for root node | `string` | `''` |
+| custom-style | Custom style for root node | `string` | `''` |
+| custom-arrow | Custom class name for arrow node | `string` | `''` |
+| custom-pop | Custom class name for popover content container | `string` | `''` |
 
 ## Events
 
-| Event Name | Description | Callback Parameters | Version |
-|------------|-------------|-------------------|----------|
-| open | Triggered when shown | - | - |
-| close | Triggered when hidden | - | - |
-| change | Triggered when pop visibility changes | - | - |
-| menuclick | Triggered when clicking an option in menu mode | `{ item, index }` | - |
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| open | Triggered when popover shows | - |
+| close | Triggered when popover hides | - |
+| change | Triggered when visibility state changes | `{ show: boolean }` |
+| menuclick | Triggered when clicking option in `menu` mode | `{ item: PopoverMenuItem; index: number }` |
 
 ## Methods
 
-| Method Name | Description | Parameters | Version |
-|-------------|-------------|------------|----------|
-| open | Open tooltip dialog | - | - |
-| close | Close tooltip dialog | - | - |
+| Method Name | Description | Parameters |
+| --- | --- | --- |
+| open | Open popover | - |
+| close | Close popover | - |
+| updatePosition | Re-measure content size and update positioning | - |
 
-## Popover External Classes
+## Slots
 
-| Class Name | Description | Version |
-|------------|-------------|----------|
-| custom-class | Root node style | - |
-| custom-arrow | Arrow style | - |
-| custom-pop | Tooltip style | - |
+| Name | Description | Parameters |
+| --- | --- | --- |
+| default | Trigger area content | - |
+| content | Custom popover content | - |

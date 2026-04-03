@@ -1,71 +1,99 @@
 # Icon
 
-Icon component for displaying various icons.
+Font-based icon set.
 
-## Basic Usage
+## Component Type
 
-Set the `name` attribute to use the built-in icons.
+### Basic Usage
+
+Set which icon to use through the `name` property.
 
 ```html
-<wd-icon name="add-circle"></wd-icon>
+<wd-icon name="del" />
 ```
 
-## Icon Color
+## Component Style
 
-Set the `color` attribute to customize the icon color.
+### Icon Color
+
+Set the `color` property.
 
 ```html
-<wd-icon name="add-circle" color="#0083ff"></wd-icon>
+<wd-icon name="del" color="#0083ff" />
 ```
 
-## Icon Size
+### Icon Size
 
-Set the `size` attribute to customize the icon size.
+Set the `size` property.
 
 ```html
-<wd-icon name="add-circle" size="20px"></wd-icon>
-<wd-icon name="add-circle" size="25px"></wd-icon>
-<wd-icon name="add-circle" size="30px"></wd-icon>
+<wd-icon name="del" size="20px" />
 ```
 
-## Custom Icon
+## Special Style
 
-Wot UI allows you to use custom icons in two ways:
+### Custom Icons
 
-### 1. Using Custom Font Icons
+If you need to use more icons on top of the existing Icon, you can import the font files and CSS files corresponding to third-party iconfont, and then use them directly in the Icon component.
 
-First, you need to define your own font icon library, and then set the `class-prefix` attribute to use your custom font icons.
+``` css
+/* Path src/iconfont/index.css */
 
+@font-face {
+  font-family: "fish";
+  src: url('//at.alicdn.com/t/c/font_4626013_vwpx4thmin.woff2?t=1721314121733') format('woff2'),
+       url('//at.alicdn.com/t/c/font_4626013_vwpx4thmin.woff?t=1721314121733') format('woff'),
+       url('//at.alicdn.com/t/c/font_4626013_vwpx4thmin.ttf?t=1721314121733') format('truetype');
+}
+
+.fish {
+  font-family: "fish" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.fish-kehuishouwu:before {
+  content: "\e627";
+}
+
+```
 ```html
-<wd-icon class-prefix="my-icon" name="my-icon-name"></wd-icon>
+<!-- app.vue -->
+<style>
+@import '@/iconfont/index.css';
+</style>
 ```
 
-### 2. Using Image Icons
+```html
+<!-- Specify class name as fish through class-prefix -->
+<wd-icon class-prefix="fish" name="kehuishouwu" />
+```
 
-Set the `name` attribute to an image URL to use image icons. The component automatically detects URLs containing `/`.
+### CSS Class Icons (UnoCSS)
+
+If your project uses [UnoCSS](https://unocss.dev/) or other CSS engines, you can set `css-icon` to `true`. In this case, the passed `name` will be directly used as a CSS class name without any prefix concatenation.
 
 ```html
-<wd-icon name="https://example.com/icon.png"></wd-icon>
+<wd-icon css-icon name="i-ep-apple" />
+<wd-icon css-icon name="i-carbon-sun" />
 ```
 
 ## Attributes
 
-| Attribute    | Description              | Type   | Default | Version |
-| ------------ | ------------------------ | ------ | ------- | ------- |
-| name         | Icon name or image URL   | string | -       | -       |
-| color        | Icon color               | string | -       | -       |
-| size         | Icon size                | string \| number | -       | -       |
-| class-prefix | Custom icon class prefix | string | wd-icon | -       |
-| custom-style | Custom root node style   | string | -       | -       |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| name | Icon name or image link | `string` | - |
+| color	| Icon color | `string` | `inherit` |
+| size | Icon font size | `string \| number` | `inherit` |
+| class-prefix | Class name prefix, used for custom icons | `string` | `wd-icon` |
+| css-icon | Whether it is a CSS class icon (such as UnoCSS icon). When true, name is directly used as CSS class | `boolean` | `false` |
+| custom-style | Root node style | `string` | - |
+| custom-class | Root node style | `string` | - |
 
 ## Events
 
-| Event Name | Description                        | Parameters   | Version |
-| ---------- | ---------------------------------- | ------------ | ------- |
-| click      | Triggered when the icon is clicked | event: Event | -       |
-
-## External Style Classes
-
-| Class Name   | Description            | Version |
-| ------------ | ---------------------- | ------- |
-| custom-class | Root node custom class | -       |
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| click | Triggered when clicking the icon | `event` |

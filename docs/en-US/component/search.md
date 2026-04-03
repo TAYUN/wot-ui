@@ -1,47 +1,75 @@
 # Search
 
-Search box component, supports input box focus, blur, input, search, cancel, and clear events.
+Search box component, supports input focus, blur, input, search, cancel, and clear events.
 
-## Basic Usage
+## Component Types
 
-`v-model` sets the input box binding value, `focus` binds the focus event, `change` binds the input event, `blur` binds the blur event, `search` binds the search event, `cancel` binds the cancel event, and `clear` binds the clear event.
+### Basic Usage
+
+`v-model` sets the input box binding value, `change` listens for input events, `search` listens for search events, `cancel` listens for cancel events, `clear` listens for clear events.
 
 ```html
-<wd-search v-model="value" @focus="focus" @blur="blur" @search="search" @clear="clear" @cancel="cancel" @change="change" maxlength="10" />
+<wd-search v-model="value" @search="search" @clear="clear" @cancel="cancel" @change="change" />
 ```
 
-```typescript
+```ts
 const value = ref<string>('')
 
-function focus() {
-  console.log('Focus')
-}
-function blur() {
-  console.log('Blur')
-}
-function search() {
-  console.log('Search')
+function search({ value }: { value: string }) {
+  console.log('Search', value)
 }
 function clear() {
   console.log('Reset')
 }
-function cancel() {
-  console.log('Cancel')
+function cancel({ value }: { value: string }) {
+  console.log('Cancel', value)
 }
-function change({ value }) {
+function change({ value }: { value: string }) {
   console.log('Input', value)
 }
 ```
 
-## Light Theme
+## Component States
 
-Set the `light` property to reverse the component background color and input box background color.
+### Auto Focus
+
+Set the `focus` property, the component will automatically focus after mounting.
 
 ```html
-<wd-search light />
+<wd-search v-model="value" focus />
 ```
 
-## Left-aligned Input Box Placeholder
+### Auto Focus After Clear
+
+Set `focus-when-clear`, the input box will refocus after clicking the clear button.
+
+```html
+<wd-search v-model="value" focus-when-clear />
+```
+
+### Disable and Hide Cancel Button
+
+Set `disabled` and `hide-cancel`. Can be used for entry scenarios that jump to a standalone search page.
+
+```html
+<wd-search disabled hide-cancel @click="handleDisabledClick" />
+```
+
+## Component Variants
+
+### Style Variants
+
+Switch between different visual styles through `variant`, optional values are `plain`, `filled`, `light`.
+
+```html
+<wd-search variant="plain" v-model="value" />
+<wd-search variant="filled" v-model="value" />
+<wd-search variant="light" v-model="value" />
+```
+
+## Component Styles
+
+### Input Box Placeholder Left-aligned
 
 Set the `placeholder-left` property.
 
@@ -49,36 +77,27 @@ Set the `placeholder-left` property.
 <wd-search placeholder-left />
 ```
 
-## Hide Cancel Button
+### Set Maximum Length
 
-Set the `hide-cancel` property.
-
-```html
-<wd-search hide-cancel />
-```
-
-## Disabled
-
-Set the `disabled` property.
+Limit the maximum length of the input box through `maxlength`, `-1` means no limit.
 
 ```html
-<wd-search disabled />
+<wd-search v-model="value" :maxlength="4" />
 ```
 
-It can be used in combination with `hide-cancel` to only display the search box on the current page. When clicking the search box, the page route will switch to the search page, where the search function can be used.
+### Custom Text
+
+Modify placeholder text through `placeholder`, and modify cancel button text through `cancel-txt`.
 
 ```html
-<wd-search hide-cancel disabled />
-```
-You can listen to click events in the disabled state.
-
-```html
-<wd-search disabled @click="handleDisabledClick" />
+<wd-search placeholder="Please enter order number/order name" cancel-txt="Search" />
 ```
 
-## Custom Left Slot
+## Special Styles
 
-Customize the content on the left side of the search box using the `prefix` slot.
+### Custom Left Slot
+
+Customize the left content of the search box through the `prefix` slot.
 
 ```html
 <wd-search v-model="value">
@@ -104,11 +123,11 @@ const menu = ref([
     content: 'Order Number'
   },
   {
-    content: 'Refund Number'
+    content: 'Refund Order Number'
   }
 ])
 
-function changeSearchType({ item, index }) {
+function changeSearchType({ item }) {
   searchType.value = item.content
 }
 ```
@@ -138,54 +157,78 @@ function changeSearchType({ item, index }) {
 }
 ```
 
-## Custom Text
-
-Modify the input box placeholder text through the `placeholder` property and the cancel button text through `cancel-txt`.
+### Custom Input Box Right Icon
 
 ```html
-<wd-search placeholder="Please enter order number/order name" cancel-txt="Search" />
+<wd-search v-model="value">
+  <template #input-suffix>
+    <wd-icon name="scan" size="20px"></wd-icon>
+  </template>
+</wd-search>
+```
+
+### Custom Right Slot
+
+```html
+<wd-search v-model="value">
+  <template #suffix>
+    <view>Filter Conditions</view>
+  </template>
+</wd-search>
+```
+
+### Multiple Slot Combinations
+
+```html
+<wd-search variant="plain" v-model="value">
+  <template #input-suffix>
+    <wd-icon name="scan" size="20px"></wd-icon>
+  </template>
+  <template #suffix>
+    <view class="action-icons">
+      <wd-icon name="filter" size="20px"></wd-icon>
+      <wd-icon name="plus-circle-fill" size="20px"></wd-icon>
+    </view>
+  </template>
+</wd-search>
 ```
 
 ## Attributes
 
-| Parameter | Description | Type | Options | Default | Version |
-|-----------|-------------|------|----------|---------|----------|
-| placeholder | Search box placeholder text | string | - | Search | - |
-| placeholder-left | Placeholder aligned to the left | boolean | - | false | - |
-| cancel-txt | Text on the right side of search box | string | - | Cancel | - |
-| light | Light color search box (white) | boolean | - | false | - |
-| hide-cancel | Whether to hide the right text | boolean | - | false | - |
-| disabled | Whether to disable the search box | boolean | - | false | - |
-| maxlength | Native attribute, set maximum length. -1 means no limit | string / number | - | -1 | - |
-| v-model | Input box content, two-way binding | string | - | - | - |
-| ~~use-suffix-slot~~ | ~~Whether to use the input box right slot~~**(Deprecated, will be removed in the next minor version, use slot directly)** | boolean | - | false | - |
-| focus | Whether to automatically focus | boolean | - | false | 0.1.63 |
-| focusWhenClear | Whether to focus the input box when clicking the clear button | boolean | - | false | 0.1.63 |
-| placeholderStyle | Native attribute, specify placeholder style, currently only supports color, font-size and font-weight | string | - | - | 1.6.0 |
-| placeholderClass | Native attribute, specify placeholder style class | string | - | - | 1.6.0 |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| v-model | Input box content, two-way binding | `string` | `''` |
+| custom-input-class | Custom input box class name | `string` | `''` |
+| placeholder | Search box placeholder text | `string` | `'Search'` |
+| cancel-txt | Search box right text | `string` | `'Cancel'` |
+| variant | Search box variant, optional values are `plain`, `filled`, `light` | `string` | `'plain'` |
+| hide-cancel | Whether to hide the right text | `boolean` | `false` |
+| disabled | Whether to disable the search box | `boolean` | `false` |
+| maxlength | Native property, sets the maximum length, `-1` means no limit | `number \| string` | `-1` |
+| placeholder-left | Whether placeholder is left-aligned | `boolean` | `false` |
+| focus ^(0.1.63) | Whether to auto focus | `boolean` | `false` |
+| focus-when-clear ^(0.1.63) | Whether to focus the input box after clicking the clear button | `boolean` | `false` |
+| placeholder-style ^(1.6.0) | Native property, specifies the style of the placeholder, currently only supports `color`, `font-size` and `font-weight` | `string` | - |
+| placeholder-class ^(1.6.0) | Native property, specifies the style class of the placeholder | `string` | `''` |
+| custom-class | Root node custom class name | `string` | `''` |
+| custom-style | Root node custom style | `string` | `''` |
 
 ## Events
 
-| Event Name | Description | Parameters | Version |
-|------------|-------------|------------|----------|
-| focus | Input box focus event | `{ value }` | - |
-| blur | Input box blur event | `{ value }` | - |
-| search | Input box search event | `{ value }` | - |
-| clear | Input box clear button event | - | - |
-| cancel | Input box right text click event | `{ value }` | - |
-| change | Input box content change event | `{ value }` | - |
-| click    | Click event in disabled state | -           |  1.14.0       |
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| focus | Input box focus event | `{ value }` |
+| blur | Input box blur event | `{ value }` |
+| search | Input box search event | `{ value }` |
+| clear | Triggered when clicking the clear button | - |
+| cancel | Triggered when clicking the right text | `{ value }` |
+| change | Triggered when input box content changes | `{ value }` |
+| click ^(1.14.0) | Triggered when clicking the component in disabled state | - |
 
 ## Slots
 
-| Name | Description | Version |
-|------|-------------|----------|
-| prefix | Custom content on the left side of input box | - |
-| suffix | Custom content on the right side of input box | - |
-
-## External Classes
-
-| Class Name | Description | Version |
-|------------|-------------|----------|
-| custom-class | Root node style | - |
-| custom-input-class | Input external custom style | 1.6.0 |
+| Name | Description |
+| --- | --- |
+| prefix | Custom content on the left side of the input box |
+| input-suffix | Custom content on the right side inside the input box |
+| suffix | Custom content on the right side of the input box |

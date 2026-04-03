@@ -34,7 +34,7 @@ console.log(current.value)
 
 ### Parameters
 
-| Parameter | Description | Type | Default |
+| Parameter | Description | Type | Default Value |
 |-----|------|------|--------|
 | time | Total countdown time (ms) | number | - |
 | millisecond | Whether to enable millisecond-level rendering | boolean | false |

@@ -1,257 +1,256 @@
-# Tab
+# Tabs
 
-Tab component, used to switch between different content areas.
+Tab component for switching between different content areas.
 
-## Basic Usage
+## Component Types
 
-`v-model` is the binding value, which can be of type number (index of the selected tab) or string (tab name).
+### Basic Usage
 
-:::tip Note
-When `v-model` is of type `number`, `wd-tab` does not need to set `name`. Also, if the value exceeds the number of tabs, it will automatically default to 0.
-:::
+`v-model` can use numeric index or string name.
 
 ```html
-<wd-tabs v-model="tab">
+<wd-tabs v-model="tab1" @change="handleChange">
   <block v-for="item in 4" :key="item">
-    <wd-tab :title="`Tab ${item}`">
-      <view class="content">Content {{ item }}</view>
+    <wd-tab :title="`Tab${item}`">
+      <view class="content">Content{{ tab1 + 1 }}</view>
     </wd-tab>
   </block>
 </wd-tabs>
 ```
 
-```typescript
-const tab = ref<number>(0)
-```
+```ts
+const tab1 = ref(0)
 
-```scss
-.content {
-  line-height: 120px;
-  text-align: center;
+function handleChange(event) {
+  console.log(event)
 }
 ```
 
-## Name Matching
+### Name Matching
 
-Set `name` for `wd-tab` as a unique identifier.
+After setting `name` for `wd-tab`, you can match the current active item through string value.
 
 ```html
 <wd-tabs v-model="tab">
-  <block v-for="item in tabs" :key="item">
-    <wd-tab :title="`${item}`" :name="item">
-      <view class="content">Content {{ item }}</view>
-    </wd-tab>
-  </block>
+  <wd-tab v-for="item in tabs" :key="item" :title="item" :name="item">
+    <view class="content">Content{{ tab }}</view>
+  </wd-tab>
 </wd-tabs>
 ```
 
-```typescript
-const tabs = ref(['This', 'Is', 'An', 'Example'])
-const tab = ref('Example')
+```ts
+const tabs = ref(['this', 'is', 'a', 'individual', 'example'])
+const tab = ref('a')
 ```
 
-```scss
-.content {
-  line-height: 120px;
-  text-align: center;
-}
-```
+### Use Badge ^(1.4.0)
 
-## Using Badges <el-tag text style="vertical-align: middle;margin-left:8px;" effect="plain">1.4.0</el-tag>
-
-Use `badge-props` to set badge properties, you can refer to [Badge Component props](/component/badge#attributes).
+Add badges to tabs through `badge-props`.
 
 ```html
-<wd-tabs v-model="tabWithBadge" @change="handleChange">
-  <wd-tab v-for="(item, index) in tabsWithBadge" :key="index" :title="`${item.title}`" :badge-props="item.badgeProps">
+<wd-tabs v-model="tabWithBadge">
+  <wd-tab v-for="(item, index) in tabsWithBadge" :key="index" :title="item.title" :badge-props="item.badgeProps">
     <view class="content">{{ item.title }} Badge</view>
   </wd-tab>
 </wd-tabs>
 ```
 
-```typescript
-const tabWithBadge = ref(0)
-const tabsWithBadge = ref([
-  {
-    title: 'Normal Value',
-    badgeProps: {
-      modelValue: 10,
-      right: '-8px'
-    }
-  },
-  {
-    title: 'Max Value',
-    badgeProps: {
-      modelValue: 100,
-      max: 99,
-      right: '-8px'
-    }
-  },
-  {
-    title: 'Dot',
-    badgeProps: {
-      isDot: true,
-      right: '-8px',
-      showZero: true
-    }
-  }
-])
-```
+## Component States
 
-## Auto Adjust Bottom Line Width
+### Sticky Layout
 
-Set the `auto-line-width` property to automatically adjust the bottom line width to match the text content width.
+Setting `sticky` enables sticky layout, can be combined with `offset-top` to control sticky offset.
 
 ```html
-<wd-tabs v-model="tab" @change="handleChange" auto-line-width>
-  <block v-for="item in tabs" :key="item">
-    <wd-tab :title="`${item}`" :name="item">
-      <view class="content">Content {{ tab }}</view>
-    </wd-tab>
-  </block>
+<wd-tabs v-model="tab2" sticky>
+  <wd-tab v-for="item in 4" :key="item" :title="`Tab${item}`">
+    <view class="content">Content{{ tab2 + 1 }}</view>
+  </wd-tab>
 </wd-tabs>
 ```
 
-```typescript
-const tabs = ref(['Wot', 'Design', 'Uni'])
-const tab = ref('Design')
-```
+### Disable Tab
 
-## Sticky Layout
-
-Set the `sticky` property to use sticky layout. You can set the `offset-top` property to specify how many pixels from the window top before fixing the tab header. When using a custom navigation bar in `H5`, you need to refer to [sticky's offset distance](/component/sticky.html#offset-distance) for configuration.
+Disable individual tabs through the `disabled` property of `wd-tab`.
 
 ```html
-<wd-tabs v-model="tab" sticky>
-  <block v-for="item in 4" :key="item">
-    <wd-tab :title="`Tab ${item}`">
-      <view class="content">Content {{ item }}</view>
-    </wd-tab>
-  </block>
+<wd-tabs v-model="tab3">
+  <wd-tab v-for="item in 4" :key="item" :title="`Tab${item}`" :disabled="item === 1">
+    <view class="content">Content{{ tab3 + 1 }}</view>
+  </wd-tab>
 </wd-tabs>
 ```
 
-## Disabled Tab
+## Component Styles
 
-Set the `disabled` property on `wd-tab` to disable a specific tab.
+### Bottom Bar Style
+
+Adjust bottom bar appearance through `line-theme`, supports `normal`, `text`, `underline`, `dot`.
 
 ```html
-<wd-tabs v-model="tab">
-  <block v-for="item in 4" :key="item">
-    <wd-tab :title="`Tab ${item}`" :disabled="item === 1">
-      <view class="content">Content {{ item }}</view>
-    </wd-tab>
-  </block>
+<wd-tabs v-model="tabLineTheme.normal" line-theme="normal">
+  <wd-tab v-for="item in 4" :key="item" :title="`normal ${item}`">
+    <view class="content">Content{{ item }}</view>
+  </wd-tab>
 </wd-tabs>
 ```
 
-## Click Event
+## Special Styles
 
-Listen to the click event of tabs.
+### Click Event
+
+Listen to `click` to get information about the currently clicked tab.
 
 ```html
-<wd-tabs v-model="tab" @click="handleClick">
-  <block v-for="item in 4" :key="item">
-    <wd-tab :title="`Tab ${item}`">
-      <view class="content">Content {{ item }}</view>
-    </wd-tab>
-  </block>
+<wd-tabs v-model="tab4" @click="handleClick" @change="handleChange">
+  <wd-tab v-for="item in 4" :key="item" :title="`Tab${item}`">
+    <view class="content">Content{{ tab4 + 1 }}</view>
+  </wd-tab>
 </wd-tabs>
 ```
 
-## Gesture Swipe
+```ts
+function handleClick({ index, name }) {
+  console.log(index, name)
+}
+```
 
-Set the `swipeable` property to support gesture swipe.
+### Switch Animation
+
+Setting `animated` enables content switch animation.
 
 ```html
-<wd-tabs v-model="tab" swipeable>
-  <block v-for="item in 4" :key="item">
-    <wd-tab :title="`Tab ${item}`">
-      <view class="content">Content {{ item }}</view>
-    </wd-tab>
-  </block>
+<wd-tabs v-model="tab8" animated>
+  <wd-tab v-for="item in 4" :key="item" :title="`Tab${item}`">
+    <view class="content">Content{{ tab8 + 1 }}</view>
+  </wd-tab>
 </wd-tabs>
 ```
 
-## Switch Animation
+### Gesture Swipe
 
-Set the `animated` property to enable transition animation when switching tab content.
+Setting `swipeable` enables gesture swipe, often used in combination with `animated`.
 
 ```html
-<wd-tabs v-model="tab" animated>
-  <block v-for="item in 4" :key="item">
-    <wd-tab :title="`Tab ${item}`">
-      <view class="content">Content {{ item }}</view>
-    </wd-tab>
-  </block>
+<wd-tabs v-model="tab5" swipeable animated>
+  <wd-tab v-for="item in 4" :key="item" :title="`Tab${item}`">
+    <view class="content">Content{{ tab5 + 1 }}</view>
+  </wd-tab>
 </wd-tabs>
 ```
 
-## Left-aligned with Scrolling <el-tag text style="vertical-align: middle;margin-left:8px;" effect="plain">1.4.0</el-tag>
+### Overflow Scroll and Navigation Map
 
-When `slidable` is set to `always`, all tabs will be aligned to the left and can be scrolled when they overflow.
+After the number of tabs exceeds `slidable-num`, scrolling is enabled. After exceeding `map-num`, a navigation map is displayed. Setting `slidable` to `always` enables always left-aligned scrolling.
 
 ```html
-<wd-tabs v-model="tab" slidable="always">
-  <block v-for="item in 5" :key="item">
-    <wd-tab :title="`Large Tab ${item}`">
-      <view class="content">Content {{ item }}</view>
-    </wd-tab>
-  </block>
+<wd-tabs v-model="tab6">
+  <wd-tab v-for="item in 7" :key="item" :title="`Tab${item}`">
+    <view class="content">Content{{ tab6 + 1 }}</view>
+  </wd-tab>
+</wd-tabs>
+
+<wd-tabs v-model="tab9" slidable="always">
+  <wd-tab v-for="item in 5" :key="item" :title="`Large Tab${item}`">
+    <view class="content">Content{{ tab9 + 1 }}</view>
+  </wd-tab>
 </wd-tabs>
 ```
+
+### Use in Popup
+
+In WeChat Mini Program and other scenarios, after the popup opens, you can call `updateLineStyle` to update the active item style.
+
+::: code-group
+
+```html [vue]
+<wd-button @click="handleOpenClick">Open Popup</wd-button>
+<wd-popup v-model="showPopup" position="bottom" @after-enter="handlePopupShow" closable>
+  <wd-tabs v-model="tab10" ref="tabsRef">
+    <wd-tab v-for="item in tabs" :key="item" :title="item" :name="item">
+      <view class="content">Content{{ tab10 }}</view>
+    </wd-tab>
+  </wd-tabs>
+</wd-popup>
+```
+
+```ts [ts]
+import type { TabsInstance } from '@/uni_modules/wot-ui/components/wd-tabs/types'
+
+const showPopup = ref(false)
+const tabsRef = ref<TabsInstance>()
+
+function handleOpenClick() {
+  showPopup.value = true
+}
+
+function handlePopupShow() {
+  tabsRef.value?.updateLineStyle(false)
+}
+```
+
+:::
 
 ## Tabs Attributes
 
-| Parameter      | Description                                                                        | Type            | Options      | Default | Version |
-| -------------- | ---------------------------------------------------------------------------------- | --------------- | ------------ | ------- | ------- |
-| v-model        | Binding value                                                                      | string / number | -            | -       | -       |
-| slidable-num   | Threshold count of tabs to enable scrolling when `slidable` is `auto`              | number          | -            | `6`     | -       |
-| map-num        | Threshold count of tabs to show navigation map                                     | number          | -            | `10`    | -       |
-| map-title      | Title of the navigation map                                                        | string          | -            | -       | 1.4.0   |
-| sticky         | Enable sticky layout                                                               | boolean         | -            | `false` | -       |
-| offset-top     | Distance from the top when sticky                                                  | number          | -            | `0`     | -       |
-| swipeable      | Enable gesture swipe                                                               | boolean         | -            | `false` | -       |
-| autoLineWidth  | Bottom line width follows text; invalid when `lineWidth` is specified              | boolean         | -            | `false` | 1.4.0   |
-| lineWidth      | Bottom line width, unit px                                                         | number          | -            | `19`    | -       |
-| lineHeight     | Bottom line height, unit px                                                        | number          | -            | `3`     | -       |
-| color          | Text color                                                                         | string          | -            | -       | -       |
-| inactiveColor  | Text color of inactive tabs                                                        | string          | -            | -       | -       |
-| animated       | Enable transition animation when switching tab content                             | boolean         | -            | `false` | -       |
-| duration       | Transition duration in ms                                                          | number          | -            | `300`   | -       |
-| slidable       | Enable scrollable navigation                                                       | TabsSlidable    | `always`     | `auto`  | 1.4.0   |
-| showScrollbar  | Whether to show scrollbar when tabs are slidable (nav)                             | boolean         | -            | `false` | 1.14.0 |
-| badge-props    | Props passed to [Badge component props](/component/badge#attributes)               | BadgeProps      | -            | -       | 1.4.0   |
-
-## Tab Attributes
-
-| Parameter | Description                                                     | Type    | Options | Default | Version |
-| --------- | --------------------------------------------------------------- | ------- | ------- | ------- | ------- |
-| name      | Tab name                                                        | string  | -       | -       | -       |
-| title     | Title                                                           | string  | -       | -       | -       |
-| disabled  | Disable                                                         | boolean | -       | `false` | -       |
-| lazy      | Lazy render; when `animated` is enabled this is always `false`  | boolean | -       | `true`  | 1.4.0   |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| v-model | Current active item, can be index or name | `number | string` | `0` |
+| slidable-num | Threshold for automatically enabling scrollable tabs | `number` | `6` |
+| map-num | Threshold for showing navigation map | `number` | `10` |
+| map-title ^(1.4.0) | Navigation map title | `string` | - |
+| sticky | Whether to enable sticky layout | `boolean` | `false` |
+| offset-top | Sticky offset | `number` | `0` |
+| swipeable | Whether to enable gesture swipe | `boolean` | `false` |
+| line-theme | Bottom bar style, optional values are `normal`, `text`, `underline`, `dot` | `TabsLineTheme` | `normal` |
+| line-width | Bottom bar width | `number | string` | - |
+| line-height | Bottom bar height | `number | string` | - |
+| color | Active item text color | `string` | `''` |
+| inactive-color | Inactive item text color | `string` | `''` |
+| animated | Whether to enable switch animation | `boolean` | `false` |
+| duration | Animation duration, in milliseconds | `number` | `300` |
+| slidable ^(1.4.0) | Whether to enable scroll navigation, optional values are `auto`, `always` | `TabsSlidable` | `auto` |
+| show-scrollbar ^(1.14.0) | Whether to show scrollbar when scrolling | `boolean` | `false` |
+| custom-class | Root node custom class name | `string` | `''` |
+| custom-style | Root node custom style | `string` | `''` |
 
 ## Tabs Events
 
-| Event Name | Description             | Parameters                                                     | Version |
-| ---------- | ----------------------- | --------------------------------------------------------------- | ------- |
-| change     | Triggered when value changes | `event = { index, name }`                                   | -       |
-| click      | Triggered when title is clicked | `event = { index, name }`                               | -       |
-| disabled   | Triggered when clicking a disabled title | `event = { index, name }`                            | -       |
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| change | Triggered when active item changes | `{ index, name }` |
+| click | Triggered when clicking tab title | `{ index, name }` |
+| disabled | Triggered when clicking disabled tab | `{ index, name }` |
+| update:modelValue | Triggered when active item changes | `number | string` |
 
-## Methods
+## Tabs Methods
 
-Exposed methods
+| Method Name | Description | Parameters | Return Value |
+| --- | --- | --- | --- |
+| setActive | Set active item | `(value: number \| string, init: boolean, setScroll: boolean)` | - |
+| scrollIntoView | Scroll selected item into view | - | - |
+| updateLineStyle | Update active item bottom bar style | `(animation?: boolean)` | - |
 
-| Method           | Description                                                                                   | Signature                                                              | Version |
-| ---------------- | --------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ------- |
-| setActive        | Set active tab; params: `value` active value, `init` initialized, `setScroll` set scroll-view | `(value: number \| string, init: boolean, setScroll: boolean) => void` | -       |
-| scrollIntoView   | Scroll the selected tab into view                                                             | `() => void`                                                           | -       |
-| updateLineStyle  | Update active underline style; `animation` determines whether to animate, default enabled     | `(animation?: boolean) => void`                                        | -       |
+## Tabs Slots
 
-## External Classes
+| Name | Description |
+| --- | --- |
+| default | Tab content |
 
-| Class Name   | Description      | Version |
-| ------------ | ---------------- | ------- |
-| custom-class | Root node style  | -       |
+## Tab Attributes
+
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| name | Tab unique identifier, defaults to index | `number | string` | - |
+| title | Tab title | `string` | - |
+| disabled | Whether disabled | `boolean` | `false` |
+| lazy | Whether to lazy load content | `boolean` | `true` |
+| badge-props ^(1.4.0) | Badge properties, passed to Badge component | `Partial<BadgeProps>` | - |
+| custom-class | Root node custom class name | `string` | `''` |
+| custom-style | Root node custom style | `string` | `''` |
+
+## Tab Slots
+
+| Name | Description |
+| --- | --- |
+| default | Tab content |

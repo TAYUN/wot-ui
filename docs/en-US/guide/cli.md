@@ -1,24 +1,24 @@
 # CLI
 
-This page introduces how to use the [create-uni](https://github.com/uni-helper/create-uni) CLI to quickly bootstrap a `uni-app` project integrated with `Wot UI`.
+Through this chapter, you can learn how to use the [create-uni](https://github.com/uni-helper/create-uni) CLI to quickly create a `uni-app` project integrated with `Wot UI`.
 
 ## create-uni
 
-We recommend [create-uni](https://github.com/uni-helper/create-uni) for project scaffolding. It supports creating a basic Wot UI integrated project in one command:
+We recommend using [create-uni](https://github.com/uni-helper/create-uni) to create projects. It supports one-click creation of basic projects integrated with Wot UI. Use the following command:
 
 ```bash
 pnpm create uni <your-project-name> --ts -m pinia -u wot -e
 ```
 
-This command will:
+Will complete the following work:
 
 - Create a TypeScript project
 - Integrate Pinia state management
-- Automatically configure the Wot UI component library
+- Automatically configure WotUI component library
 - Add ESLint support
 
-For more details, see [create-uni](https://github.com/uni-helper/create-uni).
+For more information, please see [create-uni](https://github.com/uni-helper/create-uni).
 
-## Next Step
+## Next Steps
 
-If you prefer starting from a ready-to-use project template, continue with [Templates](/en-US/guide/templates).
+If you want to start directly from an existing project template, you can continue to view [Templates](/guide/templates).

@@ -1,43 +1,46 @@
 # SwipeAction
 
-A component for slide operations, commonly used for gestures like sliding to delete in cells.
+Commonly used for cell swipe gestures like left/right swipe to delete.
 
 :::warning
-The slide operation component's functionality is deeply hidden in the page, making it difficult for users to discover. It is recommended to use other interaction methods to implement operation functions, such as having a button in the list item that opens an ActionSheet when clicked.
+The Swipe Action component hides page functionality deeply, making it difficult for users to discover. It is recommended to prioritize more direct interaction methods, such as list item buttons or ActionSheet.
 
-If you insist on using the slide operation component, it is recommended to add operation tips when users enter the page to indicate that list items can be slid left and right.
+If you still use swipe actions, it is recommended to provide explicit prompts when users enter the page, informing them that list items support left/right swiping.
 :::
 
-## Basic Usage
+## Component Types
 
-`wd-swipe-action` is divided into three parts: `custom left button content`, `custom content`, and `custom right button content`. Custom button content needs to set `slot` to enable, custom content is the default slot and does not need to be manually enabled.
+### Basic Usage
 
-Since the `uni-app` component cannot listen for clicks outside itself, to automatically close the `swipeAction` when clicking elsewhere on the page, it is recommended to use the component library's `useQueue` hook (which will close all dropmenu, popover, toast, swipeAction, fab), and listen for click event bubbling on the root element of the page.
+`wd-swipe-action` consists of three parts: left action area, content area, and right action area. The left and right action areas are defined through `left` and `right` slots respectively, and the content area uses the default slot.
+
+Listen for click events on the page root node and combine with `closeOutside` provided by `useQueue` to uniformly close expanded swipe items when clicking outside the component area.
 
 :::warning
-If there is a scenario where the user manually clicks somewhere outside of `swipeAction` like a button to slide out `swipeAction`, then you need to add @click to the clicked element (in this case the button) to prevent event bubbling to the root element, avoiding triggering `closeOutside` which would close the `swipeAction` that you want to manually open.
+If there are interactions on the page like "click button to manually expand `swipe-action`", you need to use `@click.stop` on the outer layer of these buttons to prevent event bubbling and avoid triggering `closeOutside` on the root node.
 :::
 
-```html
-<view @click.stop="closeOutside">
+::: code-group
+
+```html [vue]
+<view @click="closeOutside">
   <wd-swipe-action>
-    <wd-cell title="Title Text" value="Content"/>
+    <wd-cell title="Title" value="Content" />
     <template #right>
       <view class="action">
-        <view class="button" style="background: #C8C7CD;" @click="handleAction('Action1')">Action1</view>
-        <view class="button" style="background: #FFB300;" @click="handleAction('Action2')">Action2</view>
-        <view class="button" style="background: #E2231A;" @click="handleAction('Action3')">Action3</view>
+        <view class="button" style="background: #E2231A;" @click="handleAction('Action 1')">Action 1</view>
+        <view class="button" style="background: #FFB300;" @click="handleAction('Action 2')">Action 2</view>
+        <view class="button" style="background: #4D80F0;" @click="handleAction('Action 3')">Action 3</view>
       </view>
     </template>
   </wd-swipe-action>
 </view>
 ```
 
-```typescript
+```ts [ts]
 import { useToast, useQueue } from '@/uni_modules/wot-ui'
 
 const { closeOutside } = useQueue()
-
 const toast = useToast()
 
 function handleAction(action: string) {
@@ -45,180 +48,242 @@ function handleAction(action: string) {
 }
 ```
 
-```scss
+```scss [scss]
 .action {
   height: 100%;
 }
+
 .button {
   display: inline-block;
-  padding: 0 11px;
+  padding: 0 15px;
   height: 100%;
-  color: white;
-  line-height: 42px;
+  color: #fff;
+  line-height: 44px;
 }
 ```
 
-## Left and Right Sliding
+:::
 
-> The `wd-swipe-action` component provides `left`/`right` sliding buttons, enabled by setting the `left` and `right` slots
+### Left and Right Swipe
+
+Configure left and right action areas simultaneously through `left` and `right` slots.
 
 ```html
 <wd-swipe-action>
   <template #left>
     <view class="action">
-      <view class="button" style="background: #C8C7CD;">Action1</view>
-      <view class="button" style="background: #FFB300;">Action2</view>
-      <view class="button" style="background: #E2231A;">Action3</view>
+      <view class="button" style="background: #E2231A;">Action 1</view>
+      <view class="button" style="background: #FFB300;">Action 2</view>
+      <view class="button" style="background: #4D80F0;">Action 3</view>
     </view>
   </template>
-  <wd-cell title="Title Text" value="Content" />
+  <wd-cell title="Title" value="Content" />
   <template #right>
     <view class="action">
-      <view class="button" style="background: #cdb86e;">Action4</view>
-      <view class="button" style="background: #42ffd1;">Action5</view>
-      <view class="button" style="background: #383fe2;">Action6</view>
+      <view class="button" style="background: #E2231A;">Action 4</view>
+      <view class="button" style="background: #FFB300;">Action 5</view>
+      <view class="button" style="background: #4D80F0;">Action 6</view>
     </view>
   </template>
 </wd-swipe-action>
 ```
 
-## Toggle Buttons
+## Component States
 
-> You can control opening and closing sliding buttons by setting `v-model`. Available values are: `left`, `close`, `right`, representing "Open left sliding button", "Close sliding button", "Open right sliding button" respectively
+### Disabled Swipe Buttons
+
+After setting `disabled`, the component will not respond to swipe and click-to-close interactions.
 
 ```html
+<wd-swipe-action disabled>
+  <wd-cell title="Title" value="Content" />
+  <template #right>
+    <view class="action">
+      <view class="button" style="background: #E2231A;">Action 1</view>
+      <view class="button" style="background: #FFB300;">Action 2</view>
+      <view class="button" style="background: #4D80F0;">Action 3</view>
+    </view>
+  </template>
+</wd-swipe-action>
+```
+
+## Special Styles
+
+### Toggle Buttons
+
+Control the current expansion state directly through `v-model`. Optional values are `left`, `close`, `right`, representing expanding left, collapsing all, and expanding right respectively.
+
+::: code-group
+
+```html [vue]
 <wd-swipe-action v-model="value">
   <template #left>
     <view class="action">
-      <view class="button" style="background: #C8C7CD;">Action1</view>
-      <view class="button" style="background: #FFB300;">Action2</view>
-      <view class="button" style="background: #E2231A;">Action3</view>
+      <view class="button" style="background: #E2231A;">Action 1</view>
+      <view class="button" style="background: #FFB300;">Action 2</view>
+      <view class="button" style="background: #4D80F0;">Action 3</view>
     </view>
   </template>
-  <wd-cell title="Title Text" value="Content" />
+  <wd-cell title="Title" value="Content" />
   <template #right>
     <view class="action">
-      <view class="button" style="background: #cdb86e;">Action4</view>
-      <view class="button" style="background: #42ffd1;">Action5</view>
-      <view class="button" style="background: #383fe2;">Action6</view>
+      <view class="button" style="background: #E2231A;">Action 4</view>
+      <view class="button" style="background: #FFB300;">Action 5</view>
+      <view class="button" style="background: #4D80F0;">Action 6</view>
     </view>
   </template>
 </wd-swipe-action>
 
 <view class="button-group">
-  <wd-button @click="changeState('left')">Open Left</wd-button>
-  <wd-button @click="changeState('close')">Close All</wd-button>
-  <wd-button @click="changeState('right')">Open Right</wd-button>
+  <view @click.stop="noop">
+    <wd-button size="small" @click="changeState('left')">Open Left</wd-button>
+  </view>
+  <view @click.stop="noop">
+    <wd-button size="small" @click="changeState('close')">Close All</wd-button>
+  </view>
+  <view @click.stop="noop">
+    <wd-button size="small" @click="changeState('right')">Open Right</wd-button>
+  </view>
 </view>
 ```
 
-```typescript
-const value = ref<string>('close')
-function changeState(position: string) {
-  value.value = position
-}
-```
+```ts [ts]
+import { ref } from 'vue'
+import type { SwipeActionStatus } from '@/uni_modules/wot-ui/components/wd-swipe-action/types'
 
-## Hook Function Before Button Closes
+const value = ref<SwipeActionStatus>('close')
 
-> Pass a function through the `before-close` property. Note that the variable passed in must be defined in `data`. The callback function will execute before the sliding button closes.
-
-The hook function receives two parameters: `reason` and `position`.
-`reason` indicates the reason for the sliding button closing, with values: `click`, `swipe`, `value`, representing: closing by clicking, closing by sliding, closing by controlling `value`;
-`position` represents the operation button being closed, with values: `left`, `right`. When `reason` is `click`, it indicates closing the sliding button by clicking the `position` location, with values: `left`, `right`, `inside`.
-
-```html
-<demo-block transparent title="Toggle Buttons">
-  <wd-swipe-action v-model="value" :before-close="beforeClose">
-    <template #left>
-      <view class="action">
-        <view class="button" style="background: #C8C7CD;">Action1</view>
-        <view class="button" style="background: #FFB300;">Action2</view>
-        <view class="button" style="background: #E2231A;">Action3</view>
-      </view>
-    </template>
-    <wd-cell title="Title Text" value="Content" />
-    <template #right>
-      <view class="action">
-        <view class="button" style="background: #cdb86e;">Action4</view>
-        <view class="button" style="background: #42ffd1;">Action5</view>
-        <view class="button" style="background: #383fe2;">Action6</view>
-      </view>
-    </template>
-  </wd-swipe-action>
-
-  <view class="button-group">
-    <wd-button @click="changeState('left')">Open Left</wd-button>
-    <wd-button @click="changeState('close')">Close All</wd-button>
-    <wd-button @click="changeState('right')">Open Right</wd-button>
-  </view>
-</demo-block>
-```
-
-```typescript
-import { useToast } from '@/uni_modules/wot-ui'
-
-const toast = useToast()
-
-const value = ref<string>('close')
-function changeState(position: string) {
+function changeState(position: SwipeActionStatus) {
   value.value = position
 }
 
-const beforeClose = (reason, position) => {
-  if (reason === 'click') {
-    toast.show(`${reason} ${position} caused sliding button to close`)
-  } else {
-    toast.show(`${reason} caused ${position} sliding button to close`)
-  }
-}
+function noop() {}
 ```
 
-## Click Events
+:::
 
-> The `click` event will only trigger when closing the sliding button.
+### Hook Function Before Button Close
 
-The callback function's parameter indicates the clicked position, where `left` and `right` indicate clicking the left and right sliding buttons, and `inside` indicates clicking anywhere inside the container except the buttons.
+`before-close` is triggered before the component executes the close logic and can be used for pre-close validation or asynchronous confirmation.
 
-```html
-<wd-swipe-action @click="handleClick">
-  <wd-cell title="Title Text" value="Content" />
+The hook function receives two parameters:
+
+- `reason`: Close reason, optional values are `click`, `swipe`, `value`
+- `position`: Close position, optional values are `left`, `right`, `inside`
+
+Where `inside` indicates clicking inside the content area but not on the left or right action buttons.
+
+You need to explicitly return `true` or `Promise<true>` to continue closing, returning `false` or `Promise<false>` will prevent closing.
+
+::: code-group
+
+```html [vue]
+<wd-swipe-action :before-close="beforeClose">
+  <wd-cell title="Title" value="Prevent click content area to close" />
   <template #right>
     <view class="action">
-      <view class="button" style="background: #C8C7CD;">Action1</view>
-      <view class="button" style="background: #FFB300;">Action2</view>
-      <view class="button" style="background: #E2231A;">Action3</view>
+      <view class="button" style="background: #E2231A;">Delete</view>
+      <view class="button" style="background: #FFB300;">Mark</view>
     </view>
   </template>
 </wd-swipe-action>
 ```
 
-```typescript
+```ts [ts]
 import { useToast } from '@/uni_modules/wot-ui'
+import type { SwipeActionBeforeClose } from '@/uni_modules/wot-ui/components/wd-swipe-action/types'
 
 const toast = useToast()
 
-function handleClick(position: string) {
-  toast.show(`Clicked ${position}`)
+const beforeClose: SwipeActionBeforeClose = (reason, position) => {
+  return new Promise((resolve) => {
+    const shouldClose = !(reason === 'click' && position === 'inside')
+
+    if (!shouldClose) {
+      toast.show('Intercepted click on content area causing close')
+      resolve(false)
+    } else {
+      toast.loading('Processing...')
+      setTimeout(() => {
+        toast.close()
+        if (reason === 'click') {
+          toast.show(`${reason} ${position} caused swipe button to close`)
+        } else {
+          toast.show(`${reason} caused ${position} swipe button to close`)
+        }
+        resolve(true)
+      }, 3000)
+    }
+  })
+}
+```
+
+:::
+
+### Click Event
+
+The `click` event is emitted when clicking the content area, left action area, or right action area in the expanded state and the close is successful; it will not be triggered if intercepted by `before-close`.
+
+```html
+<wd-swipe-action @click="handleClick">
+  <wd-cell title="Title" value="Content" />
+  <template #right>
+    <view class="action">
+      <view class="button" style="background: #E2231A;">Action 1</view>
+      <view class="button" style="background: #FFB300;">Action 2</view>
+      <view class="button" style="background: #4D80F0;">Action 3</view>
+    </view>
+  </template>
+</wd-swipe-action>
+```
+
+```ts
+import { useToast } from '@/uni_modules/wot-ui'
+import type { SwipeActionClickEvent } from '@/uni_modules/wot-ui/components/wd-swipe-action/types'
+
+const toast = useToast()
+
+function handleClick({ value }: SwipeActionClickEvent) {
+  toast.show(`Clicked ${value} to close action buttons`)
 }
 ```
 
 ## Attributes
 
-| Attribute | Description | Type | Options | Default |
-|---------|-------------|------|---------|---------|
-| v-model | Control sliding button state | string | left / close / right | close |
-| before-close | Hook function before sliding button closes | function | - | - |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| v-model | Current swipe state, optional values are `left`, `close`, `right` | `SwipeActionStatus` | `close` |
+| disabled | Whether to disable swipe action | `boolean` | `false` |
+| before-close | Pre-close interceptor function, receives `(reason, position)`, returns `true` or `Promise<boolean>` to continue closing, returns `false` to prevent closing | `SwipeActionBeforeClose` | - |
+| custom-class | Root node custom class name | `string` | `''` |
+| custom-style | Root node custom style | `string` | `''` |
 
 ## Events
 
-| Event | Description | Parameters |
-|-------|-------------|------------|
-| click | Triggered when clicking to close sliding button | The clicked position (left/right/inside) |
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| click | Triggered when clicking content area or action area in expanded state and closing | `SwipeActionClickEvent` |
+| update:modelValue | Triggered when swipe state changes | `SwipeActionStatus` |
+
+## Methods
+
+The following methods can be called through the component instance.
+
+| Method Name | Description | Parameters | Return Value |
+| --- | --- | --- | --- |
+| close | Close expanded action buttons | `reason: SwipeActionReason, position?: SwipeActionPosition` | - |
 
 ## Slots
 
 | Name | Description |
-|------|-------------|
-| left | Custom left sliding button content |
-| right | Custom right sliding button content |
+| --- | --- |
+| left | Custom left action area |
+| default | Custom content area |
+| right | Custom right action area |
+
+## External Style Classes
+
+| Class Name | Description |
+| --- | --- |
+| custom-class | Root node style class |
+| custom-style | Root node inline style |

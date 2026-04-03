@@ -1,206 +1,165 @@
-# CalendarView Calendar Panel Component
+# CalendarView
 
-Provides calendar single selection, multiple selection, range selection, week dimension, month dimension and other functions. Based on this component, you can encapsulate highly customized components according to actual business scenarios.
+Provides single selection, multiple selection, range, week/month, and datetime calendar selection capabilities. Can be used as a underlying panel component for business calendar selectors.
 
-## Basic Usage
+::: tip Performance Tip
+It is not recommended to set too large a difference between `min-date` and `max-date`. If you need a large time span, it is recommended to use `switch-mode` (`month` / `year-month`) to reduce rendering pressure.
+:::
 
-The default `type` is `date`, set `v-model` binding value (13-digit timestamp format), you can also listen to the `@change` event to get the selected value. `min-date` minimum date defaults to 6 months before the current date, `max-date` maximum date defaults to 6 months after the current date, and the calendar panel only displays dates between the minimum and maximum dates.
+## Component Type
 
-> It is recommended not to set `min-date` and `max-date` too large to avoid poor page performance due to calculation and transmission of large amounts of data.
+### Single Date Selection
 
 ```html
-<wd-calendar-view v-model="value" @change="handleChange" />
+<wd-calendar-view type="date" v-model="value" @change="handleChange" />
 ```
 
-```typescript
-const value = ref(Date.now())
-
-function handleChange({ value }) {
-  console.log(value)
-}
-```
-
-## Multiple Date Selection
-
-Set `type` to `dates` type, at this time `value` is an array.
+### Multiple Date Selection
 
 ```html
 <wd-calendar-view type="dates" v-model="value" @change="handleChange" />
 ```
 
-```typescript
-const value = ref([])
-
-function handleChange({ value }) {
-  console.log(value)
-}
-```
-
-## Week Type Selection
-
-Set `type` to `week` type. If `value` has an initial value, it is recommended to set the week start day `first-day-of-week` to 1 (Monday) to avoid mismatch between selected style and echo.
-
-```html
-<wd-calendar-view type="week" v-model="value" :first-day-of-week="1" @change="handleChange" />
-```
-
-```typescript
-const value = ref(Date.now())
-
-function handleChange({ value }) {
-  console.log(value)
-}
-```
-
-## Month Type Selection
-
-Set `type` to `month` type. When `value` has a value, its value is the first day of the month.
-
-```html
-<wd-calendar-view type="month" v-model="value" @change="handleChange" />
-```
-
-```typescript
-const value = ref(Date.now())
-
-function handleChange({ value }) {
-  console.log(value)
-}
-```
-
-## Range Selection
-
-`type` supports `daterange` (date range selection), `weekrange` (week range selection), `monthrange` (month range selection) types. At this time, `value` is in array format.
+### Date Range Selection
 
 ```html
 <wd-calendar-view type="daterange" v-model="value" @change="handleChange" />
 ```
 
-```typescript
-const value = ref([])
-
-function handleChange({ value }) {
-  console.log(value)
-}
-```
-
-## Date Time Type
-
-Set `type` to `datetime` type to select down to hours, minutes and seconds. Set `type` to `datetimerange` for range selection.
+### Date Time Type
 
 ```html
 <wd-calendar-view type="datetime" v-model="value" @change="handleChange" />
+<wd-calendar-view type="datetimerange" v-model="valueRange" @change="handleChange" />
 ```
 
-```typescript
-const value = ref('')
-
-function handleChange({ value }) {
-  console.log(value)
-}
-```
-
-You can set `hide-second` to display time only to minutes; set the `time-filter` property to customize filtering of hour, minute, second options. This property accepts { type: string, values: array } parameters and returns a new array. The type value is 'hour', 'minute' or 'second', and values is the picker data list.
+### Week and Month Type
 
 ```html
-<wd-calendar-view type="datetime" v-model="value" @change="handleChange" hide-second :time-filter="timeFilter" />
+<wd-calendar-view type="week" v-model="value" :first-day-of-week="1" @change="handleChange" />
+<wd-calendar-view type="month" v-model="value" @change="handleChange" />
+<wd-calendar-view type="weekrange" v-model="valueRange" @change="handleChange" />
+<wd-calendar-view type="monthrange" v-model="valueRange" @change="handleChange" />
 ```
 
-```typescript
-const value = ref('')
+## Component State
 
-const timeFilter = ({ type, values }) => {
-  if (type === 'minute') {
-    // Only show 0,10,20,30,40,50 minute options
-    return values.filter((item) => {
-      return item % 10 === 0
-    })
-  }
-
-  return values
-}
-
-function handleChange({ value }) {
-  console.log(value)
-}
-```
-
-## Allow Same Day Selection in Range
-
-Set the `allow-same-day` property to allow users to select the same day, same week, or same month in range selection.
+### Range Selection Allow Same Day
 
 ```html
-<wd-calendar-view type="daterange" v-model="value" allow-same-day @change="handleChange" />
+<wd-calendar-view type="daterange" v-model="valueRange" allow-same-day @change="handleChange" />
 ```
 
-## Format Date
+## Component Variant
 
-Set the `formatter` parameter, its value is a function type that receives an `object` parameter and returns an object whose properties remain consistent with the input parameters. Its properties are as follows:
+### Switch Mode
 
-| Property | Type | Description | Minimum Version |
-|----------|------|-------------|----------------|
-| type | CalendarDayType | See [CalendarDayType](#calendardaytype) for optional values | - |
-| date | timestamp | 13-digit timestamp | - |
-| text | string | Date text content | - |
-| topInfo | string | Top prompt information | - |
-| bottomInfo | string | Bottom prompt information | - |
-| disabled | boolean | Whether disabled | - |
+Set `switch-mode` to control panel switch behavior:
+- `none`: Display all months/years flatly without switch buttons
+- `month`: Support month switching with previous/next month buttons
+- `year-month`: Support year and month switching with previous/next year, previous/next month buttons
+
+```html
+<wd-calendar-view type="date" v-model="value" switch-mode="month" @change="handleChange" />
+```
+
+## Component Style
+
+### Format Date
+
+Set `formatter` to customize date cell text and status.
+
+```html
+<wd-calendar-view type="daterange" v-model="valueRange" allow-same-day :formatter="formatter" @change="handleChange" />
+```
+
+### Set Week Start Day
+
+```html
+<wd-calendar-view :first-day-of-week="1" v-model="value" @change="handleChange" />
+```
+
+### Show Panel Title
+
+```html
+<wd-calendar-view type="daterange" :show-panel-title="false" v-model="valueRange" @change="handleChange" />
+```
+
+## Special Style
+
+### Max Range Limit
+
+```html
+<wd-calendar-view type="daterange" :max-range="3" v-model="valueRange" @change="handleChange" />
+```
+
+### Time Option Filter
+
+Set `hide-second` and `time-filter` to filter hour/minute/second options.
+
+```html
+<wd-calendar-view type="datetime" v-model="value" hide-second :time-filter="timeFilter" @change="handleChange" />
+```
+
+## Attributes
+
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| v-model | Selected value, 13-digit timestamp or timestamp array | `number \| number[] \| null` | - |
+| type | Date type, supports `date / dates / datetime / week / month / daterange / datetimerange / weekrange / monthrange` | string | date |
+| min-date | Minimum date timestamp | number | 6 months before current date |
+| max-date | Maximum date timestamp | number | 6 months after current date |
+| first-day-of-week | Week start day (0 means Sunday) | number | 0 |
+| formatter | Date formatting function | `CalendarFormatter` | - |
+| max-range | Maximum selectable range for range types | number | - |
+| range-prompt | Prompt text when exceeding maximum range | string | - |
+| allow-same-day | Whether to allow same day/week/month for range types | boolean | false |
+| show-panel-title | Whether to show panel title | boolean | true |
+| default-time | Default time for date | `string \| string[]` | `00:00:00` |
+| panel-height | Scrollable panel height | number | 316 |
+| time-filter | Time option filter function (datetime / datetimerange) | `CalendarTimeFilter` | - |
+| time-item-height | Time option height | number | 44 |
+| time-visible-item-count | Time visible item count | number | 3 |
+| hide-second | Whether to hide second selection (datetime / datetimerange) | boolean | false |
+| immediate-change | Whether to trigger time selection change event when finger is released | boolean | false |
+| switch-mode | Switch mode: `none` displays all months/years flatly without switch buttons; `month` supports month switching with previous/next month buttons; `year-month` supports year and month switching with previous/next year, previous/next month buttons. For large date spans, it is recommended to use `month` or `year-month` to reduce rendering pressure | string | none |
+| custom-class | Root node custom class name | string | `''` |
+| custom-style | Root node custom style | string | `''` |
+
+## Events
+
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| change | Triggered when panel value changes | `{ value }` |
+| pickstart | Triggered when time selection scroll starts | - |
+| pickend | Triggered when time selection scroll ends | - |
+
+## Methods
+
+| Method Name | Description | Parameters |
+| --- | --- | --- |
+| scrollIntoView | Scroll current date or selected date into visible area (recommended to call when panel shows from hidden) | - |
+
+## CalendarDayItem Data Structure
+
+| Property | Description | Type |
+| --- | --- | --- |
+| type | Date status type | CalendarDayType |
+| date | 13-digit timestamp | number |
+| text | Date text content | string |
+| topInfo | Top tip info | string |
+| bottomInfo | Bottom tip info | string |
+| disabled | Whether disabled | boolean |
 
 ### CalendarDayType
 
 | Type | Description |
-|------|-------------|
+| --- | --- |
 | selected | Single date selected |
 | start | Range start date |
 | end | Range end date |
-| middle | Date between range start and end |
-| same | Range start and end date are the same day |
+| middle | Dates between range start and end |
+| same | Range start and end dates are the same |
 | current | Current date |
-| multiple-middle | Multiple date range selection, date between start and end |
-| multiple-selected | Multiple date range selection, selected date |
-
-```html
-<wd-calendar-view type="daterange" v-model="value" allow-same-day :formatter="formatter" @change="handleChange"></wd-calendar-view>
-```
-
-```typescript
-const value = ref([])
-
-const formatter = (day) => {
-  const date = new Date(day.date)
-  const now = new Date()
-
-  const year = date.getFullYear()
-  const month = date.getMonth()
-  const da = date.getDate()
-  const nowYear = now.getFullYear()
-  const nowMonth = now.getMonth()
-  const nowDa = now.getDate()
-
-  if (year === nowYear && month === nowMonth && da === nowDa) {
-    day.topInfo = 'Today'
-  }
-
-  if (month === 5 && da === 18) {
-    day.topInfo = '618 Sale'
-  }
-
-  if (month === 10 && da === 11) {
-    day.topInfo = 'JD 11.11'
-  }
-
-  if (day.type === 'start') {
-    day.bottomInfo = 'Start'
-  }
-
-  if (day.type === 'end') {
-    day.bottomInfo = 'End'
-  }
-
-  if (day.type === 'same') {
-    day.bottomInfo = 'Selected'
-  }
-
-  return day
-}
-```
+| multiple-middle | Multiple date range selection, dates between start and end |
+| multiple-selected | Multiple date range selection, selected dates |

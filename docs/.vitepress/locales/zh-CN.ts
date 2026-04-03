@@ -113,7 +113,13 @@ const ecosystemNavItems = [
 ]
 const supportNavItems = [
   { text: '🥤一杯咖啡', link: '/reward/reward' },
+  { text: '成为赞助者', link: '/reward/sponsor' },
   { text: '关于作者', link: 'https://blog.wot-ui.cn/about' },
+]
+
+const versionNavItems = [
+  { text: 'v2 (当前)', link: 'https://wot-ui.cn' },
+  { text: 'v1', link: 'https://v1.wot-ui.cn' },
 ]
 
 export default defineConfig({
@@ -146,6 +152,10 @@ export default defineConfig({
         text: '支持',
         activeMatch: '/reward/',
         items: supportNavItems
+      },
+      {
+        text: 'v2',
+        items: versionNavItems
       },
     ],
     sidebar: {

@@ -1,129 +1,119 @@
-# ConfigProvider Global Configuration
+# ConfigProvider
 
-Used for global configuration of `Wot` components, providing capabilities such as dark mode and theme customization.
+Used to provide theme mode and theme variable configuration for `Wot` components, supporting dark mode, theme customization and cross-component tree shared configuration.
 
-## Dark Mode
+## Component Type
 
-Set the `theme` property of the ConfigProvider component to `dark` to enable dark mode.
+### Dark Mode
 
-Dark mode will take effect globally, making all `Wot` components on the page appear in dark style.
-
-```vue
-<wd-config-provider theme="dark">...</wd-config-provider>
-```
-
-:::tip
-It's worth noting that enabling `Wot`'s dark mode will only affect the `UI` of `Wot` components and will not affect global text color or background color. You can refer to the following `CSS` to set some global styles:
+Set `theme` to `dark` to switch `Wot` components within the current `ConfigProvider` wrapped range to dark style.
+::: tip Tip
+`ConfigProvider` only affects the theme performance of `Wot` components themselves, and will not automatically modify page global text color or background color. You can combine global styles to handle page background and text color yourself.
 :::
-
-```css
-.wot-theme-dark body {
-  color: #f5f5f5;
-  background-color: black;
-}
-```
-
-## Dynamic Switching
-
-By dynamically setting the `theme` property, you can switch between light and dark styles.
-
 ```vue
-<wd-config-provider :theme="theme">...</wd-config-provider>
+<wd-config-provider theme="dark">
+  <wd-button type="primary">Dark Mode Button</wd-button>
+</wd-config-provider>
 ```
 
-```ts
-export default {
-  setup() {
-    const theme = ref('light')
+## Switch Theme
 
-    setTimeout(() => {
-      theme.value = 'dark'
-    }, 1000)
+Switch between light and dark mode by responsively updating `theme`.
 
-    return { theme }
-  }
-}
+::: code-group
+
+```vue [vue]
+<wd-config-provider :theme="theme">
+  <wd-button type="primary">Current Mode: {{ theme }}</wd-button>
+</wd-config-provider>
 ```
+
+```ts [ts]
+import { ref } from 'vue'
+
+const theme = ref<'light' | 'dark'>('light')
+
+setTimeout(() => {
+  theme.value = 'dark'
+}, 1000)
+```
+
+:::
 
 ## Theme Customization
 
-`Wot` components organize styles through rich [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties). By overriding these `CSS` variables, you can achieve theme customization, dynamic theme switching, and other effects.
+### Override via CSS Variables
 
-### Example
-
-These variables' default values are defined on the `page` node. If converting to `H5`, the default values are defined on the `:root` node.
+`Wot UI` components organize styles through CSS variables. You can directly override these variables to adjust component appearance.
 
 ```css
 :root,
 page {
-  --wot-color-success: red;
-  --wot-color-warning: yellow;
-}
-```
-
-### Override via CSS
-
-You can directly override these `CSS` variables in your code, and the style of the `Button` component will change accordingly:
-
-```css
-/* After adding this style, the default Button background color will become green */
-:root,
-page {
-  --wot-button-normal-bg: green;
+  --wot-button-primary-bg: green;
 }
 ```
 
 ### Override via ConfigProvider
 
-The `ConfigProvider` component provides the ability to override `CSS` variables. You need to wrap a `ConfigProvider` component at the root node and configure some theme variables through the `theme-vars` property.
+`ConfigProvider` supports overriding theme variables through `theme-vars`, only affecting components within the current wrapped range.
 
-```html
+::: tip Tip
+`ConfigProvider` only affects its child component styles, and will not directly modify global `root` node styles.
+:::
+
+::: code-group
+
+```html [vue]
 <wd-config-provider :theme-vars="themeVars">
-  <div style="margin: 16px">
+  <view style="margin: 16px">
     <wd-button round block type="primary">Submit</wd-button>
-  </div>
+  </view>
 </wd-config-provider>
 ```
 
-```ts
-import { ref, reactive } from 'vue'
+```ts [ts]
+import { reactive } from 'vue'
 
-export default {
-  setup() {
-    // Values in themeVars will be converted to corresponding CSS variables
-    // For example, buttonPrimaryBg will be converted to `--wot-button-primary-bg-color`
-    const themeVars = reactive({
-      buttonPrimaryBgColor: '#07c160',
-      buttonPrimaryColor: '#07c160'
-    })
-    return {
-      themeVars
-    }
-  }
-}
+const themeVars = reactive({
+  buttonPrimaryBg: '#07c160',
+  buttonPrimaryColor: '#ffffff'
+})
 ```
 
-### Using with TypeScript
+:::
 
-When defining `themeVars` in TypeScript, it's recommended to use the **ConfigProviderThemeVars** type provided by **wot-ui**, which can provide comprehensive type hints:
+### Use in TypeScript
 
-```ts
+When defining `themeVars` in TypeScript, it is recommended to use the `ConfigProviderThemeVars` type provided by the component library for complete type hints.
+
+::: code-group
+
+```ts [ts]
 import type { ConfigProviderThemeVars } from '@wot-ui/ui'
 
 const themeVars: ConfigProviderThemeVars = {
-  colorTheme: 'red'
+  buttonPrimaryBgColor: '#07c160',
+  buttonPrimaryColor: '#ffffff'
 }
 ```
 
-:::tip
-Note: ConfigProvider only affects the styles of its child components, not the global root node.
+```ts [ts]
+import type { ConfigProviderThemeVars } from '@/uni_modules/wot-ui/components/wd-config-provider/types'
+
+const localThemeVars: ConfigProviderThemeVars = {
+  cellTitleColor: '#4d80f0'
+}
+```
+
 :::
 
-## Global Sharing
+## Special Style
 
-> Requires the virtual root component ([uni-ku-root](https://github.com/uni-ku/root)) for global sharing
+### Global Sharing
 
-### Installation
+If you need to share theme configuration at the application layer, you can combine with virtual root component [uni-ku-root](https://github.com/uni-ku/root).
+
+#### Install
 
 ::: code-group
 
@@ -141,76 +131,57 @@ pnpm add -D @uni-ku/root
 
 :::
 
-### Import
+#### Import
 
-- CLI project: Directly edit vite.config.(js|ts) in the root directory
-- HBuilderX project: Need to create vite.config.(js|ts) in the root directory
+- CLI project: directly edit vite.config.(js|ts) in root directory
+- HBuilderX project: need to create vite.config.(js|ts) in root directory
 
 ```ts
-// vite.config.(js|ts)
-
 import { defineConfig } from 'vite'
 import UniKuRoot from '@uni-ku/root'
 import Uni from '@dcloudio/vite-plugin-uni'
 
 export default defineConfig({
-  plugins: [
-    // ...plugins
-    UniKuRoot(),
-    Uni()
-  ]
+  plugins: [UniKuRoot(), Uni()]
 })
 ```
 
-:::tip
-If there are plugins that change pages.json, UniKuRoot needs to be placed after them
+::: tip
+If there are plugins that modify pages.json, `UniKuRoot` needs to be placed after these plugins.
 :::
 
-### Usage
+#### Use
 
-1. Create a root component and handle global configuration components
-
-- CLI project: Create App.ku.vue in the **src** directory
-- HBuilderX project: Create App.ku.vue in the **root** directory
-
-:::tip
-The `<KuRootView />` tag in App.ku.vue represents the specified view placement location
-:::
+1. Create root component and handle global configuration component.
 
 ```vue
-<!-- src/App.ku.vue | App.ku.vue -->
-
 <script setup lang="ts">
 import { useTheme } from './composables/useTheme'
 
 const { theme, themeVars } = useTheme({
   buttonPrimaryBgColor: '#07c160',
-  buttonPrimaryColor: '#07c160'
+  buttonPrimaryColor: '#ffffff'
 })
 </script>
 
 <template>
-  <div>Hello AppKuVue</div>
-  <!-- Ensure WdConfigProvider component is registered -->
   <wd-config-provider :theme="theme" :theme-vars="themeVars">
     <KuRootView />
   </wd-config-provider>
 </template>
 ```
 
-2. Write a composable function for theme control
+2. Write composable function to control theme.
 
 ```ts
-// src/composables/useTheme.ts
-
 import type { ConfigProviderThemeVars } from '@wot-ui/ui'
 import { ref } from 'vue'
 
-const theme = ref<'light' | 'dark'>()
+const theme = ref<'light' | 'dark'>('light')
 const themeVars = ref<ConfigProviderThemeVars>()
 
 export function useTheme(vars?: ConfigProviderThemeVars) {
-  vars && (themeVars.value = vars)
+  if (vars) themeVars.value = vars
 
   function toggleTheme(mode?: 'light' | 'dark') {
     theme.value = mode || (theme.value === 'light' ? 'dark' : 'light')
@@ -224,11 +195,9 @@ export function useTheme(vars?: ConfigProviderThemeVars) {
 }
 ```
 
-3. Use theme switching in any view file
+3. Use theme mode switching in any page.
 
 ```vue
-<!-- src/pages/*.vue -->
-
 <script setup lang="ts">
 import { useTheme } from '@/composables/useTheme'
 
@@ -236,30 +205,53 @@ const { theme, toggleTheme } = useTheme()
 </script>
 
 <template>
-  <button @click="toggleTheme">Toggle theme, current mode: {{ theme }}</button>
+  <button @click="toggleTheme">Toggle Theme, Current Mode: {{ theme }}</button>
 </template>
 ```
 
-## Attributes
-
-| Parameter  | Description                                                           | Type                      | Options        | Default | Version |
-| ---------- | --------------------------------------------------------------------- | ------------------------- | -------------- | ------- | ------- |
-| theme      | Theme style, set to `dark` to enable dark mode, takes effect globally | string                    | `dark`/`light` | -       | -       |
-| theme-vars | Custom theme variables                                                | `ConfigProviderThemeVars` | -              | -       | -       |
-
-## External Style Classes
-
-| Class Name   | Description     | Version |
-| ------------ | --------------- | ------- |
-| custom-class | Root node style | 1.3.9   |
-| custom-style | Root node style | 1.3.9   |
-
-## Composables
+## Composable Function
 
 ### useConfigProvider
 
-For detailed documentation, please refer to [useConfigProvider](/en-US/component/use-config-provider).
+Detailed documentation please see [useConfigProvider](/component/use-config-provider).
 
-In environments like WeChat Mini Program, due to component rendering limitations (such as native slot scope isolation), components rendered in slots may not be able to access the context of the `ConfigProvider` component wrapped outside the slot outlet. In addition, using `root-portal` to move nodes to the root node may also cause context loss.
+In WeChat Mini Program and other environments, due to component rendering mechanism limitations, components rendered in slots or moved to root node through `root-portal` may not inherit the outer `ConfigProvider` provide context. To solve this problem, the component library provides `useConfigProvider`, allowing you to explicitly inject configuration at the logic layer.
 
-To solve this problem, `wot-ui` provides the `useConfigProvider` composable function, allowing you to inject configuration directly in JS logic, ensuring that deeply nested or cross-component tree components can also correctly obtain theme styles.
+#### Import
+
+```ts
+import { useConfigProvider } from '@wot-ui/ui'
+```
+
+#### Use
+
+`useConfigProvider` accepts an object containing `themeVars`, `themeVars` supports plain objects, `reactive` objects or `Ref` objects.
+
+```vue
+<script setup lang="ts">
+import { reactive } from 'vue'
+import { useConfigProvider } from '@wot-ui/ui'
+
+const themeVars = reactive({
+  buttonPrimaryBg: '#07c160',
+  buttonPrimaryColor: '#ffffff'
+})
+
+useConfigProvider({ themeVars })
+</script>
+```
+
+## ConfigProvider Attributes
+
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| theme | Theme style, optional values are `light`, `dark` | string | `light` |
+| theme-vars | Custom theme variables | `ConfigProviderThemeVars` | `{}` |
+| custom-class ^(1.3.9) | Root node custom style class | string | `''` |
+| custom-style ^(1.3.9) | Root node custom style | string | `''` |
+
+## ConfigProvider Slots
+
+| Name | Description |
+| --- | --- |
+| default | Default slot, used to wrap child components that need to apply theme |

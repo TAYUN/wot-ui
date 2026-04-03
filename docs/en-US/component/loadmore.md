@@ -1,10 +1,10 @@
-# Loadmore
+# LoadMore Load More
 
 Used to display loading status at the bottom of lists.
 
 ## Basic Usage
 
-Introduce this component at the bottom of the list that needs to be loaded. When scrolling to the bottom of the list, display different text by setting `state`.
+Simply introduce this component at the bottom of the list that needs loading. When scrolling to the bottom of the list, display different text by setting `state`.
 
 ```html
 <wd-loadmore custom-class="loadmore" state="loading" />
@@ -23,19 +23,19 @@ Introduce this component at the bottom of the list that needs to be loaded. When
 
 ## Custom Text
 
-Display different text for different states by setting `loading-text`, `finished-text`, `error-text` along with `state`
+Display text for different states by setting `loading-text`, `finished-text`, `error-text` in combination with `state`.
 
 ```html
-<wd-loadmore custom-class="loadmore" state="loading" loading-text="Custom Loading Text" />
+<wd-loadmore custom-class="loadmore" state="loading" loading-text="Custom loading text" />
 
-<wd-loadmore custom-class="loadmore" state="finished" finished-text="Custom Finished Text" />
+<wd-loadmore custom-class="loadmore" state="finished" finished-text="Custom finished text" />
 
-<wd-loadmore custom-class="loadmore" state="error" error-text="Custom Error Text" />
+<wd-loadmore custom-class="loadmore" state="error" error-text="Custom error text" />
 ```
 
 ## Click to Continue Loading
 
-When state is error, clicking on the text will trigger the `loadmore` event
+When `state` is `error`, clicking the component area triggers the `reload` event.
 
 ```html
 <wd-loadmore custom-class="loadmore" state="error" @reload="loadmore" />
@@ -43,7 +43,7 @@ When state is error, clicking on the text will trigger the `loadmore` event
 
 ## Application Implementation
 
-Implement loading more when scrolling to the bottom with the `onReachBottom` event
+Implement loading more when scrolling to bottom in combination with `onReachBottom` event.
 
 ```html
 <view class="container">
@@ -56,6 +56,7 @@ Implement loading more when scrolling to the bottom with the `onReachBottom` eve
 ```
 
 ```typescript
+import { ref } from 'vue'
 import { onLoad, onReachBottom } from '@dcloudio/uni-app'
 
 
@@ -120,25 +121,36 @@ image {
 
 ## Attributes
 
-| Parameter | Description | Type | Options | Default | Version |
-|-----------|-------------|------|----------|---------|----------|
-| state | Loading state | string | loading/finished/error | - | - |
-| loading-text | Loading prompt text | string | - | Loading... | - |
-| finished-text | Text prompt when all loading is complete | string | - | No more | - |
-| error-text | Text prompt when loading fails | string | - | Loading failed, click to retry | - |
-| loading-props | Loading component properties | `Partial<LoadingProps>` | - | - | 1.3.14 |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| state | Loading state, optional values are `loading`, `finished`, `error` | `LoadMoreState` | - |
+| loading-text | Loading state text | `string` | Internationalized text "Loading..." |
+| finished-text | Loading finished text | `string` | Internationalized text "Loaded" |
+| error-text | Loading failed text; "Click to retry" is an independent prompt text within the component, not included in this property's default value | `string` | Internationalized text "Loading failed" |
+| loading-props ^(1.3.14) | Internal `wd-loading` property configuration, type see `LoadingProps` below | `Partial<LoadingProps>` | - |
+| custom-class | Custom class name for root node | `string` | `''` |
+| custom-style | Custom style for root node | `string` | `''` |
 
 #### LoadingProps
-See [LoadingProps](/component/loading.html#attributes)
+
+See [LoadingProps](/component/loading.html#attributes). The passed `customClass` will automatically append the `wd-loadmore__loading` class name.
+
+## Slots
+
+| name | Description |
+| --- | --- |
+| loading | Custom loading content |
+| finished | Custom loaded content |
+| error | Custom error content |
 
 ## Events
 
-| Event Name | Description | Parameters | Version |
-|------------|-------------|------------|----------|
-| reload | Triggered when clicking the text when state is error | - | - |
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| reload | Triggered when clicking component when `state` is `error` | - |
 
-## External Classes
+## External Style Classes
 
-| Class Name | Description | Version |
-|------------|-------------|----------|
-| custom-class | Root node style | - |
+| Class Name | Description |
+| --- | --- |
+| custom-class | Root node style |

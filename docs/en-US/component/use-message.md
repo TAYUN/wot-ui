@@ -1,6 +1,6 @@
 # useDialog
 
-Used for conveniently calling the MessageBox dialog component.
+Used to conveniently call the MessageBox dialog component.
 
 ## Alert Dialog
 
@@ -22,7 +22,7 @@ function alert() {
 
 ## Confirm Dialog
 
-Used to prompt user operations.
+Used to prompt user actions.
 
 ```html
 <wd-dialog />
@@ -81,29 +81,29 @@ function prompt() {
 
 ### Methods
 
-| Method Name | Description | Parameters |
-|--------|----------------|----------|
-| show | Show dialog | options |
-| alert | Show Alert dialog | options |
-| confirm | Show Confirm dialog | options |
-| prompt | Show Prompt dialog | options |
-| close | Close dialog | - |
+| Method Name | Description           | Parameters    |
+|--------|----------------|---------|
+| show   | Show dialog       | options |
+| alert  | Show Alert dialog | options |
+| confirm| Show Confirm dialog| options |
+| prompt | Show Prompt dialog| options |
+| close  | Close dialog       | -       |
 
 ### Options
 
-| Parameter | Description | Type | Accepted Values | Default |
+| Parameter | Description | Type | Optional Values | Default Value |
 |-----|------|------|--------|--------|
 | title | Title | string | - | - |
 | msg | Message text | string | - | - |
 | type | Dialog type | string | alert / confirm / prompt | alert |
-| closeOnClickModal | Whether to support closing by clicking the mask | boolean | - | true |
+| closeOnClickModal | Whether to support closing by clicking mask | boolean | - | true |
 | inputType | Input box type when type is prompt | string | - | text |
-| inputValue | Initial value of input box when type is prompt | string / number | - | - |
+| inputValue | Input box initial value when type is prompt | string / number | - | - |
 | inputPlaceholder | Input box placeholder when type is prompt | string | - | Please enter content |
 | inputPattern | Input box regex validation when type is prompt | RegExp | - | - |
 | inputValidate | Input box validation function when type is prompt | function | - | - |
-| inputError | Error prompt text when input box validation fails when type is prompt | string | - | Invalid input data |
+| inputError | Error prompt text when input box validation fails in prompt mode | string | - | Invalid input data |
 | confirmButtonText | Confirm button text | string | - | Confirm |
 | cancelButtonText | Cancel button text | string | - | Cancel |
-| zIndex | Dialog layer level | number | - | 99 |
-| selector | Unique identifier | string | - | '' |
+| zIndex | Dialog z-index | number | - | 99 |
+| selector | Specify unique identifier | string | - | '' |

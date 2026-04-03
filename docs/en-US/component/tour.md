@@ -1,263 +1,228 @@
 ---
 version: 1.14.0
 ---
+
 # Tour
 
-A component used to guide users step-by-step through application features, capable of highlighting specific elements on the page and providing explanations.
+Used for step-by-step guidance to help users understand page features. Can highlight target elements and display explanation panels near them.
 
-## Basic Usage
+::: tip Tip
+The Tour component demo behaves abnormally in iframe. You can click the arrow in the top-left corner of the demo to view it separately.
+:::
 
-Set the guide steps via the `steps` prop, and control visibility via `v-model`.
+## Component Types
 
-```html
-<template>
-  <view>
-    <view class="tour-item" id="step1">
-      <text class="tour-title">Step 1</text>
-      <text class="tour-content">This is the first step, introducing basic features</text>
-    </view>
-    
-    <view class="tour-item" id="step2">
-      <text class="tour-title">Step 2</text>
-      <text class="tour-content">This is the second step, showing more features</text>
-    </view>
-    
-    <wd-tour 
-      :model-value="showTour" 
-      :steps="steps" 
-      v-model:current="current"
-      @finish="onFinish"
-    />
-  </view>
-</template>
+### Basic Usage
 
-<script lang="ts" setup>
+Define guidance steps through `steps`, control visibility through `v-model`, and synchronize current step index through `v-model:current`.
+
+::: code-group
+
+```html [vue]
+<wd-tour v-model="showBasicTour" :steps="basicSteps" v-model:current="current" :padding="10" @finish="handleFinish" @change="handleChange" />
+```
+
+```ts [ts]
+import type { TourChangeDetail, TourStep } from '@/uni_modules/wot-ui/components/wd-tour/types'
 import { ref } from 'vue'
 
-const showTour = ref(true)
+const showBasicTour = ref(false)
 const current = ref(0)
 
-const steps = [
+const basicSteps: TourStep[] = [
   {
     element: '#step1',
-    content: 'This is the explanation for step 1'
+    content: 'Welcome to the tour component, this is the first step explanation'
   },
   {
     element: '#step2',
-    content: 'This is the explanation for step 2'
+    content: 'This is the second step, showing another feature point'
   }
 ]
 
-function onFinish() {
-  console.log('Tour finished')
+function handleChange({ current }: TourChangeDetail) {
+  console.log('Current step:', current)
 }
-</script>
+
+function handleFinish() {
+  showBasicTour.value = false
+}
 ```
 
-### Custom Content
+:::
 
-Customize the guide content via the `content` slot.
+## Component States
+
+### Click Mask to Continue
+
+After setting `click-mask-next`, clicking the mask layer will automatically proceed to the next step.
 
 ```html
-<wd-tour :model-value="showTour" :steps="steps">
+<wd-tour v-model="showClickMaskTour" :steps="basicSteps" :click-mask-next="true" />
+```
+
+### Close Mask
+
+After setting `mask` to `false`, only the highlight area and explanation panel remain, without the full-page mask.
+
+```html
+<wd-tour v-model="showNoMaskTour" :steps="noMaskSteps" :mask="false" />
+```
+
+## Component Styles
+
+### Custom Mask
+
+You can adjust the highlight area and mask performance through properties like `mask-color`, `offset`, `border-radius`, `padding`.
+
+```html
+<wd-tour
+  v-model="showCustomMaskTour"
+  :steps="customMaskSteps"
+  mask-color="red"
+  :offset="40"
+  :border-radius="15"
+  :padding="10"
+  next-text="Next"
+  prev-text="Previous"
+  skip-text="Skip"
+  finish-text="Finish"
+/>
+```
+
+### Custom Highlight Area
+
+Fully take over highlight area rendering through the `highlight` slot.
+
+::: code-group
+
+```html [vue]
+<wd-tour v-model="showCustomHighlightTour" :steps="customHighlightSteps" :padding="10">
+  <template #highlight="{ elementInfo }">
+    <view class="custom-highlight" :style="`${objToStyle(elementInfo)};${objToStyle(customHighlightStyle)}`"></view>
+  </template>
+</wd-tour>
+```
+
+```ts [ts]
+import { objToStyle } from '@/uni_modules/wot-ui/common/util'
+
+const customHighlightStyle = {
+  border: '2px dashed #ff0000',
+  borderRadius: '8px',
+  background: 'rgba(255, 0, 0, 0.1)',
+  boxSizing: 'border-box'
+}
+```
+
+:::
+
+### Custom Content and Buttons
+
+Supports customizing guide content and action buttons through `content`, `prev`, `next`, `skip`, `finish` slots.
+
+```html
+<wd-tour v-model="showCustomContentTour" :steps="customContentSteps" next-text="Continue" prev-text="Back" skip-text="Skip" finish-text="Got it">
   <template #content>
     <view class="custom-content">
       <wd-icon name="help-circle-filled" size="22px"></wd-icon>
       <text class="custom-text">Custom guide content area</text>
     </view>
   </template>
-</wd-tour>
-```
 
-### Custom Highlight Area
-
-Customize the highlight area style via the `highlight` slot.
-
-```html
-<wd-tour :model-value="showTour" :steps="steps">
-  <template #highlight="{ elementInfo }">
-    <view class="custom-highlight" :style="getCustomHighlightStyle(elementInfo)"></view>
-  </template>
-</wd-tour>
-```
-
-### Custom Buttons
-
-Customize buttons via `prev`, `next`, `skip`, and `finish` slots.
-
-```html
-<wd-tour :model-value="showTour" :steps="steps" next-text="Continue" finish-text="Got it">
   <template #next>
-    <view class="custom-button custom-next">Next Step</view>
+    <view class="custom-button custom-next">Next</view>
   </template>
+
   <template #finish>
     <view class="custom-button custom-finish">Finish</view>
   </template>
 </wd-tour>
 ```
 
-### Click Mask to Next
-
-Set whether clicking the mask proceeds to the next step via the `click-mask-next` prop.
-
-```html
-<wd-tour 
-  :model-value="showTour" 
-  :steps="steps" 
-  :click-mask-next="true"
-/>
-```
-
-### Custom Mask Style
-
-Customize mask style via `mask-color`, `offset`, `border-radius`, and `padding` props.
-
-```html
-<wd-tour 
-  :model-value="showTour" 
-  :steps="steps" 
-  mask-color="rgba(255, 0, 0, 0.6)"
-  :offset="40"
-  :border-radius="15"
-  :padding="20"
-/>
-```
-
-### Disable Mask
-
-Control whether to show the mask via the `mask` prop.
-
-```html
-<wd-tour 
-  :model-value="showTour" 
-  :steps="steps" 
-  :mask="false"
-/>
-```
+## Special Styles
 
 ### Control Current Step
 
-Control the current step via `v-model:current`.
+You can directly jump to a specified step externally through `v-model:current`.
 
-```html
-<view>
-  <wd-button @click="current = 2">Jump to Step 3</wd-button>
-  <wd-tour 
-    :model-value="showTour" 
-    :steps="steps" 
-    v-model:current="current"
-  />
-</view>
+```ts
+const controlCurrent = ref(0)
+
+function startControlTour() {
+  controlCurrent.value = 2
+  showControlTour.value = true
+}
 ```
 
-## Attributes
+## Tour Attributes
 
-| Attribute | Description | Type | Optional Values | Default |
-|------|------|------|--------|--------|
-| v-model | Whether to show the tour component | boolean | - | false |
-| steps | List of tour steps | array | - | [] |
-| current | Current step index, supports v-model:current binding | number | - | 0 |
-| mask | Whether to show the mask | boolean | - | true |
-| mask-color | Mask color (supports rgba format) | string | - | rgba(0, 0, 0, 0.5) |
-| offset | Spacing between the tooltip and the highlight box | number | - | 20 |
-| duration | Animation duration (ms) | number | - | 300 |
-| border-radius | Border radius of the highlight area | number | - | 8 |
-| padding | Padding of the highlight area | number | - | 8 |
-| prev-text | Text for the "Previous" button | string | - | Previous |
-| next-text | Text for the "Next" button | string | - | Next |
-| skip-text | Text for the "Skip" button | string | - | Skip |
-| finish-text | Text for the "Finish" button | string | - | Finish |
-| highlight-style | Style of the highlight area | object | - | - |
-| bottom-safety-offset | Bottom safety offset, used to ensure enough space around the element during scroll calculation | number | - | 100 |
-| top-safety-offset | Top safety offset, used to ensure enough space around the element during scroll calculation | number | - | 0 |
-| custom-nav | Whether the navigation bar is custom | boolean | - | false |
-| click-mask-next | Whether clicking the mask proceeds to the next step | boolean | - | false |
-| z-index | Z-index of the tour component | number | - | 999 |
-| show-tour-buttons | Whether to show tour buttons | boolean | - | true |
-| scope | Query scope (limit selector range) | object | - | - |
-| missing-strategy | Strategy for handling missing elements | 'skip' \| 'stop' \| 'hide' | - | stop |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| model-value | Whether to show guide component, supports `v-model` | `boolean` | `false` |
+| steps | Guide step list | <code>TourStep[]</code> | `[]` |
+| current | Current step index, supports `v-model:current` | `number` | `0` |
+| mask | Whether to show mask | `boolean` | `true` |
+| mask-color | Mask color | `string` | - |
+| offset | Spacing between guide panel and highlight area | `number` | `20` |
+| duration | Animation duration, in milliseconds | `number` | `300` |
+| border-radius | Highlight area border radius | `number` | `4` |
+| padding | Highlight area padding | `number` | `8` |
+| prev-text | Previous step button text | `string` | `Previous` |
+| next-text | Next step button text | `string` | `Next` |
+| skip-text | Skip button text | `string` | `Skip` |
+| finish-text | Finish button text | `string` | `Finish` |
+| bottom-safety-offset | Bottom safety offset, used for scroll calculation | `number` | `100` |
+| top-safety-offset | Top safety offset, used for scroll calculation | `number` | `0` |
+| custom-nav | Whether to enable custom navigation bar mode | `boolean` | `false` |
+| click-mask-next | Whether to proceed to next step when clicking mask layer | `boolean` | `false` |
+| highlight-style | Default highlight area style | <code>CSSProperties</code> | `{}` |
+| z-index | Z-index | `number` | - |
+| show-tour-buttons | Whether to show guide buttons | `boolean` | `true` |
+| scope | Query scope, limits selector lookup range | `unknown` | - |
+| missing-strategy | Processing strategy when target element is missing, optional values are `skip`, `stop`, `hide` | `MissingStrategy` | `stop` |
+| custom-class | Root node custom class name | `string` | `''` |
+| custom-style | Root node custom style | `string` | `''` |
 
-## Steps Data Structure
+## TourStep Attributes
 
-| Property | Description | Type |
-|------|------|------|
-| element | Selector for the element to highlight | string |
-| content | Guide text content (supports rich text) | string |
-| padding | Override padding for the current step | number |
-| offset | Override spacing between tooltip and highlight for the current step | number |
-| placement | Force tooltip placement | 'auto' \| 'top' \| 'bottom' \| 'left' \| 'right' |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| element | Element selector to highlight | `string` | - |
+| content | Step explanation, supports `rich-text` rendering | `string` | - |
+| padding | Override highlight padding for current step | `number` | - |
+| offset | Override panel spacing for current step | `number` | - |
+| placement | Force specify hint position, optional values are `auto`, `top`, `bottom`, `left`, `right` | `TourPlacement` | `auto` |
 
-## Events
+## Tour Events
 
 | Event Name | Description | Parameters |
-|--------|------|------|
-| change | Triggered when the step changes | `{ current: number }` |
-| prev | Triggered when the previous button is clicked | `{ prevCurrent: number, current: number, total: number, isElementInTop: boolean }` |
-| next | Triggered when the next button is clicked | `{ prevCurrent: number, current: number, total: number, isElementInTop: boolean }` |
-| finish | Triggered when the finish button is clicked | `{ current: number, total: number }` |
-| skip | Triggered when the skip button is clicked | `{ current: number, total: number }` |
-| error | Triggered when finding the guide element fails | `{ message: string, element: string }` |
+| --- | --- | --- |
+| change | Triggered when current step changes | `{ current: number }` |
+| prev | Triggered when clicking previous step | `{ prevCurrent, current, total, isElementInTop }` |
+| next | Triggered when clicking next step | `{ prevCurrent, current, total, isElementInTop }` |
+| finish | Triggered when clicking finish | `{ current, total }` |
+| skip | Triggered when clicking skip | `{ current, total }` |
+| error | Triggered when target element query fails | `{ message, element }` |
+| update:modelValue | Triggered when visibility state changes | `boolean` |
+| update:current | Triggered when current step changes | `number` |
 
-## Slots
+## Tour Methods
 
-| Slot Name | Description | Parameters |
-|--------|------|------|
-| highlight | Custom highlight area | elementInfo: Element position info |
+| Method Name | Description | Parameters | Return Value |
+| --- | --- | --- | --- |
+| handlePrev | Switch to previous step | - | - |
+| handleNext | Switch to next step | - | - |
+| handleFinish | Finish guide and close component | - | - |
+| handleSkip | Skip guide and close component | - | - |
+
+## Tour Slots
+
+| Name | Description | Parameters |
+| --- | --- | --- |
+| highlight | Custom highlight area | `{ elementInfo }` |
 | content | Custom guide content | - |
-| prev | Custom previous button | - |
-| next | Custom next button | - |
+| prev | Custom previous step button | - |
+| next | Custom next step button | - |
 | skip | Custom skip button | - |
 | finish | Custom finish button | - |
-
-## Methods
-
-You can get the component instance via ref and call the methods provided by the component:
-
-| Method Name | Description | Parameters |
-|--------|------|------|
-| handlePrev | Switch to the previous step | - |
-| handleNext | Switch to the next step | - |
-| handleSkip | Skip the tour | - |
-| handleFinish | Finish the tour | - |
-
-## Notes
-
-1. Ensure the element to highlight exists on the page and is selectable.
-2. In case of a custom navigation bar, set `custom-nav` and an appropriate `top-safety-offset` value.
-3. The tour component automatically handles scrolling to ensure the highlighted element is within the viewport.
-4. You can control whether to show the mask via the `mask` prop.
-5. When using a custom highlight area, be careful not to obscure the tour operation buttons.
-6. Slot usage might vary slightly across different platforms (H5, WeChat Mini Program, etc.).
-7. It is recommended to use `v-if` or `v-show` conditional rendering to ensure the component is initialized correctly.
-
-## Theme Customization
-
-The component supports theme customization via CSS variables. You can modify the following variables:
-
-```scss
-// Mask color
---wd-tour-mask-color: rgba(0, 0, 0, 0.5);
-
-// Guide popover background color
---wd-tour-popover-bg-color: #ffffff;
-
-// Button background color
---wd-tour-button-primary-bg-color: #007aff;
-
-// Button text color
---wd-tour-button-color: #ffffff;
-```
-
-## FAQ
-
-### Why do custom slots not show up in WeChat Mini Program?
-
-Issues may arise when combining conditional rendering with slots in WeChat Mini Program. It is recommended to use `v-show` instead of `v-if` or move the condition inside the slot.
-
-### Why does the highlight area flicker?
-
-This is usually caused by element information not being fully retrieved when the component initializes. The component has optimized the initial state to avoid flickering.
-
-### How to solve click issues?
-
-If the custom highlight area obscures operation buttons, you can adjust the `z-index` or modify the style of the custom highlight area to ensure buttons are clickable.

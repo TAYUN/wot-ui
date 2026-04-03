@@ -112,8 +112,14 @@ const ecosystemNavItems = [
   }
 ]
 const supportNavItems = [
-  { text: '🥤Buy Me a Coffee', link: '/en-US/reward/reward' },
+  { text: '🥤Buy Us a Coffee', link: '/en-US/reward/reward' },
+  { text: 'Become a Sponsor', link: '/en-US/reward/sponsor' },
   { text: 'About the Author', link: 'https://blog.wot-ui.cn/about' },
+]
+
+const versionNavItems = [
+  { text: 'v2 (Current)', link: 'https://wot-ui.cn' },
+  { text: 'v1', link: 'https://v1.wot-ui.cn' },
 ]
 
 export default defineConfig({
@@ -147,12 +153,16 @@ export default defineConfig({
         activeMatch: '/en-US/reward/',
         items: supportNavItems
       },
+      {
+        text: 'v2',
+        items: versionNavItems
+      },
     ],
     sidebar: {
       '/en-US/guide/': guideGroups,
       '/en-US/reward/': [
         {
-          text: '🥤Buy Me a Coffee',
+          text: '🥤Buy Us a Coffee',
           link: '/en-US/reward/reward',
         },
         {
@@ -160,7 +170,7 @@ export default defineConfig({
           link: '/en-US/reward/donor',
         },
         {
-          text: 'Sponsor',
+          text: 'Become a Sponsor',
           link: '/en-US/reward/sponsor',
         }
       ],

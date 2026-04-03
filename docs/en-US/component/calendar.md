@@ -1,520 +1,285 @@
 # Calendar
 
-Provides calendar single selection, multiple selection, range selection, week dimension, month dimension and other functions.
+Provides single selection, multiple selection, range, week/month, and datetime calendar selection capabilities.
 
-## Basic Usage
+::: tip Performance Tip
+It is not recommended to set too large a difference between `min-date` and `max-date`, as it may affect performance due to heavy date calculations. If you need a large time span, it is recommended to use `switch-mode` (e.g., `month` / `year-month`) to reduce rendering pressure.
+:::
 
-The default `type` is `date`, set `v-model` binding value (13-digit timestamp format), and listen to the `@confirm` event to get the selected value. The `min-date` minimum date defaults to 6 months before the current date, and the `max-date` maximum date defaults to 6 months after the current date. The calendar only displays dates between the minimum and maximum dates. The label is optional. You can set the title width through `label-width`, which defaults to '33%'.
+## Component Type
 
-> Try not to set `min-date` and `max-date` too large to avoid poor page performance due to calculation and transmission of large amounts of data.
-
-```html
-<wd-calendar v-model="value" label="Date Selection" @confirm="handleConfirm" />
-```
-
-```typescript
-const value = ref<number>(Date.now())
-function handleConfirm({ value }) {
-  console.log(value)
-}
-```
-
-## Multiple Date Selection
-
-Set `type` to `dates` type, at this time `value` is an array.
+### Single Date Selection
 
 ```html
-<wd-calendar type="dates" v-model="value" @confirm="handleConfirm" />
+<wd-cell-group border>
+  <wd-cell title="Single Date Selection" :value="formatValue(value1, 'date')" is-link @click="show1 = true" />
+</wd-cell-group>
+<wd-calendar v-model="value1" v-model:visible="show1" @confirm="handleConfirm" />
 ```
 
-```typescript
-const value = ref<number[]>([])
-function handleConfirm({ value }) {
-  console.log(value)
-}
-```
-
-## Week Selection
-
-Set `type` to `week` type. If `value` has an initial value, it is recommended to set the week start day `first-day-of-week` to 1 (Monday) to avoid mismatch between selected style and display.
+### Multiple Date Selection
 
 ```html
-<wd-calendar type="week" v-model="value" :first-day-of-week="1" @confirm="handleConfirm" />
+<wd-cell-group border>
+  <wd-cell title="Multiple Date Selection" :value="formatValue(value2, 'dates')" is-link @click="show2 = true" />
+</wd-cell-group>
+<wd-calendar type="dates" v-model="value2" v-model:visible="show2" />
 ```
 
-```typescript
-const value = ref<number>(Date.now())
-function handleConfirm({ value }) {
-  console.log(value)
-}
-```
-
-## Month Selection
-
-Set `type` to `month` type. When `value` has a value, its value is the first day of the month.
+### Range Selection
 
 ```html
-<wd-calendar type="month" v-model="value" @confirm="handleConfirm" />
+<wd-cell-group border>
+  <wd-cell title="Date Range Selection" :value="formatValue(value3, 'daterange')" is-link @click="show3 = true" />
+</wd-cell-group>
+<wd-calendar type="daterange" v-model="value3" v-model:visible="show3" />
 ```
 
-```typescript
-const value = ref<number>(Date.now())
-function handleConfirm({ value }) {
-  console.log(value)
-}
-```
-
-## Range Selection
-
-`type` supports `daterange` (date range selection), `weekrange` (week range selection), `monthrange` (month range selection) types. At this time, `value` is in array format.
+### Date Time Type
 
 ```html
-<wd-calendar type="daterange" v-model="value" @confirm="handleConfirm" />
+<wd-cell-group border>
+  <wd-cell title="Date Time Selection" :value="formatValue(value4, 'datetime')" is-link @click="show4 = true" />
+</wd-cell-group>
+<wd-calendar type="datetime" v-model="value4" v-model:visible="show4" />
 ```
-
-```typescript
-const value = ref<number[]>([])
-function handleConfirm({ value }) {
-  console.log(value)
-}
-```
-
-## Date Time Type
-
-Set `type` to `datetime` type to select down to hours, minutes, and seconds. Set `type` to `datetimerange` for range selection.
 
 ```html
-<wd-calendar type="datetime" v-model="value" @confirm="handleConfirm" />
+<wd-cell-group border>
+  <wd-cell title="Date Time Range Selection" :value="formatValue(value5, 'datetimerange')" is-link @click="show5 = true" />
+</wd-cell-group>
+<wd-calendar type="datetimerange" v-model="value5" v-model:visible="show5" />
 ```
 
-```typescript
-const value = ref<string>("")
-function handleConfirm({ value }) {
-  console.log(value)
-}
-```
-
-You can set `hide-second` to display time only to the minute level; set the `time-filter` property to customize the filtering of hour, minute, second options. This property accepts { type: string, values: array } parameters and returns a new array. The type value is 'hour', 'minute' or 'second', and values is the picker data list.
+### Week and Month Type
 
 ```html
-<wd-calendar type="datetime" v-model="value" @confirm="handleConfirm" hide-second :time-filter="timeFilter" />
+<wd-cell-group border>
+  <wd-cell title="Week Selection" :value="formatValue(value6, 'week')" is-link @click="show6 = true" />
+</wd-cell-group>
+<wd-calendar type="week" v-model="value6" v-model:visible="show6" />
 ```
-
-```typescript
-const value = ref<string>("")
-
-function timeFilter({ type, values }) {
-  if (type === "minute") {
-    // Only show 0,10,20,30,40,50 minute options
-    return values.filter((item) => {
-      return item % 10 === 0
-    })
-  }
-  return values
-}
-function handleConfirm({ value }) {
-  console.log(value)
-}
-```
-
-## Day/Week/Month Switch
-
-Set the `show-type-switch` property to display the day/week/month switch function. It supports switching between date, week, and month types (`date`, `week`, `month`). You can set the initial type through the `type` property. If `type` is a range type like `daterange`, then the calendar can switch between `daterange`, `weekrange`, and `monthrange`.
 
 ```html
-<wd-calendar label="Day/Week/Month Switch" :first-day-of-week="1" show-type-switch v-model="value" @confirm="handleConfirm" />
+<wd-cell-group border>
+  <wd-cell title="Month Selection" :value="formatValue(value7, 'month')" is-link @click="show7 = true" />
+</wd-cell-group>
+<wd-calendar type="month" :min-date="minDate" v-model="value7" v-model:visible="show7" />
 ```
 
-## Quick Operation
-
-Set the `show-confirm` property to `false` to not display the confirm button. This is only valid for `date`, `daterange`, `week`, `weekrange`, `month`, `monthrange` types.
+### Week Range and Month Range Selection
 
 ```html
-<wd-calendar label="Quick Operation" :show-confirm="false" v-model="value" @confirm="handleConfirm" />
+<wd-cell-group border>
+  <wd-cell title="Week Range Selection" :value="formatValue(value8, 'weekrange')" is-link @click="show8 = true" />
+</wd-cell-group>
+<wd-calendar :first-day-of-week="1" type="weekrange" v-model="value8" v-model:visible="show8" />
 ```
-
-## Allow Same Day Selection in Range
-
-Set the `allow-same-day` property to allow users to select the same day, same week, or same month in range selection.
 
 ```html
-<wd-calendar type="daterange" v-model="value" allow-same-day @confirm="handleConfirm" />
+<wd-cell-group border>
+  <wd-cell title="Month Range Selection" :value="formatValue(value9, 'monthrange')" is-link @click="show9 = true" />
+</wd-cell-group>
+<wd-calendar type="monthrange" v-model="value9" v-model:visible="show9" />
 ```
 
-## Date Formatting
+## Component State
 
-Set the `formatter` parameter, which is a function type that receives an `object` parameter and returns an object. The properties of the object remain consistent with the input parameters. Its properties are as follows:
+### Quick Operation
 
-| Property   | Type            | Description                                      | Version |
-| ---------- | --------------- | ------------------------------------------------ | ------- |
-| type       | CalendarDayType | See [CalendarDayType](#calendardaytype) for options | -       |
-| date       | timestamp       | 13-digit timestamp                               | -       |
-| text       | string          | Date text content                                | -       |
-| topInfo    | string          | Top prompt information                           | -       |
-| bottomInfo | string          | Bottom prompt information                        | -       |
-| disabled   | boolean         | Whether disabled                                 | -       |
-
-### CalendarDayType
-
-| Type             | Description                                           | Version |
-| ---------------- | ----------------------------------------------------- | ------- |
-| selected         | Single date selected                                  | -       |
-| start            | Range start date                                      | -       |
-| end              | Range end date                                        | -       |
-| middle           | Date between range start and end                      | -       |
-| same             | Range start and end date are the same day            | -       |
-| current          | Current date                                         | -       |
-| multiple-middle  | Multiple date range selection, dates between start and end | 1.5.0   |
-| multiple-selected| Multiple date range selection, selected dates         | 1.5.0   |
+After setting `show-confirm="false"`, confirmation occurs on selection.
 
 ```html
-<wd-calendar type="daterange" v-model="value" allow-same-day :formatter="formatter" @confirm="handleConfirm" />
+<wd-cell-group border>
+  <wd-cell title="Quick Operation" :value="formatValue(value16, 'date')" is-link @click="show16 = true" />
+</wd-cell-group>
+<wd-calendar v-model="value16" v-model:visible="show16" :show-confirm="false" />
 ```
 
-```typescript
-const value = ref<number[]>([])
+### before-confirm
 
-function handleConfirm({ value }) {
-  console.log(value)
-}
-
-const formatter = (day) => {
-  const date = new Date(day.date)
-  const now = new Date()
-  const year = date.getFullYear()
-  const month = date.getMonth()
-  const da = date.getDate()
-  const nowYear = now.getFullYear()
-  const nowMonth = now.getMonth()
-  const nowDa = now.getDate()
-
-  if (year === nowYear && month === nowMonth && da === nowDa) {
-    day.topInfo = 'Today'
-  }
-
-  if (month === 5 && da === 18) {
-    day.topInfo = '618 Sale'
-  }
-
-  if (month === 10 && da === 11) {
-    day.topInfo = 'JD Double 11'
-  }
-
-  if (day.type === 'start') {
-    day.bottomInfo = 'Start'
-  }
-
-  if (day.type === 'end') {
-    day.bottomInfo = 'End'
-  }
-
-  if (day.type === 'same') {
-    day.bottomInfo = 'Start/End'
-  }
-
-  return day
-}
-```
-
-## Quick Options
-
-Set the `shortcuts` property to configure a list of quick options. Pass the `on-shortcuts-click` property, which is a function that receives `{ item, index }` parameters, where `item` is the current option and `index` is the index of the current option. When a quick option is clicked, `on-shortcuts-click` is called and receives the new selected value of the calendar. The `text` field is required for options, and other fields can be passed as needed.
+Set `before-confirm` to intercept before confirmation, returning `false` or `Promise<false>` can prevent confirmation.
 
 ```html
+<wd-cell-group border>
+  <wd-cell title="before-confirm" :value="formatValue(value14, 'date')" is-link @click="show14 = true" />
+</wd-cell-group>
+<wd-calendar v-model="value14" v-model:visible="show14" :before-confirm="beforeConfirm" />
+```
+
+## Component Variant
+
+### Switch Mode
+
+Set `switch-mode` to control panel switch behavior:
+- `none`: Display flatly without switch buttons
+- `month`: Switch by month
+- `year-month`: Support switching by year and month
+
+```html
+<wd-radio-group v-model="switchMode" type="button">
+  <wd-radio value="none">none</wd-radio>
+  <wd-radio value="month">month</wd-radio>
+  <wd-radio value="year-month">year-month</wd-radio>
+</wd-radio-group>
+```
+
+### Day/Week/Month Switch
+
+Set `show-type-switch` to enable day/week/month switching.
+
+```html
+<wd-cell-group border>
+  <wd-cell title="Day/Week/Month Switch" :value="formatValue(value10, 'date')" is-link @click="show10 = true" />
+</wd-cell-group>
+<wd-calendar :first-day-of-week="1" show-type-switch v-model="value10" v-model:visible="show10" :switch-mode="switchMode" />
+```
+
+## Component Style
+
+### Date Formatting
+
+Set `formatter` to customize date cell text and status display.
+
+```html
+<wd-cell-group border>
+  <wd-cell title="Date Formatting" :value="formatValue(value11, 'daterange')" is-link @click="show11 = true" />
+</wd-cell-group>
+<wd-calendar type="daterange" v-model="value11" v-model:visible="show11" :formatter="formatter" />
+```
+
+### Custom Display
+
+Set `inner-display-format` to customize the start/end text in range selection panel.
+
+```html
+<wd-cell-group border>
+  <wd-cell title="Custom Display" :value="displayFormat(value13)" is-link @click="show13 = true" />
+</wd-cell-group>
 <wd-calendar
-  label="Quick Options"
+  type="daterange"
+  v-model="value13"
+  v-model:visible="show13"
+  :inner-display-format="innerDisplayFormat"
+/>
+```
+
+## Special Style
+
+### Shortcut Options
+
+Set `shortcuts` and `on-shortcuts-click` to implement shortcut date ranges.
+
+```html
+<wd-cell-group border>
+  <wd-cell title="Shortcut Options" :value="formatValue(value12, 'daterange')" is-link @click="show12 = true" />
+</wd-cell-group>
+<wd-calendar
   :shortcuts="shortcuts"
   :on-shortcuts-click="onShortcutsClick"
   type="daterange"
-  v-model="value"
-  @confirm="handleConfirm"
+  v-model="value12"
+  v-model:visible="show12"
 />
 ```
 
-```typescript
-const shortcuts = ref<Record<string, any>[]>([
-  {
-    text: 'Last 7 days',
-    id: 7
-  },
-  {
-    text: 'Last 15 days',
-    id: 15
-  },
-  {
-    text: 'Last 30 days',
-    id: 30
-  }
-])
-const value = ref<string>('')
+### Extend Confirm Area
 
-const onShortcutsClick = ({ item }) => {
-  const dayDiff = item.id
-  const endDate = Date.now() - 24 * 60 * 60 * 1000
-  const startDate = endDate - dayDiff * 24 * 60 * 60 * 1000
-
-  return [startDate, endDate]
-}
-
-function handleConfirm({ value }) {
-  console.log(value)
-}
-```
-
-## Custom Display
-
-Set the `display-format` property to customize the form display, and set the `inner-display-format` property to customize the internal panel display for range selection types.
-
-`display-format` is a function that receives two parameters: `value` (current value, which is a timestamp array when type is a range type, otherwise it is a number) and `type` (current calendar type).
-
-`inner-display-format` is a function that will be called twice, receiving three parameters: `value` (start date or end date, type is number), `rangeType` ('start' - start date, 'end' - end date), and `type` (current calendar type).
+Extend confirm area buttons through `confirm-left` / `confirm-right` slots.
 
 ```html
-<wd-calendar
-  label="Custom Display"
-  type="daterange"
-  v-model="value"
-  :display-format="displayFormat"
-  :inner-display-format="innerDisplayFormat"
-  @confirm="handleConfirm"
-/>
-```
-
-```typescript
-import { dayjs } from '@/uni_modules/wot-ui'
-
-const value = ref<string>('')
-
-const displayFormat = (value) => {
-  return dayjs(value[0]).format('YY年MM月DD日') + ' - ' + dayjs(value[1]).format('YY年MM月DD日')
-}
-
-const innerDisplayFormat = (value, rangeType) => {
-  if (!value) {
-    return rangeType === 'start' ? 'Start Time' : 'End Time'
-  }
-
-  return dayjs(value).format('YY年MM月DD日')
-}
-
-function handleConfirm({ value }) {
-  console.log(value)
-}
-```
-
-## Validation Before Confirmation
-
-Set the `before-confirm` function to run when the user clicks the `confirm` button. It receives the target `value`, returns `false` to prevent confirmation, and supports returning `Promise<boolean>`.
-
-```html
-<wd-toast />
-
-<wd-calendar label="before-confirm" v-model="value" :before-confirm="beforeConfirm" />
-```
-
-```typescript
-import { useToast } from '@/uni_modules/wot-ui'
-
-const toast = useToast()
-
-const value = ref<string>('')
-
-const beforeConfirm = (value) => {
-  if (value > Date.now()) {
-    toast.error('No data available for this date')
-    return false
-  }
-  return true
-}
-
-function handleConfirm({ value }) {
-  console.log(value)
-}
-```
-
-## Maximum Range Limit
-
-Set the `max-range` property to set the maximum limit for range selection.
-
-```html
-<wd-calendar type="daterange" :max-range="3" v-model="value" @confirm="handleConfirm" />
-```
-
-## Set Week Start Day
-
-Set the `first-day-of-week` property. The default is 0, which is Sunday. Setting it to 1 means Monday, and so on.
-
-## Extend Confirm Area Controls
-
-If you need to extend the confirm area controls, you can use the `confirm-left` and `confirm-right` slots, which correspond to the left and right positions of the confirm button respectively.
-
-```html
-<wd-calendar v-model="value">
+<wd-cell-group border>
+  <wd-cell title="Extend Confirm Area" :value="formatValue(value19, 'date')" is-link @click="show19 = true" />
+</wd-cell-group>
+<wd-calendar v-model="value19" v-model:visible="show19">
   <template #confirm-right>
     <wd-button block plain custom-style="margin-left: 10px;" @click="selectToday">Select Today</wd-button>
   </template>
 </wd-calendar>
 ```
 
-```typescript
-import { ref, nextTick } from 'vue'
-
-const value = ref<number>(Date.now())
-
-const selectToday = () => {
-  value.value = Date.now()
-  nextTick(() => {
-    value.value = getToday(false)
-  })
-}
-
-const getToday = <R extends boolean = false>(range?: R): R extends true ? [number, number] : number => {
-  const now = new Date()
-  now.setHours(0, 0, 0, 0)
-
-  if (!range) {
-    return now.getTime() as any
-  }
-  const end = new Date(now)
-  end.setHours(23, 59, 59, 999)
-  return [now.getTime(), end.getTime()] as any
-}
-```
-
-## Custom Picker
-
-If the default cell type display format does not meet your needs, you can customize the picker style through the default slot.
-
-```html
-<view style="margin-bottom: 10px;">Current selected date: {{ formatValue }}</view>
-<wd-calendar v-model="value" @confirm="handleConfirm">
-  <wd-button>Select Date</wd-button>
-</wd-calendar>
-```
-
-```typescript
-const value = ref<string>('')
-const formatValue = ref<string>('')
-
-function handleConfirm({ value }) {
-  formatValue.value = new Date(value).toString()
-}
-```
-
-## Using Component Instance Methods
-
-You can get the Calendar instance through ref and call instance methods. You can hide the internal cell picker through `with-cell`.
-
-```html
-<wd-button @click="openCalendar">Open Calendar</wd-button>
-
-<wd-calendar ref="calendar" :with-cell="false" v-model="value" @confirm="handleConfirm" />
-```
-
-```typescript
-import { ref } from 'vue'
-import type { CalendarInstance } from '@/uni_modules/wot-ui/components/wd-calendar/types'
-
-const calendar = ref<CalendarInstance>()
-const value = ref<number>(Date.now())
-
-function openCalendar() {
-  calendar.value?.open()
-}
-
-function closeCalendar() {
-  calendar.value?.close()
-}
-
-function handleConfirm({ value }) {
-  console.log(value)
-}
-```
-
 ## Attributes
 
-| Attribute | Description | Type | Options | Default | Version |
-|-----------|-------------|------|----------|---------|----------|
-| v-model | Selected value, 13-digit timestamp or timestamp array | null / number / array | - | - | - |
-| type | Date type | string | date / dates / datetime / week / month / daterange / datetimerange / weekrange / monthrange | date | - |
-| min-date | Minimum date, 13-digit timestamp | number | - | 6 months before current date | - |
-| max-date | Maximum date, 13-digit timestamp | number | - | 6 months after current date | - |
-| first-day-of-week | Week start day | number | - | 0 | - |
-| formatter | Date formatting function | function | - | - | - |
-| max-range | Maximum date range for range selection types | number | - | - | - |
-| range-prompt | Error message when selection exceeds maximum date range | string | - | Selection cannot exceed x days | - |
-| allow-same-day | Whether to allow selecting the same day in range selection | boolean | - | false | - |
-| default-time | Specific time of day for selected date | string / array | - | 00:00:00 | - |
-| time-filter | Filter function for time picker data, effective for 'datetime' or 'datetimerange' types | function | - | - | - |
-| hide-second | Whether to hide second modification for 'datetime' or 'datetimerange' types | boolean | - | false | - |
-| show-confirm | Whether to show confirm button | boolean | - | true | - |
-| show-type-switch | Whether to show type switch function | boolean | - | false | - |
-| shortcuts | Quick options, array of objects with required 'text' property | array | - | - | - |
-| title | Popup title | string | - | Select Date | - |
-| label | Picker left text | string | - | - | - |
-| placeholder | Picker placeholder | string | - | Please select | - |
-| disabled | Disabled state | boolean | - | false | - |
-| readonly | Read-only state | boolean | - | false | - |
-| display-format | Custom display text formatting function, returns a string | function | - | - | - |
-| inner-display-format | Custom panel internal display for range selection types, returns a string | function | - | - | - |
-| size | Set picker size | string | large | - | - |
-| label-width | Set left title width | string | - | 33% | - |
-| error | Whether in error state, right content is red in error state | boolean | - | false | - |
-| required | Required style | boolean | - | false | - |
-| marker-side | Position of the required marker | 'before' \| 'after' | - | 'before' | 1.12.0 |
-| center | Whether to vertically center | boolean | - | false | - |
-| ellipsis | Whether to hide overflow | boolean | - | false | - |
-| align-right | Display picker value aligned to the right | boolean | - | false | - |
-| before-confirm | Validation function before confirmation, receives target value, returns `false` to prevent confirmation, and supports `Promise<boolean>` | function | - | - | - |
-| close-on-click-modal | Whether to close when clicking mask | boolean | - | true | - |
-| z-index | Popup layer z-index | number | - | 15 | - |
-| safe-area-inset-bottom | Whether to set bottom safe area for popup panel (iPhone X type devices) | boolean | - | true | - |
-| prop | Form field `model` field name, required when using form validation | string | - | - | - |
-| rules | Form validation rules, used with `wd-form` component | `FormItemRule []` | - | `[]` | - |
-| immediate-change | Whether to trigger the picker-view's change event immediately when the finger is released. If not enabled, the change event will be triggered after the scrolling animation ends. Available from version 1.2.25, only supported on WeChat Mini Program and Alipay Mini Program. | boolean | - | false | 1.2.25 |
-| with-cell | Whether to use built-in cell picker | boolean | - | true | 1.5.0 |
-| clearable | Show clear button | boolean | - | false | 1.11.0 |
-| root-portal | Whether to detach from the page, used to solve various fixed positioning issues | boolean | - | false | 1.11.0 |
-
-### FormItemRule Data Structure
-
-| Key | Description | Type |
-|-----|-------------|------|
-| required | Whether required field | `boolean` |
-| message | Error message | `string` |
-| validator | Validate through function, can return a `Promise` for async validation | `(value, rule) => boolean \| Promise` |
-| pattern | Validate through regular expression, validation fails if regex doesn't match | `RegExp` |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| v-model | Selected value, 13-digit timestamp or timestamp array | `number \| number[] \| null` | - |
+| v-model:visible | Whether to show popup | boolean | false |
+| type | Date type, supports `date / dates / datetime / week / month / daterange / datetimerange / weekrange / monthrange` | string | date |
+| min-date | Minimum date timestamp | number | 6 months before current date |
+| max-date | Maximum date timestamp | number | 6 months after current date |
+| first-day-of-week | Week start day (0 means Sunday) | number | 0 |
+| formatter | Date formatting function | `CalendarFormatter` | - |
+| max-range | Maximum selectable range for range types | number | - |
+| range-prompt | Prompt text when exceeding maximum range | string | - |
+| allow-same-day | Whether to allow same day/week/month for range types | boolean | false |
+| default-time | Default time for date | `string \| string[]` | - |
+| time-filter | Time option filter function (datetime / datetimerange) | `CalendarTimeFilter` | - |
+| hide-second | Whether to hide second selection (datetime / datetimerange) | boolean | false |
+| title | Popup title | string | Select Date (built-in text) |
+| close-on-click-modal | Whether to close when clicking mask | boolean | true |
+| z-index | Popup z-index | number | 15 |
+| show-confirm | Whether to show confirm button | boolean | true |
+| confirm-text | Confirm button text | string | Confirm (built-in text) |
+| inner-display-format | Custom range panel internal display | `CalendarInnerDisplayFormat` | - |
+| ellipsis | Whether to omit range text display | boolean | false |
+| show-type-switch | Whether to show day/week/month switch | boolean | false |
+| shortcuts | Shortcut option list (items need to contain `text`) | `Record<string, any>[]` | `[]` |
+| on-shortcuts-click | Shortcut option click callback | `CalendarOnShortcutsClick` | - |
+| safe-area-inset-bottom | Whether to enable bottom safe area | boolean | true |
+| before-confirm | Validation function before confirm | `CalendarBeforeConfirm` | - |
+| custom-view-class | Panel internal view class name | string | `''` |
+| immediate-change | Whether to trigger time selection change event when finger is released | boolean | false |
+| root-portal | Whether to render outside page | boolean | false |
+| panel-height | Scrollable panel height | number | 316 |
+| show-panel-title | Whether to show scroll panel title | boolean | true |
+| switch-mode | Switch mode: `none` displays all months/years flatly without switch buttons; `month` supports month switching with previous/next month buttons; `year-month` supports year and month switching with previous/next year, previous/next month buttons. For large date spans, it is recommended to use `month` or `year-month` to reduce rendering pressure | string | none |
+| duration | Popup animation duration | number | 200 |
+| custom-class | Root node custom class name | string | `''` |
+| custom-style | Root node custom style | string | `''` |
 
 ## Events
 
-| Event Name | Description | Parameters | Version |
-|------------|-------------|------------|----------|
-| confirm | Triggered when binding value changes | `{ value, type }` | - |
-| change | Triggered when clicking panel date | `{ value }` | - |
-| cancel | Triggered when clicking close button or mask | - | - |
-| open | Triggered when calendar opens | - | - |
-| clear | Triggered when clicking clear button | - | 1.11.0 |
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| confirm | Triggered after clicking confirm | `{ value, type }` |
+| change | Triggered when panel date changes | `{ value }` |
+| cancel | Triggered when closed without confirmation | - |
+| open | Triggered when calendar opens | - |
 
 ## Methods
 
-| Method Name | Description | Parameters | Version |
-|-------------|-------------|------------|----------|
-| open | Open panel | - | - |
-| close | Close panel | - | - |
+| Method Name | Description | Parameters |
+| --- | --- | --- |
+| open | Open calendar popup | - |
+| close | Close calendar popup | - |
 
 ## Slots
 
-| Name | Description | Version |
-|------|-------------|----------|
-| default | Custom display | - |
-| label | Left slot | - |
-| confirm-left | Left slot of confirm button | 1.14.0 |
-| confirm-right | Right slot of confirm button | 1.14.0 |
+| name | Description |
+| --- | --- |
+| confirm-left | Confirm area left slot |
+| confirm-right | Confirm area right slot |
 
-## External Classes
+## CalendarDayItem Data Structure
 
-| Class Name | Description | Version |
-|------------|-------------|----------|
-| custom-class | Root node style | - |
-| custom-label-class | Label external custom style | - |
-| custom-value-class | Value external custom style | - |
+| Property | Description | Type |
+| --- | --- | --- |
+| type | Date status type | CalendarDayType |
+| date | 13-digit timestamp | number |
+| text | Date text content | string |
+| topInfo | Top tip info | string |
+| bottomInfo | Bottom tip info | string |
+| disabled | Whether disabled | boolean |
+
+### CalendarDayType
+
+| Type | Description |
+| --- | --- |
+| selected | Single date selected |
+| start | Range start date |
+| end | Range end date |
+| middle | Dates between range start and end |
+| same | Range start and end dates are the same |
+| current | Current date |
+| multiple-middle | Multiple date range selection, dates between start and end |
+| multiple-selected | Multiple date range selection, selected dates |

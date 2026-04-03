@@ -1,52 +1,34 @@
 # Loading
 
-Loading animation, used to indicate a transitional loading state.
+Loading animation, used to indicate the transition state of loading.
 
-## Basic Usage
+## Component Type
 
-Basic usage, suitable for button loading states and page light prompts.
+### Type
+
+Set the indicator type through the `type` property. Optional values are `circular`, `spinner`, `dots`, default is `circular`.
 
 ```html
 <wd-loading />
-```
-
-## Modify Indicator Type
-
-Adjust the indicator appearance with the `type` property. Available values are `'ring'` (default ring), `'outline'` (outlined ring), and `'spinner'` (windmill spinner for stronger motion feedback).
-
-```html
-<wd-loading type="outline" />
 <wd-loading type="spinner" />
+<wd-loading type="dots" />
 ```
 
-## Modify Color
+## Component Style
 
-Modify the indicator color through the `color` property. For example, change it to white and set the background to black.
+### Color
 
-:::warning
-In mini-programs, there is no svg tag, so the svg tag is first generated through js and then converted to base64. Therefore, the indicator color must be a hexadecimal color value and does not accept abbreviated color values.
-:::
+Modify the indicator color through the `color` property.
 
 ```html
-<wd-loading color="#ffffff" custom-class="loading-black" />
-
-<!-- The following are incorrect usages -->
-<wd-loading color="#fff" />
-<wd-loading color="green" />
-<wd-loading color="rgba(255,255,255,1)" />
+<wd-loading color="#fa34aa" />
+<wd-loading type="spinner" color="#fa34aa" />
+<wd-loading type="dots" color="#fa34aa" />
 ```
 
-```scss
-:deep(.loading-black) {
-  background: rgba(0, 0, 0, 0.7);
-  padding: 10px;
-  border-radius: 4px;
-}
-```
+### Size
 
-## Modify Indicator Size
-
-Set the indicator size through the `size` property, default size is '32px', property supports `number`/`string` types.
+Set the indicator size through the `size` property, supporting `number` / `string` types.
 
 ```html
 <wd-loading :size="20" />
@@ -54,16 +36,44 @@ Set the indicator size through the `size` property, default size is '32px', prop
 <wd-loading size="50px" />
 ```
 
+## Content Form
+
+### Display Text
+
+Set the loading text through the `text` property or the default slot.
+
+```html
+<wd-loading text="Loading..."></wd-loading>
+<wd-loading>Loading...</wd-loading>
+<wd-loading type="spinner">Loading...</wd-loading>
+```
+
+### Horizontal Direction
+
+Set the arrangement direction of text and indicator through the `direction` property. Optional values are `vertical`, `horizontal`, default is `vertical`.
+
+```html
+<wd-loading direction="horizontal" text="Loading..."></wd-loading>
+<wd-loading direction="horizontal">Loading...</wd-loading>
+<wd-loading direction="horizontal" type="spinner">Loading...</wd-loading>
+```
+
 ## Attributes
 
-| Parameter | Description | Type | Options | Default | Version |
-|-----------|-------------|------|----------|---------|----------|
-| type | Loading indicator type | string | ring / outline / spinner | ring | - |
-| color | Set loading indicator color | string | - | #4D80F0 | - |
-| size | Set loading indicator size | number / string | - | 32px | - |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| type | Loading indicator type, optional values are `circular`, `spinner`, `dots` | `LoadingType` | `circular` |
+| color | Set loading indicator color | `string` | - |
+| size | Set loading indicator size | `number \| string` | - |
+| text | Loading indicator text | `string` | - |
+| direction | Arrangement direction, optional values are `vertical`, `horizontal` | `LoadingDirection` | `vertical` |
+| inherit-color | Whether to inherit parent element color | `boolean` | `false` |
+| custom-class | Root node style class name | `string` | - |
+| custom-style | Root node style | `string` | - |
+| custom-spinner-class | Custom loading indicator style class | `string` | - |
 
-## External Classes
+## Slots
 
-| Class Name | Description | Version |
-|------------|-------------|----------|
-| custom-class | Root node style | - |
+| name | Description |
+| --- | --- |
+| default | Loading text content |

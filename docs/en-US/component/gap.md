@@ -1,43 +1,68 @@
 # Gap
 
-Generally used to replace margin or padding in page layout; or serve as a (bottom) placeholder element.
+Used for spacing placeholders in page layout, can replace `margin` or `padding`, or as a bottom placeholder element.
 
-## Basic Usage
+## Component Type
 
-Set the title through the `height` property and background color through the `background` property.
+### Basic Usage
+
+Default renders a gap with height `14px` and transparent background.
 
 ```html
-<wd-gap bg-color="#FFFFFF"></wd-gap>
+<wd-gap />
 ```
 
-## Custom Background Color
+## Component Variant
+
+### Custom Background Color
+
+Set background color through `bg-color`.
 
 ```html
-<wd-gap bg-color="#4D80F0"></wd-gap>
+<wd-gap bg-color="#4D80F0" />
 ```
 
-## Custom Height
+### Custom Height
+
+Set height through `height`, supports numbers and strings with units.
 
 ```html
-<wd-gap bg-color="#4D80F0" height="120rpx"></wd-gap>
+<wd-gap bg-color="#4D80F0" height="120rpx" />
 ```
 
-## Bottom Safe Area
+## Component Style
+
+### Custom Class Name
+
+Extend styles through `custom-class`.
 
 ```html
-<wd-gap safe-area-bottom height="0"></wd-gap>
+<wd-gap custom-class="custom-gap" />
+```
+
+```css
+.custom-gap {
+  padding-bottom: 120rpx;
+  background: #34d19d !important;
+}
+```
+
+## Special Style
+
+### Bottom Safe Area
+
+After enabling `safe-area-bottom`, bottom safe area padding will be automatically appended, suitable for bottom fixed placeholder scenarios.
+
+```html
+<wd-gap safe-area-bottom height="0" />
 ```
 
 ## Attributes
 
-| Parameter      | Description                | Type                | Options     | Default     | Version |
-|----------------|----------------------------|---------------------|-------------|-------------|----------|
-| height         | Height                     | `string`/`number`   | -           | 15          | -        |
-| bgColor        | Background color           | string             | -           | transparent | -        |
-| safeAreaBottom | Enable bottom safe area    | boolean            | true/false  | false       | -        |
-
-## External Classes
-
-| Class Name    | Description      | Version |
-|---------------|------------------|----------|
-| custom-class  | Custom style     | -        |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| height | Gap height, supports numbers (unit `px`) or strings (such as `20rpx`) | `string \| number` | `14` |
+| bg-color | Background color | `string` | `'transparent'` |
+| safe-area-bottom | Whether to enable bottom safe area adaptation | `boolean` | `false` |
+| custom-class | Root node custom class name | `string` | `''` |
+| custom-style | Root node custom style | `string` | `''` |

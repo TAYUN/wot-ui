@@ -1,28 +1,32 @@
+---
+version: New
+---
+
 # Skills
 
-Skills are reusable capability templates for AI. They package a complete approach for solving a specific kind of problem. Wot UI also provides skills that can be used directly in AI tools, making the generated results more aligned with the component library.
+Skills are "superpower templates" for AI, a complete, reusable solution that can solve specific problems. Wot UI also provides some directly reusable Skills for you to quickly gain capabilities more closely aligned with the component library in AI tools.
 
 ## Available Resources
 
-- [skills.sh](https://skills.sh/?q=wot-ui) - An open Agent Skills ecosystem that includes Wot UI related skills
-- [wot-starter](https://starter.wot-ui.cn/guide/skills.html) - A Wot UI starter template with built-in Wot UI skills
+- [skills.sh](https://skills.sh/?q=wot-ui) - Open Agent Skills ecosystem, collecting a large number of skills, including Wot UI related skills.
+- [wot-starter](https://starter.wot-ui.cn/guide/skills.html) - Wot UI's quick start template, built-in Wot UI related skills.
 
-## Use in AI Tools
+## Using in AI Tools
 
-The recommended way is to install skills with the script below and select the Wot UI skill set you need:
+It is recommended to use scripts to install Skills. You can choose installation items according to actual needs:
 
 ```sh
 npx skills add https://github.com/wot-ui/wot-starter --skill wot-ui
 ```
 
-## Typical Scenarios
+## Applicable Scenarios
 
 - Create or extend Wot UI components
-- Generate demo pages and documentation
-- Add component tests
-- Migrate design tokens or themes
+- Generate Demo pages and documentation
+- Supplement component tests
+- Migrate design system variables or themes
 
 ## Further Reading
 
-- [llms.txt](/en-US/guide/llms-txt)
-- [Agent Skills, Rules, Prompt, MCP: A Clear Overview](https://juejin.cn/post/7599268297201958950)
+- [llms.txt](/guide/llms-txt)
+- [Agent Skills, Rules, Prompt, MCP, Clarifying Them in One Article](https://juejin.cn/post/7599268297201958950)

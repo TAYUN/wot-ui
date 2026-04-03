@@ -3,25 +3,28 @@ version: 1.11.0
 ---
 # Root Portal
 
-Whether to break out of the page, used to solve various fixed positioning issues, mainly used for making popups and overlays.
+Detaches content from the page structure, used to solve various `fixed` positioning issues. Mainly used for creating modals, popups, and other overlay components.
 
 :::tip Tip
-The root portal component only supports `WeChat Mini Program`, `Alipay Mini Program`, `APP` and `H5` platforms. The component automatically chooses the appropriate implementation based on the platform:
+The Root Portal component only supports `WeChat Mini Program`, `Alipay Mini Program`, `APP`, and `H5` platforms. The component automatically selects the appropriate implementation based on the platform:
 
-- **H5**: Uses `teleport` feature
-- **WeChat Mini Program and Alipay Mini Program**: Uses `root-portal` component
+- **H5**: Uses the `teleport` feature
+- **WeChat and Alipay Mini Programs**: Uses the `root-portal` component
 - **App**: Uses renderjs implementation
-- **Other platforms**: Not supported
+- **Other platforms**: This feature is not supported
 
-This feature is mainly used to solve the hierarchy and positioning problems of popups in complex layouts, and is recommended only when needed.
+This feature is mainly used to solve z-index and positioning issues for popups in complex layouts. It is recommended to use only when necessary.
 :::
 
-## Basic Usage
+## Component Types
 
-Use `wd-root-portal` to render content to the root node, avoiding style interference from parent components.
+### Basic Usage
+
+Use `wd-root-portal` to render content to the root node, avoiding parent component style interference.
 
 ```html
 <wd-button type="primary" @click="show = true">Show Modal</wd-button>
+
 <wd-root-portal v-if="show">
   <view class="modal">
     <view class="modal-content">
@@ -48,22 +51,46 @@ Use `wd-root-portal` to render content to the root node, avoiding style interfer
 
 .modal-content {
   background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
+  padding: 24px;
+  border-radius: 12px;
+  width: 280px;
   text-align: center;
 }
 ```
 
-## Attributes
+## Special Styles
 
-This component has no attribute configuration.
+### Using with Popup Components
 
-## Events
+Some popup components natively support the `root-portal` attribute, such as `wd-select-picker`. In these scenarios, an external trigger is still needed to control the popup visibility, and then the root portal capability is enabled through the component attribute.
 
-This component has no events.
+```html
+<wd-cell title="Select Category" :value="selectedLabel" is-link @click="showPicker = true" />
+<wd-select-picker v-model="value" v-model:visible="showPicker" :columns="columns" root-portal @confirm="handleConfirm" />
+```
+
+```typescript
+import { ref } from 'vue'
+
+const showPicker = ref(false)
+const value = ref<string[]>([])
+const selectedLabel = ref('')
+const columns = ref([
+  { value: '101', label: 'Men\'s Clothing' },
+  { value: '102', label: 'Luxury' },
+  { value: '103', label: 'Women\'s Clothing' }
+])
+
+function handleConfirm({ value }: { value: string[] }) {
+  selectedLabel.value = columns.value
+    .filter((item) => value.includes(item.value))
+    .map((item) => item.label)
+    .join('、')
+}
+```
 
 ## Slots
 
-| Name    | Description                    | Version |
-| ------- | ------------------------------ | ------- |
-| default | Default slot for portal content | 1.11.0  | 
+| Name | Description |
+| --- | --- |
+| default | Default slot for rendering the portal content |

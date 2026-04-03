@@ -1,121 +1,120 @@
 # Custom Theme
 
-Every component in Wot UI basically has a custom class name custom-class, which can be added to your page's class name at the component's root node for style modification.
+In `V2` version, the component theme system is built based on [CSS Variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Cascading_variables/Using_custom_properties). By overriding these CSS variables, you can achieve theme customization, dynamic theme switching, local customization, and component-level overrides.
 
-## Theme Introduction
+## Theme Variables
+`Design Token` is the smallest entity in design that carries design decisions, which is the theme variable. Our `Design Token` adopts a three-layer architecture: basic variables, semantic variables, and component variables. By modifying `Design Token`, different component styles can be achieved. Here [theme](https://github.com/wot-ui/wot-ui/tree/main/src/uni_modules/wot-ui/styles/theme) you can see all `Design Tokens` of the component library.
 
-### Main Variables Introduction
+### Basic Variables
 
-The following style variables are used in multiple components. By modifying these main variables, you can quickly define a custom theme.
+Basic variables are pure visual constants with no business semantics, such as:
+```css
+--wot-blue-6: #1C64FDFF;
+```
 
-**Theme Color**:
+### Semantic Variables
+Semantic variables are variables that give design decisions business meaning. They map basic variables to specific business scenarios, such as:
+```css
+--wot-primary-6: var(--wot-blue-6);
+```
 
-<div class="style-block" style="background: #4D80F0;">
-  <p>Theme Color</p>
-  <p>$-color-theme: #4D80F0</p>
-</div>
+### Component Variables
+Component variables are the top layer of the `Design Token` three-layer architecture, directly associated with specific UI component attributes. By referencing semantic variables, design decisions are mapped to specific parts of components (such as background color, text color, borders, icons, etc.), thereby achieving encapsulation and management of component styles, such as:
+```css
+--wot-button-primary-bg: var(--wot-primary-6);
+```
 
-**Theme Brand Color - Small Gradient (Button, weaker gradient)**:
-<div class="color-wrapper">
-  <span class="style-block liner-color" style="background: linear-gradient(315deg, rgba(79,124,248,1) 0%,rgba(102,141,248,1) 100%);">
-    <span class="a-dot"></span>
-    <span class="b-dot"></span>
-  </span>
+## Global Customization
+When you want the entire application to use the same brand visual, it is recommended to achieve this through global coverage of [semantic variables](https://github.com/wot-ui/wot-ui/tree/main/src/uni_modules/wot-ui/styles/theme/light.scss). If you want to implement complete theme customization, it is recommended to use [preset themes](#preset-themes).
 
-  <div class="demo-right">
-    <i>Gradient angle 45 degrees, lighter in top left, darker in bottom right</i>
-    <ul>
-      <li>A: <span class="color-block" style="background: #668DF8">#668DF8</span></li>
-      <li>B: <span class="color-block" style="background: #4F7CF8">#4F7CF8</span></li>
-    </ul>
-  </div>
-</div>
+```scss
+/* App.vue */
+page,
+.wd-root-portal {
+  --wot-primary-5: #4096ff;
+  --wot-primary-6: #1677ff;
+  --wot-primary-7: #0958d9;
+}
+```
 
-**Brand Color - Large Gradient (Large background/plugin icon background, stronger gradient)**:
+## Local Customization
+When you only want the theme to take effect within a certain page, module, or component tree, it is recommended to use [ConfigProvider](/component/config-provider).
 
-<div class="color-wrapper">
-  <span class="style-block liner-color liner-color1" style="background: linear-gradient(315deg, rgba(81,124,240,1) 0%,rgba(118,158,245,1) 100%);">
-    <span class="a-dot"></span>
-    <span class="b-dot"></span>
-  </span>
+```vue
+<script setup lang="ts">
+import { reactive } from 'vue'
+import type { ConfigProviderThemeVars } from '@wot-ui/ui'
 
-  <div class="demo-right">
-    <i>Gradient angle 45 degrees, lighter in top right, darker in bottom left</i>
-    <ul>
-      <li>A: <span class="color-block" style="background: #769EF5">#769EF5</span></li>
-      <li>B: <span class="color-block" style="background: #517CF0">#517CF0</span></li>
-    </ul>
-  </div>
-</div>
+const themeVars = reactive<ConfigProviderThemeVars>({
+  primary6: '#07c160',
+})
+</script>
 
-**Function Colors**:
+<template>
+  <wd-config-provider :theme-vars="themeVars">
+    <wd-button type="primary">Submit</wd-button>
+  </wd-config-provider>
+</template>
+```
 
-<div class="style-block" style="background: #4D80F0;">
-  <p>Theme Color</p>
-  <p>$-color-theme: #4D80F0</p>
-</div>
-<div class="style-block" style="background: #34d19d;">
-  <p>Success Color</p>
-  <p>$-color-success: #34d19d</p>
-</div>
-<div class="style-block" style="background: #f0883a;">
-  <p>Warning Color</p>
-  <p>$-color-warning: #f0883a</p>
-</div>
-<div class="style-block" style="background: #fa4350;">
-  <p>Danger Color</p>
-  <p>$-color-danger: #fa4350</p>
-</div>
+### Component-level Local Override
 
-**Auxiliary Colors**:
+If you only want to adjust a specific component, you can also directly override component variables under the class name scope:
 
-<div class="style-block" style="background: #8268de;">
-  <p>#8268de</p>
-</div>
-<div class="style-block" style="background: #fa4350;">
-  <p>#fa4350</p>
-</div>
-<div class="style-block" style="background: #f0883a;">
-  <p>#f0883a</p>
-</div>
-<div class="style-block" style="background: #f0cf1d;">
-  <p>#f0cf1d</p>
-</div>
-<div class="style-block" style="background: #34d19d;">
-  <p>#34d19d</p>
-</div>
-<div class="style-block" style="background: #2bb3ed;">
-  <p>#2bb3ed</p>
-</div>
+```css
+.marketing-banner {
+  --wot-button-primary-bg: #7c3aed;
+  --wot-button-primary-color: #ffffff;
+}
+```
 
-### Neutral Colors
+## Preset Themes
 
-Neutral colors are used for text, background, and border colors. Different neutral colors are used to express hierarchical structure.
+If you need to maintain multiple reusable themes, such as Brand A, Brand B, or want to dynamically switch themes, it is recommended to organize them using independent SCSS theme files.
 
-<ul class="color-group">
-  <li class="color-group-line" style="background: rgba(0,0,0,1);color: #fff">100%<div>Important Text</div></li>
-  <li class="color-group-line" style="background: rgba(0,0,0,0.85);color: #fff">85%<div>Normal Text</div></li>
-  <li class="color-group-line" style="background: rgba(0,0,0,0.65);color: #fff">65%<div>Mask, Secondary Text<br/>Only used when hierarchy is complex</div></li>
-  <li class="color-group-line" style="background: rgba(0,0,0,0.45);color: #fff">45%<div>Auxiliary Text, Secondary Button Border</div></li>
-  <li class="color-group-line" style="background: rgba(0,0,0,0.25);color: rgba(0,0,0,0.65)">25%<div>Disabled, Default Prompt Text</div></li>
-  <li class="color-group-line" style="background: rgba(0,0,0,0.15);color: rgba(0,0,0,0.65)">15%<div>Control Border</div></li>
-  <li class="color-group-line" style="background: rgba(0,0,0,0.09);color: rgba(0,0,0,0.65)">9%<div>Use solid color #E8E8E8 if cross-used</div></li>
-  <li class="color-group-line" style="background: rgba(0,0,0,0.04);color: rgba(0,0,0,0.65)">4%<div>Background Color, Disabled Fill Color</div></li>
-  <li class="color-group-line" style="background: rgba(0,0,0,0.02);color: rgba(0,0,0,0.65)">2%<div>Table Header Fill Color</div></li>
-</ul>
+Currently, we provide examples of multiple themes in [src/theme/presets.scss](https://github.com/wot-ui/wot-ui/tree/main/src/theme/presets.scss), including `shadcn`, `cartoon`, `illustration`, `nutui`, `vant`, `tdesign` and other themes.
+::: code-group
+```scss [css]
+/* src/theme/brand-a.scss */
+@mixin brand-a-theme-vars {
+  --wot-primary-1: #e8f3ff;
+  --wot-primary-2: #c7e0ff;
+  --wot-primary-6: #1677ff;
+  --wot-primary-7: #0958d9;
 
-<ul class="color-group dark">
-  <li class="color-group-line" style="background: rgba(255,255,255,1);color: rgba(0,0,0,0.65)">100%<div>Important Text</div></li>
-  <li class="color-group-line" style="background: rgba(255,255,255,0.85);color: rgba(0,0,0,0.65)">85%<div>Normal Text</div></li>
-  <li class="color-group-line" style="background: rgba(255,255,255,0.65);color: rgba(0,0,0,0.65)">65%<div>Mask, Secondary Text<br/>Only used when hierarchy is complex</div></li>
-  <li class="color-group-line" style="background: rgba(255,255,255,0.45);color: rgba(255,255,255,0.65)">45%<div>Auxiliary Text, Secondary Button Border</div></li>
-  <li class="color-group-line" style="background: rgba(255,255,255,0.25);color: rgba(255,255,255,0.65)">25%<div>Disabled, Default Prompt Text</div></li>
-  <li class="color-group-line" style="background: rgba(255,255,255,0.15);color: rgba(255,255,255,0.65)">15%<div>Control Border</div></li>
-  <li class="color-group-line" style="background: rgba(255,255,255,0.09);color: rgba(255,255,255,0.65)">9%<div>Use solid color #E8E8E8 if cross-used</div></li>
-  <li class="color-group-line" style="background: rgba(255,255,255,0.04);color: rgba(255,255,255,0.65)">4%<div>Background Color, Disabled Fill Color</div></li>
-  <li class="color-group-line" style="background: rgba(255,255,255,0.02);color: rgba(255,255,255,0.65)">2%<div>Table Header Fill Color</div></li>
-</ul>
+  --wot-text-main: #1d1f29;
+  --wot-text-secondary: #4e5369;
+  --wot-border-main: #e5e6eb;
+  --wot-filled-bottom: #f7f8fa;
+}
 
-## Customize Theme
+.wot-theme-brand-a,
+.wot-theme-brand-a .wd-root-portal {
+  @include brand-a-theme-vars();
+}
+```
 
-We provide CSS variables for each component. You can refer to the [config-provider](../component/config-provider) component's usage guide to customize the theme.
+```scss [App.vue]
+/* App.vue */
+<!-- Import theme variables in entry file -->
+@use './uni_modules/wot-ui/styles/theme/index.scss' as *;
+@use './theme/brand-a.scss' as *;
+```
+```html [config-provider]
+<!-- Configure theme variables in `config-provider` -->
+<template>
+  <wd-config-provider theme="brand-a">
+    <wd-button type="primary">Submit</wd-button>
+  </wd-config-provider>
+</template>
+```
+:::
+
+### Skills
+If you are a `vibe coding` user, we also provide [Skills](https://github.com/wot-ui/wot-ui/tree/main/.agents/skills/generate-theme) to help developers generate custom themes, welcome to use.
+
+
+## Related Documentation
+
+- [ConfigProvider Global Configuration](/component/config-provider)
+- [useConfigProvider](/component/use-config-provider)

@@ -4,9 +4,11 @@ version: 1.14.0
 
 # Avatar
 
-Used to represent users or objects, supporting images, text, or icons.
+Used to represent users or things, supporting image, text, or icon display.
 
-## Basic Usage
+## Component Type
+
+### Basic Usage
 
 Avatar supports three types: image, text, and icon.
 
@@ -20,35 +22,68 @@ const avatarURL = 'https://wot-ui.cn/assets/panda.jpg'
 <wd-avatar icon="user" />
 ```
 
-## Shape
+### Avatar Group Basic Usage
 
-Use the `shape` prop to set the avatar shape, supports `round` and `square`, default is `round`.
+Use `wd-avatar-group` component to display a group of avatars.
+
+```html
+<wd-avatar-group>
+  <wd-avatar :src="avatarURL" />
+  <wd-avatar icon="star-fill" />
+  <wd-avatar text="A" bg-color="#1E90FF" />
+  <wd-avatar text="B" bg-color="#228B22" />
+</wd-avatar-group>
+```
+
+## Component State
+
+### Clickable
+
+Implement click functionality by listening to `click` event.
+
+```html
+<wd-avatar size="large" :src="avatarURL" @click="handleClick" />
+<wd-avatar size="large" text="Click Me" bg-color="#1E90FF" @click="handleClick" />
+```
+
+```typescript
+import { useToast } from '@/uni_modules/wot-ui'
+
+const toast = useToast()
+
+const handleClick = () => {
+  toast.show('Avatar clicked')
+}
+```
+
+## Component Style
+
+### Avatar Shape
+
+Use `shape` property to set avatar shape, supports `round` (circle) and `square` (square), default is `round`.
 
 ```html
 <wd-avatar :src="avatarURL" shape="square" />
 <wd-avatar :src="avatarURL" shape="round" />
 ```
 
-## Size
+### Avatar Size
 
-Supports preset sizes: `large`, `medium`, `normal`, `small`, default is `normal`. Also supports passing a number or string with units (like `40px`, `100rpx`) for custom sizes.
+Supports preset sizes: `large`, `medium`, `normal`, `small`, default is `normal`. Can also pass number or string with unit (e.g., `40px`, `100rpx`) for custom size.
 
 ```html
-<!-- Preset Sizes -->
 <wd-avatar :src="avatarURL" size="large" />
 <wd-avatar :src="avatarURL" size="medium" />
 <wd-avatar :src="avatarURL" size="normal" />
 <wd-avatar :src="avatarURL" size="small" />
-
-<!-- Custom Sizes -->
 <wd-avatar :src="avatarURL" :size="80" />
-<wd-avatar :src="avatarURL" size="60px" />
-<wd-avatar :src="avatarURL" size="100rpx" />
+<wd-avatar :src="avatarURL" :size="60" />
+<wd-avatar :src="avatarURL" size="40px" />
 ```
 
-## Custom Color
+### Custom Colors
 
-Use `bg-color` and `color` props to customize background and text colors.
+Use `bg-color` and `color` properties to customize background color and text color.
 
 ```html
 <wd-avatar bg-color="#DC143C" color="#fff" text="W" />
@@ -57,9 +92,11 @@ Use `bg-color` and `color` props to customize background and text colors.
 <wd-avatar bg-color="#EEEEEE" color="#7B8198" icon="user" />
 ```
 
-## Avatar with Badge
+## Special Style
 
-Display badge with Badge component.
+### Avatar with Badge
+
+Combine with Badge component to display badge.
 
 ```html
 <wd-badge modelValue="10" type="primary">
@@ -76,75 +113,45 @@ Display badge with Badge component.
 </wd-badge>
 ```
 
-## Custom Content
+## Content Form
 
-Use the default slot to customize avatar content.
+### Custom Content
+
+Use default slot to customize avatar content.
 
 ```html
 <wd-avatar>
   <view class="custom-content">VIP</view>
 </wd-avatar>
 <wd-avatar>
-  <wd-icon name="star-on" size="24px" color="#f0883a" />
+  <wd-icon name="star-fill" size="24px" color="#f0883a" />
 </wd-avatar>
 ```
 
-## Clickable
+## Layout Capability
 
-Implement click functionality by listening to the `click` event.
+### Avatar Group Max Count
 
-```html
-<wd-avatar :src="avatarURL" @click="handleClick" />
-<wd-avatar text="Click" bg-color="#1E90FF" @click="handleClick" />
-```
-
-```typescript
-import { useToast } from '@/uni_modules/wot-ui'
-
-const toast = useToast()
-
-const handleClick = () => {
-  toast.show('Avatar clicked')
-}
-```
-
-## Avatar Group
-
-Use `wd-avatar-group` component to display a group of avatars.
-
-### Basic Usage
-
-```html
-<wd-avatar-group>
-  <wd-avatar :src="avatarURL" />
-  <wd-avatar icon="star-on" />
-  <wd-avatar text="A" bg-color="#1E90FF" />
-  <wd-avatar text="B" bg-color="#228B22" />
-</wd-avatar-group>
-```
-
-### Max Count
-
-Use `max-count` prop to limit the number of displayed avatars, excess avatars will be shown as `+N`.
+Use `max-count` property to limit the number of displayed avatars, excess will be shown as `+N`.
 
 ```html
 <wd-avatar-group :max-count="3">
   <wd-avatar :src="avatarURL" />
-  <wd-avatar icon="star-on" />
+  <wd-avatar icon="star-fill" />
   <wd-avatar text="A" bg-color="#1E90FF" />
   <wd-avatar text="B" bg-color="#228B22" />
   <wd-avatar text="C" bg-color="#DC143C" />
 </wd-avatar-group>
 ```
 
-### Cascading Direction
+### Avatar Group Cascading Direction
 
-Use `cascading` prop to set the cascading direction, supports `left-up` (left avatars on top) and `right-up` (right avatars on top).
+Use `cascading` property to set cascading direction, supports `left-up` (left side on top) and `right-up` (right side on top).
 
 ```html
 <wd-avatar-group cascading="left-up" :max-count="4">
   <wd-avatar :src="avatarURL" />
-  <wd-avatar icon="star-on" />
+  <wd-avatar icon="star-fill" />
   <wd-avatar text="A" bg-color="#1E90FF" />
   <wd-avatar text="B" bg-color="#228B22" />
   <wd-avatar text="C" bg-color="#DC143C" />
@@ -152,88 +159,79 @@ Use `cascading` prop to set the cascading direction, supports `left-up` (left av
 
 <wd-avatar-group cascading="right-up" :max-count="4">
   <wd-avatar :src="avatarURL" />
-  <wd-avatar icon="star-on" />
+  <wd-avatar icon="star-fill" />
   <wd-avatar text="A" bg-color="#1E90FF" />
   <wd-avatar text="B" bg-color="#228B22" />
   <wd-avatar text="C" bg-color="#DC143C" />
 </wd-avatar-group>
 ```
 
-### Unified Size and Shape
+### Avatar Group Vertical Stack
 
-Use `size` and `shape` props to uniformly set the size and shape of all avatars in the group. Use `max-count` to limit the number of displayed avatars, and excess avatars will show a collapsed avatar. Customize the collapsed avatar text using `collapse-avatar`.
+Use `vertical` property to enable vertical direction stack display.
 
 ```html
-<!-- Unified Size -->
-<wd-avatar-group size="large" :max-count="3">
+<wd-avatar-group vertical :max-count="4">
   <wd-avatar :src="avatarURL" />
-  <wd-avatar icon="star-on" />
+  <wd-avatar icon="star-fill" />
   <wd-avatar text="A" bg-color="#1E90FF" />
   <wd-avatar text="B" bg-color="#228B22" />
+  <wd-avatar text="C" bg-color="#DC143C" />
 </wd-avatar-group>
 
-<!-- Unified Shape with Custom Collapse Text -->
-<wd-avatar-group shape="square" :max-count="3" :collapse-avatar="'+N'">
+<wd-avatar-group vertical cascading="right-up" :max-count="4">
   <wd-avatar :src="avatarURL" />
-  <wd-avatar icon="star-on" />
+  <wd-avatar icon="star-fill" />
   <wd-avatar text="A" bg-color="#1E90FF" />
   <wd-avatar text="B" bg-color="#228B22" />
+  <wd-avatar text="C" bg-color="#DC143C" />
 </wd-avatar-group>
 ```
 
 ## Avatar Attributes
 
-| Name     | Description                                              | Type             | Accepted Values                 | Default    | Version          |
-| -------- | -------------------------------------------------------- | ---------------- | ------------------------------- | ---------- | ---------------- |
-| src      | Image URL                                                | string           | -                               | -          | 1.14.0 |
-| text     | Text content                                             | string           | -                               | -          | 1.14.0 |
-| icon     | Icon name, using wd-icon component                       | string           | -                               | -          | 1.14.0 |
-| size     | Avatar size, supports preset sizes or strings with units | string \| number | large / medium / normal / small | normal     | 1.14.0 |
-| shape    | Avatar shape                                             | string           | round / square                  | round      | 1.14.0 |
-| bg-color | Background color                                         | string           | -                               | -          | 1.14.0 |
-| color    | Text color                                               | string           | -                               | -          | 1.14.0 |
-| alt      | Placeholder text when image fails to load                | string           | -                               | -          | 1.14.0 |
-| mode     | Image fill mode, same as uni-app image component's mode  | string           | -                               | aspectFill | 1.14.0 |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| src | Image URL | string | `''` |
+| text | Text content | string | `''` |
+| icon | Icon name, uses wd-icon component | string | `''` |
+| size | Avatar size, supports `large / medium / normal / small` or custom number/unit string | string \| number | normal |
+| shape | Avatar shape, supports `round / square` | string | round |
+| bg-color | Background color | string | `''` |
+| color | Text color | string | `''` |
+| alt | Placeholder text when image fails to load | string | `''` |
+| mode | Image fill mode, same as uni-app image component's mode | string | aspectFill |
+| custom-class | Root node custom class name | string | - |
+| custom-style | Root node custom style | string | - |
 
 ## Avatar Events
 
-| Event Name | Description                        | Parameters | Version          |
-| ---------- | ---------------------------------- | ---------- | ---------------- |
-| click      | Triggered when avatar is clicked   | -          | 1.14.0 |
-| error      | Triggered when image fails to load | event      | 1.14.0 |
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| click | Triggered when clicking avatar | - |
+| error | Triggered when image fails to load | `event` |
 
 ## Avatar Slots
 
-| Name    | Description           | Version          |
-| ------- | --------------------- | ---------------- |
-| default | Custom avatar content | 1.14.0 |
-
-## Avatar External Classes
-
-| Class Name   | Description     | Version          |
-| ------------ | --------------- | ---------------- |
-| custom-class | Root node style | 1.14.0 |
-| custom-style | Root node style | 1.14.0 |
+| Name | Description |
+| --- | --- |
+| default | Custom avatar content |
 
 ## AvatarGroup Attributes
 
-| Name            | Description                                         | Type             | Accepted Values                 | Default | Version          |
-| --------------- | --------------------------------------------------- | ---------------- | ------------------------------- | ------- | ---------------- |
-| max-count       | Maximum display count                               | number           | -                               | -       | 1.14.0 |
-| cascading       | Cascading direction                                 | string           | left-up / right-up              | -       | 1.14.0 |
-| shape           | Uniform avatar shape                                | string           | round / square                  | round   | 1.14.0 |
-| size            | Uniform avatar size                                 | string \| number | large / medium / normal / small | normal  | 1.14.0 |
-| collapse-avatar | Collapsed avatar content when exceeds maximum count | string           | -                               | -       | 1.14.0 |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| max-count | Maximum display count, shows collapsed avatar when exceeded | number | - |
+| cascading | Cascading direction, supports `left-up / right-up` | string | left-up |
+| shape | Uniformly set avatar shape within group, supports `round / square` | string | round |
+| size | Uniformly set avatar size within group, supports preset sizes or custom number/unit string | string \| number | normal |
+| collapse-avatar | Collapsed avatar display text when exceeding max count | string | `''` |
+| vertical | Whether to display vertically | boolean | false |
+| custom-class | Root node custom class name | string | - |
+| custom-style | Root node custom style | string | - |
 
 ## AvatarGroup Slots
 
-| Name    | Description                             | Version          |
-| ------- | --------------------------------------- | ---------------- |
-| default | Avatar list, place wd-avatar components | 1.14.0 |
-
-## AvatarGroup External Classes
-
-| Class Name   | Description     | Version          |
-| ------------ | --------------- | ---------------- |
-| custom-class | Root node style | 1.14.0 |
-| custom-style | Root node style | 1.14.0 |
+| Name | Description |
+| --- | --- |
+| default | Avatar list, place wd-avatar components |

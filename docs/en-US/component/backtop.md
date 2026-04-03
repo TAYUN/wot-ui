@@ -1,53 +1,96 @@
 # Backtop
 
-A button used to return to the top of the page.
+Button for returning to the top of the page.
 
-## Basic Usage
+## Component Type
 
-Since returning to the top requires real-time monitoring of the scrollbar position, and the page's scroll information cannot be obtained in the uniapp component,
-the scrollbar position can only be obtained in the page's `onPageScroll` lifecycle, and then passed to the component through `Props`.
+### Basic Usage
 
-```html
-  <wd-backtop :scrollTop="scrollTop"></wd-backtop>
+Since backtop needs to monitor page scroll position in real-time, it usually requires getting scroll distance in the page's `onPageScroll` lifecycle, then passing it to the component via `scroll-top`.
+
+::: code-group
+
+```html [vue]
+<wd-backtop :scroll-top="scrollTop"></wd-backtop>
 ```
 
-```typescript
-const scrollTop = ref<number>(0)
-onPageScroll((e) => {
-  scrollTop.value = e.scrollTop
+```ts [ts]
+import { onPageScroll } from '@dcloudio/uni-app'
+import { ref } from 'vue'
+
+const scrollTop = ref(0)
+
+onPageScroll((event) => {
+  scrollTop.value = event.scrollTop
 })
 ```
 
-## Custom Icon
+:::
+
+## Component Variant
+
+### Shape and Text
+
+Switch between circle or square button via `shape`, display button text via `text`.
 
 ```html
-  <wd-backtop :scrollTop="scrollTop">
-    <text>TOP<text>
-  </wd-backtop>
+<wd-backtop :scroll-top="scrollTop" shape="square" text="TOP"></wd-backtop>
 ```
 
-## Custom Style
+### Custom Icon
+
+Default slot can replace button internal content.
 
 ```html
-  <wd-backtop :scrollTop="scrollTop" customStyle="background: #007aff;color:white;"></wd-backtop>
+<wd-backtop :scroll-top="scrollTop">
+  <text>TOP</text>
+</wd-backtop>
 ```
 
-## Attributes
+## Component Style
 
-| Attribute  | Description                                                | Type   | Options | Default | Version |
-| ---------- | ---------------------------------------------------------- | ------ | ------- | ------- | ------- |
-| scrollTop  | Page scroll distance                                       | number | -       | -       | -       |
-| top        | Distance from top when to show, unit `px`                  | number | -       | 300     | -       |
-| duration   | Return to top scroll time, unit `ms`                       | number | -       | 100     | -       |
-| zIndex     | Component z-index property                                 | number | -       | 10      | -       |
-| iconStyle  | Custom `icon` style                                        | string | -       | -       | -       |
-| shape      | Button shape                                               | string | square  | circle  | -       |
-| bottom     | Distance from screen bottom, unit `px`                        | number | -       | 100     | -       |
-| right      | Distance from screen right, unit `px`                      | number | -       | 20      | -       |
+### Custom Display Distance
 
-## External Classes
+Set the scroll distance threshold to show button via `top`.
 
-| Class Name    | Description          | Version |
-| ------------- | -------------------- | ------- |
-| custom-class  | Root element style   | -       |
-| custom-style  | Root element style   | -       |
+```html
+<wd-backtop :scroll-top="scrollTop" :top="600"></wd-backtop>
+```
+
+### Custom Style
+
+Adjust button and icon styles via `custom-style` and `icon-style`.
+
+```html
+<wd-backtop :scroll-top="scrollTop" custom-style="background: #007aff;color:white;" icon-style="color: white;"></wd-backtop>
+```
+
+### Custom Scroll Duration
+
+Set return to top scroll duration via `duration`, unit is milliseconds.
+
+```html
+<wd-backtop :scroll-top="scrollTop" :duration="1000"></wd-backtop>
+```
+
+## Backtop Attributes
+
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| scroll-top | Page scroll distance | `number` | - |
+| text | Button text | `string` | - |
+| top | Show button when scroll distance exceeds this value, unit is `px` | `number` | `300` |
+| duration | Return to top scroll time, unit is `ms` | `number` | `100` |
+| z-index | Component z-index | `number` | `10` |
+| icon-style | Custom icon style | `string` | `''` |
+| shape | Button shape, optional values are `circle`, `square` | string | `circle` |
+| bottom | Distance from screen bottom, unit is `px` | `number` | `100` |
+| right | Distance from screen right, unit is `px` | `number` | `20` |
+| custom-style | Custom root node style | `string` | `''` |
+| custom-class | Custom root node style class | `string` | `''` |
+
+## Backtop Slots
+
+| Name | Description |
+| --- | --- |
+| default | Custom button content |

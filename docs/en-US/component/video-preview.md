@@ -1,25 +1,25 @@
 # VideoPreview
 
-Video preview component that supports opening a fullscreen preview layer either through component instance methods or the `useVideoPreview` composable.
+Video preview component, supports opening full-screen video preview layer through component instance or `useVideoPreview` function call. For standalone usage and API details of `useVideoPreview`, see [useVideoPreview](/component/use-video-preview).
 
-::: warning Notice
-Before calling `useVideoPreview()`, you need to declare a `wd-video-preview` instance on the current page so the injection relationship can be established.
+::: warning Note
+Before using `useVideoPreview()`, you need to declare a `wd-video-preview` instance in the current page, otherwise the injection relationship cannot be established.
 :::
 
-## Type
+## Component Types
 
 ### useVideoPreview
 
-`useVideoPreview` is the recommended way to trigger `wd-video-preview`, especially for interactions such as button clicks or list item previews.
+`useVideoPreview` is the recommended way to call `wd-video-preview`, suitable for directly launching video preview in interactions like button clicks, list item clicks. For detailed instructions, see [useVideoPreview](/component/use-video-preview).
 
 ### Basic Usage
 
-The current demo places a `wd-video-preview` instance on the page and opens the preview through `previewVideo()`.
+The usage corresponding to the current demo page is to place a `wd-video-preview` instance in the page, and then open the preview through `previewVideo()`.
 
 ::: code-group
 
 ```html [vue]
-<wd-button @click="open">Preview Video</wd-button>
+<wd-button @click="open">Click to preview video</wd-button>
 
 <wd-video-preview />
 ```
@@ -43,11 +43,11 @@ function open() {
 
 :::
 
-## Special Style
+## Special Styles
 
-### Multiple Instances
+### Multi-instance Calls
 
-If there are multiple `wd-video-preview` instances on the same page, you can distinguish them with `selector` and pass the same identifier to `useVideoPreview(selector)`.
+When multiple `wd-video-preview` instances exist on the same page, you can distinguish them through `selector`, and pass the same identifier in `useVideoPreview(selector)`.
 
 ::: code-group
 
@@ -68,9 +68,9 @@ const { previewVideo: openSubPreview } = useVideoPreview('sub-preview')
 
 :::
 
-### Custom zIndex And Callbacks
+### Custom Z-index and Callbacks
 
-When using the composable API, you can pass `zIndex`, `onOpen`, and `onClose` directly. Function call options take priority over component props.
+When calling functionally, you can directly pass `zIndex`, `onOpen`, `onClose`, and the component will prioritize configurations passed functionally.
 
 ```ts
 previewVideo({
@@ -78,14 +78,14 @@ previewVideo({
   poster: 'https://wot-ui.cn/assets/panda.jpg',
   title: 'Video Preview',
   zIndex: 1200,
-  onOpen: () => console.log('Preview opened'),
-  onClose: () => console.log('Preview closed')
+  onOpen: () => console.log('Open preview'),
+  onClose: () => console.log('Close preview')
 })
 ```
 
-### Component Instance Usage
+### Component Instance Calls
 
-You can also control the component directly through `ref` and call the exposed `open` and `close` methods.
+If you prefer component-style control, you can also call instance methods `open` and `close` through `ref`.
 
 ::: code-group
 
@@ -115,54 +115,31 @@ function openPreview() {
 
 ## VideoPreview Attributes
 
-| Parameter | Description | Type | Default |
+| Parameter | Description | Type | Default Value |
 | --- | --- | --- | --- |
-| selector | Instance identifier used to distinguish multiple video preview instances | `string` | `''` |
-| z-index | Preview layer z-index | `number` | `1000` |
-| on-open | Callback fired when the component opens | <code>() =&gt; void</code> | - |
-| on-close | Callback fired when the component closes | <code>() =&gt; void</code> | - |
-| custom-style | Custom root style | `string` | `''` |
-| custom-class | Custom root class | `string` | `''` |
+| selector | Instance identifier, used to distinguish multiple video preview instances | `string` | `''` |
+| z-index | Preview z-index | `number` | `1000` |
+| on-open | Callback when component opens | <code>() =&gt; void</code> | - |
+| on-close | Callback when component closes | <code>() =&gt; void</code> | - |
+| custom-style | Custom root node style | `string` | `''` |
+| custom-class | Custom root node style class | `string` | `''` |
 
 ## VideoPreview Events
 
 | Event Name | Description | Parameters |
 | --- | --- | --- |
-| open | Triggered when the preview opens | - |
-| close | Triggered when the preview closes | - |
+| open | Triggered when opening preview | - |
+| close | Triggered when closing preview | - |
 
 ## VideoPreview Methods
 
-Methods exposed through `ref`.
+Call component instance methods through `ref`.
 
-| Method | Description | Parameters | Return |
+| Method Name | Description | Parameters | Return Value |
 | --- | --- | --- | --- |
-| open | Open the video preview | `video: PreviewVideo` | - |
-| close | Close the video preview | - | - |
+| open | Open video preview | `video: PreviewVideo` | - |
+| close | Close video preview | - | - |
 
 ## useVideoPreview
 
-### API
-
-| Parameter | Description | Type | Default |
-| --- | --- | --- | --- |
-| selector | Target video preview instance identifier. An empty string uses the default instance | `string` | `''` |
-
-### Methods
-
-| Method | Description | Parameters |
-| --- | --- | --- |
-| previewVideo | Open the video preview | <code>options: VideoPreviewOptions &#124; PreviewVideo</code> |
-| closeVideoPreview | Close the video preview | - |
-
-## VideoPreviewOptions
-
-| Parameter | Description | Type | Default |
-| --- | --- | --- | --- |
-| url | Video resource URL | `string` | `''` |
-| poster | Video poster URL | `string` | `''` |
-| title | Video title | `string` | `''` |
-| show | Whether to display the preview layer | `boolean` | `false` |
-| zIndex | Preview layer z-index | `number` | `1000` |
-| onOpen | Callback fired when opened | <code>() =&gt; void</code> | - |
-| onClose | Callback fired when closed | <code>() =&gt; void</code> | - |
+The basic usage, multi-instance calls, methods, and `VideoPreviewOptions` descriptions of `useVideoPreview` have been separately organized to [useVideoPreview](/component/use-video-preview), and will not be repeated here in the component documentation.

@@ -1,10 +1,12 @@
 # CountDown
 
-Used to display countdown values in real-time, supporting millisecond precision.
+Used to display countdown values in real-time, supporting millisecond-level rendering and manual control.
 
-## Basic Usage
+## Component Type
 
-The `time` property represents the total duration of the countdown in milliseconds.
+### Basic Usage
+
+`time` represents the total countdown duration, unit is milliseconds.
 
 ```html
 <wd-count-down :time="time" />
@@ -14,34 +16,29 @@ The `time` property represents the total duration of the countdown in millisecon
 const time = ref<number>(30 * 60 * 60 * 1000)
 ```
 
-## Custom Format
+## Component Variant
 
-The `format` property represents the countdown format, which can be customized.
+### Custom Format
 
-```html
-<wd-count-down :time="time" :format="format" />
-```
-
-```ts
-const format = ref<string>('DD Days HH Hours mm Minutes ss Seconds')
-const time = ref<number>(30 * 60 * 60 * 1000)
-```
-
-## Millisecond Rendering
-
-The `millisecond` property indicates whether to enable millisecond-level rendering, which is disabled by default.
+Customize display format through `format`.
 
 ```html
-<wd-count-down :time="time" :millisecond="true" />
+<wd-count-down :time="time" format="DD Days HH Hours mm Minutes ss Seconds" />
 ```
 
-```ts
-const time = ref<number>(30 * 60 * 60 * 1000)
+### Millisecond-level Rendering
+
+Set `millisecond` to enable millisecond-level rendering.
+
+```html
+<wd-count-down :time="time" millisecond format="HH:mm:ss:SS" />
 ```
 
-## Custom Style
+## Component Style
 
-Customize the countdown style through slots. The `timeData` object format is shown in the table below.
+### Custom Style
+
+Use default slot to customize countdown content, slot parameters see `TimeData` below.
 
 ```html
 <wd-count-down :time="time">
@@ -55,112 +52,80 @@ Customize the countdown style through slots. The `timeData` object format is sho
 </wd-count-down>
 ```
 
-```ts
-const time = ref<number>(30 * 60 * 60 * 1000)
-```
+## Special Style
 
-```css
-.custom-count-down {
-  display: inline-block;
-  width: 22px;
-  color: #fff;
-  font-size: 12px;
-  text-align: center;
-  background-color: #f0883a;
-  border-radius: 2px;
-}
+### Manual Control
 
-.custom-count-down-colon {
-  display: inline-block;
-  margin: 0 4px;
-  color: #f0883a;
-}
-```
-
-## Manual Control
-
-Start the countdown using the `start` method, pause it using the `pause` method, and reset it using the `reset` method.
+Control start, pause, reset through instance methods.
 
 ```html
-<wd-count-down ref="countDown" :time="3000" millisecond :auto-start="false" format="ss:SSS" @finish="onFinish"></wd-count-down>
+<wd-count-down ref="countDown" :time="3000" millisecond :auto-start="false" format="ss:SSS" @finish="onFinish" />
 <wd-grid clickable border>
-  <wd-grid-item text="Start" icon="play-circle-stroke" @itemclick="start" />
-  <wd-grid-item text="Pause" icon="pause-circle" @itemclick="pause" />
-  <wd-grid-item text="Reset" icon="refresh" @itemclick="reset" />
+  <wd-grid-item text="Start" icon="play-circle" @click="start" />
+  <wd-grid-item text="Pause" icon="pause-circle" @click="pause" />
+  <wd-grid-item text="Reset" icon="refresh" @click="reset" />
 </wd-grid>
 ```
 
 ```ts
-const { show: showToast } = useToast()
+const countDown = ref<CountDownInstance>()
 
-const countDown = ref<any>(null)
-
-const start = () => {
-  countDown.value.start()
-}
-const pause = () => {
-  countDown.value.pause()
-}
-const reset = () => {
-  countDown.value.reset()
-}
-const onFinish = () => showToast('Countdown ended')
+const start = () => countDown.value?.start()
+const pause = () => countDown.value?.pause()
+const reset = () => countDown.value?.reset()
 ```
 
 ## Attributes
 
-| Parameter   | Description                                | Type    | Options | Default   | Version |
-| ----------- | ------------------------------------------ | ------- | ------- | --------- | ------- |
-| time        | Countdown duration in milliseconds         | Number  | —       | 0         | 0.1.58  |
-| millisecond | Enable millisecond-level rendering         | Boolean | —       | false     | 0.1.58  |
-| auto-start  | Automatically start countdown              | Boolean | —       | true      | 0.1.58  |
-| format      | Countdown format string                    | String  | —       | `HH:mm:ss`| 0.1.58  |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| time | Countdown duration, unit milliseconds | number | - |
+| millisecond | Whether to enable millisecond-level rendering | boolean | false |
+| format | Countdown format string | string | `HH:mm:ss` |
+| auto-start | Whether to automatically start countdown after initialization and reset | boolean | true |
+| custom-class | Root node custom class name | string | `''` |
+| custom-style | Root node custom style | string | `''` |
 
 ## Events
 
-| Event Name | Description                    | Parameters            | Version |
-| ---------- | ------------------------------ | --------------------- | ------- |
-| finish     | Triggered when countdown ends  | —                     | 0.1.58  |
-| change     | Triggered on countdown change  | current: TimeData     | 0.1.58  |
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| change | Triggered when countdown changes | `current: TimeData` |
+| finish | Triggered when countdown ends | - |
 
 ## Methods
 
-| Method Name | Description                    | Parameters            | Version |
-| ----------- | ------------------------------ | --------------------- | ------- |
-| start       | Start countdown                | —                     | 0.1.58  |
-| pause       | Pause countdown                | —                     | 0.1.58  |
-| reset       | Reset countdown, auto-starts if `auto-start` is `true` | —      | 0.1.58  |
+| Method Name | Description | Parameters |
+| --- | --- | --- |
+| start | Start countdown | - |
+| pause | Pause countdown | - |
+| reset | Reset countdown; if `auto-start` is `true`, automatically start after reset | - |
 
 ## Slots
 
-| Name | Description    | Version |
-| ---- | -------------- | ------- |
-| —    | Default slot   | 0.1.58  |
+| name | Description | Parameters |
+| --- | --- | --- |
+| default | Custom countdown display content | `{ current: TimeData }` |
 
-## External Classes
+### format Format
 
-| Class Name    | Description           | Version |
-| ------------- | --------------------- | ------- |
-| custom-class  | Root node style       | -       |
+| Format | Description |
+| --- | --- |
+| DD | Days |
+| HH | Hours |
+| mm | Minutes |
+| ss | Seconds |
+| S | Milliseconds (1 digit) |
+| SS | Milliseconds (2 digits) |
+| SSS | Milliseconds (3 digits) |
 
-### format Options
+### TimeData Object
 
-| Format | Description           |
-| ------ | --------------------- |
-| DD     | Days                  |
-| HH     | Hours                 |
-| mm     | Minutes               |
-| ss     | Seconds               |
-| S      | Milliseconds (1 digit)|
-| SS     | Milliseconds (2 digits)|
-| SSS    | Milliseconds (3 digits)|
-
-### timeData Object
-
-| Property     | Description  | Type   | Default |
-| ------------ | ------------ | ------ | ------- |
-| days         | Days         | number | -       |
-| hours        | Hours        | number | -       |
-| minutes      | Minutes      | number | -       |
-| seconds      | Seconds      | number | -       |
-| milliseconds | Milliseconds | number | -       |
+| Property | Description | Type |
+| --- | --- | --- |
+| total | Remaining total milliseconds | number |
+| days | Days | number |
+| hours | Hours | number |
+| minutes | Minutes | number |
+| seconds | Seconds | number |
+| milliseconds | Milliseconds | number |

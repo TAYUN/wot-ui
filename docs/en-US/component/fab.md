@@ -1,32 +1,32 @@
 # Fab Floating Action Button
 
-Floating action button component that displays a group of action buttons when pressed.
+Floating action button component that displays a set of action buttons when pressed.
 
 :::warning
-Since `uni-app` components cannot monitor clicks outside themselves, to automatically close the `fab` when clicking elsewhere on the page, it is recommended to use the component library's `useQueue` hook (which will close all dropmenu, popover, toast, swipeAction, fab). Monitor click event bubbling on the root element of the page.
+Because `uni-app` components cannot listen to clicks outside themselves, in order to automatically close `fab` when clicking elsewhere on the page, it is recommended to use the component library's `useQueue` hook (which will close all dropmenu, popover, toast, swipeAction, fab) and listen for click event bubbling on the page's root element.
 
-If there is a scenario where the user manually clicks somewhere other than `fab` to slide out the `fab`, you need to add `@click.stop=""` to the clicked element (in this case, the button) to prevent event bubbling to the root element, avoiding triggering `closeOutside` which would close the manually opened `fab`.
+If there is a scenario where the user manually clicks outside the `fab` (such as a button) to slide out the `fab`, you need to add `@click.stop=""` to the clicked element (the button in this case) to prevent the event from bubbling to the root element, avoiding triggering `closeOutside` which would close the manually opened `fab`.
 :::
 
 ## Component Type
 
 ### Basic Usage
 
-Set the trigger type through `type`, and set whether the floating button is disabled through `disabled`.
+Set the trigger type of the floating button via `type`, and whether the floating button is disabled via `disabled`.
 
 ::: code-group
 ```html [vue/html]
 <wd-fab :type="type">
-  <wd-button @click="showToast('Triple Like')" custom-class="custom-button" type="primary" round>
+  <wd-button @click="showToast('Triple Combo')" custom-class="custom-button" type="primary" round>
     <wd-icon name="github-filled" size="22px"></wd-icon>
   </wd-button>
-  <wd-button @click="showToast('Add to Favorites')" custom-class="custom-button" type="success" round>
+  <wd-button @click="showToast('I want to favorite')" custom-class="custom-button" type="success" round>
     <wd-icon name="star" size="22px"></wd-icon>
   </wd-button>
-  <wd-button @click="showToast('Give Coin')" custom-class="custom-button" type="danger" round>
+  <wd-button @click="showToast('I want to tip')" custom-class="custom-button" type="danger" round>
     <wd-icon name="money-circle" size="22px"></wd-icon>
   </wd-button>
-  <wd-button @click="showToast('Like')" custom-class="custom-button" type="warning" round>
+  <wd-button @click="showToast('I want to like')" custom-class="custom-button" type="warning" round>
     <wd-icon name="thumb-up" size="22px"></wd-icon>
   </wd-button>
 </wd-fab>
@@ -51,19 +51,19 @@ const type = ref<FabType>('primary')
 ```
 :::
 
-## Component Variant
+## Component Variants
 
 ### Position and Direction
 
-Through `position` to set the floating button trigger's position, and `direction` to set the opening direction of action buttons.
+Set the trigger position of the floating button via `position`, and the opening direction of the action buttons via `direction`.
 
 ::: code-group
 ```html [vue/html]
 <wd-fab :position="position" :direction="direction">
-  <wd-button @click="showToast('Triple Like')" custom-class="custom-button" type="primary" round>
+  <wd-button @click="showToast('Triple Combo')" custom-class="custom-button" type="primary" round>
     <wd-icon name="github-filled" size="22px"></wd-icon>
   </wd-button>
-  <wd-button @click="showToast('Add to Favorites')" custom-class="custom-button" type="success" round>
+  <wd-button @click="showToast('I want to favorite')" custom-class="custom-button" type="success" round>
     <wd-icon name="star" size="22px"></wd-icon>
   </wd-button>
 </wd-fab>
@@ -83,7 +83,7 @@ const direction = ref<FabDirection>('top')
 
 ### Action Menu Expand/Collapse
 
-Control the expansion/collapse of the action button menu through `v-model:active`
+Control the expand/collapse of the action button menu via `v-model:active`.
 
 ::: code-group
 ```html [vue/html]
@@ -99,7 +99,7 @@ const active = ref<boolean>(false)
 
 ### Draggable Button
 
-Set `draggable` to `true` to enable dragging for the button.
+Set `draggable` attribute to `true` to enable button dragging capability.
 
 ::: code-group
 ```html [vue/html]
@@ -108,14 +108,14 @@ Set `draggable` to `true` to enable dragging for the button.
 :::
 
 :::warning
-After enabling dragging, the `direction` property will be invalid, and the pop-up direction will be automatically calculated based on the position after dragging. After dragging is completed, the button will automatically snap to the edge.
+After enabling dragging, the `direction` attribute will become ineffective. The popup direction will be automatically calculated based on the dragged position. After dragging is complete, the button will automatically snap to the edge.
 :::
 
 ## Special Style
 
 ### Custom Trigger
 
-Customize the trigger through the `trigger` slot, `expandable` controls whether clicking the trigger expands/collapses the action button menu's default inner logic.
+Customize the trigger via the `trigger` slot. `expandable` controls whether clicking the trigger triggers the default internal expand/collapse capability.
 
 ::: code-group
 ```html [vue/html]
@@ -140,32 +140,34 @@ const handleClick = () => {
 
 | Parameter | Description | Type | Default Value |
 | --- | --- | --- | --- |
-| v-model:active ^(0.1.57) | Whether activated | boolean | `false` |
-| type ^(0.1.57) | Floating button type, optional values are `primary`, `success`, `info`, `warning`, `danger` | string | `primary` |
-| position ^(0.1.57) | Floating button position, optional values are `left-top`, `right-top`, `left-bottom`, `right-bottom`, `left-center`, `right-center`, `top-center`, `bottom-center` | string | `right-bottom` |
-| draggable ^(1.2.19) | Whether button can be dragged | boolean | `false` |
-| direction ^(0.1.57) | Floating button menu pop-up direction, optional values are `top`, `right`, `bottom`, `left` | string | `top` |
-| disabled ^(0.1.57) | Whether disabled | boolean | `false` |
-| inactive-icon ^(0.1.57) | Icon when floating button is not expanded | string | `'add'` |
-| active-icon ^(0.1.57) | Icon when floating button is expanded | string | `'close'` |
-| z-index ^(0.1.57) | Custom floating button layer level | number | `99` |
-| gap ^(1.2.26) | Custom gap between floating button and viewport edges | FabGap | `{ top: 16, right: 16, bottom: 16, left: 16 }` |
-| expandable ^(1.3.11) | Controls whether to expand menu when clicked, triggers `click` event when set to `false` | boolean | `true` |
+| v-model:active ^(0.1.57) | Whether active | `boolean` | `false` |
+| type ^(0.1.57) | Floating button type, optional values are `primary`, `success`, `info`, `warning`, `danger` | `FabType` | `'primary'` |
+| position ^(0.1.57) | Floating button position, optional values are `left-top`, `right-top`, `left-bottom`, `right-bottom`, `left-center`, `right-center`, `top-center`, `bottom-center` | `FabPosition` | `'right-bottom'` |
+| draggable ^(1.2.19) | Whether the button can be dragged | `boolean` | `false` |
+| direction ^(0.1.57) | Floating button menu popup direction, optional values are `top`, `right`, `bottom`, `left` | `FabDirection` | `'top'` |
+| disabled ^(0.1.57) | Whether disabled | `boolean` | `false` |
+| inactive-icon ^(0.1.57) | Icon when floating button is not expanded | `string` | `'plus'` |
+| active-icon ^(0.1.57) | Icon when floating button is expanded | `string` | `'close'` |
+| z-index ^(0.1.57) | Custom floating button z-index | `number` | `99` |
+| gap ^(1.2.26) | Custom spacing between floating button and visible area edge | `FabGap` | `{ top: 16, right: 16, bottom: 16, left: 16 }` |
+| expandable ^(1.3.11) | Used to control whether to expand menu on click. When set to `false`, triggers `click` event | `boolean` | `true` |
+| custom-class | Custom class name for root node | `string` | `''` |
+| custom-style | Custom style for root node | `string` | `''` |
 
 ### FabGap
 
 | Parameter | Description | Type |
 | --- | --- | --- |
-| top | Top distance | number |
-| bottom | Bottom distance | number |
-| left | Left distance | number |
-| right | Right distance | number |
+| top | Spacing from top | number |
+| bottom | Spacing from bottom | number |
+| left | Spacing from left | number |
+| right | Spacing from right | number |
 
 ## Events
 
 | Event Name | Description | Parameters |
 | --- | --- | --- |
-| click | Triggered when clicking the floating component without triggering the inner logic, when `expandable` is `false` ^(1.3.11) | - |
+| click | When `expandable` is set to `false`, triggered when clicking inside the floating component but not triggering internal logic ^(1.3.11) | - |
 
 ## Methods
 
@@ -178,11 +180,5 @@ const handleClick = () => {
 
 | name | Description |
 | --- | --- |
-| default | Action buttons area content ^(0.1.57) |
-| trigger | Trigger slot, used for completely decoupling click trigger area component ^(1.3.11) |
-
-## External Classes
-
-| Class Name | Description |
-| --- | --- |
-| custom-class | Root custom style class ^(0.1.57) |
+| default | Action button area content ^(0.1.57) |
+| trigger | Trigger slot, used for fully customizing the click trigger anchor area ^(1.3.11) |

@@ -1,202 +1,179 @@
 # Textarea
 
-Used for inputting multi-line text information.
+Used for entering multi-line text information, supporting clear, word count, auto-height adjustment, and compact layout.
 
-## Basic Usage
+## Component Types
 
-You can use `v-model` for two-way binding of the input value and set placeholder text through `placeholder`.
+### Basic Usage
+
+Bind textarea content through `v-model`, set placeholder prompt through `placeholder`.
 
 ```html
-<wd-textarea v-model="value" placeholder="Please enter your comment" />
+<wd-textarea v-model="value" placeholder="Please fill in the review" />
 ```
 
 ```typescript
-const value = ref<string>('')
+import { ref } from 'vue'
+
+const value = ref('')
 ```
 
-## Disabled
+## Component States
 
-Enable the disabled state by setting the `disabled` property.
+### Read-only
+
+Set textarea to read-only state through `readonly`.
 
 ```html
-<wd-textarea v-model="value" disabled></wd-textarea>
+<wd-textarea v-model="value" readonly clearable />
 ```
 
-## Read-only
+### Disabled
 
-Enable the read-only state by setting the `readonly` property.
+Disable textarea through `disabled`.
 
 ```html
-<wd-textarea v-model="value" readonly></wd-textarea>
+<wd-textarea v-model="value" disabled clearable />
 ```
 
-## Clear Button
+## Component Variants
 
-Enable the clear button by setting the `clearable` property, and implement character limit by setting `show-word-limit` and `maxlength`.
+### Clear Button and Word Limit
+
+Enable clear button through `clearable`, display word count through `maxlength` and `show-word-limit`.
 
 ```html
 <wd-textarea v-model="value" :maxlength="120" clearable show-word-limit />
 ```
 
-## Show Clear Button on Focus
+### Show Clear Button on Focus
 
-Set the `clear-trigger` property to control whether to show the clear button only when focused.
+Control showing clear button only when focused and has value through `clear-trigger="focus"`.
 
 :::warning Note
-Alipay Mini Program currently does not support the `clear-trigger` property, and in some cases, the clear button cannot be clicked. Please refer to this [issue](https://github.com/ant-design/ant-design-mini/issues/1255) (Hoping it can be resolved soon, so I directly raised an issue in Ant's component library).
+Alipay Mini Program temporarily does not support `clear-trigger`, and in some scenarios the clear button cannot be clicked. Refer to [issue](https://github.com/ant-design/ant-design-mini/issues/1255).
 :::
 
 ```html
-<wd-textarea clear-trigger="focus" v-model="value14" :maxlength="120" clearable show-word-limit />
+<wd-textarea v-model="value" clear-trigger="focus" :maxlength="120" clearable show-word-limit />
 ```
 
-## Don't Auto Focus After Clearing
+### Do Not Auto-focus After Clear
 
-Set the `focus-when-clear` property to control whether to automatically focus after clicking the clear button.
+Control whether to auto-focus after clicking clear button through `focus-when-clear`.
 
 ```html
 <wd-textarea v-model="value" :focus-when-clear="false" :maxlength="120" clearable show-word-limit />
 ```
 
-## Auto Height
+### Auto Height
 
-Enable auto height adjustment by setting the `auto-height` property.
+Make textarea height change with content through `auto-height`.
 
 ```html
-<wd-textarea v-model="value" auto-height />
+<wd-textarea v-model="value" auto-height clearable />
 ```
 
-## Prefix Icon
+## Component Styles
 
-Set a prefix icon using `prefix-icon`, where the icon should be a class name from the [icon](/component/icon) section. If you need a custom icon that's not available, use the `prefix` slot instead.
+### Compact Layout
+
+After setting `compact`, default padding and background will be removed, suitable for use with containers like `wd-form-item`.
 
 ```html
-<wd-textarea v-model="value" prefix-icon="dong"></wd-textarea>
+<wd-textarea v-model="value" compact placeholder="Please fill in the review" />
 ```
 
-## Setting Label Title
+## Special Styles
 
-Set a `label` title, which can be used with `cell-group` to create a `cell` display type. You can set the title width through `label-width`, which defaults to '33%'.
+### Using with Form
 
-```html
-<wd-cell-group border>
-  <wd-textarea label="Basic Usage" clearable v-model="value" placeholder="Please enter..." />
-</wd-cell-group>
-```
-
-## Required Style
-
-When a `label` is set, you can set the `required` property to display the required style.
+For current form scenarios, it is recommended to have `wd-form` and `wd-form-item` carry the title, required state, and validation prompts, while `wd-textarea` is only responsible for multi-line input capability.
 
 ```html
-<wd-textarea v-model="value" placeholder="Please enter..." label="Required" required></wd-textarea>
-```
+<wd-form :model="formData" border title-width="98px">
+  <wd-form-item title="Basic Usage" prop="basic">
+    <wd-textarea v-model="formData.basic" placeholder="Please enter" compact />
+  </wd-form-item>
 
-## Input Size
+  <wd-form-item title="Word Limit" prop="limit">
+    <wd-textarea v-model="formData.limit" :maxlength="240" show-word-limit clearable compact placeholder="Please enter" />
+  </wd-form-item>
 
-Modify the input size by setting `size`. When `size` is set to 'large', the font size is 16px.
-
-```html
-<wd-textarea label="Basic Usage" size="large" v-model="value" placeholder="Please enter..." />
-```
-
-## Error State
-
-Set the `error` property to display the input value in red.
-
-```html
-<wd-textarea v-model="value" placeholder="Please enter username" error />
-```
-
-## Vertical Center
-
-When a `label` title is set, it defaults to top alignment. Set the `center` property to vertically center the title and input box.
-
-```html
-<wd-textarea label="Basic Usage" v-model="value" center />
+  <wd-form-item title="Read-only" prop="readonly">
+    <wd-textarea v-model="formData.readonly" readonly :maxlength="240" show-word-limit placeholder="Please enter" compact />
+  </wd-form-item>
+</wd-form>
 ```
 
 ## Attributes
 
-| Parameter | Description | Type | Options | Default | Version |
-|-----------|-------------|------|----------|---------|----------|
-| v-model | Binding value | string / number | - | - | - |
-| placeholder | Placeholder text | string | - | Please enter... | - |
-| placeholderStyle | Native attribute, specify placeholder style | string | - | - | - |
-| placeholderClass | Native attribute, specify placeholder style class | string | - | - | - |
-| disabled | Native attribute, disabled state | boolean | - | false | - |
-| maxlength | Native attribute, maximum input length, set to -1 for no limit | number | - | - | - |
-| auto-focus | Native attribute, auto focus, brings up keyboard | boolean | - | false | - |
-| focus | Native attribute, get focus | boolean | - | false | - |
-| auto-height | Native attribute, auto increase height (style.height doesn't work when set) | boolean | - | false | - |
-| fixed | Need to set to true in position:fixed areas | boolean | - | false | - |
-| cursorSpacing | Native attribute, specify distance between cursor and keyboard (takes minimum of textarea bottom distance and this value) | number | - | 0 | - |
-| cursor | Native attribute, specify cursor position when focused | number | - | -1 | - |
-| confirm-type | Set text of keyboard's bottom-right button | string | `done`/`go`/`next`/`search`/`send` | - | - |
-| confirm-hold | Whether to keep keyboard open after clicking bottom-right button | boolean | - | false | - |
-| show-confirm-bar | Whether to show "Done" bar above keyboard | boolean | - | true | - |
-| selection-start | Native attribute, cursor start position (must be used with selection-end) | number | - | -1 | - |
-| selection-end | Native attribute, cursor end position (must be used with selection-start) | number | - | -1 | - |
-| adjust-position | Native attribute, whether to automatically push page up when keyboard rises | boolean | - | true | - |
-| disable-default-padding | Native attribute, whether to remove iOS default padding | boolean | - | false | - |
-| hold-keyboard | Native attribute, whether to keep keyboard open when clicking page while focused | boolean | - | false | - |
-| show-password | Display as password field | boolean | - | false | - |
-| clearable | Show clear button | boolean | - | false | - |
-| readonly | Read-only | boolean | - | false | - |
-| prefix-icon | Prefix icon (use icon component class name) | string | - | - | - |
-| show-word-limit | Show character limit (requires maxlength) | boolean | - | false | - |
-| label | Set left title | string | - | - | - |
-| label-width | Set left title width | string | - | 33% | - |
-| size | Set input size | string | - | - | - |
-| error | Set input error state (red indicator) | boolean | - | false | - |
-| center | Vertically center title and input box when label is set (defaults to top alignment) | boolean | - | false | - |
-| no-border | Whether to hide underline in non-cell type | boolean | - | false | - |
-| required | Required style in cell type | boolean | - | false | - |
-| marker-side | Position of the required marker | 'before' \| 'after' | - | 'before' | 1.12.0 |
-| prop | Form field model name (required for form validation) | string | - | - | - |
-| rules | Form validation rules | FormItemRule[] | - | [] | - |
-| clearTrigger | When to show clear icon: always (show when input is not empty) / focus (show when focused and not empty) | InputClearTrigger | `focus`/`always` | `always` | 1.3.7 |
-| focusWhenClear | Whether to focus input box when clicking clear button | boolean | - | true | 1.3.7 |
-| ignoreCompositionEvent | Whether to ignore text composition system events (when false, triggers composition events and input events during composition) | boolean | - | true | 1.3.11 |
-| inputmode | Input data type hint | InputMode | - | text | 1.5.0 |
-| enableNative | For Alipay Mini Program, setting to false can avoid content shifting up after textarea keyboard pops up | boolean | - | true | 1.14.0 |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| v-model | Textarea binding value | `string \| number` | `''` |
+| placeholder | Placeholder text | `string` | `Please enter...` |
+| placeholder-style | placeholder style | `string` | - |
+| placeholder-class | placeholder style class | `string` | `''` |
+| disabled | Whether to disable | `boolean` | `false` |
+| readonly | Whether read-only | `boolean` | `false` |
+| maxlength | Maximum input length, set to `-1` for unlimited length | `number` | `-1` |
+| clearable | Whether to show clear button | `boolean` | `false` |
+| show-word-limit | Whether to show word count, requires `maxlength` to be set | `boolean` | `false` |
+| clear-trigger ^(1.3.7) | Clear button display timing, optional values are `focus`, `always` | `InputClearTrigger` | `always` |
+| focus-when-clear ^(1.3.7) | Whether to auto-focus after clicking clear button | `boolean` | `true` |
+| error | Whether to show error state | `boolean` | `false` |
+| focus | Whether to get focus | `boolean` | `false` |
+| auto-focus | Whether to auto-focus and bring up keyboard | `boolean` | `false` |
+| auto-height | Whether to auto-increase input box height | `boolean` | `false` |
+| fixed | Whether to enable fixed mode when in `position: fixed` area | `boolean` | `false` |
+| cursor-spacing | Distance between cursor and keyboard | `number` | `0` |
+| cursor | Cursor position when getting focus | `number` | `-1` |
+| confirm-type | Text on keyboard bottom-right button, optional values are `done`, `go`, `next`, `search`, `send` | `ConfirmType` | - |
+| confirm-hold | Whether to keep keyboard open when clicking keyboard bottom-right button | `boolean` | `false` |
+| show-confirm-bar | Whether to show toolbar with "Done" button above keyboard | `boolean` | `true` |
+| selection-start | Cursor start position, needs to be used with `selection-end` | `number` | `-1` |
+| selection-end | Cursor end position, needs to be used with `selection-start` | `number` | `-1` |
+| adjust-position | Whether to automatically push up page when keyboard pops up | `boolean` | `true` |
+| disable-default-padding | Whether to remove default padding on iOS | `boolean` | `false` |
+| hold-keyboard | Whether to keep keyboard open when clicking page while focused | `boolean` | `false` |
+| ignore-composition-event ^(1.3.11) | Whether to ignore text composition system event processing; when `false`, composition-related events will be triggered, and `input` will be triggered during composition | `boolean` | `true` |
+| inputmode ^(1.5.0) | Input mode hint, optional values are `none`, `text`, `decimal`, `numeric`, `tel`, `search`, `email`, `url` | `InputMode` | `text` |
+| enable-native ^(1.14.0) | Whether to enable native input box in Alipay Mini Program, set to `false` to avoid content shifting up after keyboard pops up | `boolean` | `true` |
+| compact | Whether to enable compact mode; when not explicitly set, it will be automatically enabled in `wd-form-item` | `boolean` | - |
+| custom-textarea-class | Textarea custom class name | `string` | `''` |
+| custom-class | Root node custom class name | `string` | `''` |
+| custom-style | Root node custom style | `string` | `''` |
 
-### InputMode Options
+### InputMode Optional Values
 
->Added in uni-app 3.6.16+. inputmode is a later addition to the HTML specification. Various mini programs do not yet support this property.
-
-This property can be used in web and app-vue platforms of uni-app in compatible high-version webviews, see [inputmode](https://uniapp.dcloud.net.cn/component/input.html#inputmode).
+`inputmode` is an HTML specification extension capability that can be used in uni-app's Web and App-Vue platforms in high-version WebViews that meet the conditions. See [inputmode](https://uniapp.dcloud.net.cn/component/input.html#inputmode) for details.
 
 | Value | Description |
-|-------|-------------|
-| none | No virtual keyboard. Useful when the application or site needs to implement its own keyboard input control. |
-| text | Uses the standard text input keyboard for the user's locale. |
-| decimal | Numeric keyboard with decimal separator (usually "." or ","), device may or may not show minus key. |
-| numeric | Numeric keyboard, just needs numbers 0 to 9, device may or may not show minus key. |
-| tel | Telephone input keyboard, includes numbers 0 to 9, asterisk (*), and pound (#) keys. Phone number input typically should use <input type="tel">. |
-| search | Virtual keyboard optimized for search input, for example, return key might be labeled "search", and may have other optimizations. |
-| email | Virtual keyboard optimized for email address input, typically includes "@" symbol and other optimizations. Email address input should use <input type="email">. |
-| url | Virtual keyboard optimized for URL input, for example, "/" key might be more prominent, history access, etc. URL input typically should use <input type="url">. |
-
-### FormItemRule Data Structure
-
-| Key | Description | Type |
-|-----|-------------|------|
-| required | Whether it's a required field | `boolean` |
-| message | Error prompt text | `string` |
-| validator | Validate through function, can return a `Promise` for asynchronous validation | `(value, rule) => boolean \| Promise` |
-| pattern | Validate through regular expression, validation fails if regex doesn't match | `RegExp` |
+| --- | --- |
+| none | Do not show virtual keyboard |
+| text | Standard text input keyboard |
+| decimal | Decimal input keyboard |
+| numeric | Pure numeric input keyboard |
+| tel | Phone input keyboard |
+| search | Search input optimized keyboard |
+| email | Email input optimized keyboard |
+| url | URL input optimized keyboard |
 
 ## Events
 
-| Event Name | Description | Parameters | Version |
-|------------|-------------|------------|----------|
-| input | Listen to input box input event | `{value, cursor, keyCode}` | - |
-| focus | Listen to input box focus event | `{ value, height }`, height is keyboard height | - |
-| blur | Listen to input box blur event | `{ value }` | - |
-| clear | Listen to input box clear button event | - | - |
-| linechange | Listen to input box line number change | `{ height: 0, heightRpx: 0, lineCount: 0 }` | - |
-| confirm | Triggered when clicking done, triggers confirm event | `{ value }` | - |
-| keyboardheightchange | Triggered when keyboard height changes | `{ height, duration }` | - |
-| clickprefixicon | Triggered when clicking prefix icon | - | - |
-| clicksuffixicon | Triggered when clicking suffix icon | - | - |
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| input | Triggered when inputting | `{ value, cursor, keyCode }` |
+| focus | Triggered when focusing | `{ value, height }` |
+| blur | Triggered when blurring | `{ value, cursor }` |
+| clear | Triggered when clicking clear button | - |
+| linechange | Triggered when line count changes | `{ height, heightRpx, lineCount }` |
+| confirm | Triggered when clicking keyboard done button | `{ value }` |
+| keyboardheightchange | Triggered when keyboard height changes | `{ height, duration }` |
+
+## External Style Classes
+
+| Class Name | Description |
+| --- | --- |
+| custom-class | Root node style class |
+| custom-textarea-class | Textarea style class |

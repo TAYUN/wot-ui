@@ -2,13 +2,13 @@
 version: 1.3.10
 ---
 
-# Keyboard
+# Keyboard Virtual Keyboard
 
-Virtual keyboard for inputting numbers, passwords, ID cards, or license plate numbers.
+Virtual numeric keyboard, used for entering numbers, passwords, ID cards, or license plates, etc.
 
 ## Basic Usage
 
-You can control the keyboard's visibility through `v-model:visible`.
+You can control whether the keyboard is displayed via `v-model:visible`.
 
 ```html
 <wd-cell title="Default Keyboard" is-link @click="showKeyBoard" />
@@ -28,12 +28,14 @@ const onInput = (value) => showToast(`${value}`)
 const onDelete = () => showToast('Delete')
 ```
 
-## Keyboard with Right Sidebar
+## Component Type
 
-Set the `mode` property to `custom` to display the keyboard's right sidebar, commonly used for inputting amounts.
+### Keyboard with Sidebar
+
+Set `mode` property to `custom` to display the keyboard's right sidebar, commonly used for entering amounts.
 
 ```html
-<wd-cell title="Keyboard with Right Sidebar" is-link @click="showKeyBoard" />
+<wd-cell title="Keyboard with Sidebar" is-link @click="showKeyBoard" />
 
 <wd-keyboard v-model:visible="visible" mode="custom" extra-key="." close-text="Done" @input="onInput" @delete="onDelete"></wd-keyboard>
 ```
@@ -50,9 +52,9 @@ const onInput = (value) => showToast(`${value}`)
 const onDelete = () => showToast('Delete')
 ```
 
-## ID Card Keyboard
+### ID Card Keyboard
 
-You can set the content of the bottom-left button through the `extra-key` property. For example, when inputting ID card numbers, you can set `extra-key` to `X`.
+You can set the bottom-left key content via `extra-key` property. For example, when entering an ID card number, you can set `extra-key` to `X`.
 
 ```html
 <wd-cell title="ID Card Keyboard" is-link @click="showKeyBoard" />
@@ -72,9 +74,9 @@ const onInput = (value) => showToast(`${value}`)
 const onDelete = () => showToast('Delete')
 ```
 
-## License Plate Keyboard
+### License Plate Keyboard
 
-Set the `mode` property to `car` to display the license plate keyboard, commonly used for inputting license plate numbers.
+Set `mode` property to `car` to display the license plate keyboard, commonly used for entering license plate numbers.
 
 ```html
 <wd-cell title="License Plate Keyboard" is-link @click="showKeyBoard" />
@@ -94,18 +96,20 @@ const onInput = (value) => showToast(`${value}`)
 const onDelete = () => showToast('Delete')
 ```
 
-## License Plate Keyboard Language Control
+## Component Variants
 
-You can control the language mode of the license plate keyboard through the `car-lang` property, supporting Chinese provinces (`zh`) and English letters (`en`). Use the `auto-switch-lang` property to control whether to automatically switch languages.
+### License Plate Keyboard Language Control
+
+You can control the language mode of the license plate keyboard via `car-lang` property, supporting Chinese provinces (`zh`) and English letters (`en`). You can control whether to automatically switch languages via `auto-switch-lang` property.
 
 ```html
-<!-- Controlled mode: Manual language switching -->
+<!-- Controlled Mode: Manual language switching -->
 <wd-cell title="License Plate Keyboard (Controlled)" :value="value" is-link @click="showKeyBoard" />
 
 <wd-keyboard v-model="value" v-model:visible="visible" v-model:car-lang="lang" mode="car" @input="onInput" @delete="onDelete"></wd-keyboard>
 
-<!-- Uncontrolled mode: Disable auto-switching -->
-<wd-cell title="License Plate Keyboard (No Auto-switch)" :value="value2" is-link @click="showKeyBoard2" />
+<!-- Uncontrolled Mode: Enable auto-switch -->
+<wd-cell title="License Plate Keyboard (Uncontrolled)" :value="value2" is-link @click="showKeyBoard2" />
 
 <wd-keyboard v-model="value2" v-model:visible="visible2" mode="car" auto-switch-lang @input="onInput" @delete="onDelete"></wd-keyboard>
 ```
@@ -130,9 +134,9 @@ const onInput = (value) => showToast(`${value}`)
 const onDelete = () => showToast('Delete')
 ```
 
-## Keyboard with Title
+### Keyboard with Title
 
-You can set the keyboard title through the `title` property.
+You can set the keyboard title via `title` property.
 
 ```html
 <wd-cell title="Keyboard with Title" is-link @click="showKeyBoard" />
@@ -152,10 +156,10 @@ const onInput = (value) => showToast(`${value}`)
 const onDelete = () => showToast('Delete')
 ```
 
-## Custom Title Using Slot
+### Use Slot for Custom Title
 
 ```html
-<wd-cell title="Custom Title Using Slot" is-link @click="showKeyBoard" />
+<wd-cell title="Use Slot for Custom Title" is-link @click="showKeyBoard" />
 
 <wd-keyboard v-model:visible="visible" extra-key="." close-text="Done" @input="onInput" @delete="onDelete">
   <template #title>
@@ -176,9 +180,9 @@ const onInput = (value) => showToast(`${value}`)
 const onDelete = () => showToast('Delete')
 ```
 
-## Multiple Extra Keys
+### Multiple Extra Keys
 
-When `mode` is set to `custom`, you can configure two `extra-key` values in array form.
+When `mode` is `custom`, it supports configuring two `extra-key`s in array form.
 
 ```html
 <wd-cell title="Multiple Extra Keys" is-link @click="showKeyBoard" />
@@ -198,12 +202,12 @@ const onInput = (value) => showToast(`${value}`)
 const onDelete = () => showToast('Delete')
 ```
 
-## Random Number Keyboard
+### Random Numeric Keyboard
 
-You can randomly arrange the number keyboard through the `random-key-order` property, commonly used in high-security scenarios.
+You can randomly sort the numeric keyboard via `random-key-order` property, commonly used for high security scenarios.
 
 ```html
-<wd-cell title="Random Number Keyboard" is-link @click="showKeyBoard" />
+<wd-cell title="Random Numeric Keyboard" is-link @click="showKeyBoard" />
 
 <wd-keyboard v-model:visible="visible" random-key-order @input="onInput" @delete="onDelete" />
 ```
@@ -220,9 +224,11 @@ const onInput = (value) => showToast(`${value}`)
 const onDelete = () => showToast('Delete')
 ```
 
-## Two-way Binding
+## Special Usage
 
-You can bind the keyboard's current input value through `v-model` and limit the input length through the `maxlength` property.
+### Two-way Binding
+
+You can bind the keyboard's current input value via `v-model`, and limit the input length via `maxlength` property.
 
 ```html
 <wd-cell title="Two-way Binding" :value="value1" is-link @click="showKeyBoard" />
@@ -251,12 +257,12 @@ const onInput = (value) => showToast(`${value}`)
 const onDelete = () => showToast('Delete')
 ```
 
-## Display Modal Overlay
+### Show Mask Overlay
 
-`hideOnClickOutside` controls whether the keyboard popup has an overlay, and `modal` controls whether the overlay is transparent.
+`hideOnClickOutside` controls whether the keyboard popup has a mask. `modal` controls whether the mask is transparent.
 
-::: tip
-Currently `modal` only controls whether the overlay is transparent, `hideOnClickOutside` controls whether the popup has an overlay. When there is an overlay, clicking the overlay can close the keyboard, but when the keyboard is open, you must click the overlay to close the current keyboard before you can click other buttons. You can also disable `hideOnClickOutside` and manually control whether the keyboard is displayed to implement closing the keyboard when clicking outside, which is more flexible.
+::: tip Tip
+Currently `modal` only controls whether the mask is transparent. `hideOnClickOutside` controls whether the popup has a mask. When there is a mask, clicking the mask can close the keyboard. However, when the keyboard is expanded, you must click the mask to close the current keyboard before you can click other buttons. You can also turn off `hideOnClickOutside` and manually control whether the keyboard is displayed to achieve closing the keyboard when clicking outside, which is more flexible.
 :::
 
 ```html
@@ -279,45 +285,50 @@ const onDelete = () => showToast('Delete')
 
 ## Attributes
 
-| Parameter           | Description                                                                                                           | Type                  | Options                    | Default    | Version |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------- | ---------- | ------- |
-| v-model:visible     | Whether to display                                                                                                    | `boolean`             | -                          | `false`    | 1.3.10  |
-| v-model             | Bound value                                                                                                           | `string`              | -                          | -          | 1.3.10  |
-| title               | Title                                                                                                                 | `string`              | -                          | -          | 1.3.10  |
-| mode                | Keyboard mode                                                                                                         | `string`              | `default`, `car`, `custom` | `default`  | 1.3.10  |
-| zIndex              | Z-index                                                                                                               | `number`              | -                          | `100`      | 1.3.10  |
-| maxlength           | Maximum length                                                                                                        | `number`              | -                          | `Infinity` | 1.3.10  |
-| showDeleteKey       | Whether to show delete key                                                                                            | `boolean`             | -                          | `true`     | 1.3.10  |
-| randomKeyOrder      | Whether to randomize keyboard key order                                                                               | `boolean`             | -                          | `false`    | 1.3.10  |
-| closeText           | Confirm button text                                                                                                   | `string`              | -                          | -          | 1.3.10  |
-| deleteText          | Delete button text                                                                                                    | `string`              | -                          | -          | 1.3.10  |
-| closeButtonLoading  | Whether close button shows loading state                                                                              | `boolean`             | -                          | `false`    | 1.3.10  |
-| modal               | Whether to show modal overlay                                                                                         | `boolean`             | -                          | `false`    | 1.3.10  |
-| hideOnClickOutside  | Whether to close keyboard when clicking outside                                                                       | `boolean`             | -                          | `true`     | 1.3.10  |
-| lockScroll          | Whether to lock background scroll, when locked, content in the overlay will also not scroll                           | `boolean`             | -                          | `true`     | 1.3.10  |
-| safeAreaInsetBottom | Whether to enable bottom safe area                                                                                    | `boolean`             | -                          | `true`     | 1.3.10  |
-| extraKey            | Extra key                                                                                                             | `string` / `string[]` | -                          | -          | 1.3.10  |
-| root-portal         | Whether to detach from the page, used to solve various fixed positioning issues                                       | `boolean`             | -                          | `false`    | 1.11.0  |
-| v-model:carLang     | License plate keyboard language mode, effective when mode=car                                                         | `string`              | `zh`, `en`                 | -          | 1.13.0  |
-| autoSwitchLang      | Whether to automatically switch license plate keyboard language, effective when mode=car and car-lang is uncontrolled | `boolean`             | -                          | `false`    | 1.13.0  |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| v-model:visible | Whether expanded | `boolean` | `false` |
+| v-model | Current input value | `string` | `''` |
+| title | Keyboard title | `string` | - |
+| mode | Keyboard mode, optional values are `default`, `custom`, `car` | `KeyboardMode` | `default` |
+| z-index | Z-index | `number` | `100` |
+| maxlength | Maximum input length | `number` | `Infinity` |
+| show-delete-key | Whether to show delete key; only effective for default numeric keyboard and sidebar keyboard | `boolean` | `true` |
+| random-key-order | Whether to randomly sort numeric keys | `boolean` | `false` |
+| close-text | Close button text; displayed in header for default/license plate mode, displayed on right large button for `custom` mode | `string` | - |
+| delete-text | Delete button text | `string` | - |
+| close-button-loading | Whether close button shows loading state | `boolean` | `false` |
+| modal | Whether to show mask; when set to `false`, mask is transparent | `boolean` | `false` |
+| hide-on-click-outside | Whether to allow closing keyboard by clicking outside, also controls whether to render mask | `boolean` | `true` |
+| lock-scroll | Whether to lock background scrolling | `boolean` | `true` |
+| safe-area-inset-bottom | Whether to adapt to bottom safe area | `boolean` | `true` |
+| extra-key | Extra key, can pass single string or string array; `custom` mode supports two extra keys | `string \| string[]` | - |
+| root-portal ^(1.11.0) | Whether to detach from page structure, used to solve fixed positioning issues | `boolean` | `false` |
+| v-model:car-lang ^(1.13.0) | License plate keyboard language mode, effective when `mode=car`, optional values are `zh`, `en` | `CarKeyboardLang` | - |
+| auto-switch-lang ^(1.13.0) | Whether to automatically switch license plate keyboard language, effective when `mode=car` and `car-lang` is in uncontrolled state | `boolean` | `false` |
+| custom-class | Custom class name for root node | `string` | `''` |
+| custom-style | Custom style for root node | `string` | `''` |
 
-## Slot
+## Slots
 
-| name  | Description | Type | Version |
-| ----- | ----------- | ---- | ------- |
-| title | Title       | -    | 1.2.12  |
+| Name | Description |
+| --- | --- |
+| title | Custom title content |
 
 ## Events
 
-| Event Name | Description                                       | Parameters  | Version |
-| ---------- | ------------------------------------------------- | ----------- | ------- |
-| input      | Triggered when a key is pressed                   | key: string | -       |
-| delete     | Triggered when delete key is pressed              | -           | -       |
-| close      | Triggered when close button or outside is clicked | -           | -       |
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| input | Triggered when clicking an inputtable key | `key: string` |
+| delete | Triggered when clicking delete key | - |
+| close | Triggered when clicking close button or mask to close | - |
+| update:visible | Triggered when keyboard visibility changes | `visible: boolean` |
+| update:modelValue | Triggered when current input value changes | `value: string` |
+| update:carLang | Triggered when license plate keyboard language changes | `lang: 'zh' \| 'en'` |
 
 ## External Style Classes
 
-| Class Name   | Description           | Version |
-| ------------ | --------------------- | ------- |
-| custom-class | Root node style class | 1.3.10  |
-| custom-style | Root node style       | 1.3.10  |
+| Class Name | Description |
+| --- | --- |
+| custom-class | Root node style class |
+| custom-style | Root node style |

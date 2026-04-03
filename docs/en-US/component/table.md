@@ -1,162 +1,23 @@
 # Table
 
-Used to display multiple pieces of data with similar structures, allowing operations such as sorting.
+Used to display multiple pieces of similarly structured data, supporting fixed columns, sorting, cell merging, and virtual scrolling.
 
-::: warning Note
-After `1.5.0`, the default value of `height` has been removed. You need to set it manually, preferably as a `number` type to facilitate future adaptation of virtual lists.
+::: warning Tip
+After `1.5.0`, `height` no longer provides a default value. When enabling vertical scrolling or virtual scrolling, it is recommended to explicitly pass a numeric height.
 :::
 
-## Basic Usage
+## Component Types
 
-Set table data through `data`.
+### Basic Usage
 
-::: details Basic Usage
+Pass table data through `data`, and define column structure through multiple `wd-table-column`.
 
-```html
-<wd-table :data="dataList" :height="400">
-  <wd-table-column prop="name" label="Name"></wd-table-column>
-  <wd-table-column prop="school" label="School"></wd-table-column>
-  <wd-table-column prop="major" label="Major"></wd-table-column>
-</wd-table>
-```
+Demo page corresponding content: Basic table, sort events, row click events.
 
 ```ts
-const dataList = reactive([
-  {
-    name: 'Zhao Yun',
-    school: 'Wuhan Yanglo Maternal and Child Health College',
-    major: 'Computer Science and Technology'
-  },
-  {
-    name: 'Kong Ming',
-    school: 'Wuhan Yanglo Wolong College',
-    major: 'Computer Science and Technology'
-  },
-  {
-    name: 'Liu Bei',
-    school: 'Wuhan Yanglo Weaving College',
-    major: 'Computer Science and Technology'
-  }
-])
-```
-
-:::
-
-## Fixed Columns
-
-Set whether table columns are fixed through `fixed`, default is `false`.
-:::warning Note
-Currently only supports fixing on the left side, and the arrangement order of fixed column components must be the same as the actual desired display order.
-:::
-
-```html
-<wd-table :data="dataList" :height="400">
-  <wd-table-column prop="name" label="Name" fixed></wd-table-column>
-  <wd-table-column prop="school" label="School"></wd-table-column>
-  <wd-table-column prop="major" label="Major"></wd-table-column>
-</wd-table>
-```
-
-## Show Index
-
-Set whether to display the index column through `index`, default is `false`. You can also pass an object to configure the index column, parameters are the same as `TableColumnProps`
-
-```html
-<wd-table :data="dataList" height="328px" :index="true" :height="400">
-  <wd-table-column prop="name" label="Name" sortable></wd-table-column>
-  <wd-table-column prop="grade" label="Score" sortable></wd-table-column>
-  <wd-table-column prop="hobby" label="Description" sortable :width="160"></wd-table-column>
-</wd-table>
-
-<wd-table :data="dataList" height="328px" :index="{ align: 'center', width: 200 }">
-  <wd-table-column prop="name" label="Name" sortable align="center"></wd-table-column>
-  <wd-table-column prop="grade" label="Score" sortable align="center"></wd-table-column>
-  <wd-table-column prop="hobby" label="Description" sortable :width="160"></wd-table-column>
-</wd-table>
-```
-
-## Striped
-
-Set whether to display striped table through `stripe`, default is `true`.
-
-```html
-<wd-table :data="dataList" :stripe="false" :height="400">
-  <wd-table-column prop="name" label="Name"></wd-table-column>
-  <wd-table-column prop="school" label="School"></wd-table-column>
-  <wd-table-column prop="major" label="Major"></wd-table-column>
-</wd-table>
-```
-
-## Border
-
-Set whether to display table border through `border`, default is `true`.
-
-```html
-<wd-table :data="dataList" :border="false" :height="400">
-  <wd-table-column prop="name" label="Name"></wd-table-column>
-  <wd-table-column prop="school" label="School"></wd-table-column>
-  <wd-table-column prop="major" label="Major"></wd-table-column>
-</wd-table>
-```
-
-## Table Height
-
-Set table height through `height`, after setting height, the header will be automatically fixed.
-
-```html
-<wd-table :data="dataList" :height="400">
-  <wd-table-column prop="name" label="Name"></wd-table-column>
-  <wd-table-column prop="school" label="School"></wd-table-column>
-  <wd-table-column prop="major" label="Major"></wd-table-column>
-</wd-table>
-```
-
-## Sort Event
-
-When there are columns participating in sorting, clicking will trigger the `sort-method` sorting event.
-
-```html
-<wd-table :data="dataList" @sort-method="handleSort" :height="400">
-  <wd-table-column prop="name" label="Name"></wd-table-column>
-  <wd-table-column prop="school" label="School" sortable></wd-table-column>
-  <wd-table-column prop="major" label="Major"></wd-table-column>
-</wd-table>
-```
-
-```ts
-function handleSort(e) {
-  console.log('This is the sorting event')
-}
-```
-
-## Custom Column Template
-
-Customize the display content of columns, can be combined with other components.
-Through `Scoped slot` you can get the data of `row` and `index`, usage refers to the demo.
-
-::: details View Custom Column Template Demo
-
-```html
-<wd-table :data="dataList" @sort-method="handleSort" :height="400">
-  <wd-table-column prop="name" label="Name" fixed="true" width="320rpx" sortable></wd-table-column>
-  <wd-table-column prop="grade" label="Score" width="220rpx" sortable>
-    <template #value="{row}">
-      <view class="custom-class">
-        <text>{{ row.grade }}</text>
-        <text>YoY {{ row.compare }}</text>
-      </view>
-    </template>
-  </wd-table-column>
-  <wd-table-column prop="hobby" label="Description" sortable></wd-table-column>
-  <wd-table-column prop="school" label="School"></wd-table-column>
-  <wd-table-column prop="major" label="Major"></wd-table-column>
-  <wd-table-column prop="gender" label="Gender"></wd-table-column>
-  <wd-table-column prop="graduation" label="Graduation Time"></wd-table-column>
-</wd-table>
-```
-
-```ts
+import type { TableColumn } from '@/uni_modules/wot-ui/components/wd-table-column/types'
 import { ref } from 'vue'
+
 interface TableData {
   name: string
   school: string
@@ -170,58 +31,233 @@ interface TableData {
 
 const dataList = ref<TableData[]>([
   {
-    name: 'Zhang Fei',
-    school: 'Wuhan Yanglo Butcher College',
-    major: 'Computer Science and Technology',
-    gender: 'Male',
-    graduation: 'January 12, 2022',
-    grade: 56,
-    compare: '10%',
-    hobby: 'Zhang Fei of Yan is here!'
-  },
-  {
     name: 'Guan Yu',
-    school: 'Wuhan Yanglo Mung Bean College',
+    school: 'Wuhan Yangluo Mung Bean College',
     major: 'Computer Science and Technology',
     gender: 'Male',
     graduation: 'January 12, 2022',
     grade: 66,
-    compare: '11%',
-    hobby: 'Yan Liang and Wen Chou, in my view, are mere clay chickens and pottery dogs.'
+    compare: '48%',
+    hobby: 'Yan Liang and Wen Chou, in my view, are like chickens and dogs.'
   },
   {
     name: 'Liu Bei',
-    school: 'Wuhan Yanglo Weaving College',
+    school: 'Wuhan Yangluo Weaving College',
     major: 'Computer Science and Technology',
     gender: 'Male',
     graduation: 'January 12, 2022',
-    grade: 45,
-    compare: '1%',
-    hobby: 'I have found my Ming, like a fish finding water'
+    grade: 68,
+    compare: '21%',
+    hobby: 'Getting Kong Ming is like a fish getting water.'
   }
 ])
+
+function handleSort(column: TableColumn) {
+  dataList.value = dataList.value.reverse()
+}
+
+function handleRowClick({ rowIndex }: { rowIndex: number }) {
+  console.log(rowIndex)
+}
 ```
 
-:::
+### Fixed Columns
 
-## Attributes
+Fix columns through the `fixed` property of `TableColumn`. Currently only supports fixing on the left side. The writing order of fixed columns needs to be consistent with the final display order.
 
-| Attribute | Description | Type | Default | Version |
-|-----------|-------------|------|---------|----------|
-| data | Table data | array | [] | - |
-| height | Table height | number/string | - | - |
-| stripe | Whether to show stripes | boolean | true | - |
-| border | Whether to show border | boolean | true | - |
-| index | Whether to show index column | boolean/object | false | - |
+Demo page corresponding content: Fix "Name" and "Score" columns, other columns can be viewed by horizontal scrolling.
 
-## Events
+### Show Index
 
-| Event | Description | Parameters |
-|-------|-------------|------------|
-| sort-method | Triggered when sorting | event: Event |
+Enable index column through `index`. When passing an object, you can continue to configure the width, alignment, and other properties of the index column.
 
-## Slots
+Demo page corresponding content: Custom index column centered display.
+
+### Custom Column Template
+
+`TableColumn` provides a `value` scoped slot, which can get the current row data and row index to customize cell content.
+
+Demo page corresponding content: Score column additionally displays year-over-year information.
+
+### Merge Cells
+
+Control cell spanning through `span-method`. Callback returns `{ rowspan, colspan }`. When returning empty, it is processed as `{ rowspan: 1, colspan: 1 }`.
+
+```ts
+import type { SpanMethodParams } from '@/uni_modules/wot-ui/components/wd-table/types'
+import { computed } from 'vue'
+
+const spanData = computed(() => dataList.value.slice(0, 5))
+
+function handleSpan({ rowIndex, columnIndex }: SpanMethodParams) {
+  if (rowIndex === 0 && columnIndex === 0) {
+    return { rowspan: 1, colspan: 2 }
+  }
+  if (rowIndex === 0 && columnIndex === 1) {
+    return { rowspan: 0, colspan: 0 }
+  }
+  if (rowIndex === 2 && columnIndex === 0) {
+    return { rowspan: 2, colspan: 1 }
+  }
+  if (rowIndex === 3 && columnIndex === 0) {
+    return { rowspan: 0, colspan: 0 }
+  }
+}
+```
+
+### Merge Custom Columns
+
+`span-method` can be combined with `value` slot.
+
+```ts
+function handleCustomSpan({ rowIndex, columnIndex }: SpanMethodParams) {
+  if (rowIndex === 0 && columnIndex === 0) {
+    return { rowspan: 2, colspan: 1 }
+  }
+  if (rowIndex === 1 && columnIndex === 0) {
+    return { rowspan: 0, colspan: 0 }
+  }
+  if (rowIndex === 3 && columnIndex === 2) {
+    return { rowspan: 1, colspan: 2 }
+  }
+  if (rowIndex === 3 && columnIndex === 3) {
+    return { rowspan: 0, colspan: 0 }
+  }
+}
+```
+
+### Fixed Column Merge
+
+Cell merging is also supported in fixed column scenarios.
+
+```ts
+function handleFixedSpan({ rowIndex, columnIndex }: SpanMethodParams) {
+  if (rowIndex === 1 && columnIndex === 1) {
+    return { rowspan: 2, colspan: 1 }
+  }
+  if (rowIndex === 2 && columnIndex === 1) {
+    return { rowspan: 0, colspan: 0 }
+  }
+  if (rowIndex === 3 && columnIndex === 3) {
+    return { rowspan: 1, colspan: 2 }
+  }
+  if (rowIndex === 3 && columnIndex === 4) {
+    return { rowspan: 0, colspan: 0 }
+  }
+}
+```
+
+### Fixed Header Merge
+
+Setting `height` defaults to fixed header, which can be used together with `span-method`.
+
+```ts
+function handleHeaderSpan({ rowIndex, columnIndex }: SpanMethodParams) {
+  if (rowIndex === 0 && columnIndex === 2) {
+    return { rowspan: 2, colspan: 1 }
+  }
+  if (rowIndex === 1 && columnIndex === 2) {
+    return { rowspan: 0, colspan: 0 }
+  }
+  if (rowIndex === 4 && columnIndex === 3) {
+    return { rowspan: 2, colspan: 1 }
+  }
+  if (rowIndex === 5 && columnIndex === 3) {
+    return { rowspan: 0, colspan: 0 }
+  }
+}
+```
+
+### Virtual Scrolling
+
+For large data volume scenarios, you can enable `virtual`, and control the visible area rendering range through `row-height` and `buffer`.
+
+```ts
+const virtualData = Array.from({ length: 10000 }, (_, index) => ({
+  index: index + 1,
+  name: 'Shu Soldier' + (index + 1),
+  score: Math.floor(Math.random() * 100),
+  remark: 'This is the remark for Shu Soldier ' + (index + 1)
+}))
+```
+
+## Component States
+
+### No Border
+
+Setting `border` to `false` hides cell borders.
+
+### No Zebra Stripes
+
+Setting `stripe` to `false` turns off the alternating row background.
+
+### Hide Header
+
+Setting `show-header` to `false` hides the header area.
+
+## Special Styles
+
+### Non-Fixed Header with Pagination
+
+Setting `fixed-header` to `false` allows the table to be combined with a paginator.
+
+```ts
+import { computed, ref } from 'vue'
+
+const page = ref(1)
+const pageSize = ref(10)
+const total = ref(dataList.value.length)
+
+const paginationData = computed(() => {
+  return dataList.value.slice((page.value - 1) * pageSize.value, page.value * pageSize.value)
+})
+```
+
+## Table Attributes
+
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| data | Table data source | `Record<string, any>[]` | - |
+| border | Whether to show border | `boolean` | `true` |
+| stripe | Whether to show zebra stripes | `boolean` | `true` |
+| height | Table maximum height, enables vertical scrolling when set | `string \| number` | - |
+| show-header | Whether to show header | `boolean` | `true` |
+| ellipsis | Whether to ellipsis text after exceeding two lines | `boolean` | `false` |
+| index | Whether to show index column, can customize index column config when passing object | `boolean \| Omit<Partial<TableColumnProps>, 'prop'>` | `false` |
+| fixed-header | Whether to fix header | `boolean` | `true` |
+| span-method | Cell merge method, returns `{ rowspan, colspan }` | `SpanMethod` | - |
+| virtual | Whether to enable virtual scrolling | `boolean` | `false` |
+| row-height | Virtual scrolling row height | `number` | `44` |
+| buffer | Virtual scrolling pre-render rows above and below | `number` | `5` |
+| custom-class | Root node custom class name | `string` | `''` |
+| custom-style | Root node custom style | `string` | `''` |
+
+## Table Events
+
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| sort-method | Triggered after clicking sortable column header | `TableColumn` |
+| row-click | Triggered when clicking table row | `{ rowIndex: number }` |
+
+## Table Slots
 
 | Name | Description |
-|------|-------------|
-| value | Custom column content |
+| --- | --- |
+| default | Table column content, usually places one or more `wd-table-column` |
+
+## TableColumn Attributes
+
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| prop | Column corresponding data field name | `string` | - |
+| label | Column title | `string` | - |
+| width | Column width | `string \| number` | `100` |
+| sortable | Whether to enable sorting | `boolean` | `false` |
+| fixed | Whether to fix current column, only supports fixing on the left | `boolean` | `false` |
+| align | Content alignment, optional values are `left`, `center`, `right` | `AlignType` | `left` |
+
+## TableColumn Slots
+
+| Name | Description |
+| --- | --- |
+| value | Custom cell content, slot parameters are `{ row, index }` |

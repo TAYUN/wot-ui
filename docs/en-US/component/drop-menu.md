@@ -1,17 +1,19 @@
-# DropMenu Drop-down Menu
+# DropMenu
 
-A menu list that drops down or up.
+Menu list that pops up downward or upward.
 
-## Basic Usage
+## Component Type
 
-Basic usage requires binding a `v-model` value and the `options` property.
+### Basic Usage
 
-The `options` property is a one-dimensional object array, where each array item's data structure includes: label (option text), value (option value), tip (option description).
+Basic usage requires binding `v-model` and `options`.
 
-Since `uni-app` components cannot listen for clicks outside themselves, to automatically close the `dropmenu` when clicking elsewhere on the page, it is recommended to use the component library's `useQueue` hook (which will close all dropmenu, popover, toast, swipeAction, fab), and listen for click event bubbling on the page's root element.
+`options` is an object array, default structure is `{ label, value, tip }`.
 
-:::warning
-If there is a scenario where the user manually clicks somewhere outside the `dropmenu` like a button to open the `dropmenu`, then you need to add @click to the clicked element (in this case the button) to prevent event bubbling to the root element, avoiding triggering `closeOutside` which would close the `dropmenu` that should be manually opened.
+Because `uni-app` components cannot directly listen to clicks outside the component, to automatically close the dropdown menu when clicking other areas of the page, it is recommended to combine with `useQueue` to listen to click bubbling at the page root node and call `closeOutside`.
+
+:::warning Tip
+If there is a scenario where clicking an external button manually opens `drop-menu`, you need to add `@click.stop` to that button to avoid triggering `closeOutside` and immediately closing.
 :::
 
 ```html
@@ -23,96 +25,120 @@ If there is a scenario where the user manually clicks somewhere outside the `dro
 </view>
 ```
 
-```typescript
+```ts
+import { ref } from 'vue'
 import { useQueue } from '@/uni_modules/wot-ui'
 
 const { closeOutside } = useQueue()
-const value1 = ref<number>(0)
-const value2 = ref<number>(0)
+const value1 = ref(0)
+const value2 = ref(0)
 
-const option1 = ref<Record<string, any>[]>([
+const option1 = ref([
   { label: 'All Products', value: 0 },
   { label: 'New Products', value: 1 },
-  { label: 'Promotional Products', value: 2 }
+  { label: 'Promotion Products', value: 2 }
 ])
-const option2 = ref<Record<string, any>[]>([
+const option2 = ref([
   { label: 'Comprehensive', value: 0 },
   { label: 'Sales', value: 1 },
-  { label: 'Listing Time', value: 2 }
+  { label: 'Shelf Time', value: 2 }
 ])
 
-function handleChange1({ value }) {
+const handleChange1 = ({ value }: { value: string | number }) => {
   console.log(value)
 }
-function handleChange2({ value }) {
+const handleChange2 = ({ value }: { value: string | number }) => {
   console.log(value)
 }
 ```
 
-## Custom Menu Content
+## Component State
 
-You can customize the content of `DropMenuItem` through the `default` slot. In this case, you need to use the instance's `close` method to manually control the menu's closure.
+### Disabled Menu
 
-You can set the menu title through `title`.
-
-> Don't pass in options and value at this time
+Disable menu item through `disabled`.
 
 ```html
 <wd-drop-menu>
-  <wd-drop-menu-item v-model="value" :options="option" @change="handleChange" />
-  <wd-drop-menu-item title="Filter" ref="dropMenu" @opened="handleOpened">
-    <view>
-      <wd-slider v-model="sliderValue" ref="slider" />
-      <wd-cell title="Title Text" value="Content" />
-      <wd-cell title="Title Text" label="Description" value="Content" />
-      <wd-button block size="large" suck @click="confirm">Primary Button</wd-button>
-    </view>
-  </wd-drop-menu-item>
+  <wd-drop-menu-item v-model="value1" disabled :options="option1" />
+  <wd-drop-menu-item v-model="value2" :options="option2" />
 </wd-drop-menu>
 ```
 
-```typescript
-const dropMenu = ref()
-const slider = ref<SliderInstance>() // slider 1.2.25 supported
+## Component Variant
 
-const value = ref<number>(0)
-const sliderValue = ref<number>(30)
-const option = ref<Record<string, any>[]>([
+### Expand Upward
+
+Set `direction` to `up` to make menu expand upward.
+
+```html
+<wd-drop-menu direction="up">
+  <wd-drop-menu-item v-model="value1" :options="option1" />
+  <wd-drop-menu-item v-model="value2" :options="option2" />
+</wd-drop-menu>
+```
+
+### Async Open/Close ^(1.3.7)
+
+`before-toggle` triggers before menu opens/closes, receives `{ status }`, supports returning `boolean` or `Promise<boolean>`.
+
+:::warning Tip
+`before-toggle` only acts on the current `wd-drop-menu-item` and cannot prevent the open/close behavior of other menu items.
+:::
+
+```html
+<wd-dialog />
+<wd-drop-menu>
+  <wd-drop-menu-item v-model="value" :options="option" :before-toggle="handleBeforeToggle" />
+</wd-drop-menu>
+```
+
+```ts
+import { ref } from 'vue'
+import { useDialog } from '@/uni_modules/wot-ui'
+import type { DropMenuItemBeforeToggle } from '@/uni_modules/wot-ui/components/wd-drop-menu-item/types'
+
+const dialog = useDialog()
+const value = ref(0)
+const option = ref([
   { label: 'All Products', value: 0 },
-  { label: 'New Products', value: 1 },
-  { label: 'Promotional Products', value: 2 }
+  { label: 'New Products', value: 1, tip: 'This is supplementary info' },
+  { label: 'Long Filter Option', value: 2 }
 ])
-function handleChange({ value }) {
-  console.log(value)
-}
 
-function confirm() {
-  dropMenu.value.close()
-}
-
-function handleOpened() {
-  slider.value?.initSlider()
+const handleBeforeToggle: DropMenuItemBeforeToggle = ({ status }) => {
+  return new Promise<boolean>((resolve) => {
+    dialog
+      .confirm({
+        title: status ? 'Async Open' : 'Async Close',
+        msg: status ? 'Confirm to open dropdown menu?' : 'Confirm to close dropdown menu?'
+      })
+      .then(() => resolve(true))
+      .catch(() => resolve(false))
+  })
 }
 ```
 
-## Custom Menu Options
+## Component Style
 
-Create custom filter display using flex layout.
+### Custom Menu Options
+
+Can combine with layout components to achieve filter bar linkage display.
 
 ```html
-<view style="display: flex; background: #fff; text-align: center;">
-  <wd-drop-menu style="flex: 1; min-width: 0;">
-    <wd-drop-menu-item v-model="value1" :options="option" @change="handleChange1" />
+<view style="display: flex; background: #fff; text-align: center">
+  <wd-drop-menu style="flex: 1; min-width: 0">
+    <wd-drop-menu-item v-model="value1" :options="option1" />
   </wd-drop-menu>
-  <view style="flex: 1;">
-    <wd-sort-button v-model="value2" title="Listing Time" @change="handleChange2" />
+  <view style="flex: 1">
+    <wd-sort-button v-model="value2" title="Shelf Time" />
   </view>
 </view>
 ```
 
-## Custom Menu Icon<el-tag text style="vertical-align: middle;margin-left:8px;" effect="plain">1.3.7</el-tag>
+### Custom Menu Icon ^(1.3.7)
 
-You can set the menu's right icon through `icon`, equivalent to the `name` property of `<wd-icon />`. Set the icon size through `icon-size`, equivalent to the `size` property of `<wd-icon />`.
+Can set right icon through `icon`, set icon size through `icon-size`.
 
 ```html
 <wd-drop-menu>
@@ -120,123 +146,109 @@ You can set the menu's right icon through `icon`, equivalent to the `name` prope
 </wd-drop-menu>
 ```
 
-## Asynchronous Open/Close<el-tag text style="vertical-align: middle;margin-left:8px;" effect="plain">1.3.7</el-tag>
+## Special Style
 
-Set the `before-toggle` function to execute specific logic before the dropdown menu opens or closes, achieving the purpose of state change validation and asynchronous open/close. `before-toggle` accepts `{ status: current operation type: true to open dropdown menu, false to close dropdown menu }`, can validate the operation, and you can inform the component whether to confirm by returning `boolean` or `Promise<boolean>`.
+### Custom Menu Content
 
-:::warning Note
-The `before-toggle` function cannot prevent the expansion/closure operations of other `drop-menu` or other `drop-menu-item`, it is limited to the expansion/closure operation of the current `drop-menu-item`.
-:::
+Customize menu content through default slot; in custom content scenarios, usually manually close menu through instance method `close`.
 
 ```html
-<wd-dialog></wd-dialog>
 <wd-drop-menu>
-  <wd-drop-menu-item v-model="value" :options="option" :before-toggle="handleBeforeToggle" />
+  <wd-drop-menu-item v-model="value" :options="option" />
+  <wd-drop-menu-item ref="dropMenu" title="Filter" @opened="handleOpened">
+    <view>
+      <wd-slider v-model="sliderValue" ref="slider" />
+      <wd-cell title="Title Text" value="Content" />
+      <wd-cell title="Title Text" label="Description Info" value="Content" />
+      <view style="padding: 0 10px 20px; box-sizing: border-box">
+        <wd-button block size="large" @click="confirm">Primary Button</wd-button>
+      </view>
+    </view>
+  </wd-drop-menu-item>
 </wd-drop-menu>
 ```
 
-```typescript
-import { useDialog } from '@/uni_modules/wot-ui'
-import type { DropMenuItemBeforeToggle } from '@/uni_modules/wot-ui/components/wd-drop-menu-item/types'
+```ts
+import { ref } from 'vue'
+import type { SliderInstance } from '@/uni_modules/wot-ui/components/wd-slider/types'
+import type { DropMenuItemInstance } from '@/uni_modules/wot-ui/components/wd-drop-menu-item/types'
 
-const messageBox = useDialog()
+const dropMenu = ref<DropMenuItemInstance>()
+const slider = ref<SliderInstance>()
+const sliderValue = ref(30)
 
-const value = ref<number>(0)
-
-const option = ref<Record<string, any>[]>([
-  { label: 'All Products', value: 0 },
-  { label: 'New Products', value: 1 },
-  { label: 'Promotional Products', value: 2 }
-])
-
-// Confirm whether to open/close the dropdown menu through dialog
-const handleBeforeToggle: DropMenuItemBeforeToggle = ({ status }) => {
-  return new Promise<boolean>((resolve) => {
-    messageBox
-      .confirm({
-        title: `Asynchronous ${status ? 'Open' : 'Close'}`,
-        msg: `Are you sure you want to ${status ? 'open' : 'close'} the dropdown menu?`
-      })
-      .then(() => {
-        resolve(true)
-      })
-      .catch(() => {
-        resolve(false)
-      })
-  })
+const confirm = () => {
+  dropMenu.value?.close()
 }
-```
 
-## Expand Upward
-
-Set the `direction` property value to `up`, and the menu will expand upward
-
-```html
-<wd-drop-menu direction="up">
-  <wd-drop-menu-item v-model="value1" :options="option1" @change="handleChange1" />
-  <wd-drop-menu-item v-model="value2" :options="option2" @change="handleChange2" />
-</wd-drop-menu>
-```
-
-## Disable Menu
-
-```html
-<wd-drop-menu>
-  <wd-drop-menu-item v-model="value1" disabled :options="option2" @change="handleChange1" />
-  <wd-drop-menu-item v-model="value2" :options="option1" @change="handleChange2" />
-</wd-drop-menu>
+const handleOpened = () => {
+  slider.value?.initSlider()
+}
 ```
 
 ## DropMenu Attributes
 
-| Parameter | Description | Type | Options | Default | Version |
-|-----------|-------------|------|----------|---------|----------|
-| direction | Menu expansion direction, can be `up` or `down` | string | up / down | down | - |
-| modal | Whether to show overlay | boolean | - | true | - |
-| close-on-click-modal | Whether to close when clicking overlay | boolean | - | true | - |
-| duration | Menu expand/collapse animation time in ms | number | - | 200 | - |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| z-index | Popup z-index | `number` | `12` |
+| direction | Menu expand direction, optional values are `up`, `down` | `DropDirection` | `'down'` |
+| modal | Whether to show mask | `boolean` | `true` |
+| close-on-click-modal | Whether to close when clicking mask | `boolean` | `true` |
+| duration | Menu expand/collapse animation duration, unit ms | `number` | `200` |
+| custom-class | Root node custom class name | `string` | `''` |
+| custom-style | Root node custom style | `string` | `''` |
 
 ## DropMenuItem Attributes
 
-| Parameter | Description | Type | Options | Default | Version |
-|-----------|-------------|------|----------|---------|----------|
-| v-model | Selected value | string / number | - | - | - |
-| disabled | Whether disabled | boolean | - | false | - |
-| title | Title | string | - | - | - |
-| options | Option array | array | - | - | - |
-| icon | Right icon name | string | - | arrow-down | 1.3.7 |
-| icon-size | Right icon size | string | - | 12px | 1.3.7 |
-| before-toggle | Function executed before toggle, returns false to block operation, supports Promise | function({ status }) | - | - | 1.3.7 |
-| value-key | Key for value in options object | string | - | value | - |
-| label-key | Key for display text in options object | string | - | label | - |
-| tip-key | Key for option description in options object | string | - | tip | - |
-| root-portal | Whether to detach from the page, used to solve various fixed positioning issues | boolean | - | false | 1.11.0 |
-| icon-name | Selected icon name (available names in wd-icon component) | string | - | check | - |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| v-model / modelValue | Current selected value | `string \| number` | - |
+| disabled | Whether to disable menu | `boolean` | `false` |
+| options | Menu option list, default structure is `{ label, value, tip }` | `Array<Record<string, any>>` | `[]` |
+| icon-name | Selected item icon name | `string` | `'check'` |
+| title | Menu title, after setting, title text is displayed with priority | `string` | - |
+| icon | Menu right icon | `string` | `'caret-down'` |
+| icon-size | Menu icon size | `string \| number` | - |
+| before-toggle ^(1.3.7) | Menu toggle pre-interception function, receives `{ status }`, returns `boolean` or `Promise<boolean>` | `DropMenuItemBeforeToggle` | - |
+| value-key | Option value field name | `string` | `'value'` |
+| label-key | Option text field name | `string` | `'label'` |
+| tip-key | Option description field name | `string` | `'tip'` |
+| custom-popup-class ^(1.5.0) | Custom dropdown popup style class | `string` | `''` |
+| custom-popup-style ^(1.5.0) | Custom dropdown popup style | `string` | `''` |
+| popup-height ^(1.13.0) | Popup height, when not set, default max height is 80% | `string` | `''` |
+| root-portal ^(1.11.0) | Whether to detach from page document flow rendering, used to solve fixed invalidation problem | `boolean` | `false` |
+| custom-class | Root node custom class name | `string` | `''` |
+| custom-style | Root node custom style | `string` | `''` |
 
-## DropMenu Slot
+## DropMenuItem Events
 
-| Name | Description | Version |
-|------|-------------|----------|
-| default | Menu content | - |
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| change | Triggered when selected value changes | `{ value, selectedItem }` |
+| open | Triggered when menu starts to expand | - |
+| opened | Triggered when menu expansion completes | - |
+| close | Triggered when menu starts to close | - |
+| closed | Triggered when menu closing completes | - |
 
-## DropMenuItem Slot
+## DropMenuItem Methods
 
-| Name | Description | Version |
-|------|-------------|----------|
-| default | Custom inner content of menu | - |
+Instance methods can be obtained through `ref`:
 
-## DropMenu External Classes
+| Method Name | Description | Parameters | Return Value |
+| --- | --- | --- | --- |
+| getShowPop | Get whether current menu is expanded | - | boolean |
+| open | Open menu | - | void |
+| close | Close menu | - | void |
+| toggle | Toggle menu switch | - | void |
 
-| Class Name | Description | Version |
-|------------|-------------|----------|
-| custom-class | Root node style class of DropMenu | - |
+## DropMenu Slots
 
-## DropMenuItem External Classes
+| Name | Description | Parameters |
+| --- | --- | --- |
+| default | Menu item container slot | - |
 
-| Class Name | Description | Version |
-|------------|-------------|----------|
-| custom-class | Root node style class of DropMenuItem | - |
-| custom-title | Style class for left text of DropMenuItem | - |
-| custom-icon | Style class for right icon of DropMenuItem | - |
-| custom-popup-class | Custom popup style class for dropdown menu | 1.5.0 |
-| custom-popup-style | Custom popup style for dropdown menu | 1.5.0 |
+## DropMenuItem Slots
+
+| Name | Description | Parameters |
+| --- | --- | --- |
+| default | Custom menu content | - |

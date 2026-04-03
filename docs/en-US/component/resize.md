@@ -1,20 +1,27 @@
 # Resize
 
-When the size of the document flow wrapped by the component changes, it triggers the `resize` event. Generally used to monitor changes in DOM dimensions and positions caused by DOM content updates, re-acquire DOM dimensions and positions, and perform calculations for content display.
+When the document flow size wrapped by the component changes, the `resize` event is triggered. Generally used to listen for size and position information changes caused by content updates, and then recalculate the layout based on this.
 
-## Basic Usage
+## Component Types
 
-> Do not add any external styles to this component
+### Basic Usage
 
-```html
+Do not add additional layout styles to `wd-resize` itself, but place the content to be monitored in the default slot.
+
+::: code-group
+
+```html [vue]
 <wd-resize @resize="handleResize">
-  <view :style="`background: #4d80f0; width: ${width};height: ${height}`"></view>
+  <view :style="{ background: '#4d80f0', width, height }"></view>
 </wd-resize>
 ```
 
-```typescript
-const width = ref<string>('')
-const height = ref<string>('')
+```ts [ts]
+import { onReady } from '@dcloudio/uni-app'
+import { ref } from 'vue'
+
+const width = ref('')
+const height = ref('')
 
 onReady(() => {
   setTimeout(() => {
@@ -25,26 +32,27 @@ onReady(() => {
 
 function handleResize(detail: Record<string, string | number>) {
   const { height, width, top, right, bottom, left } = detail
-  console.log(height, width, top, right, bottom, left)
 }
 ```
 
-## Attributes
+:::
 
-| Parameter              | Description                  | Type   | Optional Values | Default | Version |
-| ---------------------- | ---------------------------- | ------ | --------------- | ------- | ------- |
-| custom-style           | Custom root node style       | string | -               | -       | -       |
-| custom-class           | Custom root node style class | string | -               | -       | -       |
-| custom-container-class | Custom container style class | string | -               | -       | -       |
+## Resize Attributes
 
-## Events
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| custom-style | Custom root node style | `string` | `''` |
+| custom-class | Custom root node style class | `string` | `''` |
+| custom-container-class | Custom container style class | `string` | `''` |
 
-| Event Name | Description                 | Parameters                                                                                  | Version |
-| ---------- | --------------------------- | ------------------------------------------------------------------------------------------- | ------- |
-| resize     | Triggered when size changes | `{width: number, height: number, top: number, right: number, bottom: number, left: number}` | -       |
+## Resize Events
 
-## Slots
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| resize | Triggered when size changes | <code>{ width: number; height: number; top: number; right: number; bottom: number; left: number }</code> |
 
-| Slot Name | Description                         | Version |
-| --------- | ----------------------------------- | ------- |
-| default   | Content to monitor for size changes | -       |
+## Resize Slots
+
+| Name | Description |
+| --- | --- |
+| default | Content that needs to listen for size changes |

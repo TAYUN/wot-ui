@@ -2,192 +2,217 @@
 
 Used to mark status or summarize main content.
 
-## Basic Usage
+## Component Types
 
-Set `type` to modify the tag type.
+### Basic Usage
 
-```html
-<wd-tag custom-class="space">Tag</wd-tag>
-<wd-tag custom-class="space" type="primary">Tag</wd-tag>
-<wd-tag custom-class="space" type="danger">Tag</wd-tag>
-<wd-tag custom-class="space" type="warning">Tag</wd-tag>
-<wd-tag custom-class="space" type="success">Tag</wd-tag>
-```
-
-```scss
-:deep(.space) {
-  margin: 0 10px 10px;
-}
-```
-
-## Plain Tag
-
-Set the `plain` property.
+Set different tag types through `type`.
 
 ```html
-<wd-tag plain>Tag</wd-tag>
-<wd-tag type="primary" plain>Tag</wd-tag>
-<wd-tag type="danger" plain>Tag</wd-tag>
-<wd-tag type="warning" plain>Tag</wd-tag>
-<wd-tag type="success" plain>Tag</wd-tag>
+<wd-tag>Tag</wd-tag>
+<wd-tag type="primary">Common Tag</wd-tag>
+<wd-tag type="danger">Danger Tag</wd-tag>
+<wd-tag type="warning">Warning Tag</wd-tag>
+<wd-tag type="success">Success Tag</wd-tag>
 ```
 
-## Mark Tag
+## Component Variants
 
-Set the `mark` property.
+### Tag Size
+
+Set tag size through `size`, supports `small`, `medium`, `default`, `large`, `extra-large`.
+
+```html
+<wd-tag type="primary" size="small">Small Tag</wd-tag>
+<wd-tag type="primary" size="medium">Medium Tag</wd-tag>
+<wd-tag type="primary">Default Tag</wd-tag>
+<wd-tag type="primary" size="large">Large Tag</wd-tag>
+<wd-tag type="primary" size="extra-large">Extra Large Tag</wd-tag>
+```
+
+### Light Tag
+
+Setting `variant="light"` displays a light-colored tag.
+
+```html
+<wd-tag variant="light">Tag</wd-tag>
+<wd-tag type="primary" variant="light">Common Tag</wd-tag>
+<wd-tag type="danger" variant="light">Danger Tag</wd-tag>
+```
+
+### Plain Tag
+
+Setting `variant="plain"` displays a plain style.
+
+```html
+<wd-tag variant="plain">Tag</wd-tag>
+<wd-tag type="primary" variant="plain">Common Tag</wd-tag>
+```
+
+### Dashed Tag
+
+Setting `variant="dashed"` displays a dashed border.
+
+```html
+<wd-tag variant="dashed">Tag</wd-tag>
+<wd-tag type="warning" variant="dashed">Warning Tag</wd-tag>
+```
+
+### Text Tag
+
+Setting `variant="text"` displays a plain text style.
+
+```html
+<wd-tag variant="text">Tag</wd-tag>
+<wd-tag type="success" variant="text">Success Tag</wd-tag>
+```
+
+## Component Styles
+
+### Mark Tag
+
+Setting `mark` generates a mark style.
 
 ```html
 <wd-tag mark>Tag</wd-tag>
-<wd-tag type="primary" mark>Tag</wd-tag>
-<wd-tag type="danger" mark>Tag</wd-tag>
-<wd-tag type="warning" mark>Tag</wd-tag>
-<wd-tag type="success" mark>Tag</wd-tag>
+<wd-tag type="primary" mark>Common Tag</wd-tag>
 ```
 
-## Plain Mark Tag
+### Ghost Mark Tag
 
-Set both `mark` and `plain` properties.
+Combining `mark` and `variant="plain"` displays a ghost mark style.
 
 ```html
-<wd-tag mark plain>Tag</wd-tag>
-<wd-tag type="primary" mark plain>Tag</wd-tag>
-<wd-tag type="danger" mark plain>Tag</wd-tag>
-<wd-tag type="warning" mark plain>Tag</wd-tag>
-<wd-tag type="success" mark plain>Tag</wd-tag>
+<wd-tag mark variant="plain">Tag</wd-tag>
+<wd-tag type="success" mark variant="plain">Success Tag</wd-tag>
 ```
 
-## Round Tag
+### Round Tag
 
-Set the `round` property.
+Setting `round` generates a round style.
 
 ```html
 <wd-tag round>Tag</wd-tag>
-<wd-tag type="primary" round>Tag</wd-tag>
-<wd-tag type="danger" round>Tag</wd-tag>
-<wd-tag type="warning" round>Tag</wd-tag>
-<wd-tag type="success" round>Tag</wd-tag>
+<wd-tag type="primary" round>Common Tag</wd-tag>
 ```
 
-## Set Icon
+### Set Icon
 
-Set `icon` for the left icon, or use the 'icon' slot. When using the slot, enable `use-icon-slot`.
+You can customize the left icon through the `icon` property or `icon` slot.
 
 ```html
-<wd-tag custom-class="space" icon="clock" mark>Tag</wd-tag>
-<wd-tag custom-class="space" mark use-icon-slot>
+<wd-tag icon="clock-circle" type="primary" mark>Tag</wd-tag>
+
+<wd-tag type="primary" mark>
   <text>Slot</text>
   <template #icon>
-    <wd-icon name="clock" />
+    <wd-icon name="thunderbolt" />
   </template>
 </wd-tag>
 ```
 
-## Custom Color
+### Custom Color
 
-Set `color` to modify text color, set `bg-color` to modify background and border color.
+Set text color through `color`, and set background color and border color through `bg-color`.
 
 ```html
 <wd-tag color="#0083ff" bg-color="#d0e8ff">Tag</wd-tag>
-<wd-tag color="#FAA21E" bg-color="#FAA21E" plain>Tag</wd-tag>
+<wd-tag color="#FAA21E" bg-color="#FAA21E" variant="plain">Tag</wd-tag>
 ```
 
-## Closable
+## Special Styles
 
-Set the `closable` property to allow the tag to be closed. When closed, it will trigger the `close` event.
+### Closable
+
+After setting `closable`, clicking the close button will trigger the `close` event.
 
 ```html
-<wd-tag closable round type="primary">Tag</wd-tag>
+<wd-tag v-for="(tag, index) in closableStrongTags" :key="index" :type="tag.type" closable @close="handleCloseStrongTag(index)">
+  {{ tag.value }}
+</wd-tag>
 ```
 
-## Add Tag
+```ts
+const closableStrongTags = ref([
+  { type: 'default', value: 'Tag' },
+  { type: 'primary', value: 'Common' }
+])
 
-Set the `dynamic` property for the add tag style. After entering content, it will trigger the `confirm` event.
-
-```html
-<wd-tag v-for="(tag, index) in tags" :key="index" custom-class="space" round closable @close="handleClose(index)">{{item}}</wd-tag>
-<wd-tag custom-class="space" round dynamic @confirm="handleConfirm"></wd-tag>
+function handleCloseStrongTag(order: number) {
+  closableStrongTags.value = closableStrongTags.value.filter((_, index) => index !== order)
+}
 ```
-If you want to customize the add style, you can use the `add` slot.
-```html
-<wd-tag custom-class="space" round dynamic @confirm="handleConfirm">
+
+### Add Tag
+
+Setting `dynamic` generates an add tag style. After input confirmation, the `confirm` event is triggered. You can customize the add button content through the `add` slot.
+
+::: code-group
+
+```html [vue]
+<wd-tag v-for="(tag, index) in dynamicTags" :key="index" type="primary" closable @close="handleClose1(index)">
+  {{ tag }}
+</wd-tag>
+<wd-tag type="primary" dynamic @confirm="handleConfirm"></wd-tag>
+<wd-tag type="primary" dynamic @confirm="handleConfirm">
   <template #add>
-    <wd-icon name="pin" size="12px"></wd-icon>
+    <wd-icon name="pushpin" size="12px"></wd-icon>
     <text style="margin-left: 4px">Custom</text>
   </template>
 </wd-tag>
 ```
 
-```typescript
-const tags = ref(['Tag 1', 'Tag 2'])
+```ts [ts]
+const dynamicTags = ref(['Tag One', 'Tag Two'])
 
-function handleClose(order) {
-  tags.value = tags.value.filter((value, index) => index !== order)
-  console.log('close:index' + order)
+function handleClose1(order: number) {
+  dynamicTags.value = dynamicTags.value.filter((item, index) => index !== order)
 }
 
-function handleConfirm({ value }) {
+function handleConfirm({ value }: { value: string }) {
   if (!value) return
-  tags.value = [...tags.value, value]
+  dynamicTags.value = [...dynamicTags.value, value]
 }
 ```
 
-## Events
-
-```html
-<wd-tag v-for="(tag, index) in tags" :key="index" round closable @click="handleClick(index)" @close="handleClose(index)">{{tag.value}}</wd-tag>
-```
-
-```typescript
-const tags = ref([
-  {
-    plain: true,
-    closable: true,
-    type: 'primary',
-    value: 'Tag 1'
-  }
-])
-
-function handleClick(index) {
-  console.log('click:index' + index)
-}
-function handleClose(order) {
-  tags.value = tags.value.filter((value, index) => index !== order)
-  console.log('close:index' + order)
-}
-```
+:::
 
 ## Attributes
 
-| Parameter | Description | Type | Options | Default | Version |
-|-----------|-------------|------|----------|---------|----------|
-| type | Tag type | string | `default` / `primary` / `danger` / `warning` / `success` | default | - |
-| plain | Plain type | boolean | - | false | - |
-| mark | Mark type | boolean | - | false | - |
-| round | Round type | boolean | - | false | - |
-| icon | Left icon | string | - | - | - |
-| color | Text color | string | - | - | - |
-| bg-color | Background and border color | string | - | - | - |
-| closable | Closable (only supported for round type) | boolean | - | false | - |
-| use-icon-slot | Enable icon slot | boolean | - | false | - |
-| dynamic | Whether it's an add tag | boolean | - | false | - |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| size | Tag size, optional values are `small`, `medium`, `large`, `extra-large`, `default` | `TagSize` | `default` |
+| type | Tag type, optional values are `default`, `primary`, `success`, `warning`, `danger`, `volcano`, `lightblue`, `cyan`, `pink`, `purple` | `TagType` | `default` |
+| icon | Left icon | `string` | `''` |
+| closable | Whether closable | `boolean` | `false` |
+| dynamic | Whether it is an add tag | `boolean` | `false` |
+| color | Text color | `string` | `''` |
+| bg-color | Background color and border color | `string` | `''` |
+| round | Whether round | `boolean` | `false` |
+| mark | Whether mark style | `boolean` | `false` |
+| variant | Tag variant, optional values are `light`, `dark`, `plain`, `dashed`, `text` | `TagVariant` | `dark` |
+| custom-class | Root node custom class name | `string` | `''` |
+| custom-style | Root node custom style | `string` | `''` |
 
 ## Events
 
-| Event Name | Description | Parameters | Version |
-|------------|-------------|------------|----------|
-| click | Triggered when tag is clicked | event | - |
-| close | Triggered when close button is clicked | event | - |
-| confirm | Triggered after entering content in add tag | `{ value }` | - |
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| click | Triggered when clicking tag | `MouseEvent` |
+| close | Triggered when clicking close button | `MouseEvent` |
+| confirm | Triggered after add tag input confirmation | `{ value: string }` |
 
 ## Slots
 
-| Name | Description | Version |
-|------|-------------|----------|
-| icon | Icon | - |
-| add | Custom add tag slot, effective when `dynamic` is `true` | - |
+| Name | Description |
+| --- | --- |
+| default | Tag content |
+| icon | Custom icon |
+| add | Custom add tag content, effective when `dynamic` is `true` |
 
-## External Classes
+## External Style Classes
 
-| Class Name | Description | Version |
-|------------|-------------|----------|
-| custom-class | Root node style | - |
+| Class Name | Description |
+| --- | --- |
+| custom-class | Root node style class |
+| custom-style | Root node inline style |

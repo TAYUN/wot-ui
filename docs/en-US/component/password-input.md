@@ -1,62 +1,73 @@
-# PasswordInput
+# PasswordInput Password Input
 
-A grid input box component that can be used for inputting passwords, SMS verification codes, and other scenarios. Usually used in conjunction with the [number keyboard](./number-keyboard.md) component.
+A grid-based password input component, suitable for payment passwords, SMS verification codes, and other scenarios. Usually used in conjunction with the [Keyboard](./keyboard.md) component.
 
-## Basic Usage
+`wd-password-input` is only responsible for displaying input values, cursor, and prompt information, and does not directly handle input logic. Usually `focused` is bound to the keyboard visibility state, and the keyboard is opened in the `focus` event.
 
-Use with the number keyboard component to implement password input functionality.
+## Component Type
+
+### Basic Usage
+
+Use with `wd-keyboard` component to achieve password input.
 
 ```html
-<!-- Password input box -->
 <wd-password-input v-model="value" :focused="showKeyboard" @focus="showKeyboard = true" />
-<!-- Number keyboard -->
-<wd-number-keyboard v-model="value" v-model:visible="showKeyboard" :maxlength="4" @blur="showKeyboard = false" />
+<wd-keyboard v-model="value" v-model:visible="showKeyboard" :maxlength="6" />
 ```
 
 ```typescript
 import { ref } from 'vue'
 
 const value = ref<string>('123')
-const showKeyboard = ref<boolean>(true)
+const showKeyboard = ref<boolean>(false)
 ```
+
+## Component Variants
 
 ### Custom Length
 
-Set the password length through the `length` property.
+Set password digits via `length`, and synchronize setting keyboard's `maxlength`.
 
 ```html
-<!-- Password input box -->
 <wd-password-input v-model="value" :length="4" :focused="showKeyboard" @focus="showKeyboard = true" />
-<wd-number-keyboard v-model="value" v-model:visible="showKeyboard" :maxlength="4" @blur="showKeyboard = false"></wd-number-keyboard>
+<wd-keyboard v-model="value" v-model:visible="showKeyboard" :maxlength="4" />
 ```
+
+## Component Style
 
 ### Grid Spacing
 
-Set the spacing between grids through the `gutter` property.
+Set spacing between grids via `gutter`, default unit is `px`.
 
 ```html
-<!-- Password input box -->
 <wd-password-input v-model="value" :gutter="10" :focused="showKeyboard" @focus="showKeyboard = true" />
+<wd-keyboard v-model="value" v-model:visible="showKeyboard" :maxlength="6" />
 ```
+
+## Content Form
 
 ### Plain Text Display
 
-Set `mask` to `false` to display the input content in plain text, suitable for SMS verification code scenarios.
+Set `mask` to `false` to display input content in plain text, suitable for SMS verification codes and other scenarios.
 
 ```html
-<!-- Password input box -->
 <wd-password-input v-model="value" :mask="false" :focused="showKeyboard" @focus="showKeyboard = true" />
+<wd-keyboard v-model="value" v-model:visible="showKeyboard" :maxlength="6" />
 ```
 
-### Information Tips
+### Prompt Information
 
-Set prompt information through the `info` property and error prompt through the `error-info` property, for example, prompting password error when six digits are entered.
+Set normal prompt information via `info`, and error prompts via `error-info`.
 
 ```html
-<!-- Password input box -->
-<wd-password-input v-model="value" info="Password is 6 digits" :error-info="errorInfo" :focused="showKeyboard" @focus="showKeyboard = true" />
-<!-- Number keyboard -->
-<wd-number-keyboard v-model="value" :show="showKeyboard" :maxlength="6" @blur="showKeyboard = false" />
+<wd-password-input
+  v-model="value"
+  info="Password is 6 digits"
+  :error-info="errorInfo"
+  :focused="showKeyboard"
+  @focus="showKeyboard = true"
+/>
+<wd-keyboard v-model="value" v-model:visible="showKeyboard" :maxlength="6" />
 ```
 
 ```typescript
@@ -64,31 +75,50 @@ import { ref, watch } from 'vue'
 
 const value = ref('123')
 const errorInfo = ref('')
-const showKeyboard = ref(true)
+const showKeyboard = ref(false)
 
 watch(value, (newVal) => {
   if (newVal.length === 6 && newVal !== '123456') {
-    errorInfo.value = 'Incorrect password'
+    errorInfo.value = 'Password error'
   } else {
     errorInfo.value = ''
   }
 })
 ```
 
+## Special Usage
+
+### Random Keyboard
+
+Combined with `wd-keyboard`'s `random-key-order` capability, security in numeric input scenarios can be enhanced.
+
+```html
+<wd-password-input v-model="value" :focused="showKeyboard" @focus="showKeyboard = true" />
+<wd-keyboard v-model="value" v-model:visible="showKeyboard" :maxlength="6" random-key-order />
+```
+
 ## Attributes
 
-| Parameter  | Description | Type | Options | Default | Version |
-|------------|-------------|------|----------|---------|----------|
-| v-model    | Password value | string | - | - | - |
-| info       | Text prompt below input box | string | - | - | - |
-| error-info | Error prompt below input box | string | - | - | - |
-| length     | Maximum password length | number | - | 6 | - |
-| gutter     | Spacing between input box grids, like 20px 2em, default unit is px | number / string | - | 0 | - |
-| mask       | Whether to hide password content | boolean | - | true | - |
-| focused    | Whether focused, cursor will be displayed when focused | boolean | - | false | - |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| v-model | Current input value | `string` | `''` |
+| mask | Whether to hide password content | `boolean` | `true` |
+| info | Text prompt below input box | `string` | `''` |
+| error-info | Error prompt below input box | `string` | `''` |
+| gutter | Spacing between input box grids, default unit is `px` | `number \| string` | `0` |
+| length | Password length | `number` | `6` |
+| focused | Whether in focused state; cursor is displayed when focused, usually linked with keyboard visibility state | `boolean` | `true` |
+| custom-class | Custom class name for root node | `string` | `''` |
+| custom-style | Custom style for root node | `string` | `''` |
 
 ## Events
 
-| Event Name | Description | Parameters | Version |
-|------------|-------------|------------|----------|
-| focus | Triggered when input box is focused | `event:Event` | - |
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| focus | Triggered when clicking password input box | `event: Event` |
+
+## External Style Classes
+
+| Class Name | Description |
+| --- | --- |
+| custom-class | Root node style |

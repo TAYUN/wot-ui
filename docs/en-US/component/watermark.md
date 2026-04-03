@@ -1,59 +1,82 @@
 # Watermark
 
-Add specified images or text on pages or components, which can be used for copyright protection, brand promotion, and other scenarios.
+Add specified images or text to pages or components, which can be used for copyright protection, brand promotion, and other scenarios.
 
-## Basic Usage
+## Component Types
 
-Place the WaterMark component in the page, you can set the watermark display content through the `content` field, and set the height and width of a single watermark through `width` and `height` to display a full-screen watermark.
+### Local Text Watermark
 
-```html
-<wd-watermark content="wot-ui" :width="130" :height="130"></wd-watermark>
-```
-
-### Image Watermark
-
-Set the network image address or Base64 image through the `image` field, and set the width and height of the watermark image through the `image-width` and `image-height` fields.
-**Note: DingTalk Mini Program platform only supports network images.**
+Specify watermark text via `content`, and use `full-screen="false"` to limit the watermark to a local container.
 
 ```html
-<wd-watermark image="https://wot-ui.cn/logo.png" :image-width="38" :image-height="38"></wd-watermark>
+<view class="watermark-wrap">
+	<wd-watermark :full-screen="false" content="wot-ui"></wd-watermark>
+</view>
 ```
 
-### Local Watermark
+### Local Image Watermark
 
-Set whether it is a full-screen watermark through `full-screen`.
+Specify image address via `image`, and use `image-width`, `image-height` to control image size.
+
+::: warning Note
+DingTalk mini program only supports network images, does not support Base64 image watermarks.
+:::
 
 ```html
-<wd-watermark content="wot-ui" :full-screen="false"></wd-watermark>
+<view class="watermark-wrap">
+	<wd-watermark :full-screen="false" image="https://wot-ui.cn/logo.png" :image-width="38" :image-height="38"></wd-watermark>
+</view>
 ```
 
-### Custom Layer Level and Opacity
+### Local Multi-line Text Watermark
 
-Set opacity through `opacity` and watermark layer level through `z-index`.
+After increasing `width` and `height`, it can carry longer text content, suitable for multi-line display.
 
 ```html
-<wd-watermark content="wot-ui" :opacity="0.4"></wd-watermark>
+<view class="watermark-wrap">
+	<wd-watermark :full-screen="false" :width="150" :height="150" content="Multi-line text watermark test automatic line break effect display, this is a very long text"></wd-watermark>
+</view>
 ```
 
-## Attributes
+## Special Styles
 
-| Parameter | Description | Type | Accepted Values | Default | Version |
-|-------------|--------------------------|---------|-----------------------------------|---------|----------|
-| `content` | Display content | string | - | `''` | 0.1.16 |
-| `image` | Image address, supports network images and base64 (DingTalk Mini Program only supports network images) | string | - | `''` | 0.1.16 |
-| `imageHeight` | Image height | number | - | `100` | 0.1.16 |
-| `imageWidth` | Image width | number | - | `100` | 0.1.16 |
-| `gutterX` | X-axis spacing, unit px | number | - | `0` | 0.1.16 |
-| `gutterY` | Y-axis spacing, unit px | number | - | `0` | 0.1.16 |
-| `width` | Canvas width, unit px | number | - | `100` | 0.1.16 |
-| `height` | Canvas height, unit px | number | - | `100` | 0.1.16 |
-| `fullScreen` | Whether it is a full-screen watermark | boolean | - | `true` | 0.1.16 |
-| `color` | Watermark font color | string | - | `'#C9CBD4'` | 0.1.16 |
-| `size` | Watermark font size, unit px | number | - | `14` | 0.1.16 |
-| `fontStyle` | Watermark font style (only supported by WeChat, Alipay and H5) | string | `normal` / `italic` / `oblique` | `'normal'` | 0.1.16 |
-| `fontWeight` | Watermark font weight (only supported by WeChat, Alipay and H5) | string / number | `normal` / `bold` / `bolder` / numeric value | `'normal'` | 0.1.16 |
-| `fontFamily` | Watermark font family (only supported by WeChat, Alipay and H5) | string | - | `'PingFang SC'` | 0.1.16 |
-| `rotate` | Watermark rotation angle | number | - | `-25` | 0.1.16 |
-| `zIndex` | Custom layer level | number | - | `1100` | 0.1.16 |
-| `opacity` | Custom opacity, value range 0~1 | number | - | `0.5` | 0.1.16 |
-| `layout` | Watermark layout mode | string | `grid` / `staggered` | `'grid'` | 1.6.0 |
+### Full-screen Watermark
+
+By default, the component will cover the entire page. Combined with `layout`, you can switch between grid layout and staggered layout, and also switch between text watermarks and image watermarks.
+
+```html
+<wd-watermark content="wot-ui" :width="130" :height="140" layout="grid"></wd-watermark>
+```
+
+### Custom Z-index and Opacity
+
+Set opacity via `opacity`, and control watermark z-index via `z-index`.
+
+```html
+<wd-watermark content="wot-ui" :opacity="0.4" :z-index="1200"></wd-watermark>
+```
+
+## Watermark Attributes
+
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| content | Watermark text content | `string` | `''` |
+| image | Watermark image address, supports network images and Base64 images, DingTalk mini program only supports network images | `string` | `''` |
+| image-height | Image height | `number` | `100` |
+| image-width | Image width | `number` | `100` |
+| gutter-x | X-axis spacing, unit is `px` | `number` | `0` |
+| gutter-y | Y-axis spacing, unit is `px` | `number` | `0` |
+| width | Single watermark canvas width, unit is `px` | `number` | `100` |
+| height | Single watermark canvas height, unit is `px` | `number` | `100` |
+| full-screen | Whether to cover the entire page | `boolean` | `true` |
+| color | Watermark text color | `string` | `#C9CBD4` |
+| size | Watermark text size, unit is `px` | `number` | `14` |
+| font-style | Watermark font style, only supported by WeChat, Alipay and H5, optional values are `normal`, `italic`, `oblique` | `WatermarkFontStyle` | `normal` |
+| font-weight | Watermark font weight, only supported by WeChat, Alipay and H5 | <code>string &#124; number</code> | `normal` |
+| font-family | Watermark font family, only supported by WeChat, Alipay and H5 | `string` | `PingFang SC` |
+| rotate | Watermark rotation angle | `number` | `-25` |
+| z-index | Watermark z-index | `number` | `1100` |
+| opacity | Watermark opacity, value range is `0` to `1` | `number` | - |
+| layout ^(1.6.0) | Watermark layout, optional values are `grid`, `staggered` | `WatermarkLayout` | `grid` |
+| custom-style | Custom root node style | `string` | `''` |
+| custom-class | Custom root node style class | `string` | `''` |

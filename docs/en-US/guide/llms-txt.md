@@ -1,41 +1,45 @@
+---
+version: New
+---
+
 # llms.txt
 
-Wot UI is an AI-friendly component library. This page explains how to use llms.txt so tools like VSCode, Cursor, TRAE, and Antigravity can better understand the Wot UI documentation.
+Wot UI is an AI-friendly component library. This page introduces how to make VSCode, Cursor, TRAE, Antigravity and other AI tools better understand Wot UI documentation through llms.txt.
 
-[llms.txt](https://llmstxt.org/) is a text file designed for large language models. It is similar to robots.txt in form, but its purpose is different. While robots.txt tells search crawlers what they can index, llms.txt provides structured documentation information for AI tools, helping them better understand and retrieve component docs, examples, and best practices.
+[llms.txt](https://llmstxt.org/) is a text file designed specifically for large language models, similar to robots.txt but with different goals. robots.txt tells search engine crawlers which pages can be crawled, while llms.txt provides structured information about website content for AI tools, helping them better understand and index component library documentation, examples, and best practices.
 
 ## Available Resources
 
-We provide two llms.txt routes for AI tools:
+We provide 2 llms.txt routes to help AI tools access documentation:
 
-- [llms.txt](https://wot-ui.cn/llms.txt) - A structured overview of all components and documentation links
-- [llms-full.txt](https://wot-ui.cn/llms-full.txt) - A fuller document with implementation details and examples
+- [llms.txt](https://wot-ui.cn/llms.txt) - Contains structured overview of all components and their documentation links
+- [llms-full.txt](https://wot-ui.cn/llms-full.txt) - Provides complete documentation including implementation details and examples
 
-## Use in AI Tools
+## Using in AI Tools
 
 ### Cursor
 
-Open the `Indexing & Docs` settings in Cursor, add `llms.txt` to `Docs`, and then use `@Docs` to include it in your project context.
+Find `Indexing & Docs` settings in Cursor, and add `llms.txt` to `Docs`, use the `@Docs` feature to include llms.txt files in the project.
 
-[Learn more about @Docs in Cursor](https://cursor.com/docs/agent/tools/search)
+[Learn more about @Docs feature in Cursor](https://cursor.com/docs/agent/tools/search)
 
 ### TRAE
 
-Open the `Context / Document Set` settings in TRAE, add `llms.txt` to your document set, and use `#Docs` to bring it into context.
+Find `Context/Docs` settings in TRAE, and add `llms.txt` to `Docs`, use the `#Docs` feature to include llms.txt files in the project.
 
-[Learn more about #Docs in TRAE](https://docs.trae.ai/ide/number-sign)
+[Learn more about #Docs feature in TRAE](https://docs.trae.ai/ide/number-sign)
 
 ### Other Tools
 
-Any tool that supports the `llms.txt` standard, or can ingest documentation from a URL, can use these files. You can add them to your tool's document set, rules, or knowledge source to help AI better understand Wot UI.
+Any tool that supports the `llms.txt` standard, or supports ingesting documentation through URLs, can use the llms.txt files we provide. You can add it to the tool's `Docs`, `rules`, or knowledge base configuration to help AI better understand the Wot UI component library.
 
 ### context7
 
-If you do not want to use llms.txt, you can also read the component library docs through [context7](https://github.com/upstash/context7).
+If you don't use llms.txt, you can also directly read component library documentation through [context7](https://github.com/upstash/context7).
 
 [Learn more about context7](https://github.com/upstash/context7)
 
 ## Further Reading
 
-- [Skills](/en-US/guide/skills)
-- [llms.txt: Help AI Better Understand Your Docs](https://juejin.cn/post/7500981295105015847)
+- [Skills](/guide/skills)
+- [llms.txt: Let AI Better Understand Your Documentation](https://juejin.cn/post/7500981295105015847)

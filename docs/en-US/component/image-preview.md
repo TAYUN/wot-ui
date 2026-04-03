@@ -1,84 +1,131 @@
-# ImagePreview
+# ImagePreview Image Preview
 
-Image preview component that supports multi-image preview, swipe switching, gesture zooming, and functional calls.
+Image preview component, supporting multi-image preview, swipe switching, and functional calls.
 
-## Basic Usage
+## Component Type
 
-Open image preview using the `useImagePreview` function.
+### useImagePreview
+
+`useImagePreview` is used for functionally calling `wd-image-preview`. You need to declare a `wd-image-preview` instance in the page before calling.
+
+### Basic Usage
+
+Open image preview via functional call using `useImagePreview`.
 
 ```html
-<wd-button @click="handlePreview">Preview Images</wd-button>
+<wd-button @click="handlePreview">Preview Image</wd-button>
 <wd-image-preview />
 ```
 
 ```typescript
 import { useImagePreview } from '@wot-ui/ui'
 
-const imagePreview = useImagePreview()
+const { previewImage } = useImagePreview()
 
 function handlePreview() {
-  imagePreview.open({
+  previewImage({
     images: [
       'https://example.com/image1.jpg',
       'https://example.com/image2.jpg',
       'https://example.com/image3.jpg'
-    ],
-    startPosition: 0
+    ]
   })
 }
 ```
 
-## Specify Start Position
+### Pass Image Array
 
-Use `startPosition` to specify the starting position (starting from 0).
-
-```typescript
-imagePreview.open({
-  images: ['url1', 'url2', 'url3'],
-  startPosition: 1 // Start from the second image
-})
-```
-
-## Pass Image Array
-
-You can directly pass an image URL array to simplify the call.
+You can directly pass an array of image URLs for simplified calling.
 
 ```typescript
-imagePreview.open([
+previewImage([
   'https://example.com/image1.jpg',
   'https://example.com/image2.jpg'
 ])
 ```
 
-## Hide Index
+## Component Variants
 
-Use the `showIndex` property to control whether to show the page index.
+### Specify Starting Position
+
+Specify the starting position for preview via `startPosition` (starting from 0).
 
 ```typescript
-imagePreview.open({
+previewImage({
+  images: ['url1', 'url2', 'url3'],
+  startPosition: 1 // Start preview from the second image
+})
+```
+
+## Component Configuration
+
+### Hide Page Number
+
+Control whether to show page numbers via `showIndex` property.
+
+```typescript
+previewImage({
   images: ['url1', 'url2'],
   showIndex: false
 })
 ```
 
-## Close Button
+### Hide Close Button
 
-Use `closeable` to control whether to show the close button, and `closeIconPosition` to control the button position.
+Control whether to show close button via `closeable`.
 
 ```typescript
-imagePreview.open({
+previewImage({
   images: ['url1', 'url2'],
-  closeable: true,
+  closeable: false
+})
+```
+
+### Close Button Position
+
+Control button position via `closeIconPosition`.
+
+```typescript
+previewImage({
+  images: ['url1', 'url2'],
   closeIconPosition: 'top-left' // or 'top-right'
 })
 ```
 
-## Listen to Events
+### Disable Click to Close
 
-Use callback functions to listen to preview events.
+Control whether to close when clicking image or mask via `closeOnClick`.
 
 ```typescript
-imagePreview.open({
+previewImage({
+  images: ['url1', 'url2'],
+  closeOnClick: false
+})
+```
+
+### Disable Loop
+
+Disable loop playback via `loop` property.
+
+```typescript
+previewImage({
+  images: ['url1', 'url2'],
+  loop: false
+})
+```
+
+## Special Usage
+
+### Listen to Events
+
+Listen to preview events via callback functions.
+
+```typescript
+import { useImagePreview } from '@wot-ui/ui'
+
+const { previewImage, closeImagePreview } = useImagePreview()
+
+previewImage({
   images: ['url1', 'url2'],
   onOpen: () => {
     console.log('Preview opened')
@@ -90,9 +137,54 @@ imagePreview.open({
     console.log('Current image index:', index)
   }
 })
+
+function handleClose() {
+  closeImagePreview()
+}
 ```
 
-## Component Usage
+### Use Slots
+
+You can customize the indicator or bottom content through named slots. If there are multiple instances on the page, you need to distinguish them via `selector` and pass the same identifier in `useImagePreview(selector)`.
+
+```html
+<wd-button @click="handleSlotPreview">Custom Slot</wd-button>
+
+<wd-image-preview selector="slot-preview">
+  <!-- Custom Indicator -->
+  <template #indicator="{ current, total }">
+    <wd-swiper-nav :current="current" :total="total" type="dots-bar" custom-style="bottom: 64px;" />
+  </template>
+  <!-- Bottom Custom Content -->
+  <template #default="{ current }">
+    <view class="custom-bottom">
+      <text class="custom-bottom__text">{{ imageDescriptions[current] }}</text>
+    </view>
+  </template>
+</wd-image-preview>
+```
+
+```typescript
+import { useImagePreview } from '@wot-ui/ui'
+
+const { previewImage } = useImagePreview('slot-preview')
+
+const images = [
+  'https://wot-ui.cn/assets/redpanda.jpg',
+  'https://wot-ui.cn/assets/capybara.jpg'
+]
+
+const imageDescriptions = ['Red Panda', 'Capybara']
+
+function handleSlotPreview() {
+  previewImage({
+    images,
+    showIndex: false // Hide default indicator
+  })
+}
+```
+
+### Component-based Usage
 
 You can also use it as a component and control it via ref.
 
@@ -118,76 +210,58 @@ function openPreview() {
 
 ## Attributes
 
-| Parameter | Description | Type | Accepted Values | Default | Min Version |
-|-----------|-------------|------|-----------------|---------|-------------|
-| images | Image URL array | `string[]` | - | `[]` | - |
-| start-position | Starting position index | `number` | - | `0` | - |
-| show-index | Whether to show page index | `boolean` | - | `true` | - |
-| loop | Whether to loop | `boolean` | - | `true` | - |
-| closeable | Whether to show close button | `boolean` | - | `true` | - |
-| close-icon | Close icon name | `string` | - | `close` | - |
-| close-icon-position | Close icon position | `string` | `top-left` / `top-right` | `top-right` | - |
-| max-zoom | Maximum zoom ratio | `number` | - | `3` | - |
-| min-zoom | Minimum zoom ratio | `number` | - | `1/3` | - |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| selector | Selector | `string` | - |
+| images | Array of image URLs | `string[]` | `[]` |
+| start-position | Starting position index | `number` | `0` |
+| show-index | Whether to show page number | `boolean` | `true` |
+| loop | Whether to loop playback | `boolean` | `true` |
+| closeable | Whether to show close button | `boolean` | `true` |
+| close-icon | Close icon name | `string` | `close` |
+| close-icon-position | Close icon position, optional values are `top-left`, `top-right` | `string` | `top-right` |
+| close-on-click | Whether to close when clicking image or mask | `boolean` | `true` |
+| show-menu-by-longpress | Enable long-press to show QR code recognition menu | `boolean` | `true` |
+| z-index | Z-index | `number` | `1000` |
 
 ## Events
 
-| Event Name | Description | Parameters | Min Version |
-|------------|-------------|------------|-------------|
-| open | Triggered when preview opens | - | - |
-| close | Triggered when preview closes | - | - |
-| change | Triggered when switching images | `{ index: number }` | - |
-| long-press | Triggered when long pressing image | `{ image: string }` | - |
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| open | Triggered when preview opens | - |
+| close | Triggered when preview closes | - |
+| change | Triggered when switching images | `{ index: number }` |
+| long-press | Triggered when long-pressing image | `{ image: string }` |
 
 ## Methods
 
 Call component instance methods via ref.
 
-| Method | Description | Parameters | Return |
-|--------|-------------|------------|--------|
+| Method Name | Description | Parameters | Return Value |
+| --- | --- | --- | --- |
 | open | Open image preview | `options?: ImagePreviewOptions \| string[]` | - |
 | close | Close image preview | - | - |
 | setActive | Switch to specified image | `index: number` | - |
 
-## useImagePreview
+## Slots
 
-The object returned by the functional call contains the following methods:
-
-| Method | Description | Parameters |
-|--------|-------------|------------|
-| open | Open image preview | `options: ImagePreviewOptions \| string[]` |
-| close | Close image preview | - |
-
-## ImagePreviewOptions
-
-| Parameter | Description | Type | Default |
-|-----------|-------------|------|---------|
-| images | Image URL array | `string[]` | `[]` |
-| startPosition | Starting position index | `number` | `0` |
-| showIndex | Whether to show page index | `boolean` | `true` |
-| loop | Whether to loop | `boolean` | `true` |
-| closeable | Whether to show close button | `boolean` | `true` |
-| closeIcon | Close icon name | `string` | `close` |
-| closeIconPosition | Close icon position | `string` | `top-right` |
-| maxZoom | Maximum zoom ratio | `number` | `3` |
-| minZoom | Minimum zoom ratio | `number` | `1/3` |
-| onOpen | Callback when opened | `() => void` | - |
-| onClose | Callback when closed | `() => void` | - |
-| onChange | Callback when switching images | `(index: number) => void` | - |
-| onLongPress | Callback when long pressing image | `(image: string) => void` | - |
+| name | Description |
+| --- | --- |
+| default | Bottom custom content, parameter is `{ current: number }` |
+| indicator | Custom indicator, parameter is `{ current: number, total: number }` |
 
 ## External Style Classes
 
-| Class Name | Description | Min Version |
-|------------|-------------|-------------|
+| Class Name | Description | Minimum Version |
+|------|------|----------|
 | custom-class | Root node style class | - |
 
 ## CSS Variables
 
-| Variable | Description | Default |
-|----------|-------------|---------|
+| Variable Name | Description | Default Value |
+|--------|------|--------|
 | --wot-image-preview-bg | Background color | `rgba(0, 0, 0, 0.9)` |
-| --wot-image-preview-index-color | Index color | `#fff` |
-| --wot-image-preview-index-font-size | Index font size | `15px` |
+| --wot-image-preview-index-color | Page number color | `#fff` |
+| --wot-image-preview-index-font-size | Page number font size | `15px` |
 | --wot-image-preview-close-size | Close button size | `44px` |
 | --wot-image-preview-close-margin | Close button margin | `12px` |

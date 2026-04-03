@@ -1,36 +1,91 @@
 # Switch
 
-Used to toggle options on or off.
+Used to turn options on or off.
 
-## Basic Usage
+## Component Types
 
-`v-model` is the binding value, which is boolean type by default.
+### Basic Usage
+
+`v-model` is the bound value, default is boolean type.
 
 ```html
 <wd-switch v-model="checked" />
 ```
 
-```typescript
+```ts
 const checked = ref<boolean>(true)
 ```
 
-## Modify Values
+### Modify Value
 
-Use the `active-value` property to modify the value when the switch is on, and the `inactive-value` property to modify the value when the switch is off.
+Modify the value when the switch is on via `active-value` property, and modify the value when the switch is off via `inactive-value` property.
 
 ```html
 <wd-switch v-model="checked" active-value="Wot" inactive-value="Merchant Backend" />
 ```
 
-## Modify Colors
+## Component States
 
-Use the `active-color` property to modify the color when the switch is on, and the `inactive-color` property to modify the color when the switch is off.
+### Loading State
+
+Setting `loading` displays the loading state.
+
+```html
+<wd-switch v-model="checked" loading active-text="Work" inactive-text="Off Work" />
+```
+
+### Disabled State
+
+Setting `disabled` disables the switch.
+
+```html
+<wd-switch v-model="checked" disabled />
+```
+
+## Component Styles
+
+### Modify Color
+
+Modify the color when the switch is on via `active-color` property, and modify the color when the switch is off via `inactive-color` property.
 
 ```html
 <wd-switch v-model="checked" active-color="#13ce66" inactive-color="#f00" />
 ```
 
-## Custom Size
+### Text Description
+
+Set the text inside the switch via `active-text` and `inactive-text`.
+
+```html
+<wd-switch v-model="checked" active-text="Work" inactive-text="Off Work" />
+```
+
+### Custom Display Icon
+
+Customize the icon inside the switch via `active-icon` and `inactive-icon`.
+
+```html
+<wd-switch v-model="checked" active-icon="check" inactive-icon="close" />
+```
+
+### Custom Action Icon
+
+Customize the button icon via `active-action-icon` and `inactive-action-icon`.
+
+```html
+<wd-switch v-model="checked" active-action-icon="check" inactive-action-icon="close" />
+```
+
+### Shape
+
+Set the shape via `shape`, optional values are `round`, `square`.
+
+```html
+<wd-switch v-model="checked" shape="round" />
+<wd-switch v-model="checked" shape="square" />
+```
+
+### Custom Size
 
 Set `size` to modify the switch size.
 
@@ -38,49 +93,63 @@ Set `size` to modify the switch size.
 <wd-switch v-model="checked" size="24px" />
 ```
 
-## Disabled
+## Special Styles
 
-Set the `disabled` property.
+### Use with Form
 
-## Before Change Hook
+Can be placed in a form item as a right-side control.
 
-Set the `before-change` property as a hook before modification. It receives the target `value`, returns `false` to prevent switching, and supports `Promise<boolean>`.
+```html
+<wd-form-item title="Use with Form" center>
+  <wd-switch v-model="checked" size="20" />
+</wd-form-item>
+```
+
+### Before Change Hook
+
+Setting `before-change` property, a hook before modification that receives the target `value`. Returning `false` means no modification, supports returning `Promise<boolean>`.
 
 ```html
 <wd-switch v-model="checked" :before-change="beforeChange" @change="handleChange" />
 ```
 
-```typescript
+```ts
 import { useDialog } from '@/uni_modules/wot-ui'
 
 const message = useDialog()
 
 const beforeChange = (value) => {
-  return message.confirm('Do you want to toggle the switch?').then(() => true).catch(() => false)
+  return message.confirm('Switch the toggle?').then(() => true).catch(() => false)
 }
 ```
 
 ## Attributes
 
-| Parameter | Description | Type | Options | Default | Version |
-|-----------|-------------|------|----------|---------|----------|
-| v-model | Binding value | boolean / string / number | - | - | - |
-| disabled | Disabled state | boolean | - | false | - |
-| active-value | Value when switch is on | boolean / string / number | - | true | - |
-| inactive-value | Value when switch is off | boolean / string / number | - | false | - |
-| active-color | Background color when switch is on | string | - | #4D80F0 | - |
-| inactive-color | Background color when switch is off. By default it's white, so there's a gray border. If this value is set, the gray border will be automatically removed | string | - | #fff | - |
-| size | Switch size, can be any unit string size | string/number | - | 28px | - |
-| before-change | Hook before modification | function | - | - | - |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| model-value / v-model | Bound value | `boolean \| string \| number` | `false` |
+| disabled | Whether disabled | `boolean` | `false` |
+| inactive-action-icon | Inactive state action button icon | `string` | - |
+| active-action-icon | Active state action button icon | `string` | - |
+| active-icon | Active state icon, ignores `active-text` when set | `string` | - |
+| inactive-icon | Inactive state icon, ignores `inactive-text` when set | `string` | - |
+| active-text | Active state text | `string` | `''` |
+| inactive-text | Inactive state text | `string` | `''` |
+| active-value | Active value | `boolean \| string \| number` | `true` |
+| inactive-value | Inactive value | `boolean \| string \| number` | `false` |
+| active-color | Active color | `string` | - |
+| inactive-color | Inactive color | `string` | - |
+| size | Switch size | `string \| number` | - |
+| shape | Shape, optional values are `round`, `square` | `SwitchShape` | `'round'` |
+| loading | Whether to show loading | `boolean` | `false` |
+| loading-props | Loading configuration | `Partial<LoadingProps>` | - |
+| before-change | Hook before modification | `SwitchBeforeChange` | - |
+| class-prefix | Icon class name prefix | `string` | `'wd-icon'` |
+| custom-class | Root node custom class name | `string` | `''` |
+| custom-style | Root node custom style | `string` | `''` |
 
 ## Events
 
-| Event Name | Description | Parameters | Version |
-|------------|-------------|------------|----------|
-| change | Value change event | `{ value }` | - |
-
-## External Style Classes
-
-| Class Name | Description | Version |
-|------------|-------------|----------|
-| custom-class | Root node style | - |
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| change | Value modification event | `{ value }` |

@@ -1,40 +1,34 @@
 # Img
 
-Enhanced img tag that provides multiple image filling modes and supports image lazy loading, loading completion, and loading failure.
+Enhanced image component that supports fill modes, lazy loading, loading/failed state slots, and click-to-preview.
 
-## Basic Usage
+## Component Type
 
-Basic usage is consistent with the native image tag. You can set native attributes such as `src`, `width`, `height`, etc.
+### Basic Usage
 
-For native attributes, refer to [uni-app image official documentation](https://uniapp.dcloud.net.cn/component/image.html#image).
+Basic usage is consistent with the native `image` tag. You can set `src`, `width`, `height`, and other properties.
 
-Note about the src attribute:
-
-When using `relative paths`, note that `src` needs to be a relative path from the component's location to the image's location.
-
-When using `file import`, note that WeChat Mini Program image tag paths accept binary data and base64 encoding. Using import image paths alone cannot be accessed.
+When using local resources, it is recommended to pass `src` through file import. In WeChat Mini Programs, the `image` tag supports binary data and base64 encoding. When using import paths alone, you need to combine with build configuration processing.
 
 ```html
-<wd-img :width="100" :height="100" :src="joy" />
+<wd-img :width="100" :height="100" :src="imgURL" />
 ```
 
 ```typescript
-// import { joy } from '../images/joy'
-const joy = 'data:image/jpeg;base64,...' // Image file base64
+import blackMao from './black_mao.png'
+
+const imgURL = blackMao
 ```
 
-:::tip
-You can configure `transformAssetUrls` so that the `src` attribute works consistently with the native `image` component.
+:::tip Tip
+You can configure `transformAssetUrls` to give `wd-img`'s `src` property the same resource conversion experience as the native `image`.
 
 ```typescript
-// vite.config.(js|ts)
-
 import uni from '@dcloudio/vite-plugin-uni'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
   plugins: [
-    // ...
     uni({
       vueOptions: {
         template: {
@@ -50,29 +44,40 @@ export default defineConfig({
 })
 ```
 
-After updating the configuration, restart the development server to apply the changes.
-For more details, see [uni-app issue#4997](https://github.com/dcloudio/uni-app/issues/4997#issuecomment-2456851123).
+After modification, restart the development service to take effect. For more background, please refer to [uni-app issue#4997](https://github.com/dcloudio/uni-app/issues/4997#issuecomment-2456851123).
 :::
 
-## Slots
+## Component State
 
-Use `loading` and `error` slots to set display content during image loading and after loading failure
+### Loading Indicator
 
-```vue
-<template>
-  <wd-img :width="100" :height="100" src="https://www.123.com/a.jpg">
-    <template #error>
-      <view class="error-wrap">Loading Failed</view>
-    </template>
-    <template #loading>
-      <view class="loading-wrap">
-        <wd-loading />
-      </view>
-    </template>
-  </wd-img>
-</template>
+When the image is loading, default placeholder content is displayed. You can also customize the loading state through the `loading` slot. If you don't want to display the default loading state, set `show-loading` to `false`.
 
-<style>
+```html
+<wd-img width="100%" height="27vw" src="https://www.123.wot.com/a.jpg" />
+
+<wd-img width="100%" height="27vw" src="https://www.123.wot.com/a.jpg">
+  <template #loading>
+    <wd-loading />
+  </template>
+</wd-img>
+```
+
+### Load Failure Indicator
+
+When the image fails to load, default placeholder content is displayed. You can also customize the failed state through the `error` slot. If you don't want to display the default failed state, set `show-error` to `false`.
+
+```html
+<wd-img width="100%" height="27vw" src="https://www.123.wot.com/a.jpg" />
+
+<wd-img width="100%" height="27vw" src="https://www.123.wot.com/a.jpg">
+  <template #error>
+    <view class="error-wrap">Loading failed</view>
+  </template>
+</wd-img>
+```
+
+```css
 .error-wrap {
   width: 100%;
   height: 100%;
@@ -81,81 +86,91 @@ Use `loading` and `error` slots to set display content during image loading and 
   line-height: 100px;
   text-align: center;
 }
-
-.loading-wrap {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-</style>
 ```
 
-## Fill Mode
+## Component Style
 
-You can set the image fill mode through the `mode` property. See the table below for available values.
+### Fill Mode
 
-Mode is a Mini Program native property, refer to [WeChat Mini Program image official documentation](https://developers.weixin.qq.com/miniprogram/dev/component/image.html).
+Set the image fill mode through `mode`. Optional values are `top left`, `top right`, `bottom left`, `bottom right`, `right`, `left`, `center`, `bottom`, `top`, `heightFix`, `widthFix`, `scaleToFill`, `aspectFit`, `aspectFill`.
 
 ```html
-<wd-img :width="100" :height="100" mode="center" :src="joy" />
+<wd-img :width="100" :height="100" :src="imgURL" mode="center" />
 ```
 
-## Round Setting
+### Round
 
-You can set to display as a circle through the `round` property.
+Display the image as a circle through `round`.
 
 ```html
-<wd-img :width="100" :height="100" round :src="joy" />
+<wd-img :width="100" :height="100" :src="imgURL" round />
 ```
 
-## Preview Enabled
+### Border Radius
 
-By setting the `enable-preview` property, you can support click preview. It uses uni.previewImage under the hood to implement the preview effect
+Set the image border radius through `radius`. The default unit is `px`.
 
 ```html
-<wd-img :width="100" :height="100" :src="joy" :enable-preview="true" />
+<wd-img :width="100" :height="100" :src="imgURL" :radius="8" />
 ```
 
-You can also pass in the `preview-src` property to preview another image
+## Special Usage
+
+### Preview Enabled
+
+Enable click-to-preview through `enable-preview`. Internally implemented using `uni.previewImage`. The component only triggers preview after the image is successfully loaded.
 
 ```html
-<wd-img :width="100" :height="100" :src="joy" :preview-src="img" :enable-preview="true" />
+<wd-img :width="100" :height="100" :src="imgURL" :enable-preview="true" />
+```
+
+### Specify Preview Image
+
+Specify the image to display during preview through `preview-src`, which can be different from the image currently displayed by the component.
+
+```html
+<wd-img :width="100" :height="100" :src="imgURL" :preview-src="previewURL" :enable-preview="true" />
+```
+
+```typescript
+import blackMao from './black_mao.png'
+import blackMaoPreview from './black_mao_1.png'
+
+const imgURL = blackMao
+const previewURL = blackMaoPreview
 ```
 
 ## Attributes
 
-| Parameter | Description | Type | Options | Default | Version |
-|-----------|-------------|------|----------|---------|----------|
-| src | Image URL | string | - | - | - |
-| width | Width, default unit is px | number / string | - | - | - |
-| height | Height, default unit is px | number / string | - | - | - |
-| mode | Fill mode | ImageMode | 'top left' / 'top right' / 'bottom left' / 'bottom right' / 'right' / 'left' / 'center' / 'bottom' / 'top' / 'heightFix' / 'widthFix' / 'aspectFill' / 'aspectFit' / 'scaleToFill' | 'scaleToFill' | - |
-| round | Whether to display as circle | boolean | - | false | - |
-| radius | Border radius size, default unit is px | number / string | - | - | - |
-| enable-preview | Whether to support click preview | boolean | - | false | 1.2.11 |
-| show-menu-by-longpress | Enable long press image to show Mini Program code recognition menu, only supported in WeChat Mini Program | boolean | - | false | 1.3.11 |
-| preview-src | Preview image URL | string | - | - | 1.8.0 |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| src | Image link | `string` | - |
+| preview-src | Preview image link | `string` | - |
+| width | Width, supports numbers (unit `px`) or strings | `string \| number` | - |
+| height | Height, supports numbers (unit `px`) or strings | `string \| number` | - |
+| mode | Fill mode, optional values are `top left`, `top right`, `bottom left`, `bottom right`, `right`, `left`, `center`, `bottom`, `top`, `heightFix`, `widthFix`, `scaleToFill`, `aspectFit`, `aspectFill` | `ImageMode` | `scaleToFill` |
+| round | Whether to display as a circle | `boolean` | `false` |
+| radius | Border radius size, default unit is `px` | `string \| number` | - |
+| lazy-load | Whether to enable image lazy loading | `boolean` | `false` |
+| enable-preview | Whether to support click-to-preview | `boolean` | `false` |
+| show-menu-by-longpress | Whether to enable long-press image to show识别小程序码 menu, only valid for WeChat Mini Programs | `boolean` | `false` |
+| show-loading | Whether to display default loading state | `boolean` | `true` |
+| show-error | Whether to display default failed state | `boolean` | `true` |
+| custom-class | Root node custom class name | `string` | `''` |
+| custom-style | Root node custom style | `string` | `''` |
+| custom-image | Internal `image` node custom class name | `string` | `''` |
 
 ## Events
 
-| Event Name | Description | Parameters | Version |
-|------------|-------------|------------|----------|
-| click | Click event | (event: MouseEvent) => void | - |
-| load | Triggered when image is loaded | `{height, width}` | - |
-| error | Triggered when error occurs | `{errMsg}` | - |
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| click | Triggered when clicking the image | `event: MouseEvent` |
+| load | Triggered when image loading is complete, returns the image loading event object | `event: Event` |
+| error | Triggered when image loading fails, returns the image error event object | `event: Event` |
 
 ## Slots
 
-| Name | Description | Version |
-|------|-------------|----------|
-| loading | Display during image loading | 1.2.21 |
-| error | Display after image loading failure | 1.2.21 |
-
-## External Classes
-
-| Class Name | Description | Version |
-|------------|-------------|----------|
-| custom-class | Root node style | - |
-| custom-image | Image external custom style | - |
+| Name | Description |
+| --- | --- |
+| loading | Customize the display content when the image is loading |
+| error | Customize the display content after the image fails to load |

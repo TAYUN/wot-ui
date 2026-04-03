@@ -1,18 +1,22 @@
 # NoticeBar
 
-Notice bar component, used to display notification reminders at the top of the page.
+A notification bar component used to display notification reminders at the top of the page.
 
-## Basic Usage
+## Component Types
 
-Set `text` content and `prefix` left icon.
+### Basic Usage
+
+Set the `text` content and `prefix` left icon.
 
 ```html
 <wd-notice-bar text="This is a message notification, this is a message notification, this is a message notification" prefix="warn-bold" />
 ```
 
-## Type Modification
+## Component Variants
 
-Set `type` to modify the notification type. There are three types of notifications: `info`|`warning`|`danger`, with default value as `warning`.
+### Type Modification
+
+Set `type` to modify the notification type. There are three notification types: `info`, `warning`, and `danger`. The default is `warning`.
 
 ```html
 <wd-notice-bar text="This is a message notification, this is a message notification, this is a message notification" prefix="warn-bold" custom-class="space" />
@@ -26,14 +30,34 @@ Set `type` to modify the notification type. There are three types of notificatio
 }
 ```
 
-## Slot Demo
+### Closable
+
+Set the `closable` property to make the notification bar closable.
 
 ```html
-<wd-notice-bar>
+<wd-notice-bar text="This is a message notification, this is a message notification, this is a message notification" closable />
+```
+
+## Content Forms
+
+### Disable Scrolling
+
+Set `scrollable` to `false` to disable the scrolling effect. The notification bar will remain static.
+
+```html
+<wd-notice-bar text="When I was young, I wanted to buy osmanthus flowers and wine" :scrollable="false" prefix="stop" />
+```
+
+### Slot Demo
+
+When the `prefix` property is not passed, you can customize the left content through the `prefix` slot; the `suffix` slot will override the default close icon area.
+
+```html
+<wd-notice-bar :scrollable="false">
   <template #prefix>
     <wd-icon class="prefix" name="warn-bold">Placeholder</wd-icon>
   </template>
-  Notifications may be blocked due to disabled notifications or time period filtering...
+  Notifications may be blocked during restricted periods...
   <template #suffix>
     <div style="color: #4d80f0">View</div>
   </template>
@@ -49,39 +73,34 @@ Set `type` to modify the notification type. There are three types of notificatio
 }
 ```
 
-## Multi-line Display
+### Multi-line Display
 
-Set `wrapable` property to `true` and disable scrolling `scrollable` to enable multi-line display.
+Set the `wrapable` property to `true` and disable scrolling with `scrollable` to enable multi-line display.
 
 ```html
 <wd-notice-bar text="This is a message notification, this is a message notification, this is a message notification" wrapable :scrollable="false" />
 ```
 
-## Closable
+## Component Styles
 
-Set `closable` property to make the notice bar closable.
+### Custom Colors
 
-```html
-<wd-notice-bar text="This is a message notification, this is a message notification, this is a message notification" closable />
-```
-
-## Custom Color
-
-Set `color` to modify text and icon color, set `background-color` to modify background color.
+Set `color` to modify text and icon color, and set `background-color` to modify the background color.
 
 ```html
 <wd-notice-bar
   text="This is a message notification, this is a message notification, this is a message notification"
   prefix="check-outline"
-  closable
   color="#34D19D"
   background-color="#f0f9eb"
 />
 ```
 
-## Multiple Text Carousel
+## Special Usage
 
-Pass a `string[]` to the `text` property to enable multiple text carousel, and the `next` event will be triggered when displaying the next text. This event receives a `number` parameter representing the current text array index.
+### Multi-text Carousel
+
+Pass a `string[]` to the `text` property to enable multi-text carousel. The `next` event will be triggered when displaying the next text, which receives a `number` parameter representing the current text array index.
 
 ```html
 <wd-notice-bar :text="textArray" prefix="check-outline" @next="onNext" />
@@ -92,39 +111,54 @@ import { ref } from 'vue'
 
 const textArray = ref([
   'Welcome to wot design uni',
-  'This component library is built based on uniapp ->Vue3, ts',
-  'Project address: https://github.com/wot-ui/wot-ui',
-  'Our goal is to create the strongest uniapp component library',
-  'Sincerely invite everyone to build together',
+  'This component library is built with uniapp -> Vue3, TypeScript',
+  'Project URL: https://github.com/wot-ui/wot-ui',
+  'Our goal is to build the best uniapp component library',
+  'We sincerely invite everyone to build together',
   'This is a message notification, this is a message notification, this is a message notification, this is a message notification, this is a message notification'
 ])
 
 const onNext = (index: number) => {
-  console.log('Show next, index: ', index)
+  console.log('Displaying next, index: ', index)
   console.log('Text is: ' + textArray.value[index])
 }
 ```
 
-## Vertical Scrolling
+### Vertical Scrolling
 
-1. Pass `vertical` to `direction` to enable vertical scrolling, currently only supports scrolling in one direction
-2. Scrolling only occurs when `text` is an array
+1. Pass `vertical` to `direction` to enable vertical scrolling. Currently, only one-direction vertical scrolling is supported.
+2. Scrolling will only occur when `text` is an array.
 
 ```html
 <wd-notice-bar prefix="warn-bold" direction="vertical" :text="textArray" :delay="3" custom-class="space" />
-<wd-notice-bar prefix="warn-bold" direction="vertical" text="Single message won't scroll" :delay="3" custom-class="space" />
+<wd-notice-bar prefix="warn-bold" direction="vertical" text="Only one message won't scroll" :delay="3" custom-class="space" />
 ```
 
-## Reset Play Animation <el-tag text style="vertical-align: middle;margin-left:8px;" effect="plain">1.3.13</el-tag>
-Get the component instance through `ref` and call the `reset` method to reset the play animation. When you encounter abnormal play animation of `NoticeBar`, you can call the `reset` method to reset the animation.
+### Click Event
 
-For example: In `APP-VUE`, when using `NoticeBar` on the `Tabbar` page, when returning to the `NoticeBar` page from other pages, there may be occasional `NoticeBar` animation abnormalities, at this time you can call the `reset` method to reset the animation.
+Clicking the notification content area will trigger the `click` event, returning the currently displayed text and its corresponding index.
+
+```html
+<wd-notice-bar :text="textArray" prefix="thunderbolt" @click="handleClick" />
+```
+
+```ts
+function handleClick(result: { text: string; index: number }) {
+  console.log(result)
+}
+```
+
+### Reset Animation ^(1.3.13)
+
+Get the component instance via `ref` and call the `reset` method to reset the animation. When you encounter animation anomalies with `NoticeBar`, you can call the `reset` method to reset the animation.
+
+For example: On the `APP-VUE` side, when using `NoticeBar` on a `Tabbar` page, returning from another page to the `NoticeBar` page may occasionally cause animation anomalies. In this case, you can call the `reset` method to reset the animation.
 
 Reference issues: [#358](https://github.com/Moonofweisheng/wot-design-uni/issues/358), [#650](https://github.com/Moonofweisheng/wot-design-uni/issues/650)
 
 ```html
 <wd-notice-bar ref="notice" prefix="warn-bold" direction="vertical" :text="textArray" :delay="3" />
-<wd-button @click="handleReset">Reset Play Animation</wd-button>
+<wd-button @click="handleReset">Reset Animation</wd-button>
 ```
 
 ```ts
@@ -137,10 +171,10 @@ const notice = ref<NoticeBarInstance>()
 
 const textArray = ref([
   'Welcome to wot design uni',
-  'This component library is built based on uniapp ->Vue3, ts',
-  'Project address: https://github.com/wot-ui/wot-ui',
-  'Our goal is to create the strongest uniapp component library',
-  'Sincerely invite everyone to build together',
+  'This component library is built with uniapp -> Vue3, TypeScript',
+  'Project URL: https://github.com/wot-ui/wot-ui',
+  'Our goal is to build the best uniapp component library',
+  'We sincerely invite everyone to build together',
   'This is a message notification, this is a message notification, this is a message notification, this is a message notification, this is a message notification'
 ])
 
@@ -151,44 +185,46 @@ function handleReset() {
 
 ## Attributes
 
-| Parameter | Description | Type | Options | Default | Version |
-|-----------|-------------|------|----------|---------|----------|
-| text | Set notice bar text | `string` `string[]` | - | - | - |
-| type | Set notice bar type | `string` | info / warning / danger | warning | - |
-| prefix | Set left icon, use icon name from icon section | `string` | - | - | - |
-| scrollable | Whether it can scroll | `boolean` | - | true | - |
-| delay | Initial delay of scroll animation, unit seconds(s) | `number` | - | 1 | - |
-| speed | Scroll speed, unit px/s | `number` | - | 50 | - |
-| closable | Whether it can be closed | `boolean` | - | false | - |
-| wrapable | Whether to wrap display | `boolean` | - | false | - |
-| color | Text and icon color | `string` | - | - | - |
-| background-color | Background color | `string` | - | - | - |
-| direction | Scroll direction | `NoticeBarScrollDirection` | `horizontal` `vertical` | `horizontal` | - |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| text | Notification bar text | `string \| string[]` | `''` |
+| type | Notification bar type, optional values are `warning`, `info`, `danger` | `NoticeBarType` | `warning` |
+| prefix | Left icon name | `string` | - |
+| scrollable | Whether to enable scrolling playback | `boolean` | `true` |
+| delay | Initial delay of scrolling animation, in seconds | `number` | `1` |
+| speed | Scrolling speed, in `px/s` | `number` | `50` |
+| closable | Whether to show the close button | `boolean` | `false` |
+| wrapable | Whether to wrap text display; only effective in horizontal mode when `scrollable=false` | `boolean` | `false` |
+| color | Text and icon color | `string` | - |
+| background-color | Background color | `string` | - |
+| direction | Scroll direction, optional values are `horizontal`, `vertical` | `NoticeBarScrollDirection` | `horizontal` |
+| custom-class | Root node custom class name | `string` | `''` |
+| custom-style | Root node custom style | `string` | `''` |
 
 ## Events
 
-| Event Name | Description | Parameters | Version |
-|------------|-------------|------------|----------|
-| close | Triggered when close button is clicked | - | - |
-| next | Triggered before next scroll | index: `number` | - |
-| click | Triggered when clicked | `{ text: string, index: number }`, where `text` is the current text and `index` is the current text index | 1.2.16 |
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| close | Triggered when clicking the close button | - |
+| next | Triggered when switching to the next text | `index: number` |
+| click ^(1.2.16) | Triggered when clicking the content area | `{ text: string, index: number }` |
 
 ## Methods
 
-| Method Name | Description | Parameters | Version |
-|------------|-------------|------------|----------|
-| reset | Used to reset play animation | - | 1.3.13 |
+| Method Name | Description | Parameters |
+| --- | --- | --- |
+| reset ^(1.3.13) | Reset animation | - |
 
-## Slot
+## Slots
 
-| Name | Description | Type | Version |
-|------|-------------|------|----------|
-| prefix | Front icon | - | - |
-| suffix | Back slot | - | - |
-| default | Notice text content | - | - |
+| Name | Description |
+| --- | --- |
+| prefix | Custom prefix content; this slot is not effective when `prefix` property is passed |
+| suffix | Custom suffix content; will override the default close icon |
+| default | Custom notification text content; only effective when `direction='horizontal'` |
 
 ## External Classes
 
-| Class Name | Description | Version |
-|------------|-------------|----------|
-| custom-class | Root node style | - |
+| Class Name | Description |
+| --- | --- |
+| custom-class | Root node style |

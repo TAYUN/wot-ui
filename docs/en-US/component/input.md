@@ -1,287 +1,252 @@
 # Input
 
-Input component for text entry.
+Users can enter content in the text box.
 
-## Basic Usage
+## Component Type
 
-The `v-model` attribute binds the input value.
+### Basic Usage
+
+Bind the input value through `v-model`, and set the placeholder prompt through `placeholder`.
 
 ```html
-<wd-input v-model="value" placeholder="Please enter content"></wd-input>
+<wd-input v-model="value" type="text" placeholder="Please enter username" @input="handleInput" />
 ```
 
 ```typescript
-import { reactive, toRefs } from 'vue'
+import { ref } from 'vue'
 
-export default {
-  setup() {
-    const state = reactive({
-      value: ''
-    })
+const value = ref('')
 
-    return {
-      ...toRefs(state)
-    }
-  }
+function handleInput(event) {
+  console.log(event)
 }
 ```
 
-## Label
+### Number Type
 
-Set the `label` attribute to display the label on the left side of the input.
-
-```html
-<wd-input v-model="value" label="Label"></wd-input>
-```
-
-## Label Width
-
-Set the `label-width` attribute to customize the width of the label.
+After setting `type` to `number`, only numbers are allowed to be entered.
 
 ```html
-<wd-input v-model="value" label="Label" label-width="100px"></wd-input>
+<wd-input v-model="value" type="number" />
 ```
 
-## Input Type
+## Component State
 
-Set the `type` attribute to define the input type, supporting all native input types.
+### Disabled
+
+Input is not allowed after setting `disabled`.
 
 ```html
-<wd-input v-model="value" label="Text" type="text"></wd-input>
-<wd-input v-model="value" label="Password" type="password"></wd-input>
-<wd-input v-model="value" label="Number" type="number"></wd-input>
-<wd-input v-model="value" label="Phone" type="tel"></wd-input>
+<wd-input v-model="value" disabled />
 ```
 
-## Disabled
+### Readonly
 
-Set the `disabled` attribute to disable the input.
+After setting `readonly`, editing is not allowed, but the display style will still be retained.
 
 ```html
-<wd-input v-model="value" label="Disabled" disabled></wd-input>
+<wd-input v-model="value" readonly />
 ```
 
-## Read Only
+### Error State
 
-Set the `readonly` attribute to make the input read-only.
+After setting `error`, the input content will be displayed in an error state.
 
 ```html
-<wd-input v-model="value" label="Read Only" readonly></wd-input>
+<wd-input v-model="value" placeholder="Please enter username" error />
 ```
 
-## Show Clear Button
+## Component Variant
 
-Set the `clearable` attribute to show a clear button when the input has content.
+### Clear Button
+
+After setting `clearable`, the clear button is displayed when the clearable condition is met.
 
 ```html
-<wd-input v-model="value" label="Clear Button" clearable></wd-input>
+<wd-input v-model="value" clearable @clear="handleClear" />
 ```
 
-## Show Password
+### Show Clear Button When Focused
 
-Set the `show-password` attribute to show a button to toggle password visibility when the input type is password.
+Control to only display the clear button when the input box is focused and has a value through `clear-trigger="focus"`.
+
+:::warning Note
+Alipay Mini Program does not support `clear-trigger` temporarily, and the clear button cannot be clicked in some scenarios. Please refer to [issue](https://github.com/ant-design/ant-design-mini/issues/1255).
+:::
 
 ```html
-<wd-input v-model="value" label="Password" type="password" show-password></wd-input>
+<wd-input v-model="value" clear-trigger="focus" clearable />
 ```
 
-## Prefix Icon
+### Do Not Auto Focus After Clear
 
-Set the `prefix-icon` attribute to display an icon at the beginning of the input.
+Control whether to refocus after clicking the clear button through `focus-when-clear`.
 
 ```html
-<wd-input v-model="value" label="Prefix Icon" prefix-icon="search"></wd-input>
+<wd-input v-model="value" :focus-when-clear="false" clearable />
 ```
 
-## Suffix Icon
+### Password Input Box
 
-Set the `suffix-icon` attribute to display an icon at the end of the input.
+After setting `show-password`, the password visibility state can be toggled.
 
 ```html
-<wd-input v-model="value" label="Suffix Icon" suffix-icon="search"></wd-input>
+<wd-input v-model="value" clearable show-password />
 ```
 
-## Custom Icon Click Event
+## Content Form
 
-Set the `on-click-prefix-icon` and `on-click-suffix-icon` attributes to handle icon click events.
+### Front and Back Icons
+
+Set the front and back icons through `prefix-icon` and `suffix-icon`. For icon names, please refer to [Icon](/component/icon).
 
 ```html
 <wd-input
   v-model="value"
-  label="Click Icon"
-  prefix-icon="search"
-  suffix-icon="search"
-  @click-prefix-icon="handleClickIcon"
-  @click-suffix-icon="handleClickIcon"
-></wd-input>
+  prefix-icon="sound"
+  suffix-icon="send"
+  clearable
+  @clickprefixicon="handlePrefixClick"
+  @clicksuffixicon="handleSuffixClick"
+/>
 ```
 
-```typescript
-import { reactive, toRefs } from 'vue'
+### Suffix Slot
 
-export default {
-  setup() {
-    const state = reactive({
-      value: ''
-    })
-
-    const handleClickIcon = () => {
-      console.log('click icon')
-    }
-
-    return {
-      ...toRefs(state),
-      handleClickIcon
-    }
-  }
-}
-```
-
-## Input Size
-
-Set the `size` attribute to customize the size of the input, supporting 'large' and 'small'.
+Customize the suffix content through the `suffix` slot.
 
 ```html
-<wd-input v-model="value" label="Large" size="large"></wd-input>
-<wd-input v-model="value" label="Default"></wd-input>
-<wd-input v-model="value" label="Small" size="small"></wd-input>
-```
-
-## Input Length Limit
-
-Set the `maxlength` attribute to limit the maximum input length.
-
-```html
-<wd-input v-model="value" label="Length Limit" maxlength="10"></wd-input>
-```
-
-## Input Alignment
-
-Set the `input-align` attribute to customize the alignment of the input text, supporting 'left', 'center', and 'right'.
-
-```html
-<wd-input v-model="value" label="Left" input-align="left"></wd-input>
-<wd-input v-model="value" label="Center" input-align="center"></wd-input>
-<wd-input v-model="value" label="Right" input-align="right"></wd-input>
-```
-
-## Cell Style
-
-Set the `cell` attribute to display the input in cell style.
-
-```html
-<wd-input v-model="value" label="Cell Style" cell></wd-input>
-```
-
-## Custom Label
-
-Use the `label` slot to customize the label content.
-
-```html
-<wd-input v-model="value">
-  <template #label>
-    <view style="display: inline-flex; align-items: center;">
-      <view>Custom Label</view>
-      <wd-icon name="question-fill" style="margin-left: 4px; color: #4D80F0;"></wd-icon>
-    </view>
-  </template>
-</wd-input>
-```
-
-## Custom Input
-
-Use the `prefix` and `suffix` slots to customize the content before and after the input.
-
-```html
-<wd-input v-model="value" label="Custom Input">
-  <template #prefix>
-    <view style="padding: 0 10px;">Prefix</view>
-  </template>
+<wd-input v-model="value" clearable placeholder="Please enter">
   <template #suffix>
-    <view style="padding: 0 10px;">Suffix</view>
+    <wd-button size="small">Get Verification Code</wd-button>
   </template>
 </wd-input>
 ```
 
-## Error Status
+## Component Style
 
-Set the `error` attribute to display the input in error status.
+### Character Limit
+
+After setting `maxlength`, the current character count can be displayed through `show-word-limit`.
 
 ```html
-<wd-input v-model="value" label="Error" error></wd-input>
+<wd-input v-model="value" :maxlength="20" show-word-limit />
 ```
 
-## Error Message
+### Compact Layout
 
-Set the `error-message` attribute to display an error message below the input.
+After setting `compact`, the default padding and background of the input box will be removed, suitable for use with `wd-cell` or `wd-form-item`.
 
 ```html
-<wd-input v-model="value" label="Error Message" error-message="Error message"></wd-input>
+<wd-input
+  v-model="price"
+  compact
+  placeholder="Please enter price"
+  custom-style="display: inline-block; width: 70px; vertical-align: middle;"
+/>
+<text style="margin-left: 8px;">Yuan</text>
+```
+
+## Special Usage
+
+### Combined with Form Usage
+
+For the current form scenario, it is recommended to use `wd-form` and `wd-form-item` to carry the title, required state, and validation prompt. `wd-input` is only responsible for the input capability.
+
+```html
+<wd-form :model="formData" border title-width="98px">
+  <wd-form-item title="Basic Usage" prop="basic">
+    <wd-input v-model="formData.basic" placeholder="Please enter" compact />
+  </wd-form-item>
+
+  <wd-form-item title="Custom Slot" prop="slot" center>
+    <wd-input v-model="formData.slot" placeholder="Please enter" clearable compact>
+      <template #suffix>
+        <wd-button size="small">Get Verification Code</wd-button>
+      </template>
+    </wd-input>
+  </wd-form-item>
+</wd-form>
 ```
 
 ## Attributes
 
-| Attribute | Description | Type | Default | Version |
-|---------|---------|---------|---------|------|
-| v-model | Input value | string / number | - | - |
-| label | Input label | string | - | - |
-| placeholder | Input placeholder | string | - | - |
-| type | Input type | string | text | - |
-| disabled | Whether to disable the input | boolean | false | - |
-| readonly | Whether the input is read-only | boolean | false | - |
-| clearable | Whether to show the clear button | boolean | false | - |
-| show-password | Whether to show the password toggle button | boolean | false | - |
-| prefix-icon | Prefix icon name | string | - | - |
-| suffix-icon | Suffix icon name | string | - | - |
-| size | Input size, can be 'large' or 'small' | string | - | - |
-| error | Whether to show error status | boolean | false | - |
-| error-message | Error message | string | - | - |
-| name | Native name attribute | string | - | - |
-| maxlength | Maximum input length | string / number | - | - |
-| input-align | Input text alignment, can be 'left', 'center', or 'right' | string | left | - |
-| label-width | Label width | string | 33% | - |
-| cell | Whether to display in cell style | boolean | false | - |
-| required | Whether to display the required asterisk | boolean | false | - |
-| marker-side | Position of the required marker | 'before' \| 'after' | 'before' | 1.12.0 |
-| center | Whether to vertically center the content | boolean | false | - |
-| active-color | Active color when focused | string | - | - |
-| adjust-position | Whether to adjust the position when the keyboard is displayed | boolean | true | - |
-| cursor-spacing | The distance from the cursor to the keyboard when focused | number | 0 | - |
-| auto-focus | Whether to auto focus | boolean | false | - |
-| always-embed | Whether to always embed the input in a native input element | boolean | false | - |
-| enable-native | Alipay mini program, you can add enableNative="false" to the input component to avoid the content moving up after the keyboard pops up | boolean | true | 1.14.0 |
-| confirm-type | The text of the confirm button on the keyboard, can be 'send', 'search', 'next', 'go', 'done' | string | done | - |
-| confirm-hold | Whether to keep the keyboard displayed after the confirm button is pressed | boolean | false | - |
-| cursor | The initial position of the cursor | number | - | - |
-| selection-start | The start position of the selection | number | -1 | - |
-| selection-end | The end position of the selection | number | -1 | - |
-| hold-keyboard | Whether to keep the keyboard displayed | boolean | false | - |
-| safe-padding-bottom | Whether to enable bottom safe area padding | boolean | false | - |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| v-model | Input box binding value | `string \| number` | `''` |
+| type | Input box type, optional values are `text`, `number`, `digit`, `idcard`, `safe-password`, `nickname`, `tel` | `InputType` | `text` |
+| placeholder | Placeholder text | `string` | `Please enter...` |
+| placeholder-style | placeholder style, currently supports `color`, `font-size`, `font-weight` | `string` | - |
+| placeholder-class | placeholder style class | `string` | `''` |
+| maxlength | Maximum input length | `number` | Alipay Mini Program has no default value, other platforms are `-1` |
+| disabled | Whether to disable | `boolean` | `false` |
+| readonly | Whether to read only | `boolean` | `false` |
+| clearable | Whether to display the clear button | `boolean` | `false` |
+| clear-trigger ^(1.3.7) | Clear button display timing, optional values are `focus`, `always` | `InputClearTrigger` | `always` |
+| focus-when-clear ^(1.3.7) | Whether to auto focus after clicking the clear button | `boolean` | `true` |
+| show-password | Whether to display the password toggle button | `boolean` | `false` |
+| prefix-icon | Prefix icon name | `string` | - |
+| suffix-icon | Suffix icon name | `string` | - |
+| show-word-limit | Whether to display character count, need to set `maxlength` at the same time | `boolean` | `false` |
+| error | Whether to display error state | `boolean` | `false` |
+| align-right | Whether the input content is right-aligned | `boolean` | `false` |
+| compact | Whether to enable compact mode; when not explicitly set, it will be automatically enabled in `wd-form-item` | `boolean` | - |
+| focus | Whether to get focus | `boolean` | `false` |
+| cursor-spacing | Distance between cursor and keyboard | `number` | `0` |
+| cursor | Cursor position when getting focus | `number` | `-1` |
+| selection-start | Cursor start position, need to be used with `selection-end` | `number` | `-1` |
+| selection-end | Cursor end position, need to be used with `selection-start` | `number` | `-1` |
+| adjust-position | Whether to automatically push up the page when the keyboard pops up | `boolean` | `true` |
+| hold-keyboard | Whether to keep the keyboard from closing when clicking the page while focused | `boolean` | `false` |
+| confirm-type | Text on the bottom right button of the keyboard, optional values are `done`, `go`, `next`, `search`, `send` | `InputConfirmType` | `done` |
+| confirm-hold | Whether to keep the keyboard from closing when clicking the bottom right button of the keyboard | `boolean` | `false` |
+| always-embed | Whether to force input to be in the same layer state, only valid for WeChat Mini Program iOS | `boolean` | `false` |
+| ignore-composition-event ^(1.3.11) | Whether to ignore text composition system event processing; when `false`, composition related events will be triggered, and `input` will be triggered during composition | `boolean` | `true` |
+| inputmode ^(1.5.0) | Input mode hint, optional values are `none`, `text`, `decimal`, `numeric`, `tel`, `search`, `email`, `url` | `InputMode` | `text` |
+| enable-native ^(1.14.0) | Whether to enable native input box in Alipay Mini Program, set to `false` to avoid content shifting up after the keyboard pops up | `boolean` | `true` |
+| custom-input-class | Input box custom class name | `string` | `''` |
+| custom-class | Root node custom class name | `string` | `''` |
+| custom-style | Root node custom style | `string` | `''` |
+
+### InputMode Optional Values
+
+`inputmode` is an HTML specification extension capability added later. It can be used in uni-app's Web and App-Vue platforms in high-version WebViews that meet the conditions. For details, see [inputmode](https://uniapp.dcloud.net.cn/component/input.html#inputmode).
+
+| Value | Description |
+| --- | --- |
+| none | Do not pop up virtual keyboard |
+| text | Standard text input keyboard |
+| decimal | Decimal input keyboard |
+| numeric | Pure numeric input keyboard |
+| tel | Phone input keyboard |
+| search | Search input optimized keyboard |
+| email | Email input optimized keyboard |
+| url | URL input optimized keyboard |
 
 ## Events
 
-| Event Name | Description | Parameters | Version |
-|---------|---------|---------|------|
-| change | Triggered when the input value changes | value: input value | - |
-| focus | Triggered when the input is focused | event: Event | - |
-| blur | Triggered when the input loses focus | event: Event | - |
-| clear | Triggered when the clear button is clicked | - | - |
-| click-prefix-icon | Triggered when the prefix icon is clicked | event: Event | - |
-| click-suffix-icon | Triggered when the suffix icon is clicked | event: Event | - |
-| confirm | Triggered when the confirm button on the keyboard is pressed | event: Event | - |
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| input | Triggered when inputting | `{ value, cursor, keyCode }` |
+| focus | Triggered when focusing | `{ value, height }` |
+| blur | Triggered when blurring | `{ value }` |
+| clear | Triggered when clicking the clear button | - |
+| confirm | Triggered when clicking the keyboard done button | `{ value }` |
+| keyboardheightchange | Triggered when keyboard height changes | `{ height, duration }` |
+| clickprefixicon | Triggered when clicking the prefix icon | - |
+| clicksuffixicon | Triggered when clicking the suffix icon | - |
+| click | Triggered when clicking the component root node | `event: MouseEvent` |
 
 ## Slots
 
-| Name | Description | Version |
-|---------|---------|------|
-| label | Custom label | - |
-| prefix | Content before the input | - |
-| suffix | Content after the input | - |
+| Name | Description |
+| --- | --- |
+| prefix | Customize prefix content |
+| suffix | Customize suffix content |
 
 ## External Style Classes
 
-| Class Name | Description | Version |
-|---------|---------|------|
-| custom-class | Root node custom class | - |
-| custom-label-class | Label custom class | - |
-| custom-input-class | Input custom class | - |
+| Class Name | Description |
+| --- | --- |
+| custom-class | Root node style class |
+| custom-input-class | Input box style class |

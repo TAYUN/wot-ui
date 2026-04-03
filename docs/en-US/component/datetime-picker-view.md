@@ -1,133 +1,103 @@
 # DatetimePickerView Date Time Picker View
 
-An encapsulation of the Picker component with date and time options built internally.
+A base view component for building date and time roller options.
 
-## Basic Usage
+## Component Type
 
-`v-model` sets the binding value. The default type is `datetime`, which displays year, month, day, hour, and minute. The binding value is of type `timestamp`. For `time` type, the binding value is a string.
+### Basic Usage
+
+`v-model` binds the selected value; default type is `datetime`, value is timestamp.
 
 ```html
-<wd-toast />
-
-<wd-datetime-picker-view v-model="value" label="Date Selection" @change="handleChange" />
+<wd-datetime-picker-view v-model="value" @change="handleChange" />
 ```
-```typescript
-import { useToast } from '@/uni_modules/wot-ui'
-const toast = useToast()
-const value = ref<number>(Date.now())
 
-function onChange1({ value }) {
-  toast.show('Selected ' + new Date(value))
+```ts
+const value = ref<number>(Date.now())
+const handleChange = ({ value }: { value: number | string }) => {
+  console.log(value)
 }
 ```
 
-## Date Type
+## Component Variants
 
-`date` type only displays year, month, and day.
+### Date Types
+
+Supports five types: `datetime`, `date`, `year-month`, `year`, `time`.
+
+::: code-group
+```html [Template]
+<wd-datetime-picker-view type="date" v-model="dateValue" />
+<wd-datetime-picker-view type="year-month" v-model="yearMonthValue" />
+<wd-datetime-picker-view type="year" v-model="yearValue" />
+<wd-datetime-picker-view type="time" v-model="timeValue" />
+<wd-datetime-picker-view type="datetime" v-model="datetimeValue" />
+```
+
+```ts [Script]
+const dateValue = ref<number>(Date.now())
+const yearMonthValue = ref<number>(Date.now())
+const yearValue = ref<number>(Date.now())
+const timeValue = ref<string>('11:12')
+const datetimeValue = ref<number>(Date.now())
+```
+:::
+
+### Enable Seconds Selection
+
+In `time` and `datetime` types, you can display the seconds column via `use-second`.
 
 ```html
-<wd-datetime-picker-view type="date" v-model="value" label="Year Month Day" />
+<wd-datetime-picker-view type="time" v-model="timeValue" use-second />
+<wd-datetime-picker-view type="datetime" v-model="value" use-second />
 ```
-```typescript
+
+```ts
+const timeValue = ref<string>('11:12:30')
 const value = ref<number>(Date.now())
 ```
 
-## Year-Month Type
+## Component Style
 
-`year-month` type only displays year and month.
+### Custom Internal Format
 
-```html
-<wd-datetime-picker-view type="year-month" v-model="value" label="Year Month" />
-```
-```typescript
-const value = ref<number>(Date.now())
-```
-
-## Year Type
-
-`year` type only displays year.
+Customize roller text format via `formatter`.
 
 ```html
-<wd-datetime-picker-view type="year" v-model="value" label="Year" />
-```
-```typescript
-const value = ref<number>(Date.now())
+<wd-datetime-picker-view v-model="value" :formatter="formatter" />
 ```
 
-## Time Type
-
-`time` type only displays hour and minute, the binding value is in `HH:mm` format.
-
-```html
-<wd-datetime-picker-view type="time" v-model="value" label="Hour Minute" />
-```
-```typescript
-const value4 = ref<string>('11:12')
-```
-
-## Time Type (with Seconds)
-
-`time` type with `use-second` property displays hour, minute and second, the binding value is in `HH:mm:ss` format.
-
-```html
-<wd-datetime-picker-view type="time" v-model="value" label="Hour Minute Second" use-second />
-```
-```typescript
-const value = ref<string>('11:12:30')
-```
-
-## Datetime Type (with Seconds)
-
-`datetime` type with `use-second` property displays year, month, day, hour, minute and second, the binding value is timestamp.
-
-```html
-<wd-datetime-picker-view type="datetime" v-model="value" label="Year Month Day Hour Minute Second" use-second />
-```
-```typescript
-const value = ref<number>(Date.now())
-```
-
-## Modify Internal Format
-
-Pass a function to the `formatter` property, which receives `type` and `value` values and returns the display text content. `type` can be `year`, `month`, `date`, `hour`, `minute`, and `value` is of type `number`.
-Using a custom `formatter` will disable the built-in default `display-format` function.
-
-```html
-<wd-datetime-picker-view v-model="value" label="Internal Format" :formatter="formatter" />
-```
-
-```typescript
-const value = ref<number>(Date.now())
-
-const formatter = (type, value) => {
+```ts
+const formatter = (type: string, value: number) => {
   switch (type) {
     case 'year':
-      return value + ' Year'
+      return `${value}Year`
     case 'month':
-      return value + ' Month'
+      return `${value}Month`
     case 'date':
-      return value + ' Day'
+      return `${value}Day`
     case 'hour':
-      return value + ' Hour'
+      return `${value}Hour`
     case 'minute':
-      return value + ' Minute'
+      return `${value}Minute`
+    case 'second':
+      return `${value}Second`
     default:
-      return value
+      return `${value}`
   }
 }
 ```
 
-## Filter Options
+### Filter Options
 
-Pass a function to the `filter` property, which receives `type` and `values` values and returns the column's option list. `type` can be `year`, `month`, `date`, `hour`, `minute`, and `values` is a number array.
+Filter selectable values by column via `filter`.
 
 ```html
-<wd-datetime-picker-view v-model="value" label="Filter Options" :filter="filter" />
+<wd-datetime-picker-view v-model="value" :filter="filter" />
 ```
-```typescript
-const value = ref<number>(Date.now())
 
-const filter = (type, values) => {
+```ts
+const filter = ({ type, values }: { type: string; values: number[] }) => {
   if (type === 'minute') {
     return values.filter((value) => value % 5 === 0)
   }
@@ -137,29 +107,61 @@ const filter = (type, values) => {
 
 ## Attributes
 
-| Attribute | Description | Type | Options | Default | Version |
-|-----------|-------------|------|----------|---------|----------|
-| v-model | Selected value, when type is time, type is string, otherwise timestamp | `string` / `timestamp` | - | - | - |
-| type | Picker type | string | date / year-month / time / year | datetime | - |
-| loading | Loading state | boolean | - | false | - |
-| loading-color | Loading color, can only use hexadecimal color values and cannot use abbreviated format | string | - | #4D80F0 | - |
-| columns-height | Height of picker's internal roller | number | - | 231 | - |
-| item-height | Height of picker item | number | - | 35 | 1.13.0 |
-| formatter | Custom formatting function for popup layer option text, returns a string | function | - | - | - |
-| filter | Custom function for filtering options, returns column's option array | function | - | - | - |
-| minDate | Minimum date, 13-digit timestamp | `timestamp` | - | Current date - 10 years | - |
-| maxDate | Maximum date, 13-digit timestamp | `timestamp` | - | Current date + 10 years | - |
-| minHour | Minimum hour, effective for time type | number | - | 0 | - |
-| maxHour | Maximum hour, effective for time type | number | - | 23 | - |
-| minMinute | Minimum minute, effective for time type | number | - | 0 | - |
-| maxMinute | Maximum minute, effective for time type | number | - | 59 | - |
-| immediate-change | Whether to trigger the picker-view's change event immediately when the finger is released. If not enabled, the change event will be triggered after the scrolling animation ends. Available from version 1.2.25, only supported on WeChat Mini Program and Alipay Mini Program. | boolean | - | false | 1.2.25 |
-| use-second | Whether to display the second selection, only effective for time and datetime types | boolean | - | false | 1.10.0 |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| v-model / modelValue | Selected item, `time` type is string, others are timestamp | `string \| number` | - |
+| type | Picker type, optional values are `datetime`, `date`, `year-month`, `time`, `year` | DateTimeType | datetime |
+| item-height | Single item height | number | 44 |
+| visible-item-count | Number of visible items | number | 6 |
+| value-key | Option value field name | string | value |
+| label-key | Option text field name | string | label |
+| formatter | Custom option text formatting function | DatetimePickerViewFormatter | - |
+| filter | Custom filter function | DatetimePickerViewFilter | - |
+| column-formatter | Custom column formatting function | DatetimePickerViewColumnFormatter | - |
+| min-date | Minimum date (timestamp) | number | January 1st, 10 years before current year |
+| max-date | Maximum date (timestamp) | number | December 31st, 10 years after current year |
+| min-hour | Minimum hour (effective for `time` type) | number | 0 |
+| max-hour | Maximum hour (effective for `time` type) | number | 23 |
+| min-minute | Minimum minute (effective for `time` type) | number | 0 |
+| max-minute | Maximum minute (effective for `time` type) | number | 59 |
+| use-second ^(1.10.0) | Whether to display seconds selection, only effective for `time` and `datetime` | boolean | false |
+| min-second ^(1.10.0) | Minimum seconds, only effective for `time` and `datetime` | number | 0 |
+| max-second ^(1.10.0) | Maximum seconds, only effective for `time` and `datetime` | number | 59 |
+| immediate-change ^(1.2.25) | Whether to trigger change immediately when finger is released (WeChat/Alipay Mini Program only) | boolean | false |
+| boundary-min-date | Range mode start time minimum boundary (for linkage) | number | - |
+| boundary-max-date | Range mode end time maximum boundary (for linkage) | number | - |
+| custom-class | Custom class name for root node | string | `''` |
+| custom-style | Custom style for root node | string | `''` |
 
 ## Events
 
-| Event Name | Description | Parameters | Version |
-|------------|-------------|------------|----------|
-| change | Triggered when switching options | Selected value `{ value }`, value is the timestamp of currently selected date, or string for 'time' type | - |
-| pickstart | Triggered when scroll selection starts | - | - |
-| pickend | Triggered when scroll selection ends | - | - |
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| change | Triggered when selected item changes | `{ value, columns }` |
+| pickstart | Triggered when scrolling starts | - |
+| pickend | Triggered when scrolling ends | - |
+
+## Methods
+
+| Method Name | Description | Parameters |
+| --- | --- | --- |
+| getSelectedOptions | Get current selected item object array | - |
+| correctValue | Correct and return valid value | `value: string \| number` |
+| getOriginColumns | Get original column definitions | - |
+
+## Types
+
+### DatetimePickerViewColumn
+
+| Key | Description | Type |
+| --- | --- | --- |
+| type | Column type | `year \| month \| date \| hour \| minute \| second` |
+| values | Current column selectable value array | number[] |
+
+### DatetimePickerViewOption
+
+| Key | Description | Type |
+| --- | --- | --- |
+| value | Option value | number |
+| label | Option display text | string |
+| disabled | Whether disabled | boolean |

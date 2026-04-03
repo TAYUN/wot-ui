@@ -10,7 +10,7 @@ hero:
   tagline: AI友好的设计系统，提供 80+ 高质量组件，支持暗黑模式、国际化和自定义主题。
   image:
     src: /logo.png
-    alt: Wot Design
+    alt: Wot UI
   actions:
     - theme: brand
       text: 起步 🚀
@@ -24,9 +24,6 @@ hero:
     - theme: brand
       text: 🥤一杯咖啡
       link: /reward/reward
-    - theme: brand
-      text: 🐟 关于作者
-      link: "https://blog.wot-ui.cn/about"
 
 features:
   - icon: 🎯
@@ -36,8 +33,8 @@ features:
     title: 80+ 组件
     details: 超过 80 个高质量组件，覆盖移动端主流场景。
   - icon: 💖
-    title: 提供快速上手模板
-    details: Wot UI 提供了基于 vitesse-uni-app 深度整合 Wot UI 组件库的快速启动模板。
+    title: 快速上手
+    details: 提供基于 vitesse-uni-app 深度整合 wot-ui 的快速启动模板 wot-starter。
     link: "https://starter.wot-ui.cn/"
     linkText: "查看 Wot Starter"
   - icon: 💪
@@ -46,15 +43,15 @@ features:
   - icon: 🌍
     title: 支持国际化
     details: 支持国际化，内置 15 种语言包。
-  - icon: 📖
-    title: 提供丰富的文档和组件示例
-    details: 文档和组件示例为开发者提供稳定的后勤保障。
+  - icon: 🤖
+    title: AI 友好
+    details: 提供 AI 友好的设计系统，持续更新 AI 编程实践。
   - icon: 🍭
     title: 支持暗黑模式和主题定制
     details: 可以定制css变量以及组件的样式自定义。
   - icon: 🍿
-    title: 最佳实践分享
-    details: 通过公众号『阿鱼聊前端』不定期分享一些使用 Wot UI 相关的最佳实践。
+    title: 实践分享
+    details: 公众号『不如摸鱼去』不定期分享 wot-ui 与 AI 编程相关的最佳实践。
     link: "./guide/join-group.html#微信公众号"
     linkText: "查看公众号"
 

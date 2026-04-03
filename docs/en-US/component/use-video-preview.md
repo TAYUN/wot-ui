@@ -1,10 +1,10 @@
 # useVideoPreview
 
-`useVideoPreview` is used to call `wd-video-preview` programmatically.
+`useVideoPreview` is used to programmatically call `wd-video-preview`.
 
 ## Basic Usage
 
-Declare `wd-video-preview` on the page first, then call `useVideoPreview()` to open the video preview.
+First declare `wd-video-preview` in the page, then open video preview via `useVideoPreview()`.
 
 ```html
 <wd-video-preview />
@@ -25,9 +25,9 @@ const openPreview = () => {
 }
 ```
 
-## Pass A Preview Object
+## Pass Preview Object
 
-You can pass a `PreviewVideo` object directly. The minimum required field is `url`.
+You can directly pass a `PreviewVideo` object, with the simplest configuration requiring only the `url`.
 
 ```ts
 previewVideo({
@@ -35,13 +35,13 @@ previewVideo({
 })
 ```
 
-## Multiple Instances
+## Multiple Instance Calls
 
-Use `selector` to distinguish multiple instances on the same page. `useVideoPreview(selector)` will bind to the matching `wd-video-preview` instance.
+Use `selector` to distinguish between multiple instances on the page. `useVideoPreview(selector)` will bind to the specified instance. The `selector` value must match the `selector` attribute on the `wd-video-preview` component.
 
 ```html
 <wd-button @click="openMain">Default Instance</wd-button>
-<wd-button @click="openSub">Named Instance</wd-button>
+<wd-button @click="openSub">Specified Instance</wd-button>
 
 <wd-video-preview />
 <wd-video-preview selector="sub-preview" />
@@ -63,14 +63,14 @@ function openMain() {
 function openSub() {
   previewSubVideo({
     url: 'https://unpkg.com/wot-design-uni-assets@1.0.3/VID_115503.mp4',
-    title: 'Named Instance'
+    title: 'Specified Instance'
   })
 }
 ```
 
-## Custom Options
+## Custom Configuration
 
-Use `VideoPreviewOptions` to configure `zIndex`, `onOpen`, and `onClose` together.
+Use `VideoPreviewOptions` to configure z-index and open/close callbacks simultaneously.
 
 ```ts
 previewVideo({
@@ -79,10 +79,10 @@ previewVideo({
   title: 'Video Preview',
   zIndex: 1200,
   onOpen: () => {
-    console.log('Preview opened')
+    console.log('Open preview')
   },
   onClose: () => {
-    console.log('Preview closed')
+    console.log('Close preview')
   }
 })
 ```
@@ -91,27 +91,27 @@ previewVideo({
 
 ### useVideoPreview
 
-| Parameter | Description | Type | Default |
+| Parameter | Description | Type | Default Value |
 | --- | --- | --- | --- |
-| selector | Target video preview instance identifier. An empty string uses the default instance | string | `''` |
+| selector | Specifies the video preview instance identifier, uses default instance when empty string | string | `''` |
 
 ### Methods
 
-The returned object from the composable contains the following methods:
+The object returned by the programmatic call contains the following methods:
 
-| Method | Description | Parameters |
+| Method Name | Description | Parameters |
 | --- | --- | --- |
-| previewVideo | Open the video preview | <code>options: VideoPreviewOptions &#124; PreviewVideo</code> |
-| closeVideoPreview | Close the video preview | - |
+| previewVideo | Open video preview | <code>options: VideoPreviewOptions &#124; PreviewVideo</code> |
+| closeVideoPreview | Close video preview | - |
 
 ### VideoPreviewOptions
 
-| Parameter | Description | Type | Default |
+| Parameter | Description | Type | Default Value |
 | --- | --- | --- | --- |
-| url | Video resource URL | `string` | `''` |
-| poster | Video poster URL | `string` | `''` |
+| url | Video resource address | `string` | `''` |
+| poster | Video cover address | `string` | `''` |
 | title | Video title | `string` | `''` |
-| show | Whether to display the preview layer | `boolean` | `false` |
-| zIndex | zIndex layer value | `number` | `1000` |
-| onOpen | Callback fired when opened | `() => void` | - |
-| onClose | Callback fired when closed | `() => void` | - |
+| show | Whether to show preview layer | `boolean` | `false` |
+| zIndex | zIndex level | `number` | `1000` |
+| onOpen | Callback when opening | `() => void` | - |
+| onClose | Callback when closing | `() => void` | - |

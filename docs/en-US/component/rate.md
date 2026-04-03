@@ -1,24 +1,28 @@
 # Rate
 
-Used for quick rating operations or displaying ratings.
+Used for quick evaluation or displaying rating results.
 
-## Basic Usage
+## Component Types
 
-Set `v-model` for the score and `num` for the total score, default is 5 points.
+### Basic Usage
+
+Set `v-model` to bind the current score, `num` is used to set the total score, default is `5`.
 
 ```html
 <wd-rate v-model="value" @change="handleChange" />
 ```
 
-```typescript
-const value = ref<number>(1)
+```ts
+const value = ref(5)
 
-function changeValue({ value }) {
+function handleChange({ value }: { value: number }) {
   console.log(value)
 }
 ```
 
-## Read-only
+## Component States
+
+### Read-only
 
 Set the `readonly` property.
 
@@ -26,81 +30,89 @@ Set the `readonly` property.
 <wd-rate v-model="value" readonly />
 ```
 
-## Disabled
+### Disabled
 
-Set the `disabled` property and `disabled-color`.
-
-```html
-<wd-rate :modelValue="2" disabled />
-```
-
-## Modify Color
-
-You can modify the unselected color through the `color` property and the selected color through `active-color`.
+Set the `disabled` property.
 
 ```html
-<wd-rate v-model="value" active-color="linear-gradient(180deg, rgba(255,238,0,1) 0%,rgba(250,176,21,1) 100%)" />
-<wd-rate v-model="value" :active-color="['linear-gradient(180deg, rgba(255,238,0,1) 0%,rgba(250,176,21,1) 100%)', 'linear-gradient(315deg, rgba(245,34,34,1) 0%,rgba(255,117,102,1) 100%)']" />
+<wd-rate v-model="value" disabled />
 ```
 
-## Modify Icon
+## Component Styles
 
-You can modify the unselected icon through the `icon` property and the selected icon through `active-icon`.
+### Modify Selected Color
+
+You can modify the selected icon color through `active-color`, and also support passing in a two-color array to achieve segmented colors.
 
 ```html
-<wd-rate v-model="value" icon="wd-icon-dong" active-icon="wd-icon-dong" active-color="#4D80F0"/>
+<wd-rate v-model="value" active-color="linear-gradient(180deg, rgba(255, 238, 0, 1) 0%, rgba(250, 176, 21, 1) 100%)" />
+<wd-rate
+  v-model="value"
+  :active-color="[
+    'linear-gradient(180deg, rgba(255, 238, 0, 1) 0%, rgba(250, 176, 21, 1) 100%)',
+    'linear-gradient(315deg, rgba(245, 34, 34, 1) 0%, rgba(255, 117, 102, 1) 100%)'
+  ]"
+/>
 ```
 
-## Modify Size and Spacing
+### Modify Icon and Color
 
-You can modify the icon size through the `size` property and the spacing between icons through `space`.
+You can set unselected and selected icons through `icon` and `active-icon` respectively, and customize the visual style in combination with `active-color`.
 
 ```html
-<wd-rate v-model="value" size="30px" space="10px"/>
+<wd-rate v-model="value" block icon="Fire" active-icon="Fire" active-color="var(--wot-red-6)" />
+<wd-rate v-model="value" block icon="thumb-down-fill" active-icon="thumb-up-fill" active-color="var(--wot-green-6)" />
 ```
 
-## Allow Half Selection
+### Modify Size and Spacing
 
-Set the `allowHalf` property.
+Modify icon size through `size`, and icon spacing through `space`.
+
+```html
+<wd-rate v-model="value" size="36" space="12px" />
+```
+
+## Special Styles
+
+### Allow Half Selection
+
+Set the `allow-half` property.
 
 ```html
 <wd-rate v-model="value" allow-half />
 ```
 
-## Allow Clear Rating
+### Allow Clearing Rating
 
-Set the `clearable` property. When clearable is set to true, clicking the same value again can reset the value to 0.
+After setting the `clearable` property, clicking the current minimum score again can clear the rating. When combined with `allow-half`, half-star ratings can be cleared.
 
 ```html
 <wd-rate v-model="value" clearable />
+<wd-rate v-model="value" clearable allow-half />
 ```
 
 ## Attributes
 
-| Parameter | Description | Type | Options | Default | Version |
-|-----------|-------------|------|----------|---------|----------|
-| v-model | Current score | number | - | - | - |
-| num | Maximum rating value | number | - | 5 | - |
-| readonly | Whether it's read-only | boolean | - | false | - |
-| size | Icon size | string | - | 16px | - |
-| space | Icon spacing | string | - | 4px | - |
-| color | Unselected icon color | string | - | #E8E8E8 | - |
-| active-color | Selected icon color (supports color array with 2 elements for 2 segments) | string/array | - | linear-gradient(180deg, rgba(255,238,0,1) 0%,rgba(250,176,21,1) 100%) | - |
-| icon | Unselected icon class name | string | - | wd-icon-star-on | - |
-| active-icon | Selected icon class name | string | - | wd-icon-star-on | - |
-| disabled | Whether it's disabled | boolean | - | false | - |
-| disabled-color | Disabled icon color | string | - | linear-gradient(315deg, rgba(177,177,177,1) 0%,rgba(199,199,199,1) 100%) | - |
-| allow-half | Whether to allow half selection | boolean | - | false | 1.7.0 |
-| clearable | Whether to allow clear rating | boolean | - | false | 1.13.0 |
+| Parameter | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| v-model | Current score | `number \| null` | `null` |
+| num | Maximum rating value | `number` | `5` |
+| readonly | Whether read-only | `boolean` | `false` |
+| size | Icon size | `string` | - |
+| space | Icon spacing | `string \| number` | - |
+| color | Unselected icon color | `string` | - |
+| active-color | Selected icon color, supports `string` or `string[]` | `string \| string[]` | - |
+| icon | Unselected icon class name | `string` | `'star-fill'` |
+| active-icon | Selected icon class name | `string` | `'star-fill'` |
+| disabled | Whether disabled | `boolean` | `false` |
+| allow-half | Whether to allow half selection | `boolean` | `false` |
+| clearable | Whether to allow clearing after clicking again | `boolean` | `false` |
+| block | Whether to display as block | `boolean` | `false` |
+| custom-class | Root node custom class name | `string` | `''` |
+| custom-style | Root node custom style | `string` | `''` |
 
 ## Events
 
-| Event Name | Description | Parameters | Version |
-|------------|-------------|------------|----------|
-| change | Triggered when clicking icon to modify score | `{ value }` | - |
-
-## External Classes
-
-| Class Name | Description | Version |
-|------------|-------------|----------|
-| custom-class | Root node style | - |
+| Event Name | Description | Parameters |
+| --- | --- | --- |
+| change | Triggered when clicking the icon to modify the score | `{ value }` |
