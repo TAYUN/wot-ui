@@ -106,7 +106,6 @@
             <wd-input-number v-model="immediate" :immediate-change="true" @change="handleChange" />
             <view class="demo-label">非立即更新模式 - 值：{{ notImmediate }}</view>
             <wd-input-number v-model="notImmediate" :immediate-change="false" @change="handleChange" />
-            <view class="demo-tip">输入时，上方的值会立即更新，下方的值仅在失焦或点击按钮时更新</view>
           </view>
         </demo-group-item>
         <demo-group-item title="初始化时自动修正">

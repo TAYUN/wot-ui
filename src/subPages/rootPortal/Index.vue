@@ -1,5 +1,5 @@
 <template>
-  <page-wraper show-dark-mode>
+  <page-wraper :demo-config="{ transparent: true }" show-dark-mode>
     <view class="page-root-portal">
       <demo-group title="组件类型">
         <demo-group-item :title="$t('ji-chu-yong-fa')">

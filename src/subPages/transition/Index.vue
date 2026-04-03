@@ -1,5 +1,5 @@
 <template>
-  <page-wraper>
+  <page-wraper :demo-config="{ transparent: true }">
     <view class="page-transition">
       <demo-group title="组件类型">
         <demo-group-item :title="$t('fade-dong-hua')">

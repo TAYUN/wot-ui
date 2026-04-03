@@ -1,12 +1,3 @@
-<!--
- * @Author: weisheng
- * @Date: 2023-11-06 20:08:34
- * @LastEditTime: 2026-02-10 14:44:48
- * @LastEditors: weisheng
- * @Description: 
- * @FilePath: /wot-design-uni/src/subPages/sidebar/Index.vue
- * 记得注释
--->
 <template>
   <page-wraper>
     <view class="page-sidebar">

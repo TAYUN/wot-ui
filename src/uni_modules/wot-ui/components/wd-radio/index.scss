@@ -17,8 +17,6 @@ $radio-label-color: var(--wot-radio-label-color, $text-main) !default;
 $radio-label-line-height: var(--wot-radio-label-line-height, $typography-body-line--height-size-main) !default;
 // 禁用态透明度
 $radio-disabled: var(--wot-radio-disabled, $opacity-disabled) !default;
-// 垂直模式间距
-$radio-vertical-padding: var(--wot-radio-vertical-padding, $spacing-extra-loose $padding-zero) !default;
 // 水平模式间距
 $radio-horizontal-margin: var(--wot-radio-horizontal-margin, $spacing-zero $spacing-extra-loose $spacing-zero $spacing-zero) !default;
 // 按钮模式项间距
@@ -68,10 +66,6 @@ $radio-button-icon-left: var(--wot-radio-button-icon-left, $n-4) !default;
   align-items: center;
   justify-content: space-between;
   overflow: hidden;
-
-  @include m(vertical) {
-    padding: $radio-vertical-padding;
-  }
 
   @include m(horizontal) {
     display: inline-flex;

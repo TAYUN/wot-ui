@@ -96,7 +96,7 @@ export default defineConfig({
     `]
   ],
   themeConfig: {
-    logo: '/logo.png',
+    logo: '/logo.svg',
     lastUpdated: {
       text: '最后更新'
     },

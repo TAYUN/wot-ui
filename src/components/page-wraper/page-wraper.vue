@@ -63,6 +63,8 @@ import type { Action } from '@/uni_modules/wot-ui/components/wd-action-sheet/typ
 import type { ConfigProviderTheme } from '@/uni_modules/wot-ui/components/wd-config-provider/types'
 import { useDark } from '../../store'
 import { useRewardAd } from '@/store/useRewardAd'
+import { useChildren } from '@/uni_modules/wot-ui/composables/useChildren'
+import { DEMO_GROUP_KEY, type DemoGroupGlobalConfig } from '../demo-group/types'
 
 const presetThemeOptions = [
   { label: 'Shadcn', value: 'shadcn' },
@@ -84,6 +86,10 @@ interface Props {
   enablePresetTheme?: boolean
   customClass?: string
   customStyle?: string
+  /**
+   * 全局控制 demo-group 的配置
+   */
+  demoConfig?: DemoGroupGlobalConfig
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -93,6 +99,17 @@ const props = withDefaults(defineProps<Props>(), {
   useRewardFab: false,
   enablePresetTheme: false
 })
+
+// 使用 useChildren 提供 demo-group 全局配置
+const { linkChildren } = useChildren(DEMO_GROUP_KEY)
+
+const demoGroupGlobalConfig = computed<DemoGroupGlobalConfig>(() => ({
+  transparent: props.demoConfig?.transparent ?? false,
+  customClass: props.demoConfig?.customClass ?? '',
+  customStyle: props.demoConfig?.customStyle ?? ''
+}))
+
+linkChildren({ props: demoGroupGlobalConfig.value })
 
 const enableRewardFab = computed(() => {
   return props.useRewardFab && (process.env.NODE_ENV === 'development' ? false : true)

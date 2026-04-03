@@ -9,7 +9,6 @@ $checkbox-label-font-size: var(--wot-checkbox-label-font-size, $typography-body-
 $checkbox-label-color: var(--wot-checkbox-label-color, $text-main) !default; // 文字颜色
 $checkbox-label-line-height: var(--wot-checkbox-label-line-height, $typography-body-line--height-size-main) !default; // 文字行高
 $checkbox-opacity-disabled: var(--wot-checkbox-opacity-disabled, $opacity-disabled) !default; // 禁用态透明度
-$checkbox-vertical-padding: var(--wot-checkbox-vertical-padding, $spacing-extra-loose $padding-zero) !default; // 垂直模式多个单选框距离
 $checkbox-horizontal-margin: var(--wot-checkbox-horizontal-margin, $spacing-zero $spacing-extra-loose $spacing-zero $spacing-zero) !default; // 水平模式多个单选框距离
 $checkbox-button-margin: var(--wot-checkbox-button-margin, $spacing-zero $spacing-extra-loose $spacing-extra-loose $spacing-zero) !default; // 按钮模式多个单选框距离
 $checkbox-button-border-width: var(--wot-checkbox-button-border-width, $stroke-main) !default; // 边框宽度
@@ -38,10 +37,6 @@ $checkbox-button-icon-left: var(--wot-checkbox-button-icon-left, $n-4) !default;
   align-items: center;
   justify-content: space-between;
   overflow: hidden;
-
-  @include m(vertical) {
-    padding: $checkbox-vertical-padding;
-  }
 
   @include m(horizontal) {
     display: inline-flex;

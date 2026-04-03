@@ -3,7 +3,7 @@
     <view class="page-radio">
       <demo-group title="组件类型">
         <demo-group-item :title="$t('jiBenYongFa')">
-          <wd-radio-group v-model="valueBasic" @change="change">
+          <wd-radio-group custom-class="page-radio__group" v-model="valueBasic" @change="change">
             <wd-radio :value="1">{{ $t('dan-xuan-kuang-1') }}</wd-radio>
             <wd-radio type="square" :value="3">{{ $t('dan-xuan-kuang-2') }}</wd-radio>
             <wd-radio type="dot" :value="5">{{ $t('dan-xuan-kuang-2') }}</wd-radio>
@@ -19,34 +19,34 @@
 
       <demo-group title="组件状态">
         <demo-group-item :title="$t('jinYong')">
-          <wd-radio-group v-model="valueDisabled" disabled type="dot">
+          <wd-radio-group custom-class="page-radio__group" v-model="valueDisabled" disabled type="dot">
             <wd-radio :value="1">{{ $t('xuanXiang_1-0') }}</wd-radio>
             <wd-radio :value="2">{{ $t('xuanXiang_2-0') }}</wd-radio>
           </wd-radio-group>
           <wd-divider dashed></wd-divider>
-          <wd-radio-group v-model="valueDisabled" disabled>
+          <wd-radio-group custom-class="page-radio__group" v-model="valueDisabled" disabled>
             <wd-radio :value="1">{{ $t('xuanXiang_1-0') }}</wd-radio>
             <wd-radio :value="2">{{ $t('xuanXiang_2-0') }}</wd-radio>
           </wd-radio-group>
           <wd-divider dashed></wd-divider>
-          <wd-radio-group v-model="valueDisabled" disabled type="button">
+          <wd-radio-group custom-class="page-radio__group" v-model="valueDisabled" disabled type="button">
             <wd-radio :value="1">{{ $t('xuanXiang_1-0') }}</wd-radio>
             <wd-radio :value="2">{{ $t('xuanXiang_2-0') }}</wd-radio>
           </wd-radio-group>
           <wd-divider dashed></wd-divider>
-          <wd-radio-group v-model="valueDisabled" disabled type="square">
+          <wd-radio-group custom-class="page-radio__group" v-model="valueDisabled" disabled type="square">
             <wd-radio :value="1">{{ $t('xuanXiang_1-0') }}</wd-radio>
             <wd-radio :value="2">{{ $t('xuanXiang_2-0') }}</wd-radio>
           </wd-radio-group>
         </demo-group-item>
         <demo-group-item title="只读状态">
-          <wd-radio-group v-model="valueReadonly" readonly>
+          <wd-radio-group custom-class="page-radio__group" v-model="valueReadonly" readonly>
             <wd-radio :value="1">{{ $t('xuanXiang_1-0') }}</wd-radio>
             <wd-radio :value="2">{{ $t('xuanXiang_2-0') }}</wd-radio>
           </wd-radio-group>
         </demo-group-item>
         <demo-group-item title="允许取消选中">
-          <wd-radio-group v-model="valueAllowUncheck" allow-uncheck @change="change">
+          <wd-radio-group custom-class="page-radio__group" v-model="valueAllowUncheck" allow-uncheck @change="change">
             <wd-radio :value="1">支持取消选中</wd-radio>
             <wd-radio :value="2">支持取消选中</wd-radio>
           </wd-radio-group>
@@ -55,31 +55,31 @@
 
       <demo-group title="组件样式">
         <demo-group-item title="图标位置">
-          <wd-radio-group v-model="valuePlacement" @change="change">
+          <wd-radio-group custom-class="page-radio__group" v-model="valuePlacement" @change="change">
             <wd-radio :value="1">{{ $t('dan-xuan-kuang-1') }}</wd-radio>
             <wd-radio type="square" :value="3">{{ $t('dan-xuan-kuang-2') }}</wd-radio>
             <wd-radio type="dot" :value="5">{{ $t('dan-xuan-kuang-2') }}</wd-radio>
           </wd-radio-group>
           <wd-divider dashed></wd-divider>
-          <wd-radio-group v-model="valuePlacementRight" placement="right" @change="change">
+          <wd-radio-group custom-class="page-radio__group" v-model="valuePlacementRight" placement="right" @change="change">
             <wd-radio :value="1">{{ $t('dan-xuan-kuang-1') }}</wd-radio>
             <wd-radio type="square" :value="3">{{ $t('dan-xuan-kuang-2') }}</wd-radio>
             <wd-radio type="dot" :value="5">{{ $t('dan-xuan-kuang-2') }}</wd-radio>
           </wd-radio-group>
         </demo-group-item>
         <demo-group-item :title="$t('xiu-gai-xuan-zhong-yan-se')">
-          <wd-radio-group v-model="valueCheckedColor" checked-color="#fa4350" @change="change">
+          <wd-radio-group custom-class="page-radio__group" v-model="valueCheckedColor" checked-color="#fa4350" @change="change">
             <wd-radio :value="1">{{ $t('xuanXiang_1-0') }}</wd-radio>
             <wd-radio :value="2">{{ $t('xuanXiang_2-0') }}</wd-radio>
           </wd-radio-group>
           <wd-divider dashed></wd-divider>
-          <wd-radio-group v-model="valueCheckedColorDot" type="dot" checked-color="#fa4350" @change="change">
+          <wd-radio-group custom-class="page-radio__group" v-model="valueCheckedColorDot" type="dot" checked-color="#fa4350" @change="change">
             <wd-radio :value="1">{{ $t('xuanXiang_1-0') }}</wd-radio>
             <wd-radio :value="2">{{ $t('xuanXiang_2-0') }}</wd-radio>
           </wd-radio-group>
         </demo-group-item>
         <demo-group-item title="修改未选中颜色">
-          <wd-radio-group v-model="valueUnchecked" unchecked-color="#fa4350" @change="change">
+          <wd-radio-group custom-class="page-radio__group" v-model="valueUnchecked" unchecked-color="#fa4350" @change="change">
             <wd-radio :value="1">{{ $t('xuanXiang_1-0') }}</wd-radio>
             <wd-radio :value="2">{{ $t('xuanXiang_2-0') }}</wd-radio>
           </wd-radio-group>
@@ -94,16 +94,16 @@
             <wd-radio :value="3">{{ $t('xuanXiang_3-0') }}</wd-radio>
           </wd-radio-group>
         </demo-group-item>
-        <demo-group-item title="结合 Cell 使用">
+        <demo-group-item title="结合 Cell 使用" no-padding>
           <wd-radio-group v-model="valueCell" checked-color="#fa4350" @change="change">
-            <wd-cell-group border insert>
+            <wd-cell-group border>
               <wd-cell title="单选框 1" clickable @click="valueCell = 1">
-                <template #right-icon>
+                <template #suffix>
                   <wd-radio :value="1" />
                 </template>
               </wd-cell>
               <wd-cell title="单选框 2" clickable @click="valueCell = 2">
-                <template #right-icon>
+                <template #suffix>
                   <wd-radio :value="2" />
                 </template>
               </wd-cell>
@@ -111,7 +111,7 @@
           </wd-radio-group>
         </demo-group-item>
         <demo-group-item title="自定义图标">
-          <wd-radio-group v-model="valueCustom">
+          <wd-radio-group custom-class="page-radio__group" v-model="valueCustom">
             <wd-radio :value="1">
               自定义图标
               <template #icon="{ isChecked }">
@@ -176,10 +176,18 @@ function change(event: { value: string | number | boolean | null }) {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .page-radio {
   :deep(.wd-divider) {
-    margin: 12px 0;
+    margin: $spacing-loose 0;
+  }
+
+  &__group {
+    .wd-radio {
+      &:not(:last-child) {
+        margin-bottom: $spacing-extra-loose;
+      }
+    }
   }
 }
 </style>

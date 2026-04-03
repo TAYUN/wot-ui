@@ -9,7 +9,7 @@ hero:
   text: "Beautiful, AI-friendly\nuni-app Component Library"
   tagline: AI-friendly design system, providing 80+ high-quality components with dark mode, internationalization, and custom theme support.
   image:
-    src: /logo.png
+    src: /logo.svg
     alt: Wot UI
   actions:
     - theme: brand

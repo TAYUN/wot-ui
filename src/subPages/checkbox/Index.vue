@@ -3,7 +3,7 @@
     <view class="page-checkbox">
       <demo-group title="组件类型">
         <demo-group-item :title="$t('jiBenYongFa')">
-          <wd-checkbox-group v-model="value1">
+          <wd-checkbox-group custom-class="page-checkbox__group" v-model="value1">
             <wd-checkbox :name="1">多选 1</wd-checkbox>
             <wd-checkbox :name="2">多选 2</wd-checkbox>
             <wd-checkbox :name="3" type="square">多选 3</wd-checkbox>
@@ -17,12 +17,12 @@
 
       <demo-group title="组件状态">
         <demo-group-item :title="$t('jin-yong-zhuang-tai')">
-          <wd-checkbox-group v-model="value8" disabled>
+          <wd-checkbox-group custom-class="page-checkbox__group" v-model="value8" disabled>
             <wd-checkbox :name="1">多选 1</wd-checkbox>
             <wd-checkbox :name="2">多选 2</wd-checkbox>
           </wd-checkbox-group>
           <wd-divider dashed />
-          <wd-checkbox-group v-model="value9">
+          <wd-checkbox-group custom-class="page-checkbox__group" v-model="value9">
             <wd-checkbox :name="1">多选 1</wd-checkbox>
             <wd-checkbox :name="2" disabled>多选 2</wd-checkbox>
           </wd-checkbox-group>
@@ -33,7 +33,7 @@
         </demo-group-item>
 
         <demo-group-item title="只读状态">
-          <wd-checkbox-group v-model="value10" readonly>
+          <wd-checkbox-group custom-class="page-checkbox__group" v-model="value10" readonly>
             <wd-checkbox :name="1">多选 1</wd-checkbox>
             <wd-checkbox :name="2">多选 2</wd-checkbox>
           </wd-checkbox-group>
@@ -42,7 +42,7 @@
 
       <demo-group title="组件变体">
         <demo-group-item title="勾选在右侧">
-          <wd-checkbox-group v-model="value2" placement="right">
+          <wd-checkbox-group custom-class="page-checkbox__group" v-model="value2" placement="right">
             <wd-checkbox :name="1">多选 1</wd-checkbox>
             <wd-checkbox :name="2">多选 2</wd-checkbox>
             <wd-checkbox :name="3" type="square">多选 3</wd-checkbox>
@@ -68,7 +68,7 @@
         </demo-group-item>
 
         <demo-group-item :title="$t('she-zhi-zui-xiao-xuan-zhong-shu-liang-he-zui-da-xuan-zhong-shu-liang')">
-          <wd-checkbox-group v-model="value11" :min="1" :max="3">
+          <wd-checkbox-group custom-class="page-checkbox__group" v-model="value11" :min="1" :max="3">
             <wd-checkbox :name="1">多选 1</wd-checkbox>
             <wd-checkbox :name="2">多选 2</wd-checkbox>
             <wd-checkbox :name="3">多选 3</wd-checkbox>
@@ -79,21 +79,21 @@
 
       <demo-group title="组件样式">
         <demo-group-item :title="$t('xiu-gai-xuan-zhong-yan-se')">
-          <wd-checkbox-group v-model="value6" checked-color="#fa4350">
+          <wd-checkbox-group custom-class="page-checkbox__group" v-model="value6" checked-color="#fa4350">
             <wd-checkbox :name="1">多选 1</wd-checkbox>
             <wd-checkbox :name="2">多选 2</wd-checkbox>
           </wd-checkbox-group>
         </demo-group-item>
 
         <demo-group-item title="修改未选中颜色">
-          <wd-checkbox-group v-model="value7" unchecked-color="#fa4350">
+          <wd-checkbox-group custom-class="page-checkbox__group" v-model="value7" unchecked-color="#fa4350">
             <wd-checkbox :name="1">多选 1</wd-checkbox>
             <wd-checkbox :name="2">多选 2</wd-checkbox>
           </wd-checkbox-group>
         </demo-group-item>
 
         <demo-group-item title="自定义图标">
-          <wd-checkbox-group v-model="value12">
+          <wd-checkbox-group custom-class="page-checkbox__group" v-model="value12">
             <wd-checkbox :name="1">
               自定义图标
               <template #icon="{ isChecked }">
@@ -110,14 +110,14 @@
         </demo-group-item>
 
         <demo-group-item :title="$t('da-chi-cun')">
-          <wd-checkbox-group v-model="value13" size="large">
+          <wd-checkbox-group custom-class="page-checkbox__group" v-model="value13" size="large">
             <wd-checkbox :name="1">多选 1</wd-checkbox>
             <wd-checkbox :name="2">多选 2</wd-checkbox>
           </wd-checkbox-group>
         </demo-group-item>
       </demo-group>
 
-      <demo-group title="特殊样式">
+      <demo-group title="特殊样式" transparent>
         <demo-group-item :title="$t('jie-he-cell-shi-yong')" no-padding>
           <wd-checkbox-group v-model="value14" direction="horizontal">
             <wd-cell-group border value-align="right">
@@ -147,7 +147,7 @@
             {{ $t('quan-bu-xuan-zhong-tiao-guo-jin-yong') }}
           </wd-button>
 
-          <wd-checkbox-group v-model="value15" ref="checkboxGroup">
+          <wd-checkbox-group custom-class="page-checkbox__group" v-model="value15" ref="checkboxGroup">
             <wd-checkbox :name="1">多选 1</wd-checkbox>
             <wd-checkbox :name="2">多选 2</wd-checkbox>
             <wd-checkbox :name="3" disabled>多选 3(Disabled)</wd-checkbox>
@@ -191,8 +191,18 @@ function toggle(value: number) {
 }
 </script>
 <style lang="scss" scoped>
-:deep(.custom-button) {
-  margin-right: 16px;
-  margin-bottom: 16px;
+.page-checkbox {
+  :deep(.custom-button) {
+    margin-right: 16px;
+    margin-bottom: 16px;
+  }
+
+  &__group {
+    .wd-checkbox {
+      &:not(:last-child) {
+        margin-bottom: $spacing-extra-loose;
+      }
+    }
+  }
 }
 </style>

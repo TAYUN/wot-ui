@@ -118,8 +118,8 @@ const supportNavItems = [
 ]
 
 const versionNavItems = [
-  { text: 'v2 (Current)', link: 'https://wot-ui.cn' },
-  { text: 'v1', link: 'https://v1.wot-ui.cn' },
+  { text: 'v1', link: 'https://wot-ui.cn' },
+  { text: 'Changelog', link: '/en-US/guide/changelog.html' },
 ]
 
 export default defineConfig({

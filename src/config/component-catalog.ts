@@ -51,7 +51,7 @@ const categories: CatalogCategory[] = [
     icon: 'common',
     appNameKey: 'ji-chu',
     docsNavText: {
-      'zh-CN': '基础组件',
+      'zh-CN': '基础',
       'en-US': 'Basic Components'
     },
     docsSidebarText: {
@@ -148,7 +148,7 @@ const categories: CatalogCategory[] = [
     icon: 'mind-mapping',
     appNameKey: 'dao-hang',
     docsNavText: {
-      'zh-CN': '导航组件',
+      'zh-CN': '导航',
       'en-US': 'Navigation'
     },
     docsSidebarText: {
@@ -438,7 +438,7 @@ const categories: CatalogCategory[] = [
     icon: 'message',
     appNameKey: 'fan-kui',
     docsNavText: {
-      'zh-CN': '反馈组件',
+      'zh-CN': '反馈',
       'en-US': 'Feedback'
     },
     docsSidebarText: {
@@ -606,11 +606,11 @@ const categories: CatalogCategory[] = [
     icon: 'image',
     appNameKey: 'shu-ju-zhan-shi',
     docsNavText: {
-      'zh-CN': '数据展示',
+      'zh-CN': '展示',
       'en-US': 'Data Display'
     },
     docsSidebarText: {
-      'zh-CN': '数据展示',
+      'zh-CN': '展示',
       'en-US': 'Data Display'
     },
     includeInApp: true,

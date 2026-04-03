@@ -1,5 +1,5 @@
 <template>
-  <page-wraper>
+  <page-wraper :demo-config="{ transparent: true }">
     <wd-toast />
     <view class="page-cell">
       <demo-group title="组件类型">
