@@ -30,6 +30,41 @@ const config: Config = {
   directivesDescription: 'Description'
 }
 
+function extractOptionsFromDescription(description?: string): string | undefined {
+  if (!description || !description.includes('可选值为')) return undefined
+
+  const optionMatches = Array.from(description.matchAll(/`([^`]+)`/g), (match) => match[1].trim()).filter(Boolean)
+
+  if (!optionMatches.length) return undefined
+
+  return optionMatches.join('/')
+}
+
+function backfillPropsOptionsFromDescription(options: Options, data: NormalizeData) {
+  const { props, propsDescription, propsOptions } = options
+
+  if (!data.table?.length || !propsOptions) return data
+
+  const propsRegExp = new RegExp(props, 'i')
+
+  for (const table of data.table) {
+    if (!table.title || !propsRegExp.test(table.title) || !table.content?.length) continue
+
+    for (const row of table.content) {
+      if (row[propsOptions]) continue
+
+      const description = row[propsDescription]
+      const extractedOptions = extractOptionsFromDescription(typeof description === 'string' ? description : undefined)
+
+      if (extractedOptions) {
+        row[propsOptions] = extractedOptions
+      }
+    }
+  }
+
+  return data
+}
+
 function normalize(options: Options, data: ParseData, path: string): NormalizeData {
   const { fileNameRegExp, props, events, slots, directives } = options
   const _fileNameRegExp = isString(fileNameRegExp) ? new RegExp(fileNameRegExp) : fileNameRegExp
@@ -42,6 +77,8 @@ function normalize(options: Options, data: ParseData, path: string): NormalizeDa
   const _directives = new RegExp(directives, 'i')
 
   if (!_data.table || !_data.table.length) return _data
+
+  backfillPropsOptionsFromDescription(options, _data)
 
   for (let i = 0; i < _data.table.length; i++) {
     const item = _data.table[i]

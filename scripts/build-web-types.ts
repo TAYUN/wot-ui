@@ -51,6 +51,11 @@ const getPureValue = (value: string) => {
     .trim()
 }
 
+// 移除参数列中的版本标记，避免生成的属性名被 ^(x.y.z) 污染
+const stripVersionMarker = (value: string) => {
+  return value.replace(/\s*\^\(\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?\)/g, '').trim()
+}
+
 // 重新定义 WebTypes 类型的函数
 const reWebTypesType: ReWebTypesType = (type) => {
   const _type = getPureValue(type)
@@ -84,16 +89,18 @@ const toKebabCase = (str: string) => {
 const reAttribute: ReAttribute = (value, key, row, title) => {
   if (title.includes('Attributes')) {
     if (key === '参数') {
-      if (value.includes('v-model:')) {
-        const part = value.split(/[\s/|]/).find((part) => part.startsWith('v-model:'))
+      const normalizedValue = stripVersionMarker(value)
+
+      if (normalizedValue.includes('v-model:')) {
+        const part = normalizedValue.split(/[\s/|]/).find((part) => part.startsWith('v-model:'))
         if (part) {
           const suffix = toKebabCase(part.split(':')[1].split(/[\s\W]/)[0])
           return `v-model:${suffix}`
         }
-      } else if (value.includes('v-model')) {
+      } else if (normalizedValue.includes('v-model')) {
         return 'v-model'
       }
-      return toKebabCase(value.replace(/[^\w\s-]/g, ''))
+      return toKebabCase(stripVersionMarker(normalizedValue).replace(/[^\w\s-]/g, ''))
     } else if (key === '可选值' || key === '默认值') {
       const pureValue = getPureValue(value)
 
