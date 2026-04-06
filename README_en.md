@@ -35,7 +35,7 @@
 </p>
 
 <p align="center">
-  🚀 <a href="https://wot-ui.cn">Documentation (Recommended)</a>&nbsp;
+  🚀 <a href="https://v2.wot-ui.cn">Documentation (Recommended)</a>&nbsp;
 </p>
 
 ## ✨ Features
@@ -54,19 +54,19 @@
 Scan the QR code to view the demo. Note: due to WeChat review restrictions, the current WeChat Mini Program demo may not be the latest version. You can clone the code locally for preview.
 
 <p style="display:flex;gap:24px">
-<img src="https://wot-ui.cn/wx.jpg" width="200" height="200"/>
-<img src="https://wot-ui.cn/alipay.png" width="200" height="200" />
-<img src="https://wot-ui.cn/h5.png" width="200" height="200" />
-<img src="https://wot-ui.cn/android.png" width="200" height="200" />
+<img src="https://v2.wot-ui.cn/wx.jpg" width="200" height="200"/>
+<img src="https://v2.wot-ui.cn/alipay.png" width="200" height="200" />
+<img src="https://v2.wot-ui.cn/h5.png" width="200" height="200" />
+<img src="https://v2.wot-ui.cn/android.png" width="200" height="200" />
 </p>
 
 ## Quick Start
 
-For detailed instructions, see [Quick Start](https://wot-ui.cn/guide/quick-use.html).
+For detailed instructions, see [Quick Start](https://v2.wot-ui.cn/guide/quick-use.html).
 
 ## Showcase
 
-Check out some excellent [examples](https://wot-ui.cn/guide/cases.html) here!
+Check out some excellent [examples](https://v2.wot-ui.cn/guide/cases.html) here!
 
 We welcome contributions of excellent demos and cases. Feel free to submit your case in this [issue](https://github.com/wot-ui/wot-ui/issues/16).
 
@@ -104,7 +104,7 @@ Developing a UI component library is time-consuming work, especially when it nee
 
 If Wot UI has helped your development work, you can donate to support its ongoing development. There is no minimum amount, even a cola is appreciated.
 
-After donating, your nickname and message will be displayed on the [donor list](https://wot-ui.cn/reward/donor.html).
+After donating, your nickname and message will be displayed on the [donor list](https://v2.wot-ui.cn/reward/donor.html).
 
 ### Afdian Donation
 
@@ -113,15 +113,15 @@ After donating, your nickname and message will be displayed on the [donor list](
 ### Scan to Donate
 
 <p>
-<img src="https://wot-ui.cn/weixinQrcode.jpg" width="200" height="200" style="margin-right:30px"/>
-<img src="https://wot-ui.cn/alipayQrcode.jpg" width="200" height="200" />
+<img src="https://v2.wot-ui.cn/weixinQrcode.jpg" width="200" height="200" style="margin-right:30px"/>
+<img src="https://v2.wot-ui.cn/alipayQrcode.jpg" width="200" height="200" />
 </p>
 
 ## Acknowledgments
 
 - [wot-design](https://github.com/jd-ftf/wot-design-mini) - Thanks to the wot-design team for years of continuous maintenance, which allowed wot-ui to build on a strong foundation.
 - [uni-helper](https://github.com/uni-helper) - Thanks to the uni-helper team for providing the uni-app toolchain that makes wot-ui easier to use.
-- [Donors](https://wot-ui.cn/reward/donor.html) - Thanks to all donors whose support helps wot-ui continue to grow.
+- [Donors](https://v2.wot-ui.cn/reward/donor.html) - Thanks to all donors whose support helps wot-ui continue to grow.
 
 ## License
 
