@@ -64,10 +64,21 @@ jobs:
             echo "NPM_DIST_TAG=latest" >> "$GITHUB_ENV"
           fi
 
+      - name: Resolve npm publish args
+        shell: bash
+        run: |
+          if [[ "${{ github.event.repository.private }}" == "true" ]]; then
+            echo "NPM_PUBLISH_ARGS=--access public --tag $NPM_DIST_TAG" >> "$GITHUB_ENV"
+            echo "NPM_PROVENANCE_ENABLED=false" >> "$GITHUB_ENV"
+          else
+            echo "NPM_PUBLISH_ARGS=--provenance --access public --tag $NPM_DIST_TAG" >> "$GITHUB_ENV"
+            echo "NPM_PROVENANCE_ENABLED=true" >> "$GITHUB_ENV"
+          fi
+
       - name: Publish package
         run: |
           cd lib
-          npm publish --provenance --access public --tag "$NPM_DIST_TAG"
+          npm publish $NPM_PUBLISH_ARGS
 
       - name: Generate GitHub changelog
         run: pnpx changelogithub
@@ -80,6 +91,7 @@ jobs:
           echo "## Release Summary" >> "$GITHUB_STEP_SUMMARY"
           echo "### Version: ${{ github.ref_name }}" >> "$GITHUB_STEP_SUMMARY"
           echo "### npm dist-tag: $NPM_DIST_TAG" >> "$GITHUB_STEP_SUMMARY"
+          echo "### npm provenance: $NPM_PROVENANCE_ENABLED" >> "$GITHUB_STEP_SUMMARY"
           echo "### Published Packages" >> "$GITHUB_STEP_SUMMARY"
           echo "- ✅ wot-ui" >> "$GITHUB_STEP_SUMMARY"
           echo "### Build Results" >> "$GITHUB_STEP_SUMMARY"
