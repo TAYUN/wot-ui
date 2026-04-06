@@ -53,12 +53,21 @@ jobs:
       - name: Check npm version
         run: npm -v
 
+      - name: Resolve npm dist-tag
+        shell: bash
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+
+          if [[ "$VERSION" =~ -([0-9A-Za-z]+)\.[0-9]+$ ]]; then
+            echo "NPM_DIST_TAG=${BASH_REMATCH[1]}" >> "$GITHUB_ENV"
+          else
+            echo "NPM_DIST_TAG=latest" >> "$GITHUB_ENV"
+          fi
+
       - name: Publish package
         run: |
           cd lib
-          npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          npm publish --provenance --access public --tag "$NPM_DIST_TAG"
 
       - name: Generate GitHub changelog
         run: pnpx changelogithub
@@ -70,6 +79,7 @@ jobs:
         run: |
           echo "## Release Summary" >> "$GITHUB_STEP_SUMMARY"
           echo "### Version: ${{ github.ref_name }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "### npm dist-tag: $NPM_DIST_TAG" >> "$GITHUB_STEP_SUMMARY"
           echo "### Published Packages" >> "$GITHUB_STEP_SUMMARY"
           echo "- ✅ wot-ui" >> "$GITHUB_STEP_SUMMARY"
           echo "### Build Results" >> "$GITHUB_STEP_SUMMARY"
