@@ -112,9 +112,9 @@ export default defineConfig({
     search: {
       provider: 'algolia',
       options: {
-        appId: 'A74X2RFXSU',
-        apiKey: '4a4ec3a94d2f41432f21c3ebc90e164d',
-        indexName: 'wot-design-uni2',
+        appId: '0SV8187ZET',
+        apiKey: 'd39f1fde160c651c475f13225c0bf205',
+        indexName: 'wot-ui-v2',
       },
     },
 
