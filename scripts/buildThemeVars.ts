@@ -116,7 +116,7 @@ const renderTypeBlock = (typeName: string, fields: ThemeVarField[]) => {
 
 const generateTSFileContent = (baseFields: ThemeVarField[], componentGroups: ThemeVarGroup[]) => {
   let tsContent = `import type { ExtractPropTypes, PropType, InjectionKey, ComputedRef } from 'vue'
-import { makeStringProp, baseProps } from '../common/props'
+import { makeStringProp, baseProps } from '../../common/props'
 
 export const configProviderProps = {
   ...baseProps,
