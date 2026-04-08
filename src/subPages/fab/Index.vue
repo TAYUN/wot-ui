@@ -1,6 +1,6 @@
 <template>
-  <view class="page-fab" @click="closeOutside">
-    <page-wraper>
+  <page-wraper>
+    <view class="page-fab" @click="closeOutside">
       <demo-group :title="$t('zu-jian-lei-xing')">
         <demo-group-item :title="$t('xuan-fu-an-niu-zhu-ti-se')">
           <wd-radio-group v-model="type" type="dot" direction="horizontal">
@@ -124,8 +124,8 @@
         <wd-button @click="showToast('复制')" icon="copy" custom-class="page-fab__button" variant="text" type="info" round></wd-button>
         <wd-button @click="showToast('删除')" icon="delete" custom-class="page-fab__button" variant="text" type="danger" round></wd-button>
       </wd-fab>
-    </page-wraper>
-  </view>
+    </view>
+  </page-wraper>
 </template>
 <script lang="ts" setup>
 import { useQueue, useToast } from '@/uni_modules/wot-ui'

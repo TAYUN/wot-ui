@@ -63,7 +63,7 @@
             type="dot"
             @change="handleChange"
           >
-            <view v-for="(item, index) in filterColumns" :key="index" :id="'radio' + item[valueKey]">
+            <view v-for="(item, index) in filterColumns" :key="index" :id="'radio' + item[valueKey]" class="wd-select-picker__radio-item">
               <wd-radio :value="item[valueKey]" :disabled="item.disabled" custom-label-class="wd-select-picker__radio-label">
                 <block v-if="showHighlightText">
                   <block v-for="text in item[labelKey]" :key="text.label">

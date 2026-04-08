@@ -31,7 +31,7 @@ $notify-icon-size: var(--wot-notify-icon-size, $n-18) !default;
 // 图标间距
 $notify-icon-spacing: var(--wot-notify-icon-spacing, $spacing-tight) !default;
 // floating 变体背景色
-$notify-floating-bg: var(--wot-notify-floating-bg, $base-white) !default;
+$notify-floating-bg: var(--wot-notify-floating-bg, $filled-oppo) !default;
 // floating 变体文字颜色
 $notify-floating-color: var(--wot-notify-floating-color, $text-main) !default;
 // floating 变体圆角

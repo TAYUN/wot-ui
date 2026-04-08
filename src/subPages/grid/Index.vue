@@ -199,7 +199,7 @@ function click() {
 .page-grid {
   &__custom-bg-grid {
     :deep(.wd-grid-item__content) {
-      background: $coolgrey-1;
+      background: $filled-bottom;
     }
   }
 
@@ -227,6 +227,6 @@ function click() {
   color: $danger-main;
   text-align: left !important;
   padding: 0 $padding-main;
-  background: $base-white;
+  background: $filled-oppo;
 }
 </style>

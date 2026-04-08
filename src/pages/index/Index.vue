@@ -1,24 +1,24 @@
 <template>
   <page-wraper :use-wx-ad="false" :use-reward-fab="true">
-    <view class="page">
-      <view class="page__header">
-        <view class="page__title">
-          <image src="../images/logo.svg" mode="widthFix" class="page__title-logo" />
-          <text class="page__title-name">Wot UI</text>
-          <text class="page__title-sparator">@</text>
-          <text class="page__title-version">{{ packageConfig.version }}</text>
+    <view class="page-home">
+      <view class="page-home__header">
+        <view class="page-home__title">
+          <image src="../images/logo.svg" mode="widthFix" class="page-home__title-logo" />
+          <text class="page-home__title-name">Wot UI</text>
+          <text class="page-home__title-separator">@</text>
+          <text class="page-home__title-version">{{ packageConfig.version }}</text>
         </view>
-        <view class="page__desc">
+        <view class="page-home__desc">
           {{ $t('ai-you-hao-de-she-ji-xi-tong-ti-gong-80-gao-zhi-liang-zu-jian-zhi-chi-an-hei-mo-shi-guo-ji-hua-he-zi-ding-yi-zhu-ti') }}
         </view>
       </view>
-      <view class="page__body">
+      <view class="page-home__body">
         <wd-collapse v-model="active">
           <wd-collapse-item v-for="(item, index) in list" :key="index" :title="item.name" :name="item.id">
             <template #title="{ expanded }">
-              <view :class="`page__body-item-header ${expanded ? 'page__body-item-header--expanded' : ''}`">
-                <wd-icon :name="item.icon" custom-class="page__body-item-header-icon"></wd-icon>
-                <text class="">{{ item.name }}</text>
+              <view :class="`page-home__body-item-header ${expanded ? 'page-home__body-item-header--expanded' : ''}`">
+                <wd-icon :name="item.icon" custom-class="page-home__body-item-header-icon"></wd-icon>
+                <text class="page-home__body-item-header-text">{{ item.name }}</text>
               </view>
             </template>
             <wd-cell-group size="large">
@@ -77,7 +77,7 @@ onShareTimeline(() => {
 </script>
 
 <style lang="scss" scoped>
-.page {
+.page-home {
   &__header {
     padding: $padding-ultra-loose $padding-extra-loose;
     background: $filled-oppo;
@@ -101,13 +101,13 @@ onShareTimeline(() => {
       line-height: $typography-title-line--height-size-large;
     }
     &-version,
-    &-sparator {
+    &-separator {
       font-size: $typography-body-size-main;
       font-weight: $font-weight-medium;
       line-height: $typography-body-line--height-size-main;
     }
 
-    &-sparator {
+    &-separator {
       margin: 0 $spacing-super-tight;
     }
   }
@@ -164,7 +164,7 @@ onShareTimeline(() => {
     line-height: $typography-body-line--height-size-large;
 
     :deep() {
-      .page__body-item-header-icon {
+      .page-home__body-item-header-icon {
         margin-right: $spacing-tight;
         font-size: $n-20;
         color: $text-secondary;
@@ -174,11 +174,15 @@ onShareTimeline(() => {
     &--expanded {
       color: $primary-6;
       :deep() {
-        .page__body-item-header-icon {
+        .page-home__body-item-header-icon {
           color: $primary-6;
         }
       }
     }
+  }
+
+  &__body-item-header-text {
+    color: inherit;
   }
 }
 </style>

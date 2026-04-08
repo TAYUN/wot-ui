@@ -1,7 +1,3 @@
----
-version: 1.14.0
----
-
 # Avatar
 
 Used to represent users or things, supporting image, text, or icon display.

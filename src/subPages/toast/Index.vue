@@ -1,7 +1,5 @@
 <template>
-  <page-wraper>
-    <wd-toast />
-
+  <page-wraper :demo-config="{ transparent: true }">
     <demo-group :title="$t('zu-jian-lei-xing')">
       <demo-group-item :title="$t('jiBenYongFa')">
         <view class="page-toast__button-group">

@@ -1,5 +1,5 @@
 <template>
-  <page-wraper>
+  <page-wraper :demo-config="{ transparent: true }">
     <view @click="closeOutside" class="page-popover">
       <demo-group :title="$t('zu-jian-lei-xing')">
         <demo-group-item :title="$t('jiBenYongFa')">

@@ -4,7 +4,7 @@
       <demo-group :title="$t('zu-jian-bian-ti')">
         <demo-group-item :title="$t('xing-zhuang-yu-wen-zi')">
           <view class="page-backtop__option-list">
-            <wd-checkbox shape="square" size="large" v-model="isSquare">{{ $t('xianShiFangXing') }}</wd-checkbox>
+            <wd-checkbox shape="square" size="large" custom-style="margin-bottom:16px" v-model="isSquare">{{ $t('xianShiFangXing') }}</wd-checkbox>
             <wd-checkbox shape="square" size="large" v-model="isText">{{ $t('xian-shi-wen-zi') }}</wd-checkbox>
           </view>
         </demo-group-item>

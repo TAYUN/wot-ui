@@ -1,7 +1,3 @@
----
-version: 1.14.0
----
-
 # SlideVerify
 
 Slide verification component for human-machine verification scenarios.

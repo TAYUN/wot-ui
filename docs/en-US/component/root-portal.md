@@ -1,6 +1,12 @@
----
-version: 1.11.0
----
+<!--
+ * @Author: weisheng
+ * @Date: 2025-08-25 17:12:16
+ * @LastEditTime: 2026-04-08 13:58:22
+ * @LastEditors: weisheng
+ * @Description: 
+ * @FilePath: /wot-ui/docs/en-US/component/root-portal.md
+ * 记得注释
+-->
 # Root Portal
 
 Detaches content from the page structure, used to solve various `fixed` positioning issues. Mainly used for creating modals, popups, and other overlay components.

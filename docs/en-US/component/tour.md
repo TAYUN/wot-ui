@@ -1,7 +1,3 @@
----
-version: 1.14.0
----
-
 # Tour
 
 Used for step-by-step guidance to help users understand page features. Can highlight target elements and display explanation panels near them.

@@ -2,6 +2,23 @@
   <page-meta :page-style="`overflow:${show ? 'hidden' : 'visible'};`"></page-meta>
   <view class="page-overlay">
     <page-wraper>
+      <wd-overlay :show="show" @click="show = false" />
+
+      <wd-overlay :show="show1" @click="show1 = false" :lock-scroll="lockScroll">
+        <view class="page-overlay__wrapper">
+          <view class="page-overlay__content" @click.stop="">
+            <view class="page-overlay__lock-scroll-row">
+              <view class="page-overlay__lock-scroll-text">
+                {{ $t('shi-fou-suo-ding-bei-jing-gun-dong-suo-ding-shi-meng-ceng-li-de-nei-rong-ye-jiang-wu-fa-gun-dong') }}
+              </view>
+              <wd-switch v-model="lockScroll" size="22px" />
+            </view>
+            <view class="page-overlay__scroll">
+              <view class="page-overlay__block" v-for="i in 10" :key="i" @click.stop="">{{ i }}</view>
+            </view>
+          </view>
+        </view>
+      </wd-overlay>
       <demo-group :title="$t('zu-jian-lei-xing')">
         <demo-group-item :title="$t('jiBenYongFa')">
           <wd-button type="primary" @click="show = true">{{ $t('xian-shi-zhe-zhao-ceng') }}</wd-button>
@@ -14,24 +31,6 @@
         </demo-group-item>
       </demo-group>
     </page-wraper>
-
-    <wd-overlay :show="show" @click="show = false" />
-
-    <wd-overlay :show="show1" @click="show1 = false" :lock-scroll="lockScroll">
-      <view class="page-overlay__wrapper">
-        <view class="page-overlay__content" @click.stop="">
-          <view class="page-overlay__lock-scroll-row">
-            <view class="page-overlay__lock-scroll-text">
-              {{ $t('shi-fou-suo-ding-bei-jing-gun-dong-suo-ding-shi-meng-ceng-li-de-nei-rong-ye-jiang-wu-fa-gun-dong') }}
-            </view>
-            <wd-switch v-model="lockScroll" size="22px" />
-          </view>
-          <view class="page-overlay__scroll">
-            <view class="page-overlay__block" v-for="i in 10" :key="i" @click.stop="">{{ i }}</view>
-          </view>
-        </view>
-      </view>
-    </wd-overlay>
   </view>
 </template>
 <script lang="ts" setup>

@@ -1,7 +1,3 @@
----
-version: 1.6.0
----
-
 # Signature
 
 Used for signature scenarios, a signature component based on Canvas, supporting image export, history records, pen pressure effects, custom bottom operations, and more.

@@ -24,7 +24,7 @@
 
       <demo-group :title="$t('te-shu-yang-shi')">
         <demo-group-item custom-class="page-gap__safe-area-bottom" :title="$t('di-bu-an-quan-qu')">
-          <wd-gap bg-color="var(--wot-filled-oppo, #FFFFFF)" safe-area-bottom height="120rpx"></wd-gap>
+          <wd-gap bg-color="#FFFFFF" safe-area-bottom height="120rpx"></wd-gap>
         </demo-group-item>
       </demo-group>
     </view>
@@ -32,6 +32,10 @@
 </template>
 <script lang="ts" setup></script>
 <style lang="scss" scoped>
+.page-gap {
+  padding-bottom: 300px;
+}
+
 :deep(.page-gap__safe-area-bottom) {
   position: fixed;
   bottom: 0;

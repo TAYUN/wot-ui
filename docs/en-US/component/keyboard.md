@@ -1,7 +1,3 @@
----
-version: 1.3.10
----
-
 # Keyboard Virtual Keyboard
 
 Virtual numeric keyboard, used for entering numbers, passwords, ID cards, or license plates, etc.

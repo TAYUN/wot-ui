@@ -1,6 +1,3 @@
----
-version: 1.14.0
----
 # useConfigProvider
 
 Used to inject global configuration (such as theme variables) in JS logic, solving issues in environments like WeChat mini programs where parent `ConfigProvider` configuration cannot be obtained due to component rendering mechanism limitations (such as native slot scope isolation) or using `root-portal`.

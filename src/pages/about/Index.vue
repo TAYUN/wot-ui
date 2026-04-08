@@ -8,22 +8,22 @@
         </view>
       </view>
       <view class="page-about__body">
-        <view class="core-team">
-          <view class="core-team__title">{{ $t('heXinTuanDui') }}</view>
-          <view class="core-team__list">
-            <view v-for="(collaborator, index) in githubData.collaborators" :key="index" class="core-team__member">
-              <image :src="collaborator.avatar_url" class="core-team__avatar" />
-              <view class="core-team__name" :title="collaborator.login">{{ collaborator.login }}</view>
+        <view class="page-about__team">
+          <view class="page-about__section-title">{{ $t('heXinTuanDui') }}</view>
+          <view class="page-about__team-list">
+            <view v-for="(collaborator, index) in githubData.collaborators" :key="index" class="page-about__team-member">
+              <image :src="collaborator.avatar_url" class="page-about__team-avatar" />
+              <view class="page-about__team-name" :title="collaborator.login">{{ collaborator.login }}</view>
             </view>
           </view>
         </view>
 
-        <view class="additional-links">
-          <view class="additional-links__title">{{ $t('gengDuoXinXi') }}</view>
+        <view class="page-about__links">
+          <view class="page-about__section-title">{{ $t('gengDuoXinXi') }}</view>
           <wd-cell-group border>
             <wd-cell
               :title="$t('yuYanQieHuan')"
-              title-width="200px"
+              title-width="var(--wot-n-200)"
               :label="$t('dangQianYuYan') + ': ' + (currentLang === 'zh-CN' ? '中文' : 'English')"
               is-link
               @click="showLanguageSwitch = true"
@@ -32,14 +32,14 @@
 
             <wd-cell
               :title="$t('guanZhuGongZhongHao')"
-              title-width="200px"
+              title-width="var(--wot-n-200)"
               :label="$t('uniappJiaoChengZuJianKuXunXiYiShouZhangWo')"
               @click="openWeChat"
               is-link
             ></wd-cell>
             <wd-cell
               :title="$t('juanZeng')"
-              title-width="200px"
+              title-width="var(--wot-n-200)"
               :label="$t('meiYiFenJuanZengDuShiDuiWoMenMoDaDeGuLi')"
               @click="donate"
               is-link
@@ -47,7 +47,7 @@
             <!-- #ifdef MP-WEIXIN -->
             <wd-cell
               :title="$t('guanKanJiLiGuangGao')"
-              title-width="200px"
+              title-width="var(--wot-n-200)"
               :label="$t('meiCiGuanKanDuShiDuiWoMenDeZhiChiXieXie')"
               @click="watchAd"
               is-link
@@ -82,11 +82,11 @@ const showLanguageSwitch = ref(false)
 const languageActions = computed(() => [
   {
     name: '中文 🇨🇳',
-    color: currentLang.value === 'zh-CN' ? '#0083ff' : ''
+    color: currentLang.value === 'zh-CN' ? 'var(--wot-primary-6, #0083ff)' : ''
   },
   {
     name: 'English 🇺🇸',
-    color: currentLang.value === 'en-US' ? '#0083ff' : ''
+    color: currentLang.value === 'en-US' ? 'var(--wot-primary-6, #0083ff)' : ''
   }
 ])
 
@@ -161,107 +161,79 @@ const watchAd = () => {
 <style lang="scss" scoped>
 .page-about {
   &__header {
-    padding: var(--wot-padding-large) var(--wot-padding-large) 0 var(--wot-padding-super-loose);
+    padding: $padding-extra-loose $padding-extra-loose 0 $padding-super-loose;
   }
 
   &__title {
     text-align: left;
-    font-size: var(--wot-typography-title-size-extra-large);
-    font-weight: var(--wot-font-weight-medium);
-    line-height: var(--wot-typography-title-line--height-size-extra-large);
-    color: var(--wot-text-main);
+    font-size: $typography-title-size-extra-large;
+    font-weight: $font-weight-semibold;
+    line-height: $typography-title-line--height-size-extra-large;
+    color: $text-main;
   }
 
   &__desc {
-    margin-top: var(--wot-spacing-super-loose);
+    margin-top: $spacing-super-loose;
     text-align: left;
-    font-size: var(--wot-typography-body-size-main);
-    line-height: var(--wot-typography-body-line--height-size-main);
-    color: var(--wot-text-secondary);
-  }
-
-  &__intro {
-    margin-top: var(--wot-spacing-main);
-    text-align: left;
-    font-size: var(--wot-typography-body-size-main);
-    line-height: var(--wot-typography-body-line--height-size-main);
-    color: var(--wot-text-secondary);
+    font-size: $typography-body-size-main;
+    line-height: $typography-body-line--height-size-main;
+    color: $text-secondary;
   }
 
   &__body {
-    padding: 0 var(--wot-padding-large) var(--wot-padding-spacious) var(--wot-padding-super-loose);
+    padding: 0 $padding-extra-loose $padding-spacious $padding-super-loose;
     user-select: none;
-    border-radius: var(--wot-radius-main);
-  }
-}
-
-.core-team {
-  margin-top: var(--wot-spacing-super-loose);
-
-  &__title {
-    margin-bottom: var(--wot-spacing-main);
-    font-size: var(--wot-typography-title-size-main);
-    font-weight: var(--wot-font-weight-semibold);
-    line-height: var(--wot-typography-title-line--height-size-main);
-    color: var(--wot-text-main);
+    border-radius: $radius-extra-large;
   }
 
-  &__list {
+  &__team,
+  &__links {
+    margin-top: $spacing-super-loose;
+  }
+
+  &__section-title {
+    margin-bottom: $spacing-main;
+    font-size: $typography-title-size-main;
+    font-weight: $font-weight-bold;
+    line-height: $typography-title-line--height-size-main;
+    color: $text-main;
+  }
+
+  &__team-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
   }
 
-  &__member {
+  &__team-member {
     flex: 1 1 25%;
     max-width: 25%;
     box-sizing: border-box;
-    margin-bottom: var(--wot-spacing-main);
+    margin-bottom: $spacing-main;
     text-align: center;
     transition: transform 0.3s;
-
-    &:hover {
-      transform: scale(1.05);
-    }
   }
 
-  &__avatar {
-    width: var(--wot-n-60);
-    height: var(--wot-n-60);
-    margin: 0 auto;
-    border: var(--wot-stroke-blod) solid var(--wot-primary-6);
-    border-radius: var(--wot-radius-radius-full);
+  &__team-member:hover {
+    transform: scale(1.05);
   }
 
-  &__name {
+  &__team-avatar {
+    width: $n-60;
+    height: $n-60;
     margin: 0 auto;
-    margin-top: var(--wot-spacing-super-tight);
-    font-size: var(--wot-typography-body-size-main);
-    line-height: var(--wot-typography-body-line--height-size-main);
-    color: var(--wot-text-main);
+    border: $stroke-light solid $primary-6;
+    border-radius: $radius-radius-full;
+  }
+
+  &__team-name {
+    max-width: 100%;
+    margin: $spacing-super-tight auto 0;
+    color: $text-main;
+    font-size: $typography-body-size-main;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
-}
-
-// 移除了不再需要的language-switch相关样式
-
-.additional-links {
-  margin-top: var(--wot-spacing-super-loose);
-
-  &__title {
-    margin-bottom: var(--wot-spacing-main);
-    font-size: var(--wot-typography-title-size-main);
-    font-weight: var(--wot-font-weight-semibold);
-    line-height: var(--wot-typography-title-line--height-size-main);
-    color: var(--wot-text-main);
-  }
-
-  &__icon {
-    width: var(--wot-n-24);
-    height: var(--wot-n-24);
-    margin-right: var(--wot-spacing-main);
   }
 }
 </style>

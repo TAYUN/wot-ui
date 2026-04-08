@@ -1,7 +1,3 @@
----
-version: 1.3.8
----
-
 # CountTo Number Animation
 
 Used for animated number display, supporting themes, prefixes/suffixes, decimal precision, and manual control.
