@@ -80,8 +80,6 @@ When using `uni_modules` installation, `Wot UI` components naturally support the
 If you are not familiar with `easycom`, you can also achieve automatic component import through [@uni-helper/vite-plugin-uni-components](https://github.com/uni-helper/vite-plugin-uni-components).
 
 :::tip Reminder
-
-- Recommended to use `@uni-helper/vite-plugin-uni-components@0.0.9` and above, as version 0.0.9 and above has built-in `resolver` for `wot-ui`.
 - If using this solution, the console prints many `Sourcemap for points to missing source files​`, you can try upgrading `Vite` version to `4.5.x` or above.
 
 :::
@@ -102,13 +100,37 @@ pnpm add @uni-helper/vite-plugin-uni-components -D
 
 :::
 
-```ts
+::: code-group
+
+```ts [wot-ui-resolver.ts]
+import type { ComponentResolver } from '@uni-helper/vite-plugin-uni-components'
+
+import { kebabCase } from '@uni-helper/vite-plugin-uni-components'
+
+export function WotResolver(): ComponentResolver {
+  return {
+    type: 'component',
+    resolve: (name: string) => {
+      if (name.match(/^Wd[A-Z]/)) {
+        const compName = kebabCase(name)
+        return {
+          name,
+          from: `@wot-ui/ui/components/${compName}/${compName}.vue`,
+        }
+      }
+    },
+  }
+}
+
+```
+
+```ts [vite.config.ts]
 // vite.config.ts
 import { defineConfig } from "vite";
 import uni from "@dcloudio/vite-plugin-uni";
 
 import Components from '@uni-helper/vite-plugin-uni-components'
-import { WotResolver } from '@uni-helper/vite-plugin-uni-components/resolvers'
+import { WotResolver } from '@/resolvers/wot-ui-resolver'
 
 
 export default defineConfig({
@@ -119,6 +141,7 @@ export default defineConfig({
   }), uni()],
 });
 ```
+:::
 
 If you use `pnpm`, please create a `.npmrc` file in the root directory, see [Issue](https://github.com/antfu/unplugin-vue-components/issues/389).
 

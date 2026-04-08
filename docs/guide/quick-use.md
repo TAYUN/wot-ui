@@ -77,11 +77,9 @@ pnpm add sass -D
 
 #### 基于 vite 配置自动引入组件<el-tag type="primary" style="vertical-align: middle;margin-left:8px;" effect="dark" >方案 1</el-tag>
 
-如果不熟悉 `easycom`，也可以通过 [@uni-helper/vite-plugin-uni-components](https://github.com/uni-helper/vite-plugin-uni-components) 实现组件的自动引入。
+如果不你不喜欢用 `easycom`，可以通过 [@uni-helper/vite-plugin-uni-components](https://github.com/uni-helper/vite-plugin-uni-components) 实现组件的自动引入。
 
 :::tip 提醒
-
-- 推荐使用 `@uni-helper/vite-plugin-uni-components@0.0.9` 及以上版本，因为在 0.0.9 版本开始其内置了 `wot-ui` 的`resolver`。
 - 如果使用此方案时控制台打印很多 `Sourcemap for  points to missing source files​` ，可以尝试将 `Vite` 版本升级至 `4.5.x` 以上版本。
 
 :::
@@ -102,13 +100,37 @@ pnpm add @uni-helper/vite-plugin-uni-components -D
 
 :::
 
-```ts
+::: code-group
+
+```ts [wot-ui-resolver.ts]
+import type { ComponentResolver } from '@uni-helper/vite-plugin-uni-components'
+
+import { kebabCase } from '@uni-helper/vite-plugin-uni-components'
+
+export function WotResolver(): ComponentResolver {
+  return {
+    type: 'component',
+    resolve: (name: string) => {
+      if (name.match(/^Wd[A-Z]/)) {
+        const compName = kebabCase(name)
+        return {
+          name,
+          from: `@wot-ui/ui/components/${compName}/${compName}.vue`,
+        }
+      }
+    },
+  }
+}
+
+```
+
+```ts [vite.config.ts]
 // vite.config.ts
 import { defineConfig } from "vite";
 import uni from "@dcloudio/vite-plugin-uni";
 
 import Components from '@uni-helper/vite-plugin-uni-components'
-import { WotResolver } from '@uni-helper/vite-plugin-uni-components/resolvers'
+import { WotResolver } from '@/resolvers/wot-ui-resolver'
 
 
 export default defineConfig({
@@ -119,6 +141,8 @@ export default defineConfig({
   }), uni()],
 });
 ```
+:::
+
 
 如果你使用 `pnpm` ，请在根目录下创建一个 `.npmrc` 文件，参见 [Issue](https://github.com/antfu/unplugin-vue-components/issues/389)。
 

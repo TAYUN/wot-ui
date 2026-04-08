@@ -1,5 +1,5 @@
 ---
-name: optimize-subpage-styles
+name: optimize-page-styles
 description: 优化 subPages 演示页面中的样式，将硬编码的颜色、字号、间距、圆角等替换为 wot-ui 设计系统语义变量。允许直接使用已全局注入的 variable.scss Sass 变量，也允许使用 CSS 自定义属性；不需要额外引入 variable.scss。消除手写的暗色模式覆盖块，统一使用语义变量实现自适应主题。同时将 class 命名统一为 BEM 规范。
 ---
 

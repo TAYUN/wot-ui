@@ -24,6 +24,7 @@
 | `create-test` | 为组件补充或创建单元测试 | 组件源码骨架、文档迁移 |
 | `generate-scss-variables` | 生成或审计组件级 SCSS 变量定义 | 旧设计系统迁移、主题生成 |
 | `generate-theme` | 生成单文件主题 SCSS，并在 App.vue 中挂载 | 组件级变量命名审计 |
+| `optimize-page-styles` | 按顺序巡检并修复 `src/pages`、`src/subPages` 页面样式，统一语义变量与 BEM 命名 | 组件源码样式、业务逻辑改写、文档迁移 |
 
 ## 推荐使用方式
 
@@ -90,6 +91,20 @@
 - 类型说明缺失
 - 函数和变量命名不统一
 
+### 6. 巡检和规范化页面样式
+
+优先组合：
+
+- `optimize-page-styles`
+
+适用场景：
+
+- 按顺序检查并修复 `src/pages` 与 `src/subPages` 页面样式
+- 将硬编码颜色、字号、间距、圆角替换为语义变量
+- 统一页面级 class 命名为 BEM
+- 清理手写暗色模式覆盖并收口为语义变量方案
+- 批量整理页面中的 `custom-style`、局部演示区块样式和模板 class 对应关系
+
 ## 当前职责边界
 
 为避免 Skill 相互覆盖，当前按以下规则区分：
@@ -99,6 +114,7 @@
 - 只改 Demo 页：使用 `create-demo-page`
 - 只改源码注释和命名：使用 `vue-comment`
 - 只建组件骨架：使用 `create-component`
+- 只改页面文件样式与模板 class，同步做 BEM 和语义变量收口：使用 `optimize-page-styles`
 
 ## 维护约定
 
@@ -117,6 +133,7 @@
 1. `wot-ui-component-baseline`
 2. `create-component`
 3. `create-demo-page`
-4. `check-doc-component-consistency`
-5. `migrate-component-doc`
-6. 其余辅助 Skill
+4. `optimize-page-styles`
+5. `check-doc-component-consistency`
+6. `migrate-component-doc`
+7. 其余辅助 Skill
