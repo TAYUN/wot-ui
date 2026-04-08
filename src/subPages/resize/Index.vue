@@ -4,42 +4,42 @@
       <demo-group :title="$t('zu-jian-lei-xing')">
         <demo-group-item :title="$t('ji-chu-yong-fa-0')">
           <wd-resize @resize="handleResize">
-            <view class="resize-target" :style="{ width, height }"></view>
+            <view class="page-resize__target" :style="{ width, height }"></view>
           </wd-resize>
-          <view class="tip-item">
-            <view class="tip-label">width:</view>
+          <view class="page-resize__tip-item">
+            <view class="page-resize__tip-label">width:</view>
             {{ lastWidth }}
-            <wd-icon name="arrow-thin-up" custom-class="icon"></wd-icon>
+            <wd-icon name="arrow-thin-up" custom-class="page-resize__icon"></wd-icon>
             {{ sizeWidth }}
           </view>
-          <view class="tip-item">
-            <view class="tip-label">height:</view>
+          <view class="page-resize__tip-item">
+            <view class="page-resize__tip-label">height:</view>
             {{ lastHeight }}
-            <wd-icon name="arrow-thin-up" custom-class="icon"></wd-icon>
+            <wd-icon name="arrow-thin-up" custom-class="page-resize__icon"></wd-icon>
             {{ sizeHeight }}
           </view>
-          <view class="tip-item">
-            <view class="tip-label">top:</view>
+          <view class="page-resize__tip-item">
+            <view class="page-resize__tip-label">top:</view>
             {{ lastTop }}
-            <wd-icon name="arrow-thin-up" custom-class="icon"></wd-icon>
+            <wd-icon name="arrow-thin-up" custom-class="page-resize__icon"></wd-icon>
             {{ sizeTop }}
           </view>
-          <view class="tip-item">
-            <view class="tip-label">right:</view>
+          <view class="page-resize__tip-item">
+            <view class="page-resize__tip-label">right:</view>
             {{ lastRight }}
-            <wd-icon name="arrow-thin-up" custom-class="icon"></wd-icon>
+            <wd-icon name="arrow-thin-up" custom-class="page-resize__icon"></wd-icon>
             {{ sizeRight }}
           </view>
-          <view class="tip-item">
-            <view class="tip-label">bottom:</view>
+          <view class="page-resize__tip-item">
+            <view class="page-resize__tip-label">bottom:</view>
             {{ lastBottom }}
-            <wd-icon name="arrow-thin-up" custom-class="icon"></wd-icon>
+            <wd-icon name="arrow-thin-up" custom-class="page-resize__icon"></wd-icon>
             {{ sizeBottom }}
           </view>
-          <view class="tip-item">
-            <view class="tip-label">left:</view>
+          <view class="page-resize__tip-item">
+            <view class="page-resize__tip-label">left:</view>
             {{ lastLeft }}
-            <wd-icon name="arrow-thin-up" custom-class="icon"></wd-icon>
+            <wd-icon name="arrow-thin-up" custom-class="page-resize__icon"></wd-icon>
             {{ sizeLeft }}
           </view>
         </demo-group-item>
@@ -88,26 +88,25 @@ function handleResize(detail: Record<string, string | number>) {
 }
 </script>
 <style lang="scss" scoped>
-.resize-target {
-  background: #4d80f0;
-}
+.page-resize {
+  &__target {
+    background: $primary-6;
+  }
 
-.wot-theme-dark {
-  .tip-item {
-    color: $-dark-color;
+  &__tip-item {
+    margin-top: 15px;
+    color: $text-secondary;
+    font-size: $typography-label-size-main;
+  }
+
+  &__tip-label {
+    display: inline-block;
+    width: 70px;
   }
 }
-.tip-item {
-  margin-top: 15px;
-  color: rgba(0, 0, 0, 0.45);
-  font-size: 12px;
-}
-.tip-label {
-  display: inline-block;
-  width: 70px;
-}
-:deep(.icon) {
-  margin: 0 4px;
+
+:deep(.page-resize__icon) {
+  margin: 0 $spacing-super-tight;
   transform: rotate(90deg);
 }
 </style>

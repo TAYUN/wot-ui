@@ -4,11 +4,11 @@
       <demo-group :title="$t('zu-jian-lei-xing')">
         <demo-group-item :title="$t('xuan-fu-an-niu-zhu-ti-se')">
           <wd-radio-group v-model="type" type="dot" direction="horizontal">
-            <wd-radio value="primary" custom-class="custom-radio">{{ $t('zhu-yao-an-niu') }}</wd-radio>
-            <wd-radio value="success" custom-class="custom-radio">{{ $t('cheng-gong-an-niu-0') }}</wd-radio>
-            <wd-radio value="warning" custom-class="custom-radio">{{ $t('jing-gao-an-niu-0') }}</wd-radio>
-            <wd-radio value="error" custom-class="custom-radio">{{ $t('wei-xian-an-niu') }}</wd-radio>
-            <wd-radio value="info" custom-class="custom-radio">{{ $t('xin-xi-an-niu') }}</wd-radio>
+            <wd-radio value="primary" custom-class="page-fab__radio">{{ $t('zhu-yao-an-niu') }}</wd-radio>
+            <wd-radio value="success" custom-class="page-fab__radio">{{ $t('cheng-gong-an-niu-0') }}</wd-radio>
+            <wd-radio value="warning" custom-class="page-fab__radio">{{ $t('jing-gao-an-niu-0') }}</wd-radio>
+            <wd-radio value="error" custom-class="page-fab__radio">{{ $t('wei-xian-an-niu') }}</wd-radio>
+            <wd-radio value="info" custom-class="page-fab__radio">{{ $t('xin-xi-an-niu') }}</wd-radio>
           </wd-radio-group>
         </demo-group-item>
       </demo-group>
@@ -16,23 +16,23 @@
       <demo-group :title="$t('zu-jian-bian-ti')">
         <demo-group-item :title="$t('xuan-fu-an-niu-wei-zhi')">
           <wd-radio-group v-model="position" type="dot" direction="horizontal">
-            <wd-radio value="left-top" custom-class="custom-radio">{{ $t('zuo-shang') }}</wd-radio>
-            <wd-radio value="right-top" custom-class="custom-radio">{{ $t('you-shang') }}</wd-radio>
-            <wd-radio value="left-center" custom-class="custom-radio">{{ $t('zuo-zhong') }}</wd-radio>
-            <wd-radio value="right-center" custom-class="custom-radio">{{ $t('you-zhong') }}</wd-radio>
-            <wd-radio value="top-center" custom-class="custom-radio">{{ $t('shang-zhong') }}</wd-radio>
-            <wd-radio value="bottom-center" custom-class="custom-radio">{{ $t('xia-zhong') }}</wd-radio>
-            <wd-radio value="left-bottom" custom-class="custom-radio">{{ $t('zuo-xia') }}</wd-radio>
-            <wd-radio value="right-bottom" custom-class="custom-radio">{{ $t('you-xia') }}</wd-radio>
+            <wd-radio value="left-top" custom-class="page-fab__radio">{{ $t('zuo-shang') }}</wd-radio>
+            <wd-radio value="right-top" custom-class="page-fab__radio">{{ $t('you-shang') }}</wd-radio>
+            <wd-radio value="left-center" custom-class="page-fab__radio">{{ $t('zuo-zhong') }}</wd-radio>
+            <wd-radio value="right-center" custom-class="page-fab__radio">{{ $t('you-zhong') }}</wd-radio>
+            <wd-radio value="top-center" custom-class="page-fab__radio">{{ $t('shang-zhong') }}</wd-radio>
+            <wd-radio value="bottom-center" custom-class="page-fab__radio">{{ $t('xia-zhong') }}</wd-radio>
+            <wd-radio value="left-bottom" custom-class="page-fab__radio">{{ $t('zuo-xia') }}</wd-radio>
+            <wd-radio value="right-bottom" custom-class="page-fab__radio">{{ $t('you-xia') }}</wd-radio>
           </wd-radio-group>
         </demo-group-item>
 
         <demo-group-item :title="$t('cai-dan-dan-chu-fang-xiang')">
           <wd-radio-group v-model="direction" type="dot" direction="horizontal">
-            <wd-radio value="top" custom-class="custom-radio">{{ $t('xiang-shang') }}</wd-radio>
-            <wd-radio value="bottom" custom-class="custom-radio">{{ $t('xiang-xia') }}</wd-radio>
-            <wd-radio value="right" custom-class="custom-radio">{{ $t('xiang-you') }}</wd-radio>
-            <wd-radio value="left" custom-class="custom-radio">{{ $t('xiang-zuo') }}</wd-radio>
+            <wd-radio value="top" custom-class="page-fab__radio">{{ $t('xiang-shang') }}</wd-radio>
+            <wd-radio value="bottom" custom-class="page-fab__radio">{{ $t('xiang-xia') }}</wd-radio>
+            <wd-radio value="right" custom-class="page-fab__radio">{{ $t('xiang-you') }}</wd-radio>
+            <wd-radio value="left" custom-class="page-fab__radio">{{ $t('xiang-zuo') }}</wd-radio>
           </wd-radio-group>
         </demo-group-item>
       </demo-group>
@@ -60,10 +60,10 @@
       <demo-group :title="$t('te-shu-yang-shi')">
         <demo-group-item :title="$t('zi-ding-yi-chu-fa-qi')">
           <wd-radio-group v-model="customType" type="dot" direction="horizontal" @click.stop="">
-            <wd-radio value="default" custom-class="custom-radio">{{ $t('mo-ren-yang-shi') }}</wd-radio>
-            <wd-radio value="withText" custom-class="custom-radio">{{ $t('dai-wen-zi-an-niu') }}</wd-radio>
-            <wd-radio value="plain" custom-class="custom-radio">{{ $t('plain-bian-ti') }}</wd-radio>
-            <wd-radio value="text" custom-class="custom-radio">{{ $t('text-bian-ti') }}</wd-radio>
+            <wd-radio value="default" custom-class="page-fab__radio">{{ $t('mo-ren-yang-shi') }}</wd-radio>
+            <wd-radio value="withText" custom-class="page-fab__radio">{{ $t('dai-wen-zi-an-niu') }}</wd-radio>
+            <wd-radio value="plain" custom-class="page-fab__radio">{{ $t('plain-bian-ti') }}</wd-radio>
+            <wd-radio value="text" custom-class="page-fab__radio">{{ $t('text-bian-ti') }}</wd-radio>
           </wd-radio-group>
         </demo-group-item>
       </demo-group>
@@ -83,13 +83,20 @@
           @click="showToast('一键三连')"
           icon="heart-fill"
           :disabled="disabled"
-          custom-class="custom-button"
+          custom-class="page-fab__button"
           type="primary"
           round
         ></wd-button>
-        <wd-button @click="showToast('我要收藏')" icon="star" :disabled="disabled" custom-class="custom-button" type="success" round></wd-button>
-        <wd-button @click="showToast('我要投币')" icon="gift" :disabled="disabled" custom-class="custom-button" type="danger" round></wd-button>
-        <wd-button @click="showToast('我要点赞')" icon="thumb-up" :disabled="disabled" custom-class="custom-button" type="warning" round></wd-button>
+        <wd-button @click="showToast('我要收藏')" icon="star" :disabled="disabled" custom-class="page-fab__button" type="success" round></wd-button>
+        <wd-button @click="showToast('我要投币')" icon="gift" :disabled="disabled" custom-class="page-fab__button" type="danger" round></wd-button>
+        <wd-button
+          @click="showToast('我要点赞')"
+          icon="thumb-up"
+          :disabled="disabled"
+          custom-class="page-fab__button"
+          type="warning"
+          round
+        ></wd-button>
       </wd-fab>
 
       <!-- 自定义触发器：带文字的按钮 -->
@@ -104,9 +111,9 @@
         <template #trigger="{ disabled }">
           <wd-button icon="menu" variant="plain" type="primary" round :disabled="disabled"></wd-button>
         </template>
-        <wd-button @click="showToast('设置')" icon="settings" custom-class="custom-button" variant="plain" type="info" round></wd-button>
-        <wd-button @click="showToast('分享')" icon="share-alt" custom-class="custom-button" variant="plain" type="success" round></wd-button>
-        <wd-button @click="showToast('编辑')" icon="edit" custom-class="custom-button" variant="plain" type="warning" round></wd-button>
+        <wd-button @click="showToast('设置')" icon="settings" custom-class="page-fab__button" variant="plain" type="info" round></wd-button>
+        <wd-button @click="showToast('分享')" icon="share-alt" custom-class="page-fab__button" variant="plain" type="success" round></wd-button>
+        <wd-button @click="showToast('编辑')" icon="edit" custom-class="page-fab__button" variant="plain" type="warning" round></wd-button>
       </wd-fab>
 
       <!-- 自定义触发器：text 变体 -->
@@ -114,8 +121,8 @@
         <template #trigger="{ disabled }">
           <wd-button icon="heart-fill" variant="text" :disabled="disabled" type="primary" round size="large"></wd-button>
         </template>
-        <wd-button @click="showToast('复制')" icon="copy" custom-class="custom-button" variant="text" type="info" round></wd-button>
-        <wd-button @click="showToast('删除')" icon="delete" custom-class="custom-button" variant="text" type="danger" round></wd-button>
+        <wd-button @click="showToast('复制')" icon="copy" custom-class="page-fab__button" variant="text" type="info" round></wd-button>
+        <wd-button @click="showToast('删除')" icon="delete" custom-class="page-fab__button" variant="text" type="danger" round></wd-button>
       </wd-fab>
     </page-wraper>
   </view>
@@ -156,24 +163,19 @@ function handleCustomClick() {
   box-sizing: border-box;
   padding-bottom: $n-98;
   background: $filled-oppo;
-  :deep(.custom-button) {
+
+  :deep(.page-fab__button) {
     min-width: auto !important;
     box-sizing: border-box;
-    width: 32px !important;
-    height: 32px !important;
-    border-radius: 16px !important;
-    margin: 8rpx;
+    width: $n-32 !important;
+    height: $n-32 !important;
+    margin: $spacing-extra-tight;
+    border-radius: $radius-radius-full !important;
   }
 
-  :deep(.custom-radio) {
-    height: 32px !important;
-    line-height: 32px !important;
-  }
-
-  .custom-demo-text {
-    font-size: 14px;
-    color: #999;
-    line-height: 1.6;
+  :deep(.page-fab__radio) {
+    height: $n-32 !important;
+    line-height: $n-32 !important;
   }
 }
 </style>

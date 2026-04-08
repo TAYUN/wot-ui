@@ -57,12 +57,12 @@
       <wd-image-preview selector="slot-preview">
         <!-- 自定义指示器 -->
         <template #indicator="{ current, total }">
-          <wd-swiper-nav :current="current" :total="total" type="dots-bar" custom-style="bottom: 64px;" />
+          <wd-swiper-nav :current="current" :total="total" type="dots-bar" custom-style="bottom: var(--wot-n-64);" />
         </template>
         <!-- 底部自定义内容 -->
         <template #default="{ current }">
-          <view class="custom-bottom">
-            <text class="custom-bottom__text">{{ imageDescriptions[current] }}</text>
+          <view class="page-image-preview__bottom">
+            <text class="page-image-preview__bottom-text">{{ imageDescriptions[current] }}</text>
           </view>
         </template>
       </wd-image-preview>
@@ -181,22 +181,22 @@ function handleSlotPreview() {
 <style lang="scss" scoped>
 .page-image-preview {
   :deep(.wd-button) {
-    margin-right: 10px;
-    margin-bottom: 10px;
+    margin-right: $spacing-main;
+    margin-bottom: $spacing-main;
   }
-}
 
-.custom-bottom {
-  position: fixed;
-  bottom: 60rpx;
-  left: 0;
-  right: 0;
-  text-align: center;
-  z-index: 100;
+  &__bottom {
+    position: fixed;
+    right: 0;
+    bottom: 60rpx;
+    left: 0;
+    z-index: 100;
+    text-align: center;
+  }
 
-  &__text {
-    color: #fff;
-    font-size: 28rpx;
+  &__bottom-text {
+    color: $text-white;
+    font-size: $typography-body-size-large;
     text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.5);
   }
 }

@@ -1,9 +1,9 @@
 <template>
   <page-wraper>
-    <view style="overflow: hidden" class="page-tooltip" @click="closeOutside">
+    <view class="page-tooltip" @click="closeOutside">
       <demo-group :title="$t('zu-jian-lei-xing')" transparent>
         <demo-group-item :title="$t('jiBenYongFa')">
-          <view class="top">
+          <view class="page-tooltip__top">
             <wd-tooltip placement="bottom-start" content="bottom-start 提示文字" @change="handleChange1">
               <wd-button :round="false">bottom-start</wd-button>
             </wd-tooltip>
@@ -14,7 +14,7 @@
               <wd-button :round="false">bottom-end</wd-button>
             </wd-tooltip>
           </view>
-          <view class="left">
+          <view class="page-tooltip__left">
             <wd-tooltip placement="right-start" content="right-start 提示文字" @change="handleChange4">
               <wd-button :round="false">right-start</wd-button>
             </wd-tooltip>
@@ -25,7 +25,7 @@
               <wd-button :round="false">right-end</wd-button>
             </wd-tooltip>
           </view>
-          <view class="right">
+          <view class="page-tooltip__right">
             <wd-tooltip placement="left-start" content="left-start 提示文字" @change="handleChange7">
               <wd-button :round="false">
                 left-start
@@ -39,7 +39,7 @@
               <wd-button :round="false">left-end</wd-button>
             </wd-tooltip>
           </view>
-          <view class="bottom">
+          <view class="page-tooltip__bottom">
             <wd-tooltip placement="top-start" content="top-start 提示文字" @change="handleChange10">
               <wd-button :round="false">top-start</wd-button>
             </wd-tooltip>
@@ -55,7 +55,7 @@
 
       <demo-group :title="$t('zu-jian-zhuang-tai')" transparent>
         <demo-group-item :title="$t('xian-shi-guan-bi-an-niu')">
-          <view class="demo-left">
+          <view class="page-tooltip__demo-left">
             <wd-tooltip content="显示关闭按钮" placement="right" show-close @change="handleChange13">
               <wd-button :round="false">{{ $t('xian-shi-guan-bi-an-niu-0') }}</wd-button>
             </wd-tooltip>
@@ -63,16 +63,16 @@
         </demo-group-item>
         <demo-group-item :title="$t('kong-zhi-xian-yin')">
           <view @click.stop="control">
-            <wd-button plain size="small" class="button-control">{{ show ? '关闭' : '打开' }}</wd-button>
+            <wd-button plain size="small" class="page-tooltip__button-control">{{ show ? '关闭' : '打开' }}</wd-button>
           </view>
-          <view class="demo-left demo-control">
+          <view class="page-tooltip__demo-left page-tooltip__demo-control">
             <wd-tooltip placement="top" content="控制显隐" v-model="show">
               <wd-button :round="false">top</wd-button>
             </wd-tooltip>
           </view>
         </demo-group-item>
         <demo-group-item :title="$t('jinYong')">
-          <view class="demo-left">
+          <view class="page-tooltip__demo-left">
             <wd-tooltip placement="right-end" content="禁用" disabled @change="handleChange17">
               <wd-button :round="false">{{ $t('jinYong') }}</wd-button>
             </wd-tooltip>
@@ -82,11 +82,11 @@
 
       <demo-group :title="$t('nei-rong-xing-tai')" transparent>
         <demo-group-item :title="$t('duo-hang-wen-ben')">
-          <view class="demo-left lines-demo">
+          <view class="page-tooltip__demo-left page-tooltip__lines-demo">
             <wd-tooltip placement="right" use-content-slot @change="handleChange14">
               <wd-button :round="false">{{ $t('duo-hang-wen-ben-0') }}</wd-button>
               <template #content>
-                <view class="lines-content">
+                <view class="page-tooltip__lines-content">
                   <view>{{ $t('duo-hang-wen-ben-1') }}</view>
                   <view>{{ $t('duo-hang-wen-ben-2') }}</view>
                   <view>{{ $t('duo-hang-wen-ben-3') }}</view>
@@ -99,12 +99,14 @@
 
       <demo-group :title="$t('te-shu-yang-shi')" transparent>
         <demo-group-item :title="$t('dong-tai-nei-rong-yu-wei-zhi-geng-xin')">
-          <view class="demo-left lines-demo">
+          <view class="page-tooltip__demo-left page-tooltip__lines-demo">
             <wd-tooltip placement="right" use-content-slot ref="tooltipRef">
               <template #content>
-                <view class="lines-content" :style="{ width: dynamicTooltipWidth + 'px' }">
-                  <view class="dynamic-width-label">{{ $t('dang-qian-kuan-du-dynamictooltipwidth-px', dynamicTooltipWidth) }}</view>
-                  <wd-button custom-class="custom-btn" size="small" @click="changeTooltipSize">{{ $t('gai-bian-da-xiao') }}</wd-button>
+                <view class="page-tooltip__lines-content" :style="{ width: dynamicTooltipWidth + 'px' }">
+                  <view class="page-tooltip__dynamic-width-label">{{ $t('dang-qian-kuan-du-dynamictooltipwidth-px', dynamicTooltipWidth) }}</view>
+                  <wd-button custom-class="page-tooltip__action-button" size="small" @click="changeTooltipSize">
+                    {{ $t('gai-bian-da-xiao') }}
+                  </wd-button>
                 </view>
               </template>
               <wd-button :round="false">{{ $t('dong-tai-nei-rong') }}</wd-button>
@@ -112,7 +114,7 @@
           </view>
         </demo-group-item>
         <demo-group-item :title="$t('bang-ding-change-shi-jian')">
-          <view class="demo-left">
+          <view class="page-tooltip__demo-left">
             <wd-tooltip placement="right-end" :content="content" @open="onShow" @close="onHide" @change="handleChange16">
               <wd-button :round="false">{{ $t('shi-jian-0') }}</wd-button>
             </wd-tooltip>
@@ -207,73 +209,78 @@ function handleChange17(event: any) {
 </script>
 <style lang="scss" scoped>
 .page-tooltip {
+  overflow: hidden;
+
   :deep() {
     .wd-button {
       min-width: auto;
     }
   }
-}
-.position-wrap {
-  position: relative;
-}
-.center {
-  text-align: center;
-}
-.left {
-  float: left;
-  display: flex;
-  flex-direction: column;
-}
-.right {
-  float: right;
-  display: flex;
-  flex-direction: column;
-  text-align: right;
-  margin-bottom: $spacing-super-loose;
-}
-.top {
-  display: flex;
-  justify-content: space-between;
-  margin-top: $spacing-super-loose;
-  margin-bottom: $spacing-super-loose;
-}
-.bottom {
-  clear: both;
-  display: flex;
-  justify-content: space-between;
-  margin-top: $spacing-super-loose;
-}
-.demo-left {
-  text-align: left;
-}
-.button-control {
-  float: left;
-}
-.demo-control {
-  text-align: center;
-  display: block;
-  padding-top: $n-18;
-  clear: both;
-  margin-bottom: $spacing-main;
-}
-.lines-demo {
-  padding: $spacing-ultra-loose + $spacing-extra-tight 0;
-}
-.lines-content {
-  color: $text-main;
-  padding: $n-5;
-  width: 90px;
-}
 
-.dynamic-width-label {
-  margin-bottom: $spacing-main;
+  &__left {
+    float: left;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__right {
+    float: right;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: $spacing-super-loose;
+    text-align: right;
+  }
+
+  &__top {
+    display: flex;
+    justify-content: space-between;
+    margin-top: $spacing-super-loose;
+    margin-bottom: $spacing-super-loose;
+  }
+
+  &__bottom {
+    clear: both;
+    display: flex;
+    justify-content: space-between;
+    margin-top: $spacing-super-loose;
+  }
+
+  &__demo-left {
+    text-align: left;
+  }
+
+  &__button-control {
+    float: left;
+  }
+
+  &__demo-control {
+    display: block;
+    clear: both;
+    margin-bottom: $spacing-main;
+    padding-top: $n-18;
+    text-align: center;
+  }
+
+  &__lines-demo {
+    padding: $spacing-ultra-loose + $spacing-extra-tight 0;
+  }
+
+  &__lines-content {
+    width: 90px;
+    padding: $n-5;
+    color: $text-main;
+  }
+
+  &__dynamic-width-label {
+    margin-bottom: $spacing-main;
+  }
 }
 
 :deep(.tooltip-middle-item) {
   margin: $spacing-super-loose 0;
 }
 
-:deep(.custom-btn) {
+:deep(.page-tooltip__action-button) {
   margin: 0 !important;
 }
 </style>

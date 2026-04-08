@@ -20,7 +20,7 @@
               )
             "
             prefix="close-circle-fill"
-            custom-class="space"
+            custom-class="page-notice-bar__space"
           />
           <wd-notice-bar
             type="info"
@@ -48,7 +48,7 @@
         <demo-group-item :title="$t('cha-cao')" no-padding>
           <wd-notice-bar :scrollable="false">
             <template #prefix>
-              <wd-icon custom-class="prefix" name="stop">{{ $t('zhan-wei-fu') }}</wd-icon>
+              <wd-icon custom-class="page-notice-bar__prefix" name="stop">{{ $t('zhan-wei-fu') }}</wd-icon>
             </template>
             {{ $t('tong-zhi-bei-jin-huo-shi-duan-nei-xiao-xi-ping-bi-ke-neng-zao-cheng-xiao') }}
             <template #suffix>
@@ -74,8 +74,8 @@
           <wd-notice-bar
             :text="$t('zhe-shi-yi-tiao-xiao-xi-ti-shi-xin-xi-zhe-shi-yi-tiao-xiao-xi-ti-shi-xin-xi-zhe-shi-yi-tiao-xiao-xi-ti-shi-xin-xi-1')"
             prefix="robot"
-            color="#34D19D"
-            background-color="#f0f9eb"
+            color="var(--wot-success-hover)"
+            background-color="var(--wot-success-surface)"
           />
         </demo-group-item>
       </demo-group>
@@ -85,18 +85,25 @@
           <wd-notice-bar @click="handleClick" :text="textArray" prefix="thunderbolt" @next="onNext" />
         </demo-group-item>
         <demo-group-item :title="$t('chui-zhi-gun-dong')" no-padding>
-          <wd-notice-bar @click="handleClick" prefix="experiment" direction="vertical" :text="textArray" :delay="3" custom-class="space" />
+          <wd-notice-bar
+            @click="handleClick"
+            prefix="experiment"
+            direction="vertical"
+            :text="textArray"
+            :delay="3"
+            custom-class="page-notice-bar__space"
+          />
           <wd-notice-bar
             @click="handleClick"
             prefix="experiment"
             direction="vertical"
             :text="$t('zhi-you-yi-tiao-xiao-xi-bu-hui-gun-dong')"
             :delay="3"
-            custom-class="space"
+            custom-class="page-notice-bar__space"
           />
         </demo-group-item>
         <demo-group-item :title="$t('zhong-zhi-bo-fang-dong-hua')" no-padding>
-          <wd-notice-bar ref="notice" prefix="wifi" direction="vertical" :text="textArray" :delay="3" custom-class="space" />
+          <wd-notice-bar ref="notice" prefix="wifi" direction="vertical" :text="textArray" :delay="3" custom-class="page-notice-bar__space" />
           <wd-button @click="handleReset">{{ $t('zhong-zhi-bo-fang-dong-hua-0') }}</wd-button>
         </demo-group-item>
       </demo-group>
@@ -132,16 +139,16 @@ function handleClick(result: { text: string; index: number }) {
   }
 }
 
-:deep(.prefix) {
-  font-size: 20px;
-  margin-right: 8px;
+:deep(.page-notice-bar__prefix) {
+  font-size: $n-20;
+  margin-right: $spacing-tight;
 }
 
 .page-notice-bar__suffix {
-  color: #4d80f0;
+  color: $primary-5;
 }
 
-:deep(.space) {
-  margin-bottom: 10px;
+:deep(.page-notice-bar__space) {
+  margin-bottom: $spacing-main;
 }
 </style>

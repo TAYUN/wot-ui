@@ -1,11 +1,11 @@
 <template>
   <page-wraper>
-    <view class="wraper">
+    <view class="page-sidebar-demo3">
       <wd-sidebar v-model="active" @change="handleChange">
         <wd-sidebar-item v-for="(item, index) in categories" :key="index" :value="index" :label="item.label" :icon="item.icon" />
       </wd-sidebar>
-      <scroll-view class="content" scroll-y scroll-with-animation :scroll-top="scrollTop" :throttle="false" @scroll="onScroll">
-        <view v-for="(item, index) in categories" :key="index" class="category">
+      <scroll-view class="page-sidebar-demo3__content" scroll-y scroll-with-animation :scroll-top="scrollTop" :throttle="false" @scroll="onScroll">
+        <view v-for="(item, index) in categories" :key="index" class="page-sidebar-demo3__category">
           <wd-cell-group :title="item.title" border>
             <wd-cell v-for="(cell, index) in item.items" :key="index" :title="cell.title" :label="cell.label">
               <wd-icon name="code" size="24px"></wd-icon>
@@ -88,7 +88,7 @@ const categories = computed<Category[]>(() => [
 ])
 
 onMounted(() => {
-  getRect('.category', true).then((rects) => {
+  getRect('.page-sidebar-demo3__category', true).then((rects) => {
     itemScrollTop.value = rects.map((item) => item.top || 0)
     scrollTop.value = rects[active.value].top || 0
   })
@@ -112,14 +112,15 @@ function onScroll(e: any) {
 }
 </script>
 <style lang="scss" scoped>
-.wraper {
+.page-sidebar-demo3 {
   display: flex;
   height: calc(100vh - var(--window-top));
   height: calc(100vh - var(--window-top) - constant(safe-area-inset-bottom));
   height: calc(100vh - var(--window-top) - env(safe-area-inset-bottom));
-}
-.content {
-  flex: 1;
-  background: #fff;
+
+  &__content {
+    flex: 1;
+    background: $filled-oppo;
+  }
 }
 </style>

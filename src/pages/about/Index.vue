@@ -1,13 +1,13 @@
 <template>
   <page-wraper :use-wx-ad="false" :use-reward-fab="true">
-    <view class="page">
-      <view class="page__hd">
-        <view class="page__title">{{ $t('guanYuWoMen') }}</view>
-        <view class="page__desc">
+    <view class="page-about">
+      <view class="page-about__header">
+        <view class="page-about__title">{{ $t('guanYuWoMen') }}</view>
+        <view class="page-about__desc">
           {{ $t('woShiBuRuMoYuQuYiGeQianDuanDaGongZiWoHeWoDeXiaoHuoBanMenZhengZaiZhiLiYuKaiFaQingLiangGaoXiaoDeUniappZuJianKu') }}
         </view>
       </view>
-      <view class="page__bd">
+      <view class="page-about__body">
         <view class="core-team">
           <view class="core-team__title">{{ $t('heXinTuanDui') }}</view>
           <view class="core-team__list">
@@ -159,95 +159,109 @@ const watchAd = () => {
 </script>
 
 <style lang="scss" scoped>
-.page__hd {
-  padding: 15px 15px 0 20px;
-}
+.page-about {
+  &__header {
+    padding: var(--wot-padding-large) var(--wot-padding-large) 0 var(--wot-padding-super-loose);
+  }
 
-.page__title {
-  text-align: left;
-  font-size: 24px;
-  font-weight: 600;
-}
+  &__title {
+    text-align: left;
+    font-size: var(--wot-typography-title-size-extra-large);
+    font-weight: var(--wot-font-weight-medium);
+    line-height: var(--wot-typography-title-line--height-size-extra-large);
+    color: var(--wot-text-main);
+  }
 
-.page__desc {
-  margin-top: 20px;
-  text-align: left;
-  font-size: 14px;
-}
+  &__desc {
+    margin-top: var(--wot-spacing-super-loose);
+    text-align: left;
+    font-size: var(--wot-typography-body-size-main);
+    line-height: var(--wot-typography-body-line--height-size-main);
+    color: var(--wot-text-secondary);
+  }
 
-.page__intro {
-  margin-top: 10px;
-  text-align: left;
-  font-size: 14px;
-}
+  &__intro {
+    margin-top: var(--wot-spacing-main);
+    text-align: left;
+    font-size: var(--wot-typography-body-size-main);
+    line-height: var(--wot-typography-body-line--height-size-main);
+    color: var(--wot-text-secondary);
+  }
 
-.page__bd {
-  padding: 0 15px 30px 20px;
-  user-select: none;
-  border-radius: 10px;
+  &__body {
+    padding: 0 var(--wot-padding-large) var(--wot-padding-spacious) var(--wot-padding-super-loose);
+    user-select: none;
+    border-radius: var(--wot-radius-main);
+  }
 }
 
 .core-team {
-  margin-top: 20px;
-}
+  margin-top: var(--wot-spacing-super-loose);
 
-.core-team__title {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
+  &__title {
+    margin-bottom: var(--wot-spacing-main);
+    font-size: var(--wot-typography-title-size-main);
+    font-weight: var(--wot-font-weight-semibold);
+    line-height: var(--wot-typography-title-line--height-size-main);
+    color: var(--wot-text-main);
+  }
 
-.core-team__list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
 
-.core-team__member {
-  flex: 1 1 25%;
-  max-width: 25%;
-  box-sizing: border-box;
-  margin-bottom: 10px;
-  text-align: center;
-  transition: transform 0.3s;
-}
+  &__member {
+    flex: 1 1 25%;
+    max-width: 25%;
+    box-sizing: border-box;
+    margin-bottom: var(--wot-spacing-main);
+    text-align: center;
+    transition: transform 0.3s;
 
-.core-team__member:hover {
-  transform: scale(1.05);
-}
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
 
-.core-team__avatar {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  margin: 0 auto;
-  border: 2px solid #0083ff;
-}
+  &__avatar {
+    width: var(--wot-n-60);
+    height: var(--wot-n-60);
+    margin: 0 auto;
+    border: var(--wot-stroke-blod) solid var(--wot-primary-6);
+    border-radius: var(--wot-radius-radius-full);
+  }
 
-.core-team__name {
-  margin-top: 5px;
-  font-size: 14px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0 auto;
+  &__name {
+    margin: 0 auto;
+    margin-top: var(--wot-spacing-super-tight);
+    font-size: var(--wot-typography-body-size-main);
+    line-height: var(--wot-typography-body-line--height-size-main);
+    color: var(--wot-text-main);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 // 移除了不再需要的language-switch相关样式
 
 .additional-links {
-  margin-top: 20px;
-}
+  margin-top: var(--wot-spacing-super-loose);
 
-.additional-links__title {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
+  &__title {
+    margin-bottom: var(--wot-spacing-main);
+    font-size: var(--wot-typography-title-size-main);
+    font-weight: var(--wot-font-weight-semibold);
+    line-height: var(--wot-typography-title-line--height-size-main);
+    color: var(--wot-text-main);
+  }
 
-.additional-links__icon {
-  width: 24px;
-  height: 24px;
-  margin-right: 10px;
+  &__icon {
+    width: var(--wot-n-24);
+    height: var(--wot-n-24);
+    margin-right: var(--wot-spacing-main);
+  }
 }
 </style>

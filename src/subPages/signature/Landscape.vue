@@ -13,8 +13,8 @@
       <!-- #ifndef MP-WEIXIN -->
 
       <template #footer="{ clear, confirm, restore, revoke, canUndo, canRedo }">
-        <view class="custom-actions">
-          <view class="button-group">
+        <view class="landscape-signature__actions">
+          <view class="landscape-signature__button-group">
             <wd-button size="small" plain @click="revoke" :disabled="!canUndo">{{ $t('che-hui') }}</wd-button>
             <wd-button size="small" plain @click="restore" :disabled="!canRedo">{{ $t('hui-fu') }}</wd-button>
             <wd-button size="small" plain @click="clear">{{ $t('qing-chu') }}</wd-button>
@@ -71,7 +71,7 @@ function handleConfirm(result: SignatureResult) {
   // #ifdef H5
   height: calc(100vh - 44px);
   // #endif
-  background: #fff;
+  background: $filled-oppo;
   position: relative;
   box-sizing: border-box;
 
@@ -83,26 +83,26 @@ function handleConfirm(result: SignatureResult) {
   // #endif
 
   // #ifndef MP-WEIXIN
-  padding: 24px 0;
-  padding-left: 48px;
+  padding: $padding-ultra-loose 0;
+  padding-left: $padding-ultra-spacious;
 
-  .custom-actions {
+  &__actions {
     position: fixed;
     left: 0;
     top: 50%;
-    width: 48px;
+    width: $padding-ultra-spacious;
     transform: translateY(-50%) rotate(90deg);
     transform-origin: center;
     z-index: 10;
+  }
 
-    .button-group {
-      display: flex;
-      flex-direction: row;
-      gap: 12px;
-      white-space: nowrap;
-      width: max-content;
-      transform: translateX(-50%);
-    }
+  &__button-group {
+    display: flex;
+    flex-direction: row;
+    gap: $spacing-loose;
+    white-space: nowrap;
+    width: max-content;
+    transform: translateX(-50%);
   }
   // #endif
 }

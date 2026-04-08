@@ -12,11 +12,11 @@
           <wd-skeleton :row-col="grid" />
         </demo-group-item>
         <demo-group-item :title="$t('dan-yuan-ge-gu-jia-ping')">
-          <view class="skeleton-row">
+          <view class="page-skeleton__row">
             <wd-skeleton :row-col="[{ size: '48px', type: 'circle' }]" />
             <wd-skeleton :custom-style="{ width: '100%', marginLeft: '12px' }" :row-col="[{ width: '50%' }, { width: '100%' }]" />
           </view>
-          <view class="skeleton-row skeleton-row--top">
+          <view class="page-skeleton__row page-skeleton__row--top">
             <wd-skeleton :row-col="[{ size: '48px', type: 'rect' }]" />
             <wd-skeleton :custom-style="{ width: '100%', marginLeft: '12px' }" :row-col="[{ width: '50%' }, { width: '100%' }]" />
           </view>
@@ -32,15 +32,15 @@
           <wd-skeleton animation="gradient" theme="paragraph" />
         </demo-group-item>
         <demo-group-item :title="$t('shan-shuo-jia-zai-dong-hua')">
-          <view class="skeleton-row">
+          <view class="page-skeleton__row">
             <wd-skeleton :row-col="[{ size: '48px', type: 'circle' }]" />
             <wd-skeleton :custom-style="{ width: '100%', marginLeft: '12px' }" animation="flashed" theme="paragraph" />
           </view>
         </demo-group-item>
         <demo-group-item :title="$t('cha-cao-nei-rong')">
-          <view class="switch-label">{{ $t('qie-huan-xian-shi') }}</view>
+          <view class="page-skeleton__switch-label">{{ $t('qie-huan-xian-shi') }}</view>
           <wd-switch v-model="showContent" />
-          <view class="switch-gap"></view>
+          <view class="page-skeleton__switch-gap"></view>
           <wd-skeleton :row-col="grid" :loading="showContent">
             <wd-grid>
               <wd-grid-item icon-size="32px" icon="camera" :text="$t('wen-zi-10')" />
@@ -88,20 +88,20 @@ const showContent = ref(true)
 </script>
 <style lang="scss" scoped>
 .page-skeleton {
-  .skeleton-row {
+  &__row {
     display: flex;
 
     &--top {
-      margin-top: 20px;
+      margin-top: $spacing-super-loose;
     }
   }
 
-  .switch-label {
-    margin-bottom: 10px;
+  &__switch-label {
+    margin-bottom: $spacing-main;
   }
 
-  .switch-gap {
-    height: 20px;
+  &__switch-gap {
+    height: $n-20;
   }
 }
 </style>

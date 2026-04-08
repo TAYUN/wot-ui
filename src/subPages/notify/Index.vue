@@ -81,9 +81,9 @@ const showFloatingType = (type: NotifyType) => {
 }
 const showCustomColor = () => {
   showNotify({
-    color: '#ad0000',
+    color: 'var(--wot-danger-main, #ad0000)',
     message: t('zi-ding-yi-yan-se-0'),
-    background: '#ffe1e1'
+    background: 'var(--wot-danger-surface, #ffe1e1)'
   })
 }
 const showCustomPosition = () => {

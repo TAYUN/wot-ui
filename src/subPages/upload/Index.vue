@@ -56,13 +56,13 @@
             @fail="handleFail"
             @progress="handleProgess"
           ></wd-upload>
-          <view v-if="uploadStatusText" class="upload-status">{{ uploadStatusText }}</view>
+          <view v-if="uploadStatusText" class="page-upload__status">{{ uploadStatusText }}</view>
         </demo-group-item>
         <demo-group-item :title="$t('jinYong')">
           <wd-upload :file-list="fileList8" disabled :action="action" :success-status="[200, 201]" @change="handleChange8"></wd-upload>
         </demo-group-item>
         <demo-group-item :title="$t('shou-dong-chu-fa-shang-chuan')">
-          <view class="upload-action-row">
+          <view class="page-upload__action-row">
             <wd-upload
               ref="upload14"
               :auto-upload="false"
@@ -118,7 +118,7 @@
         <demo-group-item :title="$t('zi-ding-yi-yu-lan-yang-shi')">
           <wd-upload v-model:file-list="fileList16" accept="image" image-mode="aspectFill" :action="action" :success-status="[200, 201]">
             <template #preview-cover="{ file, index }">
-              <view class="preview-cover">{{ file.name || `文件${index}` }}</view>
+              <view class="page-upload__preview-cover">{{ file.name || `文件${index}` }}</view>
             </template>
           </wd-upload>
         </demo-group-item>
@@ -169,9 +169,9 @@
         <demo-group-item :title="$t('gen-ju-kuo-zhan-ming-guo-lv')">
           <!-- #ifdef H5 -->
           <wd-upload v-model:file-list="fileList18" :extension="['.jpg', '.png']" :action="action" :success-status="[200, 201]"></wd-upload>
-          <view class="upload-filter-tip">{{ $t('xuan-ze-shi-pin-shi-guo-lv-mp4') }}</view>
+          <view class="page-upload__filter-tip">{{ $t('xuan-ze-shi-pin-shi-guo-lv-mp4') }}</view>
           <wd-upload accept="video" v-model:file-list="fileList19" :extension="['.mp4']" :action="action" :success-status="[200, 201]"></wd-upload>
-          <view class="upload-filter-tip">{{ $t('shang-chuan-suo-you-lei-xing-wen-jian-shi-guo-lv-pdf-he-docx') }}</view>
+          <view class="page-upload__filter-tip">{{ $t('shang-chuan-suo-you-lei-xing-wen-jian-shi-guo-lv-pdf-he-docx') }}</view>
           <wd-upload
             accept="all"
             v-model:file-list="fileList21"
@@ -181,9 +181,9 @@
           ></wd-upload>
           <!-- #endif -->
           <!-- #ifdef MP-WEIXIN -->
-          <view class="upload-filter-tip">{{ $t('xuan-ze-wen-jian-shi-guo-lv-txt-wen-jian') }}</view>
+          <view class="page-upload__filter-tip">{{ $t('xuan-ze-wen-jian-shi-guo-lv-txt-wen-jian') }}</view>
           <wd-upload accept="file" v-model:file-list="fileList19" :extension="['.txt']" :action="action" :success-status="[200, 201]"></wd-upload>
-          <view class="upload-filter-tip">{{ $t('xuan-ze-suo-you-wen-jian-shi-guo-lv-jpg-he-mp4') }}</view>
+          <view class="page-upload__filter-tip">{{ $t('xuan-ze-suo-you-wen-jian-shi-guo-lv-jpg-he-mp4') }}</view>
           <wd-upload
             accept="all"
             v-model:file-list="fileList20"
@@ -435,24 +435,26 @@ const customUpload: UploadMethod = (file, formData, options) => {
 }
 </script>
 <style lang="scss" scoped>
-.upload-action-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
+.page-upload {
+  &__action-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-loose;
+  }
 
-.upload-status {
-  margin-top: 12px;
-  color: #666;
-  font-size: 14px;
-}
+  &__status {
+    margin-top: $spacing-loose;
+    color: $text-auxiliary;
+    font-size: $typography-body-size-main;
+  }
 
-.upload-filter-tip {
-  margin: 10px 0;
-}
+  &__filter-tip {
+    margin: $spacing-main 0;
+  }
 
-.preview-cover {
-  margin-top: 10rpx;
-  text-align: center;
+  &__preview-cover {
+    margin-top: 10rpx;
+    text-align: center;
+  }
 }
 </style>

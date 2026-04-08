@@ -1,74 +1,76 @@
 <template>
   <page-wraper>
-    <demo-group :title="$t('zu-jian-lei-xing')">
-      <demo-group-item no-padding :title="$t('dan-ge-ri-qi-xuan-ze')">
-        <view style="margin: 0 15px 10px">
-          <view style="margin-bottom: 10px; font-size: 13px">{{ $t('qie-huan-lei-xing') }}</view>
-          <wd-radio-group v-model="type1" type="button">
-            <wd-radio value="date">date</wd-radio>
-            <wd-radio value="week">week</wd-radio>
+    <view class="page-calendar-view">
+      <demo-group :title="$t('zu-jian-lei-xing')">
+        <demo-group-item no-padding :title="$t('dan-ge-ri-qi-xuan-ze')">
+          <view class="page-calendar-view__panel page-calendar-view__panel--compact">
+            <view class="page-calendar-view__panel-title">{{ $t('qie-huan-lei-xing') }}</view>
+            <wd-radio-group v-model="type1" type="button">
+              <wd-radio value="date">date</wd-radio>
+              <wd-radio value="week">week</wd-radio>
+              <wd-radio value="month">month</wd-radio>
+            </wd-radio-group>
+          </view>
+          <wd-calendar-view :type="type1" v-model="value1" :switch-mode="switchMode" @change="handleChange1"></wd-calendar-view>
+        </demo-group-item>
+
+        <demo-group-item no-padding :title="$t('duo-ge-ri-qi-xuan-ze')">
+          <wd-calendar-view type="dates" v-model="value2" :switch-mode="switchMode" @change="handleChange2"></wd-calendar-view>
+        </demo-group-item>
+
+        <demo-group-item no-padding :title="$t('ri-qi-fan-wei-xuan-ze')">
+          <view class="page-calendar-view__panel page-calendar-view__panel--wide">
+            <view class="page-calendar-view__panel-title">{{ $t('qie-huan-lei-xing-0') }}</view>
+            <wd-radio-group v-model="type2" type="button" @change="handleTypeChange2">
+              <wd-radio value="daterange">daterange</wd-radio>
+              <wd-radio value="weekrange">weekrange</wd-radio>
+              <wd-radio value="monthrange">monthrange</wd-radio>
+            </wd-radio-group>
+          </view>
+          <wd-calendar-view :type="type2" allow-same-day v-model="value3" :switch-mode="switchMode" @change="handleChange3"></wd-calendar-view>
+        </demo-group-item>
+
+        <demo-group-item no-padding :title="$t('shi-jian-lei-xing')">
+          <wd-calendar-view type="datetime" v-model="value4" :switch-mode="switchMode"></wd-calendar-view>
+        </demo-group-item>
+
+        <demo-group-item no-padding :title="$t('shi-jian-fan-wei-lei-xing')">
+          <wd-calendar-view type="datetimerange" v-model="value5" :switch-mode="switchMode"></wd-calendar-view>
+        </demo-group-item>
+      </demo-group>
+
+      <demo-group :title="$t('zu-jian-zhuang-tai')">
+        <demo-group-item no-padding :title="$t('fan-wei-xuan-ze-yun-xu-xuan-zhong-tong-yi-ri-qi')">
+          <wd-calendar-view type="daterange" allow-same-day v-model="value3" :switch-mode="switchMode"></wd-calendar-view>
+        </demo-group-item>
+      </demo-group>
+
+      <demo-group :title="$t('zu-jian-bian-ti')">
+        <demo-group-item :title="$t('qie-huan-mo-shi')">
+          <wd-radio-group v-model="switchMode" type="button">
+            <wd-radio value="none">none</wd-radio>
             <wd-radio value="month">month</wd-radio>
+            <wd-radio value="year-month">year-month</wd-radio>
           </wd-radio-group>
-        </view>
-        <wd-calendar-view :type="type1" v-model="value1" :switch-mode="switchMode" @change="handleChange1"></wd-calendar-view>
-      </demo-group-item>
+        </demo-group-item>
+      </demo-group>
 
-      <demo-group-item no-padding :title="$t('duo-ge-ri-qi-xuan-ze')">
-        <wd-calendar-view type="dates" v-model="value2" :switch-mode="switchMode" @change="handleChange2"></wd-calendar-view>
-      </demo-group-item>
+      <demo-group :title="$t('zu-jian-yang-shi')">
+        <demo-group-item no-padding :title="$t('zi-ding-yi-ri-qi')">
+          <wd-calendar-view type="daterange" allow-same-day v-model="value6" :formatter="formatter" :switch-mode="switchMode"></wd-calendar-view>
+        </demo-group-item>
 
-      <demo-group-item no-padding :title="$t('ri-qi-fan-wei-xuan-ze')">
-        <view style="margin: 0 24rpx 20rpx">
-          <view style="margin-bottom: 20rpx; font-size: 26rpx">{{ $t('qie-huan-lei-xing-0') }}</view>
-          <wd-radio-group v-model="type2" type="button" @change="handleTypeChange2">
-            <wd-radio value="daterange">daterange</wd-radio>
-            <wd-radio value="weekrange">weekrange</wd-radio>
-            <wd-radio value="monthrange">monthrange</wd-radio>
-          </wd-radio-group>
-        </view>
-        <wd-calendar-view :type="type2" allow-same-day v-model="value3" :switch-mode="switchMode" @change="handleChange3"></wd-calendar-view>
-      </demo-group-item>
+        <demo-group-item no-padding :title="$t('she-zhi-zhou-qi-shi-ri')">
+          <wd-calendar-view :first-day-of-week="1" v-model="value8" :switch-mode="switchMode"></wd-calendar-view>
+        </demo-group-item>
+      </demo-group>
 
-      <demo-group-item no-padding :title="$t('shi-jian-lei-xing')">
-        <wd-calendar-view type="datetime" v-model="value4" :switch-mode="switchMode"></wd-calendar-view>
-      </demo-group-item>
-
-      <demo-group-item no-padding :title="$t('shi-jian-fan-wei-lei-xing')">
-        <wd-calendar-view type="datetimerange" v-model="value5" :switch-mode="switchMode"></wd-calendar-view>
-      </demo-group-item>
-    </demo-group>
-
-    <demo-group :title="$t('zu-jian-zhuang-tai')">
-      <demo-group-item no-padding :title="$t('fan-wei-xuan-ze-yun-xu-xuan-zhong-tong-yi-ri-qi')">
-        <wd-calendar-view type="daterange" allow-same-day v-model="value3" :switch-mode="switchMode"></wd-calendar-view>
-      </demo-group-item>
-    </demo-group>
-
-    <demo-group :title="$t('zu-jian-bian-ti')">
-      <demo-group-item :title="$t('qie-huan-mo-shi')">
-        <wd-radio-group v-model="switchMode" type="button">
-          <wd-radio value="none">none</wd-radio>
-          <wd-radio value="month">month</wd-radio>
-          <wd-radio value="year-month">year-month</wd-radio>
-        </wd-radio-group>
-      </demo-group-item>
-    </demo-group>
-
-    <demo-group :title="$t('zu-jian-yang-shi')">
-      <demo-group-item no-padding :title="$t('zi-ding-yi-ri-qi')">
-        <wd-calendar-view type="daterange" allow-same-day v-model="value6" :formatter="formatter" :switch-mode="switchMode"></wd-calendar-view>
-      </demo-group-item>
-
-      <demo-group-item no-padding :title="$t('she-zhi-zhou-qi-shi-ri')">
-        <wd-calendar-view :first-day-of-week="1" v-model="value8" :switch-mode="switchMode"></wd-calendar-view>
-      </demo-group-item>
-    </demo-group>
-
-    <demo-group :title="$t('te-shu-yang-shi')">
-      <demo-group-item no-padding :title="$t('xian-zhi-zui-da-xuan-ze-fan-wei')">
-        <wd-calendar-view type="daterange" :max-range="3" v-model="value7" :switch-mode="switchMode"></wd-calendar-view>
-      </demo-group-item>
-    </demo-group>
+      <demo-group :title="$t('te-shu-yang-shi')">
+        <demo-group-item no-padding :title="$t('xian-zhi-zui-da-xuan-ze-fan-wei')">
+          <wd-calendar-view type="daterange" :max-range="3" v-model="value7" :switch-mode="switchMode"></wd-calendar-view>
+        </demo-group-item>
+      </demo-group>
+    </view>
   </page-wraper>
 </template>
 <script lang="ts" setup>
@@ -141,4 +143,23 @@ function handleChange3({ value }: any) {
   value3.value = value
 }
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.page-calendar-view {
+  &__panel {
+    &--compact {
+      margin: 0 15px $spacing-main;
+    }
+
+    &--wide {
+      margin: 0 $spacing-loose $spacing-main;
+    }
+  }
+
+  &__panel-title {
+    margin-bottom: $spacing-main;
+    font-size: 13px;
+    line-height: $n-18;
+    color: $text-secondary;
+  }
+}
+</style>

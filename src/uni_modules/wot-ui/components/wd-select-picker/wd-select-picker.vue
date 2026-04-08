@@ -37,7 +37,7 @@
             placement="right"
             @change="handleChange"
           >
-            <view v-for="item in filterColumns" :key="item[valueKey]" :id="'check' + item[valueKey]">
+            <view v-for="item in filterColumns" :key="item[valueKey]" :id="'check' + item[valueKey]" class="wd-select-picker__checkbox-item">
               <wd-checkbox :name="item[valueKey]" :disabled="item.disabled" custom-label-class="wd-select-picker__checkbox-label">
                 <block v-if="showHighlightText">
                   <block v-for="text in item[labelKey]" :key="text.label">

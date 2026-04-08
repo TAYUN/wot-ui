@@ -1,6 +1,6 @@
 <template>
   <wd-toast></wd-toast>
-  <view class="loating-panel">
+  <view class="page-floating-panel">
     <page-wraper>
       <wd-tabs v-model="tab">
         <wd-tab :title="$t('ji-chu-yong-fa-1')">
@@ -12,12 +12,14 @@
         </wd-tab>
         <wd-tab :title="$t('zi-ding-yi-mao-dian-0')">
           <wd-floating-panel v-model:height="height" :anchors="anchors" safeAreaInsetBottom @heightChange="handleHeightChange">
-            <view class="inner-content">{{ $t('"zi-ding-yi-mao-dian"') }} {{ anchors.map(addUnit) }} - {{ addUnit(height.toFixed(0)) }}</view>
+            <view class="page-floating-panel__content">
+              {{ $t('"zi-ding-yi-mao-dian"') }} {{ anchors.map(addUnit) }} - {{ addUnit(height.toFixed(0)) }}
+            </view>
           </wd-floating-panel>
         </wd-tab>
         <wd-tab :title="$t('jin-tou-bu-tuo-zhuai-0')">
           <wd-floating-panel :contentDraggable="false">
-            <view class="inner-content">{{ $t('nei-rong-qu-bu-ke-yi-tuo-zhuai') }}</view>
+            <view class="page-floating-panel__content">{{ $t('nei-rong-qu-bu-ke-yi-tuo-zhuai') }}</view>
           </wd-floating-panel>
         </wd-tab>
       </wd-tabs>
@@ -52,10 +54,13 @@ onLoad(() => {
 </script>
 
 <style lang="scss" scoped>
-.inner-content {
-  padding: 1rem;
-  text-align: center;
-  font-size: 16px;
-  font-weight: bold;
+.page-floating-panel {
+  &__content {
+    padding: $padding-main;
+    font-size: $typography-body-size-extra-large;
+    font-weight: $typography-body-font-weight-strong;
+    text-align: center;
+    color: $text-main;
+  }
 }
 </style>

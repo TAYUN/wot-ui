@@ -55,7 +55,7 @@
       </demo-group>
 
       <wd-popup v-model="popupState.basic" custom-style="border-radius: 32rpx;" @close="closePopup('basic')">
-        <text class="custom-txt">{{ $t('dan-dan-dan') }}</text>
+        <text class="page-popup__text">{{ $t('dan-dan-dan') }}</text>
       </wd-popup>
       <wd-popup v-model="popupState.top" position="top" custom-style="height: 200px;" @close="closePopup('top')"></wd-popup>
       <wd-popup v-model="popupState.right" position="right" custom-style="width: 200px;" @close="closePopup('right')"></wd-popup>
@@ -95,21 +95,26 @@
       ></wd-popup>
 
       <wd-popup v-model="popupState.nested" position="center" custom-style="padding: 20px; border-radius: 16px;" @close="closeNestedPopup">
-        <view class="nested-popup-content">
-          <text class="nested-title">{{ $t('fu-dan-chuang-pu-tong-mo-shi') }}</text>
-          <text class="nested-desc">
+        <view class="nested-popup__content">
+          <text class="nested-popup__title">{{ $t('fu-dan-chuang-pu-tong-mo-shi') }}</text>
+          <text class="nested-popup__desc">
             {{ $t('dian-ji-xia-fang-an-niu-fen-bie-da-kai-pu-tong-zi-dan-chuang-he-qi-yong-rootportal-de-zi-dan-chuang') }}
           </text>
-          <view class="nested-buttons">
+          <view class="nested-popup__buttons">
             <wd-button type="primary" size="small" @click="openChildPopup(false)">{{ $t('da-kai-pu-tong-zi-dan-chuang') }}</wd-button>
             <wd-button type="success" size="small" @click="openChildPopup(true)">{{ $t('da-kai-chuan-song-zi-dan-chuang') }}</wd-button>
           </view>
         </view>
 
-        <wd-popup v-model="popupState.child" position="center" custom-style="padding: 20px; border-radius: 16px;" @close="closePopup('child')">
-          <view class="nested-popup-content">
-            <text class="nested-title">{{ $t('zi-dan-chuang-pu-tong-mo-shi') }}</text>
-            <text class="nested-desc">{{ $t('zhe-ge-zi-dan-chuang-he-fu-dan-chuang-chu-yu-tong-yi-ceng-ji') }}</text>
+        <wd-popup
+          v-model="popupState.child"
+          position="center"
+          custom-style="padding: 20px;height:300px;width:300px; border-radius: 16px;"
+          @close="closePopup('child')"
+        >
+          <view class="nested-popup__content">
+            <text class="nested-popup__title">{{ $t('zi-dan-chuang-pu-tong-mo-shi') }}</text>
+            <text class="nested-popup__desc">{{ $t('zhe-ge-zi-dan-chuang-he-fu-dan-chuang-chu-yu-tong-yi-ceng-ji') }}</text>
             <wd-button type="primary" size="small" @click="closePopup('child')">{{ $t('guan-bi') }}</wd-button>
           </view>
         </wd-popup>
@@ -118,12 +123,12 @@
           v-model="popupState.childPortal"
           root-portal
           position="center"
-          custom-style="padding: 20px; border-radius: 16px;"
+          custom-style="padding: 20px;height:300px;width:300px; border-radius: 16px;"
           @close="closePopup('childPortal')"
         >
-          <view class="nested-popup-content">
-            <text class="nested-title">{{ $t('zi-dan-chuang-chuan-song-mo-shi') }}</text>
-            <text class="nested-desc">{{ $t('kai-qi-rootportal-hou-zi-dan-chuang-hui-tuo-li-fu-ceng-ji-xuan-ran') }}</text>
+          <view class="nested-popup__content">
+            <text class="nested-popup__title">{{ $t('zi-dan-chuang-chuan-song-mo-shi') }}</text>
+            <text class="nested-popup__desc">{{ $t('kai-qi-rootportal-hou-zi-dan-chuang-hui-tuo-li-fu-ceng-ji-xuan-ran') }}</text>
             <wd-button type="success" size="small" @click="closePopup('childPortal')">{{ $t('guan-bi') }}</wd-button>
           </view>
         </wd-popup>
@@ -185,56 +190,47 @@ function openChildPopup(useRootPortal: boolean) {
 
 <style lang="scss" scoped>
 .page-popup {
-  .custom-txt {
-    color: black;
-    width: 400rpx;
-    height: 400rpx;
+  &__text {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 40rpx;
-    border-radius: 32rpx;
-  }
-
-  .nested-popup-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20rpx;
-  }
-
-  .nested-title {
-    color: black;
-    font-size: 36rpx;
-    font-weight: bold;
-    text-align: center;
-  }
-
-  .nested-desc {
-    color: #666;
-    font-size: 28rpx;
-    text-align: center;
-    line-height: 1.5;
-    margin: 10rpx 0;
-  }
-
-  .nested-buttons {
-    display: flex;
-    gap: 20rpx;
-    margin-top: 20rpx;
+    width: 400rpx;
+    height: 400rpx;
+    color: $text-main;
+    font-size: $n-20;
+    border-radius: $radius-super-large;
   }
 }
 
-.wot-theme-dark {
-  .page-popup {
-    .custom-txt,
-    .nested-title {
-      color: $-dark-color;
-    }
+.nested-popup {
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-super-loose;
+    height: 100%;
+  }
 
-    .nested-desc {
-      color: $-dark-color3;
-    }
+  &__title {
+    color: $text-main;
+    font-size: $typography-title-size-main;
+    font-weight: $font-weight-bold;
+    text-align: center;
+  }
+
+  &__desc {
+    margin: $spacing-main 0;
+    color: $text-auxiliary;
+    font-size: $typography-body-size-main;
+    text-align: center;
+    line-height: $typography-body-line--height-size-main;
+  }
+
+  &__buttons {
+    display: flex;
+    gap: $spacing-super-loose;
+    margin-top: $spacing-super-loose;
   }
 }
 </style>

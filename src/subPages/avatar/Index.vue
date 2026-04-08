@@ -2,7 +2,7 @@
   <page-wraper>
     <demo-group :title="$t('zu-jian-lei-xing')">
       <demo-group-item :title="$t('ji-chu-yong-fa-0')">
-        <view class="demo-avatar-row">
+        <view class="page-avatar__row">
           <wd-avatar :src="avatarURL" />
           <wd-avatar text="U" />
           <wd-avatar icon="user" />
@@ -13,31 +13,31 @@
         <wd-avatar-group>
           <wd-avatar :src="avatarURL" />
           <wd-avatar icon="star-fill" />
-          <wd-avatar text="A" bg-color="#1E90FF" />
-          <wd-avatar text="B" bg-color="#228B22" />
+          <wd-avatar text="A" bg-color="var(--wot-primary-6, #1E90FF)" />
+          <wd-avatar text="B" bg-color="var(--wot-success-main, #228B22)" />
         </wd-avatar-group>
       </demo-group-item>
     </demo-group>
 
     <demo-group :title="$t('zu-jian-zhuang-tai')">
       <demo-group-item :title="$t('ke-dian-ji')">
-        <view class="demo-avatar-row">
+        <view class="page-avatar__row">
           <wd-avatar size="large" :src="avatarURL" @click="handleClick" />
-          <wd-avatar size="large" :text="$t('dian-wo')" bg-color="#1E90FF" @click="handleClick" />
+          <wd-avatar size="large" :text="$t('dian-wo')" bg-color="var(--wot-primary-6, #1E90FF)" @click="handleClick" />
         </view>
       </demo-group-item>
     </demo-group>
 
     <demo-group :title="$t('zu-jian-yang-shi')">
       <demo-group-item :title="$t('tou-xiang-xing-zhuang')">
-        <view class="demo-avatar-row">
+        <view class="page-avatar__row">
           <wd-avatar :src="avatarURL" shape="square" />
           <wd-avatar :src="avatarURL" shape="round" />
         </view>
       </demo-group-item>
 
       <demo-group-item :title="$t('tou-xiang-chi-cun')">
-        <view class="demo-avatar-row">
+        <view class="page-avatar__row">
           <wd-avatar v-for="size in sizes" :key="size" :src="avatarURL" :size="size" />
           <wd-avatar :src="avatarURL" :size="80" />
           <wd-avatar :src="avatarURL" :size="60" />
@@ -46,7 +46,7 @@
       </demo-group-item>
 
       <demo-group-item :title="$t('zi-ding-yi-yan-se-0')">
-        <view class="demo-avatar-row">
+        <view class="page-avatar__row">
           <wd-avatar
             v-for="(item, index) in customColors"
             :key="index"
@@ -62,18 +62,18 @@
 
     <demo-group :title="$t('te-shu-yang-shi')">
       <demo-group-item :title="$t('dai-hui-ji-de-tou-xiang')">
-        <view class="demo-avatar-row">
-          <wd-badge modelValue="10" type="primary">
+        <view class="page-avatar__row">
+          <wd-badge value="10" type="primary">
             <wd-avatar :src="avatarURL" shape="square" />
           </wd-badge>
-          <wd-badge modelValue="20" type="danger">
-            <wd-avatar :src="avatarURL" shape="square" />
-          </wd-badge>
-          <wd-badge is-dot>
+          <wd-badge value="20" type="danger">
             <wd-avatar :src="avatarURL" shape="square" />
           </wd-badge>
           <wd-badge is-dot>
-            <wd-avatar text="A" shape="square" bg-color="#1E90FF" />
+            <wd-avatar :src="avatarURL" shape="square" />
+          </wd-badge>
+          <wd-badge is-dot>
+            <wd-avatar text="A" shape="square" bg-color="var(--wot-primary-6, #1E90FF)" />
           </wd-badge>
         </view>
       </demo-group-item>
@@ -81,12 +81,12 @@
 
     <demo-group :title="$t('nei-rong-xing-tai')">
       <demo-group-item :title="$t('ziDingYiNeiRong')">
-        <view class="demo-avatar-row">
+        <view class="page-avatar__row">
           <wd-avatar>
-            <view class="custom-content">VIP</view>
+            <view class="page-avatar__custom-content">VIP</view>
           </wd-avatar>
           <wd-avatar>
-            <wd-icon name="star-fill" size="24px" color="#f0883a" />
+            <wd-icon name="star-fill" size="24px" color="var(--wot-warning-main, #f0883a)" />
           </wd-avatar>
         </view>
       </demo-group-item>
@@ -97,46 +97,46 @@
         <wd-avatar-group :max-count="3">
           <wd-avatar :src="avatarURL" />
           <wd-avatar icon="star-fill" />
-          <wd-avatar text="A" bg-color="#1E90FF" />
-          <wd-avatar text="B" bg-color="#228B22" />
-          <wd-avatar text="C" bg-color="#DC143C" />
+          <wd-avatar text="A" bg-color="var(--wot-primary-6, #1E90FF)" />
+          <wd-avatar text="B" bg-color="var(--wot-success-main, #228B22)" />
+          <wd-avatar text="C" bg-color="var(--wot-danger-main, #DC143C)" />
         </wd-avatar-group>
       </demo-group-item>
 
       <demo-group-item :title="$t('tou-xiang-zu-die-ceng-fang-xiang')">
-        <view class="demo-avatar-column">
+        <view class="page-avatar__column">
           <wd-avatar-group cascading="left-up" :max-count="4">
             <wd-avatar :src="avatarURL" />
             <wd-avatar icon="star-fill" />
-            <wd-avatar text="A" bg-color="#1E90FF" />
-            <wd-avatar text="B" bg-color="#228B22" />
-            <wd-avatar text="C" bg-color="#DC143C" />
+            <wd-avatar text="A" bg-color="var(--wot-primary-6, #1E90FF)" />
+            <wd-avatar text="B" bg-color="var(--wot-success-main, #228B22)" />
+            <wd-avatar text="C" bg-color="var(--wot-danger-main, #DC143C)" />
           </wd-avatar-group>
           <wd-avatar-group cascading="right-up" :max-count="4">
             <wd-avatar :src="avatarURL" />
             <wd-avatar icon="star-fill" />
-            <wd-avatar text="A" bg-color="#1E90FF" />
-            <wd-avatar text="B" bg-color="#228B22" />
-            <wd-avatar text="C" bg-color="#DC143C" />
+            <wd-avatar text="A" bg-color="var(--wot-primary-6, #1E90FF)" />
+            <wd-avatar text="B" bg-color="var(--wot-success-main, #228B22)" />
+            <wd-avatar text="C" bg-color="var(--wot-danger-main, #DC143C)" />
           </wd-avatar-group>
         </view>
       </demo-group-item>
 
       <demo-group-item :title="$t('tou-xiang-zu-chui-zhi-dui-die')">
-        <view class="demo-avatar-row">
+        <view class="page-avatar__row">
           <wd-avatar-group vertical :max-count="4">
             <wd-avatar :src="avatarURL" />
             <wd-avatar icon="star-fill" />
-            <wd-avatar text="A" bg-color="#1E90FF" />
-            <wd-avatar text="B" bg-color="#228B22" />
-            <wd-avatar text="C" bg-color="#DC143C" />
+            <wd-avatar text="A" bg-color="var(--wot-primary-6, #1E90FF)" />
+            <wd-avatar text="B" bg-color="var(--wot-success-main, #228B22)" />
+            <wd-avatar text="C" bg-color="var(--wot-danger-main, #DC143C)" />
           </wd-avatar-group>
           <wd-avatar-group vertical cascading="right-up" :max-count="4">
             <wd-avatar :src="avatarURL" />
             <wd-avatar icon="star-fill" />
-            <wd-avatar text="A" bg-color="#1E90FF" />
-            <wd-avatar text="B" bg-color="#228B22" />
-            <wd-avatar text="C" bg-color="#DC143C" />
+            <wd-avatar text="A" bg-color="var(--wot-primary-6, #1E90FF)" />
+            <wd-avatar text="B" bg-color="var(--wot-success-main, #228B22)" />
+            <wd-avatar text="C" bg-color="var(--wot-danger-main, #DC143C)" />
           </wd-avatar-group>
         </view>
       </demo-group-item>
@@ -154,10 +154,10 @@ const toast = useToast()
 const avatarURL = 'https://wot-ui.cn/assets/panda.jpg'
 const sizes = ['large', 'medium', 'normal', 'small']
 const customColors = [
-  { bgColor: '#DC143C', color: '#fff', text: 'W' },
-  { bgColor: '#228B22', color: '#fff', text: 'O' },
-  { bgColor: '#1E90FF', color: '#fff', text: 'T' },
-  { bgColor: '#EEEEEE', color: '#7B8198', icon: 'user' }
+  { bgColor: 'var(--wot-danger-main, #DC143C)', color: 'var(--wot-text-white, #fff)', text: 'W' },
+  { bgColor: 'var(--wot-success-main, #228B22)', color: 'var(--wot-text-white, #fff)', text: 'O' },
+  { bgColor: 'var(--wot-primary-6, #1E90FF)', color: 'var(--wot-text-white, #fff)', text: 'T' },
+  { bgColor: 'var(--wot-filled-bottom, #EEEEEE)', color: 'var(--wot-text-secondary, #7B8198)', icon: 'user' }
 ]
 
 const handleClick = () => {
@@ -166,21 +166,25 @@ const handleClick = () => {
 </script>
 
 <style lang="scss" scoped>
-.demo-avatar-row {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
-}
+.page-avatar {
+  &__row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: $spacing-loose;
+  }
 
-.demo-avatar-column {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
+  &__column {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-extra-loose;
+  }
 
-.custom-content {
-  font-size: 12px;
-  font-weight: 600;
+  &__custom-content {
+    font-size: $typography-label-size-main;
+    font-weight: $font-weight-medium;
+    line-height: $typography-label-line--height-size-main;
+    color: $text-main;
+  }
 }
 </style>

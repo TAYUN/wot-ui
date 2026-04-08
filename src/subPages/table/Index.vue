@@ -32,7 +32,7 @@
           <wd-table-column prop="name" :label="$t('xing-ming')" fixed sortable align="center"></wd-table-column>
           <wd-table-column prop="grade" :label="$t('fen-shu')" fixed sortable align="center">
             <template #value="{ row }">
-              <view class="custom-class">
+              <view class="page-table__custom-cell">
                 <text>{{ row.grade }}</text>
                 <text>{{ $t('tong-bi-rowcompare', row.compare) }}</text>
               </view>
@@ -58,7 +58,7 @@
           <wd-table-column prop="name" :label="$t('xing-ming')" fixed sortable align="center"></wd-table-column>
           <wd-table-column prop="grade" :label="$t('fen-shu')" align="center">
             <template #value="{ row }">
-              <view class="custom-class">
+              <view class="page-table__custom-cell">
                 <text>{{ row.grade }}</text>
                 <text>{{ $t('tong-bi-rowcompare-0', row.compare) }}</text>
               </view>
@@ -320,12 +320,14 @@ const paginationData = computed(() => {
  */
 /** 合并单元格示例数据（取前 5 条） */
 /** 虚拟滚动 demo 数据（1000 行） */
-const virtualData = Array.from({ length: 10000 }, (_, i) => ({
-  index: i + 1,
-  name: t('shu-bingi-1-hao', i + 1),
-  score: Math.floor(Math.random() * 100),
-  remark: t('zhe-shi-shu-bingi-1-hao-de-bei-zhu-xin-xi', i + 1)
-}))
+const virtualData = computed(() => {
+  return Array.from({ length: 10000 }, (_, i) => ({
+    index: i + 1,
+    name: t('shu-bingi-1-hao', i + 1),
+    score: Math.floor(Math.random() * 100),
+    remark: t('zhe-shi-shu-bingi-1-hao-de-bei-zhu-xin-xi', i + 1)
+  }))
+})
 
 const spanData = computed(() => dataList.value.slice(0, 5))
 
@@ -422,11 +424,13 @@ function handleRowClick({ rowIndex }: any) {
 }
 </script>
 <style lang="scss" scoped>
-.custom-class {
-  height: 80rpx;
-  width: 220rpx;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.page-table {
+  &__custom-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 220rpx;
+    height: 80rpx;
+  }
 }
 </style>

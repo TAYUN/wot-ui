@@ -3,10 +3,10 @@
     <view class="page-count-to">
       <demo-group :title="$t('zu-jian-lei-xing')">
         <demo-group-item :title="$t('jiBenYongFa')">
-          <wd-count-to :endVal="endVal" suffix="年" color="#16baaa" />
-          <wd-count-to prefix="￥" :decimals="2" :endVal="186.321" suffix="%" color="#1e9fff" />
-          <wd-count-to prefix="￥" :decimals="2" :endVal="21286.321" suffix="%" color="#ff5722" />
-          <wd-count-to prefix="￥" :decimals="2" :endVal="21286.321" suffix="%" color="#ffb800" :duration="2000" />
+          <wd-count-to :endVal="endVal" suffix="年" color="var(--wot-success-main)" />
+          <wd-count-to prefix="￥" :decimals="2" :endVal="186.321" suffix="%" color="var(--wot-primary-6)" />
+          <wd-count-to prefix="￥" :decimals="2" :endVal="21286.321" suffix="%" color="var(--wot-danger-main)" />
+          <wd-count-to prefix="￥" :decimals="2" :endVal="21286.321" suffix="%" color="var(--wot-warning-main)" :duration="2000" />
         </demo-group-item>
       </demo-group>
 
@@ -22,7 +22,16 @@
 
       <demo-group :title="$t('te-shu-yang-shi')">
         <demo-group-item :title="$t('shou-dong-kong-zhi')">
-          <wd-count-to ref="countTo" :auto-start="false" prefix="￥" :startVal="1000" :decimals="3" :endVal="9999.32" suffix="%" color="#1e9fff" />
+          <wd-count-to
+            ref="countTo"
+            :auto-start="false"
+            prefix="￥"
+            :startVal="1000"
+            :decimals="3"
+            :endVal="9999.32"
+            suffix="%"
+            color="var(--wot-primary-6)"
+          />
 
           <wd-grid clickable border>
             <wd-grid-item :text="$t('kai-shi')" icon="play-circle" @click="start" />

@@ -28,10 +28,10 @@
       </demo-group>
 
       <wd-root-portal v-if="showBasic">
-        <view class="basic-modal">
-          <view class="basic-modal-content">
-            <text class="basic-modal-title">{{ $t('ji-ben-tan-chuang') }}</text>
-            <text class="basic-modal-text">{{ $t('zhe-shi-yi-ge-shi-yong-root-portal-de-ji-ben-tan-chuang-shi-li') }}</text>
+        <view class="page-root-portal__modal">
+          <view class="page-root-portal__modal-content">
+            <text class="page-root-portal__modal-title">{{ $t('ji-ben-tan-chuang') }}</text>
+            <text class="page-root-portal__modal-text">{{ $t('zhe-shi-yi-ge-shi-yong-root-portal-de-ji-ben-tan-chuang-shi-li') }}</text>
             <wd-button type="primary" @click="showBasic = false">{{ $t('guan-bi') }}</wd-button>
           </view>
         </view>
@@ -113,48 +113,51 @@ function handlePickerConfirm({ value }: { value: string[] }) {
 .page-root-portal__tips {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: $spacing-tight;
 }
 
 .page-root-portal__tip {
   display: block;
-  color: #666;
-  font-size: 14px;
-  line-height: 22px;
+  color: $text-auxiliary;
+  font-size: $typography-body-size-main;
+  line-height: $typography-body-line--height-size-large;
 }
 
-.basic-modal {
+.page-root-portal__modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: $opacfilled-main-cover;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
 }
 
-.basic-modal-content {
-  background-color: #fff;
-  padding: 24px;
-  border-radius: 12px;
+.page-root-portal__modal-content {
+  width: 280px;
+  padding: $padding-ultra-loose;
+  border-radius: $radius-extra-large;
+  background-color: $filled-oppo;
   width: 280px;
   text-align: center;
 }
 
-.basic-modal-title {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 12px;
+.page-root-portal__modal-title {
   display: block;
+  margin-bottom: $spacing-loose;
+  font-size: $typography-title-size-main;
+  font-weight: $font-weight-bold;
+  color: $text-main;
 }
 
-.basic-modal-text {
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 20px;
+.page-root-portal__modal-text {
   display: block;
+  margin-bottom: $spacing-super-loose;
+  font-size: $typography-body-size-main;
+  color: $text-auxiliary;
+  line-height: $typography-body-line--height-size-main;
 }
 </style>

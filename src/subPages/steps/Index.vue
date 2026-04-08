@@ -15,7 +15,7 @@
             <wd-step :title="$t('bu-zhou-2')" :description="$t('deng-lu-zhang-hao-bin-ding-shou-ji')" />
             <wd-step :title="$t('bu-zhou-3')" :description="$t('wan-shan-ge-ren-xin-xi')" />
           </wd-steps>
-          <view class="steps-action">
+          <view class="page-steps__action">
             <wd-button size="small" @click="nextStep">{{ $t('xia-yi-bu') }}</wd-button>
           </view>
         </demo-group-item>
@@ -72,7 +72,7 @@
             <wd-step :title="$t('bu-zhou-2')" description="登录账号并绑定手机" />
             <wd-step :title="$t('bu-zhou-3-0')" description="完善个人信息" />
           </wd-steps>
-          <view class="steps-action">
+          <view class="page-steps__action">
             <wd-button size="small" @click="nextDotStep">{{ $t('xia-yi-bu') }}</wd-button>
           </view>
         </demo-group-item>
@@ -89,7 +89,7 @@
             <wd-step :title="$t('bu-zhou-2')" description="登录账号并绑定手机" />
             <wd-step :title="$t('bu-zhou-3-0')" description="完善个人信息" />
           </wd-steps>
-          <view class="steps-action">
+          <view class="page-steps__action">
             <wd-button size="small" @click="nextVerticalDotStep">{{ $t('xia-yi-bu') }}</wd-button>
           </view>
         </demo-group-item>
@@ -118,7 +118,7 @@ function nextVerticalDotStep() {
 </script>
 <style lang="scss" scoped>
 .page-steps {
-  .steps-action {
+  &__action {
     margin-top: 15px;
     text-align: center;
   }

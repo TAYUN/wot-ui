@@ -120,6 +120,6 @@ const onDelete = () => showToast(t('shan-chu'))
 }
 
 .page-keyboard__custom-title {
-  color: #ee0a24;
+  color: $danger-main;
 }
 </style>

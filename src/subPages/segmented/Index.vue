@@ -4,7 +4,7 @@
       <view class="page-segmented">
         <demo-group :title="$t('zu-jian-lei-xing')">
           <demo-group-item no-padding :title="$t('ji-chu-yong-fa-0')">
-            <view class="section">
+            <view class="page-segmented__section">
               <wd-segmented :options="list" v-model:value="currentBasic"></wd-segmented>
             </view>
           </demo-group-item>
@@ -12,7 +12,7 @@
 
         <demo-group :title="$t('zu-jian-zhuang-tai')">
           <demo-group-item no-padding :title="$t('jin-yong-fen-duan-qi')">
-            <view class="section">
+            <view class="page-segmented__section">
               <wd-segmented :options="list" v-model:value="currentDisabled" disabled></wd-segmented>
             </view>
           </demo-group-item>
@@ -20,7 +20,7 @@
 
         <demo-group :title="$t('zu-jian-bian-ti')">
           <demo-group-item no-padding :title="$t('lun-kuo-zhu-ti')">
-            <view class="section">
+            <view class="page-segmented__section">
               <wd-segmented :options="list" v-model:value="currentOutline" theme="outline"></wd-segmented>
             </view>
           </demo-group-item>
@@ -28,12 +28,12 @@
 
         <demo-group :title="$t('zu-jian-yang-shi')">
           <demo-group-item no-padding :title="$t('zi-ding-yi-xuan-ran-fen-duan-qi-biao-qian')">
-            <view class="section">
+            <view class="page-segmented__section">
               <wd-segmented :options="list1" v-model:value="currentCustom" :vibrate-short="true" @change="handleChange">
                 <template #label="{ option }">
-                  <view class="section-slot">
-                    <image class="avatar" :src="option.payload.avatar" />
-                    <view class="name">{{ option.value }}</view>
+                  <view class="page-segmented__section-slot">
+                    <image class="page-segmented__avatar" :src="option.payload.avatar" />
+                    <view class="page-segmented__name">{{ option.value }}</view>
                   </view>
                 </template>
               </wd-segmented>
@@ -43,16 +43,22 @@
 
         <demo-group :title="$t('te-shu-yang-shi')">
           <demo-group-item no-padding :title="$t('dai-zhen-dong-xiao-guo-de-fen-duan-qi')">
-            <view class="section">
+            <view class="page-segmented__section">
               <wd-segmented :options="list" v-model:value="currentVibrate" :vibrate-short="true"></wd-segmented>
             </view>
           </demo-group-item>
-          <wd-popup v-model="showPopup" position="bottom" @after-enter="handlePopupShow" closable custom-style="height: 200px; padding: 0 24rpx;">
-            <view class="title">{{ $t('zai-dan-chu-kuang-zhong-shi-yong-0') }}</view>
+          <wd-popup
+            v-model="showPopup"
+            position="bottom"
+            @after-enter="handlePopupShow"
+            closable
+            custom-style="height: var(--wot-n-200); padding: 0 var(--wot-padding-loose);"
+          >
+            <view class="page-segmented__title">{{ $t('zai-dan-chu-kuang-zhong-shi-yong-0') }}</view>
             <wd-segmented :options="list" v-model:value="currentPopup" ref="segmentedRef" @change="handleChange"></wd-segmented>
           </wd-popup>
           <demo-group-item no-padding :title="$t('zai-dan-chu-kuang-zhong-shi-yong')">
-            <view class="section">
+            <view class="page-segmented__section">
               <wd-button @click="handleClick">{{ $t('da-kai-dan-chuang') }}</wd-button>
             </view>
           </demo-group-item>
@@ -122,26 +128,34 @@ function handlePopupShow() {
 }
 </script>
 <style lang="scss" scoped>
-.section {
-  width: 100%;
-  padding: 0 24rpx;
-  box-sizing: border-box;
-  &-slot {
-    padding: 4px;
+.page-segmented {
+  &__section {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 $padding-loose;
   }
-}
 
-.avatar {
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-}
+  &__section-slot {
+    padding: $padding-super-tight;
+  }
 
-.title {
-  display: flex;
-  font-size: 32rpx;
-  align-items: center;
-  justify-content: center;
-  padding: 24rpx 0;
+  &__avatar {
+    width: $n-32;
+    height: $n-32;
+    border-radius: $radius-radius-full;
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $padding-loose 0;
+    font-size: $typography-body-size-extra-large;
+    color: $text-main;
+  }
+
+  &__name {
+    color: $text-main;
+  }
 }
 </style>

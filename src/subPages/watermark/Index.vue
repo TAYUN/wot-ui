@@ -16,7 +16,7 @@
     <view class="page-watermark">
       <demo-group :title="$t('zu-jian-lei-xing')">
         <demo-group-item :title="$t('ju-bu-wen-zi-shui-yin')">
-          <view class="watermark-wrap">
+          <view class="page-watermark__wrap">
             <wd-watermark :full-screen="false" content="wot-ui"></wd-watermark>
             <wd-cell-group border>
               <wd-cell :title="$t('xiao-xi-tong-zhi')" center>
@@ -45,9 +45,9 @@
         </demo-group-item>
 
         <demo-group-item :title="$t('ju-bu-tu-pian-shui-yin')">
-          <view class="watermark-wrap">
+          <view class="page-watermark__wrap">
             <wd-watermark :full-screen="false" image="https://v2.wot-ui.cn/logo.svg" :image-width="38" :image-height="38"></wd-watermark>
-            <wd-checkbox-group v-model="checkVal" type="square" placement="right">
+            <wd-checkbox-group custom-class="page-watermark__radio-group" v-model="checkVal" type="square" placement="right">
               <wd-checkbox name="1">{{ $t('cha-kan-quan-xian') }}</wd-checkbox>
               <wd-checkbox name="2">{{ $t('bian-ji-quan-xian') }}</wd-checkbox>
               <wd-checkbox name="3">{{ $t('shan-chu-quan-xian') }}</wd-checkbox>
@@ -60,14 +60,14 @@
         </demo-group-item>
 
         <demo-group-item :title="$t('ju-bu-duo-hang-wen-zi-shui-yin')">
-          <view class="watermark-wrap">
+          <view class="page-watermark__wrap">
             <wd-watermark
               :full-screen="false"
               :width="150"
               :height="150"
               content="多行文字水印测试自动换行效果展示，这是一段很长的文本"
             ></wd-watermark>
-            <wd-radio-group v-model="radioVal" type="dot" placement="right">
+            <wd-radio-group custom-class="page-watermark__radio-group" v-model="radioVal" type="dot" placement="right">
               <wd-radio value="1">简体中文</wd-radio>
               <wd-radio value="2">繁体中文</wd-radio>
               <wd-radio value="3">English</wd-radio>
@@ -82,14 +82,14 @@
 
       <demo-group :title="$t('te-shu-yang-shi')">
         <demo-group-item :title="$t('quan-ju-shui-yin')">
-          <view class="global-action-row">
+          <view class="page-watermark__global-action-row">
             <wd-button @click="showGlobalWatermark = !showGlobalWatermark" size="small" type="primary">
               {{ showGlobalWatermark ? '关闭全局水印' : '开启全局水印' }}
             </wd-button>
 
             <template v-if="showGlobalWatermark">
               <wd-button @click="toggleGlobalType" size="small" type="info">
-                {{ $t('qie-huan-wei-globaltype-text-tu-pian-wen-zi', globalType === 'text' ? '图片' : '文字') }}
+                {{ $t('qie-huan-wei-globaltype-text-tu-pian-wen-zi') }}{{ globalType === 'text' ? '图片' : '文字' }}
               </wd-button>
               <wd-button @click="toggleGlobalLayout" size="small" type="warning">
                 {{ globalLayout === 'grid' ? '错位布局' : '网格布局' }}
@@ -130,15 +130,25 @@ function toggleGlobalLayout() {
 </script>
 
 <style lang="scss" scoped>
-.watermark-wrap {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-}
+.page-watermark {
+  &__wrap {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
 
-.global-action-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
+  &__global-action-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-loose;
+  }
+
+  :deep() {
+    .page-watermark__radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-loose;
+    }
+  }
 }
 </style>

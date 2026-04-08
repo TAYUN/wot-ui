@@ -1,6 +1,6 @@
 <template>
   <page-wraper>
-    <view class="wraper">
+    <view class="page-index-bar">
       <wd-index-bar sticky v-if="showList.length">
         <view v-for="item in showList" :key="item.index">
           <wd-index-anchor :index="item.index" />
@@ -182,8 +182,8 @@ function handleSearch() {
 }
 </script>
 
-<style lang="scss">
-.wraper {
+<style lang="scss" scoped>
+.page-index-bar {
   height: calc(100vh - var(--window-top));
   height: calc(100vh - var(--window-top) - constant(safe-area-inset-bottom));
   height: calc(100vh - var(--window-top) - env(safe-area-inset-bottom));

@@ -5,7 +5,7 @@
         <wd-text :text="text"></wd-text>
       </demo-group-item>
       <demo-group-item :title="$t('she-zhi-zhu-ti')">
-        <view class="text-row">
+        <view class="page-text__row">
           <wd-text type="primary" :text="$t('zhu-se')"></wd-text>
           <wd-text type="error" :text="$t('cuo-wu')"></wd-text>
           <wd-text type="success" :text="$t('cheng-gong')"></wd-text>
@@ -27,19 +27,19 @@
 
     <demo-group :title="$t('zu-jian-yang-shi')">
       <demo-group-item :title="$t('zi-ding-yi-zi-ti-yan-se')">
-        <wd-text :text="text" color="#36B8C2"></wd-text>
+        <wd-text :text="text" color="var(--wot-primary-7, #36B8C2)"></wd-text>
       </demo-group-item>
       <demo-group-item :title="$t('shi-fou-cu-ti')">
         <wd-text :text="text" bold></wd-text>
       </demo-group-item>
       <demo-group-item :title="$t('zi-ti-da-xiao')">
-        <wd-text :text="text" size="16px"></wd-text>
+        <wd-text :text="text" size="var(--wot-typography-body-size-extra-large)"></wd-text>
       </demo-group-item>
       <demo-group-item title="lines">
-        <wd-text :text="text" :lines="2" size="16px"></wd-text>
+        <wd-text :text="text" :lines="2" size="var(--wot-typography-body-size-extra-large)"></wd-text>
       </demo-group-item>
       <demo-group-item title="lineHeight">
-        <wd-text :text="text" :lines="2" lineHeight="20px"></wd-text>
+        <wd-text :text="text" :lines="2" lineHeight="var(--wot-typography-body-line--height-size-extra-large)"></wd-text>
       </demo-group-item>
       <demo-group-item :title="$t('wen-zi-zhuang-shi')">
         <wd-text :text="text" type="warning" decoration="underline" />
@@ -48,7 +48,7 @@
 
     <demo-group :title="$t('te-shu-yang-shi')">
       <demo-group-item :title="$t('tuo-min')">
-        <view class="text-row text-row--center">
+        <view class="page-text__row page-text__row--center">
           <wd-text :text="$t('zhang-chang-san')" mode="name" :format="true"></wd-text>
           <wd-text text="18888888888" mode="phone" :format="true"></wd-text>
         </view>
@@ -75,13 +75,15 @@ const text = ref<string>(
 )
 </script>
 <style lang="scss" scoped>
-.text-row {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
+.page-text {
+  &__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-loose;
 
-  &--center {
-    align-items: center;
+    &--center {
+      align-items: center;
+    }
   }
 }
 </style>

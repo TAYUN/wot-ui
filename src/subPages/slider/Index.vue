@@ -39,7 +39,7 @@
 
       <demo-group :title="$t('bu-ju-neng-li')">
         <demo-group-item :title="$t('chui-zhi-fang-xiang')">
-          <view class="vertical-demo">
+          <view class="page-slider__vertical-demo">
             <wd-slider v-model="value14" vertical />
             <wd-slider v-model="value16" vertical show-extreme-value />
             <wd-slider v-model="value17" vertical range />
@@ -47,7 +47,7 @@
           </view>
         </demo-group-item>
         <demo-group-item :title="$t('chui-zhi-guan-dao')">
-          <view class="vertical-demo">
+          <view class="page-slider__vertical-demo">
             <wd-slider v-model="value18" vertical theme="capsule" />
             <wd-slider v-model="value20b" vertical theme="capsule" range show-extreme-value />
             <wd-slider v-model="value21" vertical theme="capsule" :marks="marks1" :step="25" />
@@ -100,11 +100,11 @@ const value20b = ref<number[]>([20, 60])
 
 <style lang="scss" scoped>
 .page-slider {
-  .vertical-demo {
+  &__vertical-demo {
     display: flex;
-    gap: 40px;
     align-items: stretch;
-    padding: 20px;
+    gap: $spacing-super-spacious;
+    padding: $padding-super-loose;
     height: 250px;
   }
 }

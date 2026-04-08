@@ -11,20 +11,20 @@
             <wd-form-item :title="$t('sha-ka-la-ka')" prop="value2">
               <wd-input type="text" v-model="model1.value2" :placeholder="$t('qing-shu-ru-sha-ka-la-ka')" />
             </wd-form-item>
-            <view class="footer">
+            <view class="page-form__footer">
               <wd-button type="primary" size="large" @click="handleSubmit1" block>{{ $t('ti-jiao') }}</wd-button>
             </view>
           </wd-form>
         </demo-group-item>
 
         <demo-group-item :title="$t('dong-tai-biao-dan')" transparent>
-          <view class="demo-button">
+          <view class="page-form__button-wrap">
             <wd-button @click="handleClick1" :round="false" block size="large">{{ $t('dong-tai-biao-dan-0') }}</wd-button>
           </view>
         </demo-group-item>
 
         <demo-group-item :title="$t('fu-za-biao-dan')" transparent>
-          <view class="demo-button">
+          <view class="page-form__button-wrap">
             <wd-button @click="handleClick3" :round="false" block size="large">{{ $t('fu-za-biao-dan-0') }}</wd-button>
           </view>
         </demo-group-item>
@@ -32,13 +32,13 @@
 
       <demo-group :title="$t('zu-jian-pei-zhi')">
         <demo-group-item :title="$t('xiao-yan-ti-shi-fang-shi')" transparent>
-          <view class="demo-button">
+          <view class="page-form__button-wrap">
             <wd-button @click="handleClick4" :round="false" block size="large">{{ $t('xiao-yan-ti-shi-fang-shi') }}</wd-button>
           </view>
         </demo-group-item>
 
         <demo-group-item :title="$t('xiao-yan-chu-fa-shi-ji')" transparent>
-          <view class="demo-button">
+          <view class="page-form__button-wrap">
             <wd-button @click="handleClick2" :round="false" block size="large">{{ $t('xiao-yan-chu-fa-shi-ji-0') }}</wd-button>
           </view>
         </demo-group-item>
@@ -119,12 +119,15 @@ function handleClick2() {
 }
 </script>
 <style lang="scss" scoped>
-.demo-button {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 0 24rpx;
-}
-.footer {
-  padding: 16px;
+.page-form {
+  &__button-wrap {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 $padding-loose;
+  }
+
+  &__footer {
+    padding: $padding-main;
+  }
 }
 </style>

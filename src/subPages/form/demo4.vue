@@ -1,7 +1,7 @@
 <template>
   <page-wraper>
     <wd-form ref="form" :model="model" :schema="activeSchema" :error-type="errorType" :title-width="100" border>
-      <wd-cell-group custom-class="group" :title="$t('pei-zhi-qie-huan')">
+      <wd-cell-group custom-class="page-form-demo4__group" :title="$t('pei-zhi-qie-huan')">
         <wd-form-item :title="$t('xiao-yan-yin-qing')" value-align="left">
           <wd-switch size="20" v-model="useZodSchema" active-text="Zod" inactive-text="自定义" />
         </wd-form-item>
@@ -13,7 +13,7 @@
           </wd-radio-group>
         </wd-form-item>
       </wd-cell-group>
-      <wd-cell-group custom-class="group" :title="$t('biao-dan-nei-rong')">
+      <wd-cell-group custom-class="page-form-demo4__group" :title="$t('biao-dan-nei-rong')">
         <wd-form-item :title="$t('wai-bi-ba-bu')" prop="value1">
           <wd-input clearable v-model="model.value1" :placeholder="$t('qing-shu-ru-wai-bi-ba-bu')" />
         </wd-form-item>
@@ -21,7 +21,7 @@
           <wd-input show-password clearable v-model="model.value2" :placeholder="$t('qing-shu-ru-sha-ka-la-ka')" />
         </wd-form-item>
       </wd-cell-group>
-      <view class="footer">
+      <view class="page-form-demo4__footer">
         <wd-button type="primary" size="large" @click="handleSubmit" block>{{ $t('ti-jiao') }}</wd-button>
       </view>
     </wd-form>
@@ -104,13 +104,13 @@ function handleSubmit() {
 }
 </script>
 <style lang="scss" scoped>
-.footer {
-  padding: 16px;
+:deep(.page-form-demo4__group) {
+  &:not(:first-child) {
+    margin-top: $spacing-tight;
+  }
 }
 
-:deep(.group) {
-  &:not(:first-child) {
-    margin-top: 12px;
-  }
+.page-form-demo4__footer {
+  padding: $padding-main;
 }
 </style>

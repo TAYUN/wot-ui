@@ -27,7 +27,7 @@
         </demo-group-item>
       </demo-group>
 
-      <wd-transition :show="show" :name="name" custom-class="block" />
+      <wd-transition :show="show" :name="name" custom-class="page-transition__block" />
 
       <wd-transition
         :show="customShow"
@@ -38,7 +38,7 @@
         leave-class="custom-leave"
         leave-active-class="custom-leave-active"
         leave-to-class="custom-leave-to"
-        custom-class="block"
+        custom-class="page-transition__block"
       />
     </view>
   </page-wraper>
@@ -69,18 +69,18 @@ function runTransition(transitionName: TransitionName) {
 <style lang="scss" scoped>
 .page-transition {
   :deep(.wd-button) {
-    margin: 0 10px 10px 0;
+    margin: 0 $spacing-main $spacing-main 0;
   }
 }
 
-:deep(.block) {
+:deep(.page-transition__block) {
   position: fixed;
   left: 50%;
   top: 50%;
   margin: -50px 0 0 -50px;
   width: 100px;
   height: 100px;
-  background: #0083ff;
+  background: $primary-6;
 }
 
 :deep(.custom-enter-active),
@@ -90,11 +90,11 @@ function runTransition(transitionName: TransitionName) {
 
 :deep(.custom-enter) {
   transform: translate3d(-100px, -100px, 0) rotate(-180deg);
-  background: #ff0000;
+  background: $danger-main;
 }
 
 :deep(.custom-leave-to) {
   transform: translate3d(100px, 100px, 0) rotate(180deg);
-  background: #ff0000;
+  background: $danger-main;
 }
 </style>

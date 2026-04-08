@@ -33,14 +33,14 @@
               <wd-button :disabled="modelValue >= totalPageNum" @click="page7 += 1" size="small" type="danger">{{ $t('xia-yi-ye') }}</wd-button>
             </template>
             <template #size="{ modelValue, totalPageNum }">
-              <view class="custom-pagination__content">
-                <text class="custom-pagination__page">{{ modelValue }}</text>
-                <text class="custom-pagination__separator">/</text>
-                <text class="custom-pagination__total">{{ totalPageNum }}</text>
+              <view class="page-pagination__content">
+                <text class="page-pagination__page">{{ modelValue }}</text>
+                <text class="page-pagination__separator">/</text>
+                <text class="page-pagination__total">{{ totalPageNum }}</text>
               </view>
             </template>
             <template #message="{ total }">
-              <view class="custom-pagination__message">{{ $t('dang-qian-di-page7-ye-gong-total-tiao-shu-ju', page7, total) }}</view>
+              <view class="page-pagination__message">{{ $t('dang-qian-di-page7-ye-gong-total-tiao-shu-ju', page7, total) }}</view>
             </template>
           </wd-pagination>
         </demo-group-item>
@@ -106,30 +106,27 @@ function handleChange7({ value }: any) {
 .page-pagination__stack {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: $spacing-loose;
 }
 
-.button-block {
-  margin-right: 0;
-}
-.custom-pagination__content {
+.page-pagination__content {
   display: flex;
   justify-content: center;
   align-items: center;
   flex: 1;
 }
-.custom-pagination__page {
-  color: #f00;
+.page-pagination__page {
+  color: $danger-main;
 }
-.custom-pagination__separator {
-  margin: 0 5px;
+.page-pagination__separator {
+  margin: 0 $spacing-super-tight;
 }
-.custom-pagination__total {
-  color: #00f;
+.page-pagination__total {
+  color: $primary-6;
 }
-.custom-pagination__message {
-  margin-top: 10px;
-  color: #999;
+.page-pagination__message {
+  margin-top: $spacing-main;
+  color: $text-placeholder;
   text-align: center;
 }
 </style>

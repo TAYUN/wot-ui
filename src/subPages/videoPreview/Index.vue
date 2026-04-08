@@ -9,7 +9,7 @@
 
       <demo-group :title="$t('te-shu-yang-shi')">
         <demo-group-item :title="$t('duo-shi-li-tiao-yong')">
-          <view class="button-row">
+          <view class="page-video-preview__button-row">
             <wd-button @click="open">{{ $t('mo-ren-shi-li') }}</wd-button>
             <wd-button @click="openSub">{{ $t('zhi-ding-shi-li') }}</wd-button>
           </view>
@@ -28,7 +28,7 @@
 <script lang="ts" setup>
 import { type PreviewVideo, type VideoPreviewInstance } from '@/uni_modules/wot-ui/components/wd-video-preview/types'
 import { useVideoPreview } from '@/uni_modules/wot-ui/components/wd-video-preview'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import blackMao from '../img/black_mao.png'
 import { useI18n } from 'vue-i18n'
 
@@ -39,35 +39,37 @@ const { previewVideo: previewSubVideo } = useVideoPreview('sub-preview')
 
 const videoPreviewRef = ref<VideoPreviewInstance>()
 
-const video: PreviewVideo = {
+const video = computed<PreviewVideo>(() => ({
   url: 'https://unpkg.com/wot-design-uni-assets@1.0.3/VID_115503.mp4',
   poster: blackMao,
   title: t('shi-pin-yu-lan')
-}
+}))
 
-const subVideo: PreviewVideo = {
+const subVideo = computed<PreviewVideo>(() => ({
   url: 'https://unpkg.com/wot-design-uni-assets@1.0.3/VID_115503.mp4',
   poster: blackMao,
   title: t('zhi-ding-shi-li-yu-lan')
-}
+}))
 
 function open() {
-  previewVideo(video)
+  previewVideo(video.value)
 }
 
 function openSub() {
-  previewSubVideo(subVideo)
+  previewSubVideo(subVideo.value)
 }
 
 function openByRef() {
-  videoPreviewRef.value?.open(video)
+  videoPreviewRef.value?.open(video.value)
 }
 </script>
 
 <style lang="scss" scoped>
-.button-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
+.page-video-preview {
+  &__button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-loose;
+  }
 }
 </style>

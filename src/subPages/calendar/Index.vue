@@ -112,7 +112,7 @@
         </wd-cell-group>
         <wd-calendar v-model="value19" v-model:visible="show19" :switch-mode="switchMode">
           <template #confirm-right>
-            <wd-button block plain custom-style="margin-left: 10px;" @click="selectToday">{{ $t('xuan-ze-jin-tian') }}</wd-button>
+            <wd-button block plain custom-style="margin-left: var(--wot-spacing-main);" @click="selectToday">{{ $t('xuan-ze-jin-tian') }}</wd-button>
           </template>
         </wd-calendar>
       </demo-group>

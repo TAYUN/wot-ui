@@ -7,110 +7,110 @@
       </wd-dialog>
       <wd-dialog selector="wd-dialog-header-slot">
         <template #header>
-          <image mode="widthFix" style="width: 100%; display: block" :src="blackMao"></image>
+          <image mode="widthFix" class="page-dialog__header-image" :src="blackMao"></image>
         </template>
       </wd-dialog>
 
       <demo-group :title="$t('zu-jian-lei-xing')">
         <demo-group-item :title="$t('ji-chu-yong-fa-0')">
-          <wd-button type="primary" plain block custom-style="margin-bottom: 12px" @click="basicAlert">{{ $t('alert-dan-chuang') }}</wd-button>
-          <wd-button type="primary" plain block custom-style="margin-bottom: 12px" @click="basicConfirm">{{ $t('confirm-dan-chuang') }}</wd-button>
-          <wd-button type="primary" plain block custom-style="margin-bottom: 12px" @click="basicPrompt">{{ $t('prompt-shu-ru-kuang') }}</wd-button>
+          <wd-button type="primary" plain block custom-class="page-dialog__button" @click="basicAlert">{{ $t('alert-dan-chuang') }}</wd-button>
+          <wd-button type="primary" plain block custom-class="page-dialog__button" @click="basicConfirm">{{ $t('confirm-dan-chuang') }}</wd-button>
+          <wd-button type="primary" plain block custom-class="page-dialog__button" @click="basicPrompt">{{ $t('prompt-shu-ru-kuang') }}</wd-button>
           <wd-button type="primary" plain block @click="withTitleAndContent">{{ $t('biao-ti-nei-rong') }}</wd-button>
         </demo-group-item>
         <demo-group-item :title="$t('dan-chuang-lei-xing')">
-          <wd-button type="success" plain block custom-style="margin-bottom: 12px" @click="alertType">{{ $t('alert-lei-xing') }}</wd-button>
-          <wd-button type="primary" plain block custom-style="margin-bottom: 12px" @click="confirmType">{{ $t('confirm-lei-xing') }}</wd-button>
+          <wd-button type="success" plain block custom-class="page-dialog__button" @click="alertType">{{ $t('alert-lei-xing') }}</wd-button>
+          <wd-button type="primary" plain block custom-class="page-dialog__button" @click="confirmType">{{ $t('confirm-lei-xing') }}</wd-button>
           <wd-button type="warning" plain block @click="promptType">{{ $t('prompt-lei-xing') }}</wd-button>
         </demo-group-item>
       </demo-group>
 
       <demo-group :title="$t('zu-jian-zhuang-tai')">
         <demo-group-item :title="$t('shu-ru-pei-zhi-prompt')">
-          <wd-button type="primary" plain block custom-style="margin-bottom: 12px" @click="promptWithPlaceholder">
+          <wd-button type="primary" plain block custom-class="page-dialog__button" @click="promptWithPlaceholder">
             {{ $t('dai-zhan-wei-fu') }}
           </wd-button>
-          <wd-button type="primary" plain block custom-style="margin-bottom: 12px" @click="promptWithDefaultValue">
+          <wd-button type="primary" plain block custom-class="page-dialog__button" @click="promptWithDefaultValue">
             {{ $t('dai-mo-ren-zhi') }}
           </wd-button>
-          <wd-button type="primary" plain block custom-style="margin-bottom: 12px" @click="promptTextarea">
+          <wd-button type="primary" plain block custom-class="page-dialog__button" @click="promptTextarea">
             {{ $t('duo-hang-wen-ben-shu-ru') }}
           </wd-button>
-          <wd-button type="primary" plain block custom-style="margin-bottom: 12px" @click="promptWithMaxlength">
+          <wd-button type="primary" plain block custom-class="page-dialog__button" @click="promptWithMaxlength">
             {{ $t('xian-zhi-shu-ru-chang-du') }}
           </wd-button>
-          <wd-button type="primary" plain block custom-style="margin-bottom: 12px" @click="promptRegexValidation">
+          <wd-button type="primary" plain block custom-class="page-dialog__button" @click="promptRegexValidation">
             {{ $t('zheng-ze-xiao-yan') }}
           </wd-button>
-          <wd-button type="primary" plain block custom-style="margin-bottom: 12px" @click="promptFunctionValidation">函数校验</wd-button>
-          <wd-button type="primary" plain block custom-style="margin-bottom: 12px" @click="promptNumberInput">数字输入</wd-button>
+          <wd-button type="primary" plain block custom-class="page-dialog__button" @click="promptFunctionValidation">函数校验</wd-button>
+          <wd-button type="primary" plain block custom-class="page-dialog__button" @click="promptNumberInput">数字输入</wd-button>
           <wd-button type="primary" plain block @click="promptPasswordInput">密码输入</wd-button>
         </demo-group-item>
         <demo-group-item title="交互功能">
-          <wd-button type="primary" plain block custom-style="margin-bottom: 12px" @click="withCloseButton">显示关闭按钮</wd-button>
-          <wd-button type="primary" plain block custom-style="margin-bottom: 12px" @click="closeOnClickModal">点击遮罩关闭</wd-button>
-          <wd-button type="primary" plain block custom-style="margin-bottom: 12px" @click="beforeConfirmHook">确认前钩子</wd-button>
-          <wd-button type="primary" plain block custom-style="margin-bottom: 12px" @click="asyncBeforeConfirm">异步确认前钩子</wd-button>
+          <wd-button type="primary" plain block custom-class="page-dialog__button" @click="withCloseButton">显示关闭按钮</wd-button>
+          <wd-button type="primary" plain block custom-class="page-dialog__button" @click="closeOnClickModal">点击遮罩关闭</wd-button>
+          <wd-button type="primary" plain block custom-class="page-dialog__button" @click="beforeConfirmHook">确认前钩子</wd-button>
+          <wd-button type="primary" plain block custom-class="page-dialog__button" @click="asyncBeforeConfirm">异步确认前钩子</wd-button>
           <wd-button type="primary" plain block @click="customZIndex">自定义层级</wd-button>
         </demo-group-item>
         <demo-group-item title="按钮状态">
-          <wd-button type="primary" plain block custom-style="margin-bottom: 12px" @click="loadingButton">按钮加载状态</wd-button>
+          <wd-button type="primary" plain block custom-class="page-dialog__button" @click="loadingButton">按钮加载状态</wd-button>
           <wd-button type="primary" plain block @click="disabledButton">禁用按钮</wd-button>
         </demo-group-item>
       </demo-group>
 
       <demo-group title="组件变体">
         <demo-group-item title="弹窗风格">
-          <wd-button type="primary" plain block custom-style="margin-bottom: 12px" @click="buttonTheme">Button 风格（默认）</wd-button>
-          <wd-button type="primary" plain block custom-style="margin-bottom: 12px" @click="textTheme">Text 风格（iOS 风格）</wd-button>
+          <wd-button type="primary" plain block custom-class="page-dialog__button" @click="buttonTheme">Button 风格（默认）</wd-button>
+          <wd-button type="primary" plain block custom-class="page-dialog__button" @click="textTheme">Text 风格（iOS 风格）</wd-button>
           <wd-button type="primary" plain block @click="textThemeVertical">Text 风格 + 垂直布局</wd-button>
         </demo-group-item>
         <demo-group-item title="操作按钮配置">
-          <wd-button type="primary" plain block custom-style="margin-bottom: 12px" @click="customButtonText">自定义按钮文本</wd-button>
-          <wd-button type="primary" plain block custom-style="margin-bottom: 12px" @click="customButtonStyle">自定义按钮样式</wd-button>
-          <wd-button type="primary" plain block custom-style="margin-bottom: 12px" @click="verticalLayout">垂直排列按钮</wd-button>
-          <wd-button type="primary" plain block custom-style="margin-bottom: 12px" @click="singleButton">单个按钮</wd-button>
+          <wd-button type="primary" plain block custom-class="page-dialog__button" @click="customButtonText">自定义按钮文本</wd-button>
+          <wd-button type="primary" plain block custom-class="page-dialog__button" @click="customButtonStyle">自定义按钮样式</wd-button>
+          <wd-button type="primary" plain block custom-class="page-dialog__button" @click="verticalLayout">垂直排列按钮</wd-button>
+          <wd-button type="primary" plain block custom-class="page-dialog__button" @click="singleButton">单个按钮</wd-button>
           <wd-button type="primary" plain block @click="multipleActions">多个按钮（Actions）</wd-button>
         </demo-group-item>
       </demo-group>
 
       <demo-group title="组件样式">
         <demo-group-item title="图标与头图">
-          <wd-button type="success" plain block custom-style="margin-bottom: 12px" @click="withSuccessIcon">成功图标</wd-button>
-          <wd-button type="danger" plain block custom-style="margin-bottom: 12px" @click="withDangerIcon">危险图标</wd-button>
-          <wd-button type="warning" plain block custom-style="margin-bottom: 12px" @click="withWarningIcon">警告图标</wd-button>
-          <wd-button type="info" plain block custom-style="margin-bottom: 12px" @click="withInfoIcon">信息图标</wd-button>
-          <wd-button type="primary" plain block custom-style="margin-bottom: 12px" @click="withCustomIcon">自定义图标</wd-button>
-          <wd-button type="primary" plain block custom-style="margin-bottom: 12px" @click="headerImageFull">顶部图片（完整）</wd-button>
-          <wd-button type="primary" plain block custom-style="margin-bottom: 12px" @click="headerImageWithTitle">顶部图片 + 标题</wd-button>
-          <wd-button type="primary" plain block custom-style="margin-bottom: 12px" @click="headerImageWithMessage">顶部图片 + 内容</wd-button>
-          <wd-button type="primary" plain block custom-style="margin-bottom: 12px" @click="headerImageOnly">顶部图片（纯图片）</wd-button>
+          <wd-button type="success" plain block custom-class="page-dialog__button" @click="withSuccessIcon">成功图标</wd-button>
+          <wd-button type="danger" plain block custom-class="page-dialog__button" @click="withDangerIcon">危险图标</wd-button>
+          <wd-button type="warning" plain block custom-class="page-dialog__button" @click="withWarningIcon">警告图标</wd-button>
+          <wd-button type="info" plain block custom-class="page-dialog__button" @click="withInfoIcon">信息图标</wd-button>
+          <wd-button type="primary" plain block custom-class="page-dialog__button" @click="withCustomIcon">自定义图标</wd-button>
+          <wd-button type="primary" plain block custom-class="page-dialog__button" @click="headerImageFull">顶部图片（完整）</wd-button>
+          <wd-button type="primary" plain block custom-class="page-dialog__button" @click="headerImageWithTitle">顶部图片 + 标题</wd-button>
+          <wd-button type="primary" plain block custom-class="page-dialog__button" @click="headerImageWithMessage">顶部图片 + 内容</wd-button>
+          <wd-button type="primary" plain block custom-class="page-dialog__button" @click="headerImageOnly">顶部图片（纯图片）</wd-button>
           <wd-button type="primary" plain block @click="longTextScroll">长文本滚动</wd-button>
         </demo-group-item>
       </demo-group>
 
       <demo-group title="特殊样式">
         <demo-group-item title="插槽能力">
-          <wd-button type="primary" plain block custom-style="margin-bottom: 12px" @click="customSlot">默认插槽：自定义内容</wd-button>
-          <wd-button type="primary" plain block custom-style="margin-bottom: 12px" @click="slotHeader">Header 插槽：顶部图片</wd-button>
-          <wd-button type="primary" plain block custom-style="margin-bottom: 12px" @click="slotTitle">Title 插槽：自定义标题</wd-button>
+          <wd-button type="primary" plain block custom-class="page-dialog__button" @click="customSlot">默认插槽：自定义内容</wd-button>
+          <wd-button type="primary" plain block custom-class="page-dialog__button" @click="slotHeader">Header 插槽：顶部图片</wd-button>
+          <wd-button type="primary" plain block custom-class="page-dialog__button" @click="slotTitle">Title 插槽：自定义标题</wd-button>
           <wd-button type="primary" plain block @click="slotActions">Actions 插槽：多支付方式</wd-button>
         </demo-group-item>
         <demo-group-item title="业务场景示例">
-          <wd-button type="danger" plain block custom-style="margin-bottom: 12px" @click="deleteConfirm">删除确认</wd-button>
-          <wd-button type="success" plain block custom-style="margin-bottom: 12px" @click="paymentConfirm">支付确认</wd-button>
-          <wd-button type="warning" plain block custom-style="margin-bottom: 12px" @click="formSubmit">表单提交</wd-button>
-          <wd-button type="info" plain block custom-style="margin-bottom: 12px" @click="userFeedback">用户反馈选择</wd-button>
-          <wd-button type="primary" plain block custom-style="margin-bottom: 12px" @click="versionUpdate">版本更新</wd-button>
-          <wd-button type="warning" plain block custom-style="margin-bottom: 12px" @click="phoneCall">拨打电话</wd-button>
-          <wd-button type="primary" plain block custom-style="margin-bottom: 12px" @click="addressInput">地址录入</wd-button>
+          <wd-button type="danger" plain block custom-class="page-dialog__button" @click="deleteConfirm">删除确认</wd-button>
+          <wd-button type="success" plain block custom-class="page-dialog__button" @click="paymentConfirm">支付确认</wd-button>
+          <wd-button type="warning" plain block custom-class="page-dialog__button" @click="formSubmit">表单提交</wd-button>
+          <wd-button type="info" plain block custom-class="page-dialog__button" @click="userFeedback">用户反馈选择</wd-button>
+          <wd-button type="primary" plain block custom-class="page-dialog__button" @click="versionUpdate">版本更新</wd-button>
+          <wd-button type="warning" plain block custom-class="page-dialog__button" @click="phoneCall">拨打电话</wd-button>
+          <wd-button type="primary" plain block custom-class="page-dialog__button" @click="addressInput">地址录入</wd-button>
           <wd-button type="success" plain block @click="couponReceive">领取优惠券</wd-button>
         </demo-group-item>
         <demo-group-item title="开放能力（OpenType）">
-          <wd-button type="primary" plain block custom-style="margin-bottom: 12px" @click="getPhoneNumber">获取手机号</wd-button>
-          <wd-button type="success" plain block custom-style="margin-bottom: 12px" @click="getUserInfo">获取用户信息</wd-button>
-          <wd-button type="info" plain block custom-style="margin-bottom: 12px" @click="contactService">联系客服</wd-button>
-          <wd-button type="warning" plain block custom-style="margin-bottom: 12px" @click="openSettings">打开设置页</wd-button>
+          <wd-button type="primary" plain block custom-class="page-dialog__button" @click="getPhoneNumber">获取手机号</wd-button>
+          <wd-button type="success" plain block custom-class="page-dialog__button" @click="getUserInfo">获取用户信息</wd-button>
+          <wd-button type="info" plain block custom-class="page-dialog__button" @click="contactService">联系客服</wd-button>
+          <wd-button type="warning" plain block custom-class="page-dialog__button" @click="openSettings">打开设置页</wd-button>
           <wd-button type="primary" plain block @click="multipleOpenTypes">多按钮不同开放能力</wd-button>
         </demo-group-item>
       </demo-group>
@@ -282,7 +282,7 @@ function withCustomIcon() {
     title: '收藏成功',
     msg: '已添加到我的收藏',
     icon: 'star-fill',
-    iconColor: '#ff9500'
+    iconColor: 'var(--wot-warning-main, #ff9500)'
   })
 }
 
@@ -361,13 +361,13 @@ function customButtonStyle() {
         text: '取消',
         round: false,
         type: 'danger',
-        customClass: 'custom-shadow'
+        customClass: 'page-dialog__shadow'
       },
       confirmButtonProps: {
         text: '确定',
         round: false,
         type: 'success',
-        customClass: 'custom-shadow'
+        customClass: 'page-dialog__shadow'
       }
     })
     .then(() => {
@@ -1150,8 +1150,17 @@ function multipleOpenTypes() {
 </script>
 <style lang="scss" scoped>
 .page-dialog {
+  &__header-image {
+    display: block;
+    width: 100%;
+  }
+
   :deep() {
-    .custom-shadow {
+    .page-dialog__button {
+      margin-bottom: $spacing-tight;
+    }
+
+    .page-dialog__shadow {
       box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
     }
   }

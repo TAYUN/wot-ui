@@ -68,18 +68,34 @@
           </wd-radio-group>
         </demo-group-item>
         <demo-group-item :title="$t('xiu-gai-xuan-zhong-yan-se')">
-          <wd-radio-group custom-class="page-radio__group" v-model="valueCheckedColor" checked-color="#fa4350" @change="change">
+          <wd-radio-group
+            custom-class="page-radio__group"
+            v-model="valueCheckedColor"
+            checked-color="var(--wot-danger-main, #fa4350)"
+            @change="change"
+          >
             <wd-radio :value="1">{{ $t('xuanXiang_1-0') }}</wd-radio>
             <wd-radio :value="2">{{ $t('xuanXiang_2-0') }}</wd-radio>
           </wd-radio-group>
           <wd-divider dashed></wd-divider>
-          <wd-radio-group custom-class="page-radio__group" v-model="valueCheckedColorDot" type="dot" checked-color="#fa4350" @change="change">
+          <wd-radio-group
+            custom-class="page-radio__group"
+            v-model="valueCheckedColorDot"
+            type="dot"
+            checked-color="var(--wot-danger-main, #fa4350)"
+            @change="change"
+          >
             <wd-radio :value="1">{{ $t('xuanXiang_1-0') }}</wd-radio>
             <wd-radio :value="2">{{ $t('xuanXiang_2-0') }}</wd-radio>
           </wd-radio-group>
         </demo-group-item>
         <demo-group-item :title="$t('xiu-gai-wei-xuan-zhong-yan-se')">
-          <wd-radio-group custom-class="page-radio__group" v-model="valueUnchecked" unchecked-color="#fa4350" @change="change">
+          <wd-radio-group
+            custom-class="page-radio__group"
+            v-model="valueUnchecked"
+            unchecked-color="var(--wot-danger-main, #fa4350)"
+            @change="change"
+          >
             <wd-radio :value="1">{{ $t('xuanXiang_1-0') }}</wd-radio>
             <wd-radio :value="2">{{ $t('xuanXiang_2-0') }}</wd-radio>
           </wd-radio-group>
@@ -88,14 +104,14 @@
 
       <demo-group :title="$t('te-shu-yang-shi')">
         <demo-group-item :title="$t('radio-de-props-bi-radiogroup-de-you-xian-ji-gao')">
-          <wd-radio-group v-model="valuePriority" type="button" disabled checked-color="#fa4350" @change="change">
-            <wd-radio :value="1" checked-color="#000" :disabled="false">{{ $t('xuanXiang_1-0') }}</wd-radio>
+          <wd-radio-group v-model="valuePriority" type="button" disabled checked-color="var(--wot-danger-main, #fa4350)" @change="change">
+            <wd-radio :value="1" checked-color="var(--wot-text-main, #000)" :disabled="false">{{ $t('xuanXiang_1-0') }}</wd-radio>
             <wd-radio :value="2" :disabled="false">{{ $t('xuanXiang_2-0') }}</wd-radio>
             <wd-radio :value="3">{{ $t('xuanXiang_3-0') }}</wd-radio>
           </wd-radio-group>
         </demo-group-item>
         <demo-group-item :title="$t('jie-he-cell-shi-yong-0')" no-padding>
-          <wd-radio-group v-model="valueCell" checked-color="#fa4350" @change="change">
+          <wd-radio-group v-model="valueCell" checked-color="var(--wot-danger-main, #fa4350)" @change="change">
             <wd-cell-group border>
               <wd-cell :title="$t('dan-xuan-kuang-1-0')" clickable @click="valueCell = 1">
                 <template #suffix>
@@ -115,13 +131,21 @@
             <wd-radio :value="1">
               {{ $t('zi-ding-yi-tu-biao') }}
               <template #icon="{ isChecked }">
-                <wd-icon :name="isChecked ? 'star-fill' : 'star'" size="22px" :color="isChecked ? '#fa4350' : '#ccc'" />
+                <wd-icon
+                  :name="isChecked ? 'star-fill' : 'star'"
+                  size="22px"
+                  :color="isChecked ? 'var(--wot-danger-main, #fa4350)' : 'var(--wot-text-placeholder, #ccc)'"
+                />
               </template>
             </wd-radio>
             <wd-radio :value="2">
               {{ $t('zi-ding-yi-tu-biao') }}
               <template #icon="{ isChecked }">
-                <wd-icon :name="isChecked ? 'star-fill' : 'star'" size="22px" :color="isChecked ? '#fa4350' : '#ccc'" />
+                <wd-icon
+                  :name="isChecked ? 'star-fill' : 'star'"
+                  size="22px"
+                  :color="isChecked ? 'var(--wot-danger-main, #fa4350)' : 'var(--wot-text-placeholder, #ccc)'"
+                />
               </template>
             </wd-radio>
           </wd-radio-group>
@@ -176,7 +200,7 @@ function change(event: { value: string | number | boolean | null }) {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .page-radio {
   :deep(.wd-divider) {
     margin: $spacing-loose 0;

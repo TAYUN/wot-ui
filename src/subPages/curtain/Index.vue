@@ -41,7 +41,7 @@
     <wd-curtain v-model="value[8]" :src="img" :to="link" close-position="bottom-right" :width="280" :close-on-click-modal="true"></wd-curtain>
     <wd-curtain v-model="value[9]" :src="img" :width="280">
       <template #close>
-        <view class="custom-close" @click="handleClose(9)">{{ $t('guan-bi') }}</view>
+        <view class="page-curtain__close" @click="handleClose(9)">{{ $t('guan-bi') }}</view>
       </template>
     </wd-curtain>
   </page-wraper>
@@ -78,14 +78,16 @@ function handleClose(index: number) {
 <style lang="scss" scoped>
 .page-curtain {
   :deep(.wd-button) {
-    margin: 0 10px 10px 0;
+    margin: 0 $spacing-main $spacing-main 0;
   }
-}
-.custom-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  color: #ffffff;
-  font-size: 32rpx;
+
+  &__close {
+    position: absolute;
+    top: $spacing-main;
+    right: $spacing-main;
+    color: $text-white;
+    font-size: $n-16;
+    line-height: $n-24;
+  }
 }
 </style>

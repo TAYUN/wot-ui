@@ -1,15 +1,15 @@
 <template>
-  <page-wraper>
+  <page-wraper :demo-config="{ transparent: true }">
     <view class="page-collapse">
       <demo-group :title="$t('zu-jian-lei-xing')">
         <demo-group-item :title="$t('shou-dong-qie-huan')">
-          <wd-button custom-class="custom-button" type="info" @click="collapse?.toggleAll()">{{ $t('quan-bu-qie-huan') }}</wd-button>
-          <wd-button custom-class="custom-button" type="success" @click="collapse?.toggleAll(true)">{{ $t('quan-bu-zhan-kai') }}</wd-button>
-          <wd-button custom-class="custom-button" type="primary" @click="collapse?.toggleAll(false)">{{ $t('quan-bu-shou-qi') }}</wd-button>
-          <wd-button custom-class="custom-button" type="warning" @click="collapse?.toggleAll({ skipDisabled: true })">
+          <wd-button custom-class="page-collapse__action" type="info" @click="collapse?.toggleAll()">{{ $t('quan-bu-qie-huan') }}</wd-button>
+          <wd-button custom-class="page-collapse__action" type="success" @click="collapse?.toggleAll(true)">{{ $t('quan-bu-zhan-kai') }}</wd-button>
+          <wd-button custom-class="page-collapse__action" type="primary" @click="collapse?.toggleAll(false)">{{ $t('quan-bu-shou-qi') }}</wd-button>
+          <wd-button custom-class="page-collapse__action" type="warning" @click="collapse?.toggleAll({ skipDisabled: true })">
             {{ $t('quan-bu-qie-huan-tiao-guo-jin-yong') }}
           </wd-button>
-          <wd-button custom-class="custom-button" type="danger" @click="collapse?.toggleAll({ expanded: true, skipDisabled: true })">
+          <wd-button custom-class="page-collapse__action" type="danger" @click="collapse?.toggleAll({ expanded: true, skipDisabled: true })">
             {{ $t('quan-bu-xuan-zhong-tiao-guo-jin-yong') }}
           </wd-button>
         </demo-group-item>
@@ -78,8 +78,8 @@
           <wd-collapse v-model="value7">
             <wd-collapse-item name="item1">
               <template #title="{ expanded }">
-                <view class="header">
-                  <text style="color: red">{{ $t('tong-guo-slot-zi-ding-yi-biao-ti') }}</text>
+                <view class="page-collapse__header">
+                  <text class="page-collapse__title-text page-collapse__title-text--accent">{{ $t('tong-guo-slot-zi-ding-yi-biao-ti') }}</text>
                   <text>{{ expanded ? '我展开了' : '我已收起' }}</text>
                 </view>
               </template>
@@ -87,9 +87,9 @@
             </wd-collapse-item>
             <wd-collapse-item name="item2" disabled>
               <template #title="{ expanded, disabled }">
-                <view class="header">
+                <view class="page-collapse__header">
                   <text v-if="disabled">{{ $t('bei-jin-yong') }}</text>
-                  <text style="color: red" v-else>{{ $t('tong-guo-slot-zi-ding-yi-title') }}</text>
+                  <text class="page-collapse__title-text page-collapse__title-text--accent" v-else>{{ $t('tong-guo-slot-zi-ding-yi-title') }}</text>
                   <text>{{ expanded ? '我展开了' : '我已收起' }}</text>
                 </view>
               </template>
@@ -109,14 +109,14 @@
         </demo-group-item>
 
         <demo-group-item :title="$t('cha-kan-geng-duo-ju-ming-cha-cao')" no-padding>
-          <wd-collapse viewmore v-model="value6" use-more-slot custom-more-slot-class="more-slot" @change="handleChange6">
+          <wd-collapse viewmore v-model="value6" use-more-slot custom-more-slot-class="page-collapse__more-slot" @change="handleChange6">
             {{
               $t(
                 'ju-ming-cha-cao-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi-zhe-shi-yi-tiao-jian-dan-de-shi-li-wen-zi'
               )
             }}
             <template #more>
-              <view>{{ $t('xian-shi-quan-bu') }}</view>
+              <view class="page-collapse__more-text">{{ $t('xian-shi-quan-bu') }}</view>
             </template>
           </wd-collapse>
         </demo-group-item>
@@ -128,7 +128,7 @@
             <wd-collapse-item
               v-for="item in 5"
               :key="item"
-              custom-body-style="padding:0 0 0 14px"
+              custom-body-style="padding: 0 0 0 var(--wot-n-14);"
               :title="$t('biao-qian-item') + item"
               :name="`${item}`"
             >
@@ -136,7 +136,7 @@
                 <wd-collapse-item
                   v-for="(item, index) in itemList"
                   :key="index"
-                  :custom-class="index === 0 ? 'no-border' : ''"
+                  :custom-class="index === 0 ? 'page-collapse__item--borderless' : ''"
                   :title="item.title"
                   :name="item.name"
                 >
@@ -254,22 +254,33 @@ function beforeExpend(name: string) {
 </script>
 <style lang="scss" scoped>
 .page-collapse {
-  .header {
+  &__header {
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
 
-  :deep(.more-slot) {
-    color: red;
+  &__title-text {
+    &--accent {
+      color: $danger-main;
+    }
   }
 
-  :deep(.custom-button) {
-    margin-right: 16px;
-    margin-bottom: 16px;
+  &__more-text {
+    color: $danger-main;
   }
+
+  :deep(.page-collapse__more-slot) {
+    color: $danger-main;
+  }
+
+  :deep(.page-collapse__action) {
+    margin-right: $spacing-extra-loose;
+    margin-bottom: $spacing-extra-loose;
+  }
+
   :deep() {
-    .no-border {
+    .page-collapse__item--borderless {
       &::after {
         display: none;
       }

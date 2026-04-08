@@ -250,16 +250,17 @@ function handleConfirm16({ value }: any) {
 </script>
 <style lang="scss" scoped>
 .is-error {
-  color: var(--wot-input-error-color, #f56c6c);
+  color: $danger-main;
 }
+
 .wd-datetime-picker__clear {
   position: absolute;
   right: 0;
   top: 50%;
   transform: translateY(-50%);
-  padding: 8px;
-  font-size: 16px;
-  color: var(--wot-cell-icon-color, #c8c9cc);
+  padding: $padding-tight;
+  font-size: $n-16;
+  color: $icon-disabled;
   z-index: 2;
 }
 </style>

@@ -168,9 +168,9 @@ function handleImmediateChange({ selectedLabels, columnIndex }: any) {
 </script>
 <style lang="scss" scoped>
 .page-picker-view__result {
-  padding: 12px 16px 0;
-  color: var(--wot-text-secondary);
-  font-size: 14px;
-  line-height: 20px;
+  padding: $padding-loose $padding-extra-loose 0;
+  color: $text-secondary;
+  font-size: $typography-body-size-main;
+  line-height: $typography-body-line--height-size-large;
 }
 </style>

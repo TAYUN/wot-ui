@@ -40,14 +40,14 @@
 
       <demo-group :title="$t('zu-jian-yang-shi')">
         <demo-group-item no-padding :title="$t('ka-pian-yang-shi')">
-          <view class="card-swiper">
+          <view class="page-swiper__card-swiper">
             <wd-swiper
               autoplay
               v-model:current="current4"
-              custom-indicator-class="custom-indicator-class"
-              custom-image-class="custom-image"
-              custom-next-image-class="custom-image-prev"
-              custom-prev-image-class="custom-image-prev"
+              custom-indicator-class="page-swiper__indicator-class"
+              custom-image-class="page-swiper__image"
+              custom-next-image-class="page-swiper__image-prev"
+              custom-prev-image-class="page-swiper__image-prev"
               :indicator="{ type: 'dots' }"
               :list="swiperList"
               previousMargin="24px"
@@ -56,15 +56,15 @@
           </view>
         </demo-group-item>
         <demo-group-item no-padding :title="$t('tong-shi-zhan-shi-2-ge-hua-kuai')">
-          <view class="card-swiper">
+          <view class="page-swiper__card-swiper">
             <wd-swiper
               autoplay
               v-model:current="current5"
               :display-multiple-items="2"
-              custom-indicator-class="custom-indicator-class"
-              custom-image-class="custom-image"
-              custom-next-image-class="custom-image-prev"
-              custom-prev-image-class="custom-image-prev"
+              custom-indicator-class="page-swiper__indicator-class"
+              custom-image-class="page-swiper__image"
+              custom-next-image-class="page-swiper__image-prev"
+              custom-prev-image-class="page-swiper__image-prev"
               :indicator="{ type: 'dots' }"
               :list="swiperList"
               previousMargin="24px"
@@ -75,7 +75,7 @@
         <demo-group-item no-padding :title="$t('zi-ding-yi-zhi-shi-qi')">
           <wd-swiper :list="swiperList" direction="vertical" indicator-position="right" autoplay v-model:current="current7">
             <template #indicator="{ current, total }">
-              <view class="custom-indicator">{{ current + 1 }}/{{ total }}</view>
+              <view class="page-swiper__custom-indicator">{{ current + 1 }}/{{ total }}</view>
             </template>
           </wd-swiper>
         </demo-group-item>
@@ -109,7 +109,7 @@
             </wd-cell>
             <wd-cell title="current" :value="current8.toString()" />
           </wd-cell-group>
-          <view class="demo-actions">
+          <view class="page-swiper__actions">
             <wd-button @click="current8--">prev</wd-button>
             <wd-button type="success" @click="current8++">next</wd-button>
           </view>
@@ -117,7 +117,7 @@
         <demo-group-item no-padding :title="$t('cha-cao-yong-fa')">
           <wd-swiper :list="swiperList" autoplay v-model:current="current1" :indicator="{ type: 'dots-bar' }">
             <template #default="{ item }">
-              <image :src="item as string" mode="aspectFill" class="custom-slot-image" />
+              <image :src="item as string" mode="aspectFill" class="page-swiper__slot-image" />
             </template>
           </wd-swiper>
         </demo-group-item>
@@ -167,48 +167,49 @@ const current9 = ref<number>(0)
 
 const isLoop = ref(false)
 </script>
-
 <style lang="scss" scoped>
-.card-swiper {
-  --wot-swiper-radius: 0;
-  --wot-swiper-item-padding: 0 24rpx;
-  --wot-swiper-nav-dot-color: #e7e7e7;
-  --wot-swiper-nav-dot-active-color: #4d80f0;
-  padding-bottom: 24rpx;
+.page-swiper {
+  &__card-swiper {
+    --wot-swiper-radius: 0;
+    --wot-swiper-item-padding: 0 24rpx;
+    --wot-swiper-nav-dot-color: $filled-strong;
+    --wot-swiper-nav-dot-active-color: $primary-6;
+    padding-bottom: 24rpx;
 
-  :deep(.custom-indicator-class) {
-    bottom: -16px;
+    :deep(.page-swiper__indicator-class) {
+      bottom: -16px;
+    }
+
+    :deep(.page-swiper__image) {
+      border-radius: 12rpx;
+    }
+
+    :deep(.page-swiper__image-prev) {
+      height: 168px !important;
+    }
   }
 
-  :deep(.custom-image) {
-    border-radius: 12rpx;
+  &__slot-image {
+    width: 100%;
+    height: 100%;
   }
 
-  :deep(.custom-image-prev) {
-    height: 168px !important;
+  &__custom-indicator {
+    position: absolute;
+    right: 24rpx;
+    bottom: 24rpx;
+    height: 48rpx;
+    padding: 0 12rpx;
+    color: $text-white;
+    font-size: 24rpx;
+    line-height: 48rpx;
+    border-radius: 45%;
+    background: rgba(0, 0, 0, 0.6);
   }
-}
 
-.custom-slot-image {
-  width: 100%;
-  height: 100%;
-}
-
-.custom-indicator {
-  position: absolute;
-  right: 24rpx;
-  bottom: 24rpx;
-  padding: 0 12rpx;
-  height: 48rpx;
-  line-height: 48rpx;
-  border-radius: 45%;
-  background: rgba(0, 0, 0, 0.6);
-  color: #ffffff;
-  font-size: 24rpx;
-}
-
-.demo-actions {
-  display: flex;
-  justify-content: space-between;
+  &__actions {
+    display: flex;
+    justify-content: space-between;
+  }
 }
 </style>

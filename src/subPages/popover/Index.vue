@@ -1,6 +1,5 @@
 <template>
   <page-wraper>
-    <wd-toast />
     <view @click="closeOutside" class="page-popover">
       <demo-group :title="$t('zu-jian-lei-xing')">
         <demo-group-item :title="$t('jiBenYongFa')">
@@ -130,9 +129,7 @@ function changeSize() {
   })
 }
 </script>
-<style lang="scss">
-@use '@/uni_modules/wot-ui/styles/variable.scss' as *;
-
+<style lang="scss" scoped>
 .page-popover {
   width: 100%;
 
@@ -142,7 +139,7 @@ function changeSize() {
   }
 
   &__status {
-    margin-bottom: 10px;
+    margin-bottom: $spacing-main;
   }
 
   &__content {
@@ -152,7 +149,7 @@ function changeSize() {
     border-radius: $radius-main;
     /* 必填 结束 */
     background: $filled-oppo;
-    color: $purple-6;
+    color: $text-main;
     font-weight: $font-weight-semibold;
     padding: $padding-main;
     width: 150px;

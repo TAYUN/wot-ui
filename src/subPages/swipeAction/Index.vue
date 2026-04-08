@@ -4,7 +4,7 @@
       <demo-group transparent :title="$t('zu-jian-lei-xing')">
         <demo-group-item no-padding :title="$t('jiBenYongFa')">
           <wd-swipe-action>
-            <wd-cell :title="$t('biao-ti-wen-zi-10')" value="$t('nei-rong')" />
+            <wd-cell :title="$t('biao-ti-wen-zi-10')" :value="$t('nei-rong')" />
             <template #right>
               <view class="swipe-action-demo__action">
                 <view class="swipe-action-demo__button swipe-action-demo__button--danger" @click="handleAction('操作1')">{{ $t('cao-zuo-1') }}</view>
@@ -23,7 +23,7 @@
                 <view class="swipe-action-demo__button swipe-action-demo__button--primary">{{ $t('cao-zuo-3-0') }}</view>
               </view>
             </template>
-            <wd-cell :title="$t('biao-ti-wen-zi-10')" value="$t('nei-rong')" />
+            <wd-cell :title="$t('biao-ti-wen-zi-10')" :value="$t('nei-rong')" />
             <template #right>
               <view class="swipe-action-demo__action">
                 <view class="swipe-action-demo__button swipe-action-demo__button--danger">{{ $t('cao-zuo-4') }}</view>
@@ -38,7 +38,7 @@
       <demo-group transparent :title="$t('zu-jian-zhuang-tai')">
         <demo-group-item no-padding :title="$t('jin-yong-hua-dong-an-niu')">
           <wd-swipe-action disabled>
-            <wd-cell :title="$t('biao-ti-wen-zi-10')" value="$t('nei-rong')" />
+            <wd-cell :title="$t('biao-ti-wen-zi-10')" :value="$t('nei-rong')" />
             <template #right>
               <view class="swipe-action-demo__action">
                 <view class="swipe-action-demo__button swipe-action-demo__button--danger">{{ $t('cao-zuo-1-3') }}</view>
@@ -60,7 +60,7 @@
                 <view class="swipe-action-demo__button swipe-action-demo__button--primary">{{ $t('cao-zuo-3-1') }}</view>
               </view>
             </template>
-            <wd-cell :title="$t('biao-ti-wen-zi-10')" value="$t('nei-rong')" />
+            <wd-cell :title="$t('biao-ti-wen-zi-10')" :value="$t('nei-rong')" />
             <template #right>
               <view class="swipe-action-demo__action">
                 <view class="swipe-action-demo__button swipe-action-demo__button--danger">{{ $t('cao-zuo-4-0') }}</view>
@@ -83,7 +83,7 @@
         </demo-group-item>
         <demo-group-item no-padding :title="$t('guan-bi-qian-lan-jie')">
           <wd-swipe-action :before-close="beforeClose">
-            <wd-cell :title="$t('biao-ti-wen-zi-10')" value="$t('zu-zhi-dian-ji-nei-rong-qu-guan-bi')" />
+            <wd-cell :title="$t('biao-ti-wen-zi-10')" :value="$t('zu-zhi-dian-ji-nei-rong-qu-guan-bi')" />
             <template #right>
               <view class="swipe-action-demo__action">
                 <view class="swipe-action-demo__button swipe-action-demo__button--danger">{{ $t('shan-chu') }}</view>
@@ -94,7 +94,7 @@
         </demo-group-item>
         <demo-group-item no-padding :title="$t('dian-ji-shi-jian')">
           <wd-swipe-action @click="handleClick">
-            <wd-cell :title="$t('biao-ti-wen-zi-10')" value="$t('nei-rong')" />
+            <wd-cell :title="$t('biao-ti-wen-zi-10')" :value="$t('nei-rong')" />
             <template #right>
               <view class="swipe-action-demo__action">
                 <view class="swipe-action-demo__button swipe-action-demo__button--danger">{{ $t('cao-zuo-1-2') }}</view>

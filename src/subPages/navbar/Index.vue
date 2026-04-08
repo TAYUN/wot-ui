@@ -56,7 +56,7 @@
         <demo-group-item no-padding :title="$t('dai-sou-suo-lan')" transparent>
           <wd-navbar :left-text="$t('fan-hui')" :right-text="$t('she-zhi')" left-arrow>
             <template #title>
-              <view class="search-box">
+              <view class="page-navbar__search-box">
                 <wd-search v-model="keyword" hide-cancel placeholder-left></wd-search>
               </view>
             </template>
@@ -64,7 +64,7 @@
         </demo-group-item>
       </demo-group>
     </view>
-    <view style="height: 500rpx"></view>
+    <view class="page-navbar__spacer"></view>
   </page-wraper>
 </template>
 <script lang="ts" setup>
@@ -94,17 +94,22 @@ function handleBackHome() {
 </script>
 <style lang="scss" scoped>
 .page-navbar {
-  .search-box {
+  &__search-box {
     display: flex;
-    height: 100%;
     align-items: center;
+    height: 100%;
     --wot-search-padding: 0;
     --wot-search-side-padding: 0;
+
     :deep() {
       .wd-search {
         background: transparent;
       }
     }
+  }
+
+  &__spacer {
+    height: 500rpx;
   }
 }
 </style>

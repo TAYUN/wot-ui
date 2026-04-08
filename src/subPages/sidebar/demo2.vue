@@ -1,6 +1,6 @@
 <template>
   <page-wraper>
-    <view class="wraper">
+    <view class="page-sidebar-demo2">
       <wd-sidebar v-model="active" @change="handleChange">
         <wd-sidebar-item
           v-for="(item, index) in categories"
@@ -11,11 +11,11 @@
           :disabled="item.disabled"
         />
       </wd-sidebar>
-      <view class="content" :style="`transform: translateY(-${active * 100}%)`">
+      <view class="page-sidebar-demo2__content" :style="`transform: translateY(-${active * 100}%)`">
         <scroll-view
           v-for="(item, index) in categories"
           :key="index"
-          class="category"
+          class="page-sidebar-demo2__category"
           scroll-y
           scroll-with-animation
           :show-scrollbar="false"
@@ -118,20 +118,22 @@ function handleChange({ value }: any) {
 }
 </script>
 <style lang="scss" scoped>
-.wraper {
+.page-sidebar-demo2 {
   display: flex;
   height: calc(100vh - var(--window-top));
   height: calc(100vh - var(--window-top) - constant(safe-area-inset-bottom));
   height: calc(100vh - var(--window-top) - env(safe-area-inset-bottom));
   overflow: hidden;
-}
-.content {
-  flex: 1;
-  background: #fff;
-  transition: transform 0.3s ease;
-}
-.category {
-  box-sizing: border-box;
-  height: 100%;
+
+  &__content {
+    flex: 1;
+    background: $filled-oppo;
+    transition: transform 0.3s ease;
+  }
+
+  &__category {
+    box-sizing: border-box;
+    height: 100%;
+  }
 }
 </style>

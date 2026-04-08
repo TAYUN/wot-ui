@@ -18,14 +18,14 @@
 
       <demo-group :title="$t('zu-jian-yang-shi')">
         <demo-group-item :title="$t('xiu-gai-xuan-zhong-yan-se')">
-          <view class="demo-row">
+          <view class="page-rate__row">
             <wd-rate
               v-model="colorValue"
               active-color="linear-gradient(180deg, rgba(255, 238, 0, 1) 0%, rgba(250, 176, 21, 1) 100%)"
               @change="handleChange"
             />
           </view>
-          <view class="demo-row">
+          <view class="page-rate__row">
             <wd-rate
               v-model="gradientValue"
               :active-color="[
@@ -36,10 +36,10 @@
           </view>
         </demo-group-item>
         <demo-group-item :title="$t('xiu-gai-icon-he-xuan-zhong-yan-se')">
-          <view class="demo-row">
+          <view class="page-rate__row">
             <wd-rate v-model="fireValue" block icon="Fire" active-icon="Fire" active-color="var(--wot-red-6)" />
           </view>
-          <view class="demo-row">
+          <view class="page-rate__row">
             <wd-rate v-model="thumbValue" block icon="thumb-down-fill" active-icon="thumb-up-fill" active-color="var(--wot-green-6)" />
           </view>
         </demo-group-item>
@@ -53,10 +53,10 @@
           <wd-rate v-model="halfValue" allow-half />
         </demo-group-item>
         <demo-group-item :title="$t('yun-xu-qing-kong-ping-fen')">
-          <view class="demo-row">
+          <view class="page-rate__row">
             <wd-rate v-model="clearableValue" clearable />
           </view>
-          <view class="demo-row">
+          <view class="page-rate__row">
             <wd-rate v-model="clearableHalfValue" clearable allow-half />
           </view>
         </demo-group-item>
@@ -87,11 +87,11 @@ function handleChange(event: { value: number }) {
 
 <style lang="scss" scoped>
 .page-rate {
-  .demo-row {
-    margin-bottom: 12px;
+  &__row {
+    margin-bottom: $spacing-loose;
   }
 
-  .demo-row:last-child {
+  &__row:last-child {
     margin-bottom: 0;
   }
 }

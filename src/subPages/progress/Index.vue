@@ -6,7 +6,7 @@
           <wd-progress :percentage="basePercentage" />
         </demo-group-item>
         <demo-group-item :title="$t('nei-zhi-bai-fen-bi')">
-          <view v-for="item in innerItems" :key="item.key" class="demo-row">
+          <view v-for="item in innerItems" :key="item.key" class="page-progress__row">
             <wd-progress :percent-position="item.percentPosition" :percentage="item.percentage" :status="item.status" />
           </view>
         </demo-group-item>
@@ -14,7 +14,7 @@
 
       <demo-group :title="$t('zu-jian-zhuang-tai')">
         <demo-group-item :title="$t('jin-du-tiao-zhuang-tai')">
-          <view v-for="item in statusItems" :key="item.status" class="demo-row">
+          <view v-for="item in statusItems" :key="item.status" class="page-progress__row">
             <wd-progress :percentage="basePercentage" :status="item.status" hide-text />
           </view>
         </demo-group-item>
@@ -25,15 +25,15 @@
           <wd-progress :percentage="basePercentage" hide-text />
         </demo-group-item>
         <demo-group-item :title="$t('xiu-gai-yan-se')">
-          <view v-for="item in solidColorItems" :key="item.color" class="demo-row">
+          <view v-for="item in solidColorItems" :key="item.color" class="page-progress__row">
             <wd-progress :percentage="basePercentage" :color="item.color" />
           </view>
         </demo-group-item>
         <demo-group-item :title="$t('yan-se-shu-zu')">
-          <view class="demo-row">
-            <wd-progress :percentage="basePercentage" :color="['#00c740', '#ffb300', '#e2231a', '#0083ff']" />
+          <view class="page-progress__row">
+            <wd-progress :percentage="basePercentage" :color="gradientColors" />
           </view>
-          <view class="demo-row">
+          <view class="page-progress__row">
             <wd-progress :percentage="basePercentage" :color="colorObject" />
           </view>
         </demo-group-item>
@@ -42,8 +42,8 @@
       <demo-group :title="$t('te-shu-yang-shi')">
         <demo-group-item :title="$t('dong-tai-kong-zhi')">
           <wd-progress :percentage="interactivePercentage" />
-          <view class="action-container">
-            <wd-button custom-style="margin-right: 10px;" type="danger" size="small" @click="reduce">-10</wd-button>
+          <view class="page-progress__actions">
+            <wd-button custom-class="page-progress__button" type="danger" size="small" @click="reduce">-10</wd-button>
             <wd-button type="success" size="small" @click="add">+10</wd-button>
           </view>
         </demo-group-item>
@@ -89,26 +89,33 @@ const innerItems = [
 const statusItems: Array<{ status: ProgressStatus }> = [{ status: 'success' }, { status: 'danger' }, { status: 'warning' }]
 
 const solidColorItems = [
-  { color: 'var(--wot-color-theme, #0083ff)' },
-  { color: 'var(--wot-color-success, #00c740)' },
-  { color: 'var(--wot-color-warning, #ffb300)' }
+  { color: 'var(--wot-primary-6, #0083ff)' },
+  { color: 'var(--wot-success-main, #00c740)' },
+  { color: 'var(--wot-warning-main, #ffb300)' }
 ] as const
+
+const gradientColors: string[] = [
+  'var(--wot-success-main, #00c740)',
+  'var(--wot-warning-main, #ffb300)',
+  'var(--wot-danger-main, #e2231a)',
+  'var(--wot-primary-6, #0083ff)'
+]
 
 const colorObject: ProgressColor[] = [
   {
-    color: 'yellow',
+    color: 'var(--wot-warning-main, #ffb300)',
     percentage: 30
   },
   {
-    color: 'red',
+    color: 'var(--wot-danger-main, #e2231a)',
     percentage: 60
   },
   {
-    color: 'blue',
+    color: 'var(--wot-primary-6, #0083ff)',
     percentage: 80
   },
   {
-    color: 'black',
+    color: 'var(--wot-text-main, #000000)',
     percentage: 90
   }
 ]
@@ -124,18 +131,22 @@ function reduce() {
 
 <style lang="scss" scoped>
 .page-progress {
-  .demo-row {
-    margin-bottom: 12px;
+  &__row {
+    margin-bottom: $spacing-loose;
   }
 
-  .demo-row:last-child {
+  &__row:last-child {
     margin-bottom: 0;
   }
 
-  .action-container {
+  &__actions {
     display: flex;
     justify-content: center;
-    margin-top: 24px;
+    margin-top: $spacing-ultra-loose;
+  }
+
+  :deep(.page-progress__button) {
+    margin-right: $spacing-main;
   }
 }
 </style>

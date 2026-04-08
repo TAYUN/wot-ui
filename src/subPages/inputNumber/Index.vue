@@ -3,7 +3,7 @@
     <view class="page-input-number">
       <demo-group :title="$t('zu-jian-lei-xing')">
         <demo-group-item :title="$t('ji-ben-shi-yong')">
-          <view class="demo-grid">
+          <view class="page-input-number__grid">
             <wd-input-number v-model="themeDefault" @change="handleChange" />
             <wd-input-number v-model="themePrimary" theme="primary" @change="handleChange" />
             <wd-input-number v-model="themeOutlineSplit" theme="outline-split" @change="handleChange" />
@@ -14,7 +14,7 @@
 
       <demo-group :title="$t('zu-jian-zhuang-tai')">
         <demo-group-item :title="$t('jinYong')">
-          <view class="demo-grid">
+          <view class="page-input-number__grid">
             <wd-input-number v-model="disabled" disabled />
             <wd-input-number v-model="disabled" disabled theme="primary" />
             <wd-input-number v-model="disabled" disabled theme="outline-split" />
@@ -25,13 +25,13 @@
           <wd-input-number v-model="disableInput" disable-input @change="handleChange" />
         </demo-group-item>
         <demo-group-item :title="$t('jin-yong-jian-hao-an-niu')">
-          <view class="demo-grid">
+          <view class="page-input-number__grid">
             <wd-input-number v-model="disableMinusDefault" disable-minus @change="handleChange" />
             <wd-input-number v-model="disableMinusPrimary" disable-minus theme="primary" @change="handleChange" />
           </view>
         </demo-group-item>
         <demo-group-item :title="$t('jin-yong-jia-hao-an-niu')">
-          <view class="demo-grid">
+          <view class="page-input-number__grid">
             <wd-input-number v-model="disablePlusDefault" disable-plus @change="handleChange" />
             <wd-input-number v-model="disablePlusPrimary" disable-plus theme="primary" @change="handleChange" />
           </view>
@@ -40,7 +40,7 @@
 
       <demo-group :title="$t('zu-jian-bian-ti')">
         <demo-group-item :title="$t('yuan-jiao-yang-shi')">
-          <view class="demo-grid">
+          <view class="page-input-number__grid">
             <wd-input-number v-model="roundDefault" round @change="handleChange" />
             <wd-input-number v-model="roundPrimary" round theme="primary" @change="handleChange" />
             <wd-input-number v-model="roundOutlineSplit" round theme="outline-split" @change="handleChange" />
@@ -63,10 +63,10 @@
           <wd-input-number v-model="stepStrict" step-strictly :step="2" @change="handleChange" />
         </demo-group-item>
         <demo-group-item :title="$t('yan-ge-bu-jin-bian-jie-xian-zhi')">
-          <view class="demo-section">
-            <view class="demo-label">{{ $t('zhi-strictbounds-bu-jin-zhi-2-zui-xiao-zhi-3-zui-da-zhi-15', strictBounds) }}</view>
+          <view class="page-input-number__section">
+            <view class="page-input-number__label">{{ $t('zhi-strictbounds-bu-jin-zhi-2-zui-xiao-zhi-3-zui-da-zhi-15', strictBounds) }}</view>
             <wd-input-number v-model="strictBounds" step-strictly :step="2" :min="3" :max="15" @change="handleChange" />
-            <view class="demo-tip">
+            <view class="page-input-number__tip">
               {{ $t('shu-ru-1-43-de-zui-xiao-2-de-bei-shu') }}
               <br />
               {{ $t('shu-ru-5-4-zui-jie-jin-de-2-de-bei-shu') }}
@@ -82,7 +82,7 @@
 
       <demo-group :title="$t('te-shu-yong-fa')">
         <demo-group-item :title="$t('wu-shu-ru-kuang')">
-          <view class="demo-row">
+          <view class="page-input-number__row">
             <view>{{ $t('shu-liang-value5') }}{{ withoutInput }}</view>
             <wd-input-number v-model="withoutInput" without-input @change="handleChange" />
           </view>
@@ -91,30 +91,32 @@
           <wd-input-number v-model="allowNull" allow-null :placeholder="$t('bu-xian')" input-width="70px" @change="handleChange" />
         </demo-group-item>
         <demo-group-item :title="$t('fei-yun-xu-kong-zhi-dan-ke-lin-shi-shan-chu')">
-          <view class="demo-section">
-            <view class="demo-label">{{ $t('zhi-tempempty-shi-jiao-shi-hui-zi-dong-xiu-zheng-wei-zui-xiao-zhi', tempEmpty) }}</view>
+          <view class="page-input-number__section">
+            <view class="page-input-number__label">{{ $t('zhi-tempempty-shi-jiao-shi-hui-zi-dong-xiu-zheng-wei-zui-xiao-zhi', tempEmpty) }}</view>
             <wd-input-number v-model="tempEmpty" :min="1" @change="handleChange" />
-            <view class="demo-tip">{{ $t('chang-shi-shan-chu-shu-ru-kuang-zhong-de-suo-you-nei-rong-ran-hou-dian-ji-qi-ta-di-fang-shi-jiao') }}</view>
+            <view class="page-input-number__tip">
+              {{ $t('chang-shi-shan-chu-shu-ru-kuang-zhong-de-suo-you-nei-rong-ran-hou-dian-ji-qi-ta-di-fang-shi-jiao') }}
+            </view>
           </view>
         </demo-group-item>
         <demo-group-item :title="$t('jian-pan-dan-qi-bu-shang-tui-ye-mian')">
           <wd-input-number v-model="adjustPosition" :adjust-position="false" @change="handleChange" />
         </demo-group-item>
         <demo-group-item :title="$t('fei-li-ji-geng-xin-mo-shi')">
-          <view class="demo-section">
-            <view class="demo-label">{{ $t('li-ji-geng-xin-mo-shi-mo-ren-zhi-immediate', immediate) }}</view>
+          <view class="page-input-number__section">
+            <view class="page-input-number__label">{{ $t('li-ji-geng-xin-mo-shi-mo-ren-zhi-immediate', immediate) }}</view>
             <wd-input-number v-model="immediate" :immediate-change="true" @change="handleChange" />
-            <view class="demo-label">{{ $t('fei-li-ji-geng-xin-mo-shi-zhi-notimmediate', notImmediate) }}</view>
+            <view class="page-input-number__label">{{ $t('fei-li-ji-geng-xin-mo-shi-zhi-notimmediate', notImmediate) }}</view>
             <wd-input-number v-model="notImmediate" :immediate-change="false" @change="handleChange" />
           </view>
         </demo-group-item>
         <demo-group-item :title="$t('chu-shi-hua-shi-zi-dong-xiu-zheng')">
-          <view class="demo-section">
-            <view class="demo-label">{{ $t('zi-dong-xiu-zheng-chu-shi-zhi-zhi-updateoninit', updateOnInit) }}</view>
+          <view class="page-input-number__section">
+            <view class="page-input-number__label">{{ $t('zi-dong-xiu-zheng-chu-shi-zhi-zhi-updateoninit', updateOnInit) }}</view>
             <wd-input-number v-model="updateOnInit" :update-on-init="true" :min="3" :max="15" :step="2" step-strictly @change="handleChange" />
-            <view class="demo-label">{{ $t('bu-xiu-zheng-chu-shi-zhi-zhi-noupdateoninit', noUpdateOnInit) }}</view>
+            <view class="page-input-number__label">{{ $t('bu-xiu-zheng-chu-shi-zhi-zhi-noupdateoninit', noUpdateOnInit) }}</view>
             <wd-input-number v-model="noUpdateOnInit" :update-on-init="false" :min="3" :max="15" :step="2" step-strictly @change="handleChange" />
-            <view class="demo-tip">
+            <view class="page-input-number__tip">
               {{ $t('shang-fang-zu-jian-hui-zai-chu-shi-hua-shi-zi-dong-jiang-zhi-1-xiu-zheng-wei-43-de-zui-xiao-2-de-bei-shu') }}
             </view>
           </view>
@@ -197,29 +199,27 @@ const beforeChange: InputNumberBeforeChange = (value) => {
   :deep(.demo-group-item__content) {
     overflow: hidden;
   }
-}
 
-.demo-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
+  &__grid {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-extra-loose;
+  }
 
-.demo-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+  &__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
-.demo-section {
-  .demo-label {
+  &__label {
     font-size: $typography-body-size-main;
     color: $text-main;
     margin-bottom: $spacing-tight;
     font-weight: $font-weight-medium;
   }
 
-  .demo-tip {
+  &__tip {
     font-size: $typography-label-size-main;
     color: $text-auxiliary;
     margin-top: $n-12;
@@ -229,8 +229,14 @@ const beforeChange: InputNumberBeforeChange = (value) => {
     border-radius: $radius-main;
   }
 
+  &__section {
+    :deep(.wd-input-number) {
+      margin-bottom: $n-16;
+    }
+  }
+
   :deep(.wd-input-number) {
-    margin-bottom: $n-16;
+    margin-bottom: 0;
   }
 }
 </style>

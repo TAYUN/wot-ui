@@ -184,7 +184,7 @@ function changeSearchType({ item }: any) {
 }
 
 .page-search__light-demo {
-  background: var(--wot-color-bg);
+  background: $filled-bottom;
   padding: $n-10 0;
 }
 
@@ -251,9 +251,5 @@ function changeSearchType({ item }: any) {
   .page-search__mt {
     margin-top: $n-10;
   }
-}
-
-.overflowauto {
-  overflow: normal;
 }
 </style>

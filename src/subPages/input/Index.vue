@@ -53,7 +53,7 @@
         <demo-group-item :title="$t('hou-zhui-cha-cao')" no-padding>
           <wd-input v-model="slotValue" type="text" :placeholder="$t('qing-shu-ru-wai-bi-ba-bu')" clearable @input="handleEvent">
             <template #suffix>
-              <wd-button size="small" custom-class="button">{{ $t('huo-qu-yan-zheng-ma') }}</wd-button>
+              <wd-button size="small" custom-class="page-input__button">{{ $t('huo-qu-yan-zheng-ma') }}</wd-button>
             </template>
           </wd-input>
         </demo-group-item>
@@ -64,15 +64,15 @@
           <wd-input v-model="value7" type="text" :maxlength="20" show-word-limit @input="handleEvent" />
         </demo-group-item>
         <demo-group-item :title="$t('jin-cou-bu-ju')">
-          <view class="compact-row">
+          <view class="page-input__compact-row">
             <wd-input
               v-model="value8"
               compact
               :placeholder="$t('qing-shu-ru-jia-ge')"
-              custom-style="display: inline-block; width: 70px; vertical-align: middle;"
+              custom-style="display: inline-block; width: var(--wot-n-70); vertical-align: middle;"
               @input="handleEvent"
             />
-            <text class="custom-txt">{{ $t('yuan') }}</text>
+            <text class="page-input__text">{{ $t('yuan') }}</text>
           </view>
         </demo-group-item>
       </demo-group>
@@ -112,7 +112,7 @@
             <wd-form-item :title="$t('zi-ding-yi-cha-cao')" prop="slot" center>
               <wd-input v-model="formData.slot" type="text" :placeholder="$t('qing-shu-ru-9')" clearable compact @input="handleEvent">
                 <template #suffix>
-                  <wd-button size="small" custom-class="button">{{ $t('huo-qu-yan-zheng-ma') }}</wd-button>
+                  <wd-button size="small" custom-class="page-input__button">{{ $t('huo-qu-yan-zheng-ma') }}</wd-button>
                 </template>
               </wd-input>
             </wd-form-item>
@@ -162,26 +162,23 @@ function handleEvent(event: any) {
   :deep(.demo-group-item__content) {
     overflow: hidden;
   }
-}
 
-.compact-row {
-  display: flex;
-  align-items: center;
-}
+  &__compact-row {
+    display: flex;
+    align-items: center;
+  }
 
-.wot-theme-dark {
-  .custom-txt {
-    color: $-dark-color;
+  &__text {
+    display: inline-flex;
+    align-items: center;
+    margin-left: $spacing-tight;
+    font-size: $typography-body-size-main;
+    color: $text-main;
   }
 }
-.custom-txt {
-  display: inline-flex;
-  align-items: center;
-  font-size: 14px;
-  margin-left: 8px;
-}
-:deep(.button) {
-  margin-left: 8px;
+
+:deep(.page-input__button) {
+  margin-left: $spacing-tight;
   vertical-align: middle;
 }
 </style>

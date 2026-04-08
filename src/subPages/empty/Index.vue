@@ -29,7 +29,7 @@
         <demo-group-item :title="$t('di-bu-cha-cao')">
           <wd-empty icon="no-content" tip="当前搜索无结果">
             <template #bottom>
-              <view class="bottom-actions">
+              <view class="page-empty__bottom-actions">
                 <wd-button type="info">{{ $t('zhong-xin-jia-zai') }}</wd-button>
               </view>
             </template>
@@ -59,11 +59,11 @@ const emptyTypes = [
 
 <style lang="scss" scoped>
 .page-empty {
-  .bottom-actions {
-    margin-top: var(--wot-empty-bottom-margin-top, 20px);
+  &__bottom-actions {
+    width: 100%;
     display: flex;
     justify-content: center;
-    width: 100%;
+    margin-top: var(--wot-empty-bottom-margin-top, 20px);
   }
 }
 </style>

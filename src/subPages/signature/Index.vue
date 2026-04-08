@@ -1,5 +1,5 @@
 <template>
-  <page-wraper>
+  <page-wraper :demo-config="{ transparent: true }">
     <view class="page-signature">
       <demo-group :title="$t('zu-jian-lei-xing')">
         <demo-group-item :title="$t('ji-chu-yong-fa-0')">
@@ -16,11 +16,11 @@
         </demo-group-item>
         <demo-group-item :title="$t('bi-feng-mo-shi-zi-ding-yi')">
           <wd-signature pressure :height="300" :min-width="1" :max-width="6" :min-speed="1.5" background-color="#f5f5f5" />
-          <view class="tip-text">{{ $t('kuai-su-shu-xie-chan-sheng-xi-xian-tiao-man-su-shu-xie-chan-sheng-cu-xian-tiao') }}</view>
+          <view class="page-signature__tip-text">{{ $t('kuai-su-shu-xie-chan-sheng-xi-xian-tiao-man-su-shu-xie-chan-sheng-cu-xian-tiao') }}</view>
         </demo-group-item>
         <demo-group-item :title="$t('bi-feng-mo-shi-li-shi-ji-lu')">
           <wd-signature pressure enable-history :height="300" :min-width="1" :max-width="6" background-color="#f5f5f5" />
-          <view class="tip-text">{{ $t('jie-he-li-shi-ji-lu-zhi-chi-bi-feng-xiao-guo-de-che-xiao-yu-hui-fu') }}</view>
+          <view class="page-signature__tip-text">{{ $t('jie-he-li-shi-ji-lu-zhi-chi-bi-feng-xiao-guo-de-che-xiao-yu-hui-fu') }}</view>
         </demo-group-item>
       </demo-group>
 
@@ -52,7 +52,7 @@
             closable
             safe-area-inset-bottom
             position="bottom"
-            custom-style="padding: 48px 20px 20px 20px; border-radius: 16px 16px 0 0;"
+            custom-style="padding: 48px 20px 20px 20px; border-radius: 8px 8px 0 0;"
             @after-enter="signatureRef?.init()"
           >
             <wd-signature ref="signatureRef" :height="300" enable-history pressure background-color="#f5f5f5" @confirm="handlePopupConfirm" />
@@ -111,11 +111,11 @@ function toSignatureLandscape() {
 
 <style lang="scss" scoped>
 .page-signature {
-  .tip-text {
-    font-size: 12px;
-    color: #999;
-    margin-top: 8px;
+  &__tip-text {
+    margin-top: $spacing-tight;
     text-align: center;
+    color: $text-placeholder;
+    font-size: $typography-label-size-main;
   }
 }
 </style>

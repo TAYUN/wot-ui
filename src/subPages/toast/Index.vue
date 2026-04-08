@@ -4,13 +4,13 @@
 
     <demo-group :title="$t('zu-jian-lei-xing')">
       <demo-group-item :title="$t('jiBenYongFa')">
-        <view class="button-group">
+        <view class="page-toast__button-group">
           <wd-button @click="showToast">toast</wd-button>
           <wd-button @click="showLongToast">{{ $t('chang-wen-an') }}</wd-button>
         </view>
       </demo-group-item>
       <demo-group-item :title="$t('lei-xing-toast')">
-        <view class="button-group">
+        <view class="page-toast__button-group">
           <wd-button @click="showSuccessToast">{{ $t('cheng-gong-toast') }}</wd-button>
           <wd-button @click="showErrorToast">{{ $t('cuo-wu-toast') }}</wd-button>
           <wd-button @click="showWarnToast">{{ $t('jing-gao-toast') }}</wd-button>
@@ -21,14 +21,14 @@
 
     <demo-group :title="$t('zu-jian-zhuang-tai')">
       <demo-group-item :title="$t('loading')">
-        <view class="button-group">
+        <view class="page-toast__button-group">
           <wd-button @click="showLoadingToast">circular ({{ $t('mo-ren') }})</wd-button>
           <wd-button @click="showSpinnerLoading">spinner</wd-button>
           <wd-button @click="showDotsLoading">dots</wd-button>
         </view>
       </demo-group-item>
       <demo-group-item :title="$t('zong-xiang-bu-ju-loading')">
-        <view class="button-group">
+        <view class="page-toast__button-group">
           <wd-button @click="showVerticalCircularLoading">circular</wd-button>
           <wd-button @click="showVerticalSpinnerLoading">spinner</wd-button>
           <wd-button @click="showVerticalDotsLoading">dots</wd-button>
@@ -38,20 +38,20 @@
 
     <demo-group :title="$t('zu-jian-yang-shi')">
       <demo-group-item :title="$t('shi-yong-tu-biao')">
-        <view class="button-group">
+        <view class="page-toast__button-group">
           <wd-button @click="showInnerIconToast">{{ $t('nei-bu-tu-biao') }}</wd-button>
           <wd-button @click="showCustomIconToast">{{ $t('ziDingYiTuBiao') }}</wd-button>
         </view>
       </demo-group-item>
       <demo-group-item :title="$t('ti-shi-wei-zhi')">
-        <view class="button-group">
+        <view class="page-toast__button-group">
           <wd-button @click="showTopToast">{{ $t('ding-bu-toast') }}</wd-button>
           <wd-button @click="showMiddletoast">{{ $t('ju-zhong-toast') }}</wd-button>
           <wd-button @click="showBottomToast">{{ $t('di-bu-toast') }}</wd-button>
         </view>
       </demo-group-item>
       <demo-group-item :title="$t('pai-ban-fang-xiang')">
-        <view class="button-group">
+        <view class="page-toast__button-group">
           <wd-button @click="showHorizonToast">{{ $t('heng-xiang-pai-ban') }}</wd-button>
           <wd-button @click="showVerticalToast">{{ $t('zong-xiang-pai-ban') }}</wd-button>
         </view>
@@ -117,7 +117,7 @@ function showSpinnerLoading() {
   toast.loading({
     msg: t('3s-hou-zi-dong-guan-bi-0'),
     loadingType: 'spinner',
-    loadingColor: '#fff'
+    loadingColor: 'var(--wot-text-white, #fff)'
   })
   setTimeout(() => {
     toast.close()
@@ -128,7 +128,7 @@ function showDotsLoading() {
   toast.loading({
     msg: t('3s-hou-zi-dong-guan-bi-1'),
     loadingType: 'dots',
-    loadingColor: '#fff'
+    loadingColor: 'var(--wot-text-white, #fff)'
   })
   setTimeout(() => {
     toast.close()
@@ -150,7 +150,7 @@ function showVerticalSpinnerLoading() {
     msg: '芦叶满汀洲，寒沙带浅流。二十年重过南楼。柳下系船犹未稳，能几日，又中秋。黄鹤断矶头，故人曾到否？旧江山浑是新愁。欲买桂花同载酒，终不似，少年游。',
     direction: 'vertical',
     loadingType: 'spinner',
-    loadingColor: '#fff'
+    loadingColor: 'var(--wot-text-white, #fff)'
   })
   setTimeout(() => {
     toast.close()
@@ -162,7 +162,7 @@ function showVerticalDotsLoading() {
     msg: '芦叶满汀洲，寒沙带浅流。二十年重过南楼。柳下系船犹未稳，能几日，又中秋。黄鹤断矶头，故人曾到否？旧江山浑是新愁。欲买桂花同载酒，终不似，少年游。',
     direction: 'vertical',
     loadingType: 'dots',
-    loadingColor: '#fff'
+    loadingColor: 'var(--wot-text-white, #fff)'
   })
   setTimeout(() => {
     toast.close()
@@ -203,9 +203,11 @@ function showVerticalToast() {
 }
 </script>
 <style lang="scss" scoped>
-.button-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+.page-toast {
+  &__button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-main;
+  }
 }
 </style>

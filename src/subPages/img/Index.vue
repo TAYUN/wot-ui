@@ -9,35 +9,35 @@
 
       <demo-group :title="$t('zu-jian-zhuang-tai')">
         <demo-group-item :title="$t('jia-zai-zhong-0')">
-          <view class="demo-grid demo-grid--two">
-            <view class="demo-col">
+          <view class="page-img__grid page-img__grid--two">
+            <view class="page-img__col">
               <wd-img width="100%" height="27vw" src="https://www.123.wot.com/a.jpg" />
-              <view class="demo-text">{{ $t('mo-ren-ti-shi') }}</view>
+              <view class="page-img__text">{{ $t('mo-ren-ti-shi') }}</view>
             </view>
-            <view class="demo-col">
+            <view class="page-img__col">
               <wd-img width="100%" height="27vw" src="https://www.123.wot.com/a.jpg">
                 <template #loading>
                   <wd-loading />
                 </template>
               </wd-img>
-              <view class="demo-text">{{ $t('zi-ding-yi-ti-shi') }}</view>
+              <view class="page-img__text">{{ $t('zi-ding-yi-ti-shi') }}</view>
             </view>
           </view>
         </demo-group-item>
 
         <demo-group-item :title="$t('jia-zai-shi-bai')">
-          <view class="demo-grid demo-grid--two">
-            <view class="demo-col">
+          <view class="page-img__grid page-img__grid--two">
+            <view class="page-img__col">
               <wd-img width="100%" height="27vw" src="https://www.123.wot.com/a.jpg" />
-              <view class="demo-text">{{ $t('mo-ren-ti-shi-0') }}</view>
+              <view class="page-img__text">{{ $t('mo-ren-ti-shi-0') }}</view>
             </view>
-            <view class="demo-col">
+            <view class="page-img__col">
               <wd-img width="100%" height="27vw" src="https://www.123.wot.com/a.jpg">
                 <template #error>
-                  <view class="error-wrap">{{ $t('jia-zai-shi-bai') }}</view>
+                  <view class="page-img__error">{{ $t('jia-zai-shi-bai') }}</view>
                 </template>
               </wd-img>
-              <view class="demo-text">{{ $t('zi-ding-yi-ti-shi-0') }}</view>
+              <view class="page-img__text">{{ $t('zi-ding-yi-ti-shi-0') }}</view>
             </view>
           </view>
         </demo-group-item>
@@ -45,28 +45,28 @@
 
       <demo-group :title="$t('zu-jian-yang-shi')">
         <demo-group-item :title="$t('tian-chong')">
-          <view class="demo-grid">
-            <view class="demo-col" v-for="mode in modes" :key="mode">
+          <view class="page-img__grid">
+            <view class="page-img__col" v-for="mode in modes" :key="mode">
               <wd-img width="100%" height="27vw" :src="imgURL" :mode="mode" />
-              <view class="demo-text">{{ mode }}</view>
+              <view class="page-img__text">{{ mode }}</view>
             </view>
           </view>
         </demo-group-item>
 
         <demo-group-item :title="$t('yuan-xing')">
-          <view class="demo-grid">
-            <view class="demo-col" v-for="mode in modes" :key="`round-${mode}`">
+          <view class="page-img__grid">
+            <view class="page-img__col" v-for="mode in modes" :key="`round-${mode}`">
               <wd-img round width="100%" height="27vw" :src="imgURL" :mode="mode" />
-              <view class="demo-text">{{ mode }}</view>
+              <view class="page-img__text">{{ mode }}</view>
             </view>
           </view>
         </demo-group-item>
 
         <demo-group-item :title="$t('yuan-jiao')">
-          <view class="demo-grid">
-            <view class="demo-col" v-for="mode in modes" :key="`radius-${mode}`">
+          <view class="page-img__grid">
+            <view class="page-img__col" v-for="mode in modes" :key="`radius-${mode}`">
               <wd-img width="100%" height="27vw" :radius="5" :src="imgURL" :mode="mode" />
-              <view class="demo-text">{{ mode }}</view>
+              <view class="page-img__text">{{ mode }}</view>
             </view>
           </view>
         </demo-group-item>
@@ -74,14 +74,14 @@
 
       <demo-group :title="$t('te-shu-yong-fa')">
         <demo-group-item :title="$t('ke-yu-lan')">
-          <view class="demo-grid demo-grid--two">
-            <view class="demo-col">
+          <view class="page-img__grid page-img__grid--two">
+            <view class="page-img__col">
               <wd-img width="100%" mode="widthFix" :src="imgURL" :enable-preview="true" />
-              <view class="demo-text">{{ $t('mo-ren-yu-lan-tu') }}</view>
+              <view class="page-img__text">{{ $t('mo-ren-yu-lan-tu') }}</view>
             </view>
-            <view class="demo-col">
+            <view class="page-img__col">
               <wd-img width="100%" mode="widthFix" :src="imgURL" :preview-src="previewURL" :enable-preview="true" />
-              <view class="demo-text">{{ $t('zhi-ding-yu-lan-tu') }}</view>
+              <view class="page-img__text">{{ $t('zhi-ding-yu-lan-tu') }}</view>
             </view>
           </view>
         </demo-group-item>
@@ -120,42 +120,37 @@ const modes: ImageMode[] = [
   :deep(.demo-group-item__content) {
     overflow: hidden;
   }
-}
 
-.demo-card {
-  display: flex;
-  justify-content: center;
-}
-
-.demo-grid {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.demo-grid--two {
-  .demo-col {
-    width: 50%;
+  &__grid {
+    display: flex;
+    flex-wrap: wrap;
   }
-}
 
-.demo-col {
-  box-sizing: border-box;
-  min-height: 1px;
-  padding: 0 10px 20px;
-  width: 33.3333%;
-}
+  &__grid--two {
+    .page-img__col {
+      width: 50%;
+    }
+  }
 
-.demo-text {
-  margin-top: 8px;
-  text-align: center;
-}
+  &__col {
+    box-sizing: border-box;
+    width: 33.3333%;
+    min-height: 1px;
+    padding: 0 $padding-main $padding-super-loose;
+  }
 
-.error-wrap {
-  width: 100%;
-  height: 100%;
-  background-color: red;
-  color: white;
-  line-height: 100px;
-  text-align: center;
+  &__text {
+    margin-top: $spacing-tight;
+    text-align: center;
+  }
+
+  &__error {
+    width: 100%;
+    height: 100%;
+    line-height: 100px;
+    text-align: center;
+    color: $text-white;
+    background-color: $danger-main;
+  }
 }
 </style>

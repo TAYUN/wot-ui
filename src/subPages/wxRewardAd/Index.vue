@@ -1,13 +1,13 @@
 <template>
   <page-wraper :use-wx-ad="false">
-    <div class="ad-completion-message">
-      <div class="message-title">{{ $t('gan-xie-ni-yuan-yi-lai-guan-kan-guang-gao') }}</div>
-      <div class="message-content">{{ $t('guan-kan-cheng-gong-jiu-yi-jing-cheng-gong-wei-wo-zhu-li') }}</div>
-      <view class="button-group">
+    <view class="page-wx-reward-ad">
+      <view class="page-wx-reward-ad__title">{{ $t('gan-xie-ni-yuan-yi-lai-guan-kan-guang-gao') }}</view>
+      <view class="page-wx-reward-ad__content">{{ $t('guan-kan-cheng-gong-jiu-yi-jing-cheng-gong-wei-wo-zhu-li') }}</view>
+      <view class="page-wx-reward-ad__button-group">
         <wd-button type="success" block @click="back">{{ $t('fan-hui-shi-yong') }}</wd-button>
         <wd-button type="danger" block @click="showAd">{{ $t('guan-kan-shi-pin') }}</wd-button>
       </view>
-    </div>
+    </view>
   </page-wraper>
 </template>
 <script setup lang="ts">
@@ -28,38 +28,25 @@ function showAd() {
 }
 </script>
 <style lang="scss" scoped>
-.ad-completion-message {
+.page-wx-reward-ad {
+  padding: $padding-super-loose;
   text-align: center;
-  padding: 20px;
-}
 
-.message-title {
-  font-size: 24px;
-  color: #4caf50;
-}
+  &__title {
+    color: $success-main;
+    font-size: $typography-title-size-extra-large;
+  }
 
-.message-content {
-  font-size: 16px;
-  margin: 16px 0;
-}
+  &__content {
+    margin: $spacing-extra-loose 0;
+    color: $text-main;
+    font-size: $typography-body-size-extra-large;
+  }
 
-.continue-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.continue-button:hover {
-  background-color: #0056b3;
-}
-
-.button-group {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
+  &__button-group {
+    display: flex;
+    justify-content: space-around;
+    margin-top: $spacing-super-loose;
+  }
 }
 </style>

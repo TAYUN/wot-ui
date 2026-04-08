@@ -3,13 +3,13 @@
     <view class="page-backtop">
       <demo-group :title="$t('zu-jian-bian-ti')">
         <demo-group-item :title="$t('xing-zhuang-yu-wen-zi')">
-          <view class="option-list">
+          <view class="page-backtop__option-list">
             <wd-checkbox shape="square" size="large" v-model="isSquare">{{ $t('xianShiFangXing') }}</wd-checkbox>
             <wd-checkbox shape="square" size="large" v-model="isText">{{ $t('xian-shi-wen-zi') }}</wd-checkbox>
           </view>
         </demo-group-item>
         <demo-group-item :title="$t('ziDingYiTuBiao')">
-          <view class="option-list">
+          <view class="page-backtop__option-list">
             <wd-checkbox shape="square" size="large" v-model="isCustomIcon">{{ $t('ziDingYiTuBiao') }}</wd-checkbox>
           </view>
         </demo-group-item>
@@ -17,17 +17,17 @@
 
       <demo-group :title="$t('zu-jian-yang-shi')">
         <demo-group-item :title="$t('ziDingYiJuLi')">
-          <view class="option-list">
+          <view class="page-backtop__option-list">
             <wd-checkbox shape="square" size="large" v-model="isTop">{{ $t('ziDingYiJuLi') }}</wd-checkbox>
           </view>
         </demo-group-item>
         <demo-group-item :title="$t('ziDingYiYangShi')">
-          <view class="option-list">
+          <view class="page-backtop__option-list">
             <wd-checkbox shape="square" size="large" v-model="isStyle">{{ $t('ziDingYiYangShi') }}</wd-checkbox>
           </view>
         </demo-group-item>
         <demo-group-item :title="$t('ziDingYiFanHuiDingBuGunDongShiJian')">
-          <view class="option-list">
+          <view class="page-backtop__option-list">
             <wd-checkbox shape="square" size="large" v-model="isDuration">{{ $t('ziDingYiFanHuiDingBuGunDongShiJian') }}</wd-checkbox>
           </view>
         </demo-group-item>
@@ -40,18 +40,18 @@
         :scrollTop="scrollTop"
         :shape="isSquare ? 'square' : undefined"
         :top="isTop ? 600 : undefined"
-        :custom-style="isStyle ? 'background: #007aff;color:white;' : undefined"
+        :custom-style="isStyle ? 'background: var(--wot-primary-6); color: var(--wot-text-white);' : undefined"
         :duration="isDuration ? 1000 : undefined"
         :text="isText ? 'TOP' : undefined"
       >
-        <text :class="['custom-backtop-icon', { 'is-custom-style': isStyle }]">TOP</text>
+        <text :class="['page-backtop__custom-icon', { 'page-backtop__custom-icon--active': isStyle }]">TOP</text>
       </wd-backtop>
       <wd-backtop
         v-else
         :scrollTop="scrollTop"
         :shape="isSquare ? 'square' : undefined"
         :top="isTop ? 600 : undefined"
-        :custom-style="isStyle ? 'background: #007aff;color:white;' : undefined"
+        :custom-style="isStyle ? 'background: var(--wot-primary-6); color: var(--wot-text-white);' : undefined"
         :duration="isDuration ? 1000 : undefined"
         :text="isText ? 'TOP' : undefined"
       ></wd-backtop>
@@ -75,21 +75,23 @@ const isDuration = ref(false)
 const isText = ref(false)
 </script>
 <style lang="scss" scoped>
-.option-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
+.page-backtop {
+  &__option-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--wot-spacing-loose);
+  }
 
-.page-backtop__spacer {
-  height: 2000px;
-}
+  &__spacer {
+    height: 2000px;
+  }
 
-.custom-backtop-icon {
-  color: #333;
-}
+  &__custom-icon {
+    color: var(--wot-text-secondary);
 
-.is-custom-style {
-  color: #fff;
+    &--active {
+      color: var(--wot-text-white);
+    }
+  }
 }
 </style>

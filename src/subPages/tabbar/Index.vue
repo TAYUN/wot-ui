@@ -56,7 +56,12 @@
           </wd-tabbar>
         </demo-group-item>
         <demo-group-item no-padding :title="$t('zi-ding-yi-yan-se-0')">
-          <wd-tabbar v-model="tabbar5" active-color="#ee0a24" inactive-color="#7d7e80" @change="handleChange">
+          <wd-tabbar
+            v-model="tabbar5"
+            active-color="var(--wot-danger-main, #ee0a24)"
+            inactive-color="var(--wot-text-placeholder, #7d7e80)"
+            @change="handleChange"
+          >
             <wd-tabbar-item is-dot :value="2" :title="$t('dian-zhuang-0')" icon="home"></wd-tabbar-item>
             <wd-tabbar-item :value="2" icon="store" :title="$t('fen-lei')"></wd-tabbar-item>
             <wd-tabbar-item :value="30" :title="$t('wo-de')" icon="user"></wd-tabbar-item>
@@ -68,7 +73,12 @@
 
       <demo-group transparent :title="$t('te-shu-yang-shi')">
         <demo-group-item no-padding :title="$t('jian-ting-qie-huan-shi-jian')">
-          <wd-tabbar v-model="tabbar6" active-color="#ee0a24" inactive-color="#7d7e80" @change="handleChange1">
+          <wd-tabbar
+            v-model="tabbar6"
+            active-color="var(--wot-danger-main, #ee0a24)"
+            inactive-color="var(--wot-text-placeholder, #7d7e80)"
+            @change="handleChange1"
+          >
             <wd-tabbar-item :title="$t('shou-ye')" icon="home"></wd-tabbar-item>
             <wd-tabbar-item :title="$t('fen-lei')" icon="store"></wd-tabbar-item>
             <wd-tabbar-item :title="$t('wo-de')" icon="user"></wd-tabbar-item>
@@ -81,7 +91,7 @@
             <wd-tabbar-item :value="2" is-dot :title="$t('shou-ye')" icon="home"></wd-tabbar-item>
             <wd-tabbar-item :title="$t('fen-lei')" icon="store"></wd-tabbar-item>
             <wd-tabbar-item>
-              <view class="custom-raised-button">
+              <view class="page-tabbar__raised-button">
                 <wd-icon name="plus" size="32px"></wd-icon>
               </view>
             </wd-tabbar-item>
@@ -160,22 +170,21 @@ function handleChange1({ value }: { value: string }) {
 }
 </script>
 <style lang="scss" scoped>
-// :deep(.page-wraper) {
-//   background: #f6f6f6;
-// }
-.custom-raised-button {
-  width: 100rpx;
-  height: 100rpx;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  top: 0rpx;
-  left: 50%;
-  transform: translateX(-50%) translateY(-30%);
-  background-color: #fff;
-  z-index: 10;
-  color: var(--wot-color-theme, #4d80f0);
+.page-tabbar {
+  &__raised-button {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100rpx;
+    height: 100rpx;
+    color: var(--wot-primary-6, #4d80f0);
+    background-color: $filled-oppo;
+    border-radius: 50%;
+    transform: translateX(-50%) translateY(-30%);
+  }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <page-wraper>
+  <page-wraper :demo-config="{ transparent: true }">
     <view class="page-sort-button">
       <demo-group :title="$t('zu-jian-lei-xing')">
         <demo-group-item :title="$t('ji-chu-yong-fa-0')">

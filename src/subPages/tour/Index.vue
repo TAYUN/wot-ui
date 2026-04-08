@@ -1,38 +1,38 @@
 <template>
   <page-wraper>
-    <view class="tour-container">
-      <view class="tour-step" id="step1">
-        <view class="tour-item">
-          <text class="tour-title">{{ $t('di-yi-bu') }}</text>
-          <text class="tour-content">{{ $t('zhe-shi-yin-dao-de-di-yi-bu-jie-shao-ji-ben-gong-neng') }}</text>
+    <view class="page-tour__container">
+      <view class="page-tour__step" id="step1">
+        <view class="page-tour__item">
+          <text class="page-tour__title">{{ $t('di-yi-bu') }}</text>
+          <text class="page-tour__content">{{ $t('zhe-shi-yin-dao-de-di-yi-bu-jie-shao-ji-ben-gong-neng') }}</text>
         </view>
       </view>
 
-      <view class="tour-step" id="step2">
-        <view class="tour-item">
-          <text class="tour-title">{{ $t('di-er-bu') }}</text>
-          <text class="tour-content">{{ $t('zhe-shi-yin-dao-de-di-er-bu-zhan-shi-geng-duo-gong-neng') }}</text>
+      <view class="page-tour__step" id="step2">
+        <view class="page-tour__item">
+          <text class="page-tour__title">{{ $t('di-er-bu') }}</text>
+          <text class="page-tour__content">{{ $t('zhe-shi-yin-dao-de-di-er-bu-zhan-shi-geng-duo-gong-neng') }}</text>
         </view>
       </view>
 
-      <view class="tour-step" id="step3">
-        <view class="tour-item">
-          <text class="tour-title">{{ $t('di-san-bu') }}</text>
-          <text class="tour-content">{{ $t('zhe-shi-yin-dao-de-di-san-bu-shen-ru-gong-neng-jie-shao') }}</text>
+      <view class="page-tour__step" id="step3">
+        <view class="page-tour__item">
+          <text class="page-tour__title">{{ $t('di-san-bu') }}</text>
+          <text class="page-tour__content">{{ $t('zhe-shi-yin-dao-de-di-san-bu-shen-ru-gong-neng-jie-shao') }}</text>
         </view>
       </view>
 
-      <view class="tour-step" id="step4">
-        <view class="tour-item">
-          <text class="tour-title">{{ $t('di-si-bu') }}</text>
-          <text class="tour-content">{{ $t('zhe-shi-yin-dao-de-zui-hou-yi-bu-zong-jie-gong-neng') }}</text>
+      <view class="page-tour__step" id="step4">
+        <view class="page-tour__item">
+          <text class="page-tour__title">{{ $t('di-si-bu') }}</text>
+          <text class="page-tour__content">{{ $t('zhe-shi-yin-dao-de-zui-hou-yi-bu-zong-jie-gong-neng') }}</text>
         </view>
       </view>
     </view>
 
     <demo-group :title="$t('zu-jian-lei-xing')">
       <demo-group-item :title="$t('ji-chu-yong-fa')">
-        <view class="button-group">
+        <view class="page-tour__button-group">
           <wd-button type="primary" @click="startBasicTour">{{ $t('kai-shi-yin-dao') }}</wd-button>
         </view>
       </demo-group-item>
@@ -40,12 +40,12 @@
 
     <demo-group :title="$t('zu-jian-zhuang-tai')">
       <demo-group-item :title="$t('dian-ji-meng-ban-ji-xu')">
-        <view class="button-group">
+        <view class="page-tour__button-group">
           <wd-button type="primary" @click="startMaskNextTour">{{ $t('dian-ji-meng-ban-ji-xu-0') }}</wd-button>
         </view>
       </demo-group-item>
       <demo-group-item :title="$t('guan-bi-meng-ban')">
-        <view class="button-group">
+        <view class="page-tour__button-group">
           <wd-button type="primary" @click="startNoMaskTour">{{ $t('guan-bi-meng-ban-0') }}</wd-button>
         </view>
       </demo-group-item>
@@ -53,17 +53,17 @@
 
     <demo-group :title="$t('zu-jian-yang-shi')">
       <demo-group-item :title="$t('zi-ding-yi-meng-ban')">
-        <view class="button-group">
+        <view class="page-tour__button-group">
           <wd-button type="primary" @click="startCustomMaskTour">{{ $t('zi-ding-yi-meng-ban-0') }}</wd-button>
         </view>
       </demo-group-item>
       <demo-group-item :title="$t('zi-ding-yi-gao-liang-qu-yu')">
-        <view class="button-group">
+        <view class="page-tour__button-group">
           <wd-button type="primary" @click="startCustomHighlightTour">{{ $t('zi-ding-yi-gao-liang') }}</wd-button>
         </view>
       </demo-group-item>
       <demo-group-item :title="$t('zi-ding-yi-nei-rong-he-an-niu')">
-        <view class="button-group">
+        <view class="page-tour__button-group">
           <wd-button type="primary" @click="startCustomContentTour">{{ $t('ziDingYiNeiRong') }}</wd-button>
         </view>
       </demo-group-item>
@@ -71,7 +71,7 @@
 
     <demo-group :title="$t('te-shu-yang-shi')">
       <demo-group-item :title="$t('kong-zhi-dang-qian-bu-zhou')">
-        <view class="button-group">
+        <view class="page-tour__button-group">
           <wd-button type="primary" @click="startControlTour">{{ $t('tiao-zhuan-dao-di-san-bu-kai-shi-yin-dao') }}</wd-button>
         </view>
       </demo-group-item>
@@ -129,7 +129,7 @@
       @change="handleChange"
     >
       <template #highlight="{ elementInfo }">
-        <view class="custom-highlight" :style="`${objToStyle(elementInfo)};${objToStyle(customHighlightStyle)}`"></view>
+        <view class="page-tour__custom-highlight" :style="`${objToStyle(elementInfo)};${objToStyle(customHighlightStyle)}`"></view>
       </template>
     </wd-tour>
 
@@ -146,18 +146,18 @@
       @change="handleChange"
     >
       <template #content>
-        <view class="custom-content">
+        <view class="page-tour__custom-content">
           <wd-icon name="help-circle-filled" size="22px"></wd-icon>
-          <text class="custom-text">{{ $t('zi-ding-yi-yin-dao-nei-rong-qu-yu') }}</text>
+          <text class="page-tour__custom-text">{{ $t('zi-ding-yi-yin-dao-nei-rong-qu-yu') }}</text>
         </view>
       </template>
 
       <template #next>
-        <view class="custom-button custom-next">{{ $t('xia-yi-bu') }}</view>
+        <view class="page-tour__custom-button page-tour__custom-button--next">{{ $t('xia-yi-bu') }}</view>
       </template>
 
       <template #finish>
-        <view class="custom-button custom-finish">{{ $t('wan-cheng') }}</view>
+        <view class="page-tour__custom-button page-tour__custom-button--finish">{{ $t('wan-cheng') }}</view>
       </template>
     </wd-tour>
 
@@ -194,7 +194,7 @@ const finishText = ref(t('zhi-dao-le'))
 const current = ref(0)
 const controlCurrent = ref(0)
 // 步骤数据
-const basicSteps = [
+const basicSteps = ref([
   {
     element: '#step1',
     content: t('huan-ying-shi-yong-yin-dao-zu-jian-zhe-shi-di-yi-bu-de-shuo-ming')
@@ -211,9 +211,9 @@ const basicSteps = [
     element: '#step4',
     content: t('zhe-shi-zui-hou-yi-bu-wan-cheng-yin-dao-liu-cheng')
   }
-]
+])
 
-const customMaskSteps = [
+const customMaskSteps = ref([
   {
     element: '#step1',
     content: t('zhe-shi-strong-zi-ding-yi-meng-ban-strong-shi-li-shi-yong-le-strong-hong-se-ban-tou-ming-strong-meng-ban')
@@ -230,9 +230,9 @@ const customMaskSteps = [
     element: '#step4',
     content: t('wan-cheng-le-zi-ding-yi-meng-ban-yang-shi-de-zhan-shi')
   }
-]
+])
 
-const noMaskSteps = [
+const noMaskSteps = ref([
   {
     element: '#step1',
     content: t('zhe-shi-strong-wu-meng-ban-strong-yin-dao-mo-shi')
@@ -249,9 +249,9 @@ const noMaskSteps = [
     element: '#step4',
     content: t('yin-dao-wan-chengubu-gan-raouyong-hu-cha-kan-ye-mian-qi-ta-nei-rong')
   }
-]
+])
 
-const customHighlightSteps = [
+const customHighlightSteps = ref([
   {
     element: '#step1',
     content: t('zhe-shi-strong-zi-ding-yi-gao-liang-qu-yu-strong-shi-li')
@@ -268,9 +268,9 @@ const customHighlightSteps = [
     element: '#step4',
     content: t('wan-cheng-le-zi-ding-yi-gao-liang-qu-yu-de-zhan-shi')
   }
-]
+])
 
-const customContentSteps = [
+const customContentSteps = ref([
   {
     element: '#step1',
     content: t('zhe-shi-h1-zi-ding-yi-yang-shi-h1-de-yin-dao-ke-yi-xiu-gai-em-meng-ban-yan-se-emu-yuan-jiao-da-xiaoudeng-shu-xing')
@@ -287,12 +287,12 @@ const customContentSteps = [
     element: '#step4',
     content: t('zhe-shi-zui-hou-yi-bu-wan-cheng-yin-dao-liu-cheng-0')
   }
-]
+])
 // 自定义高亮样式
 const customHighlightStyle = {
-  border: '2px dashed #ff0000',
-  borderRadius: '8px',
-  background: 'rgba(255, 0, 0, 0.1)',
+  border: '2px dashed var(--wot-danger-main, #ff0000)',
+  borderRadius: 'var(--wot-radius-large, 8px)',
+  background: 'var(--wot-danger-surface, rgba(255, 0, 0, 0.1))',
   boxSizing: 'border-box'
 }
 
@@ -371,75 +371,73 @@ function handleChange({ current }: TourChangeDetail) {
 </script>
 
 <style lang="scss" scoped>
-.tour-container {
-  padding-top: 20px;
+.page-tour {
+  &__container {
+    padding-top: $spacing-super-loose;
+  }
 
-  .tour-step {
+  &__step {
     width: fit-content;
-    margin: 0 auto 20px;
-
-    .tour-item {
-      padding: 20px;
-      border: 1px solid #e5e5e5;
-      border-radius: 8px;
-      background-color: #f8f8f8;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-      min-width: 250px;
-
-      .tour-title {
-        font-size: 18px;
-        font-weight: bold;
-        color: #333;
-        margin-bottom: 10px;
-        display: block;
-      }
-
-      .tour-content {
-        font-size: 14px;
-        color: #666;
-        line-height: 1.5;
-        display: block;
-      }
-    }
-  }
-}
-
-.button-group {
-  padding: 10px 0;
-  text-align: center;
-}
-
-.custom-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px;
-
-  .custom-text {
-    font-size: 14px;
-    color: #333;
-  }
-}
-
-.custom-button {
-  padding: 6px 12px;
-  border-radius: 4px;
-  font-size: 12px;
-
-  &.custom-next {
-    background-color: #34d19d;
-    color: #fff;
+    margin: 0 auto $spacing-super-loose;
   }
 
-  &.custom-finish {
-    background-color: #34d19d;
-    color: #fff;
+  &__item {
+    min-width: 250px;
+    padding: $padding-super-loose;
+    border: $stroke-main solid $border-light;
+    border-radius: $radius-large;
+    background-color: $filled-bottom;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   }
-}
 
-.custom-highlight {
-  position: fixed;
-  box-sizing: border-box;
-  transition: all 0.3s ease-in-out;
+  &__title {
+    display: block;
+    margin-bottom: $spacing-main;
+    color: $text-secondary;
+    font-size: $typography-title-size-main;
+    font-weight: $font-weight-bold;
+  }
+
+  &__content {
+    display: block;
+    color: $text-auxiliary;
+    font-size: $typography-body-size-main;
+    line-height: 1.5;
+  }
+
+  &__button-group {
+    padding: $padding-main 0;
+    text-align: center;
+  }
+
+  &__custom-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: $padding-main;
+  }
+
+  &__custom-text {
+    font-size: $typography-body-size-main;
+    color: $text-secondary;
+  }
+
+  &__custom-button {
+    padding: $spacing-extra-tight $spacing-loose;
+    border-radius: $radius-main;
+    font-size: $typography-label-size-main;
+  }
+
+  &__custom-button--next,
+  &__custom-button--finish {
+    color: $text-white;
+    background-color: $success-main;
+  }
+
+  &__custom-highlight {
+    position: fixed;
+    box-sizing: border-box;
+    transition: all 0.3s ease-in-out;
+  }
 }
 </style>

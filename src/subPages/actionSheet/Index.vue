@@ -47,7 +47,7 @@
         <demo-group-item :title="$t('biaoTi-0')">
           <wd-button block @click="showCustom = true">{{ $t('danChuCaiDan') }}</wd-button>
           <wd-action-sheet v-model="showCustom" :title="$t('biaoTi-0')" :cancel-text="cancelText" @close="showCustom = false">
-            <view class="custom-content">{{ $t('neiRong') }}</view>
+            <view class="page-action-sheet__custom-content">{{ $t('neiRong') }}</view>
           </wd-action-sheet>
         </demo-group-item>
       </demo-group>
@@ -79,7 +79,7 @@ const basicActions = computed<Action[]>(() => [
 ])
 
 const statusActions = computed<Action[]>(() => [
-  { name: t('yanSe'), color: '#0083ff' },
+  { name: t('yanSe'), color: 'var(--wot-primary-6, #0083ff)' },
   { name: t('jinYong'), disabled: true },
   { name: '', loading: true }
 ])
@@ -121,8 +121,8 @@ function select1({ item, rowIndex, colIndex }: { item: Panel; rowIndex: number; 
 </script>
 <style lang="scss" scoped>
 .page-action-sheet {
-  .custom-content {
-    padding: 15px 15px 150px 15px;
+  &__custom-content {
+    padding: var(--wot-padding-large) var(--wot-padding-large) var(--wot-n-150) var(--wot-padding-large);
   }
 }
 </style>

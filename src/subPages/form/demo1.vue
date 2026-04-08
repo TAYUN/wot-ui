@@ -17,7 +17,7 @@
       </wd-form-item>
 
       <wd-cell title-width="0px">
-        <view class="footer">
+        <view class="page-form-demo1__footer">
           <wd-button size="small" type="info" plain @click="addPhone">{{ $t('tian-jia') }}</wd-button>
           <wd-button size="small" type="info" plain @click="removePhone">{{ $t('shan-chu') }}</wd-button>
           <wd-button size="small" type="info" plain @click="reset">{{ $t('zhong-zhi') }}</wd-button>
@@ -133,11 +133,12 @@ const submit = () => {
 }
 </script>
 <style lang="scss" scoped>
-.footer {
+.page-form-demo1__footer {
   text-align: left;
+
   :deep(.wd-button) {
     &:not(:last-child) {
-      margin-right: 12px;
+      margin-right: $spacing-tight;
     }
   }
 }

@@ -7,7 +7,7 @@
         <wd-tabs v-model="tab1" @change="handleChange">
           <block v-for="item in 4" :key="item">
             <wd-tab :title="$t('biao-qian-item') + item">
-              <view class="content">
+              <view class="page-tabs__content">
                 {{ $t('nei-rong') }}{{ tab1 + 1 }}
                 <view>
                   <wd-button @click="tab1 < 3 ? tab1++ : (tab1 = 0)">{{ $t('xia-yi-ge') }}</wd-button>
@@ -21,7 +21,7 @@
         <wd-tabs v-model="tab" @change="handleChange">
           <block v-for="item in tabs" :key="item">
             <wd-tab :title="item" :name="item">
-              <view class="content">{{ $t('nei-rong') }}{{ tab }}</view>
+              <view class="page-tabs__content">{{ $t('nei-rong') }}{{ tab }}</view>
             </wd-tab>
           </block>
         </wd-tabs>
@@ -29,7 +29,7 @@
       <demo-group-item no-padding :title="$t('shi-yong-hui-biao')">
         <wd-tabs v-model="tabWithBadge" @change="handleChange">
           <wd-tab v-for="(item, index) in tabsWithBadge" :key="index" :title="item.title" :badge-props="item.badgeProps">
-            <view class="content">{{ item.title + $t('itemtitle-hui-biao') }}</view>
+            <view class="page-tabs__content">{{ item.title + $t('itemtitle-hui-biao') }}</view>
           </wd-tab>
         </wd-tabs>
       </demo-group-item>
@@ -40,7 +40,7 @@
         <wd-tabs v-model="tab2" sticky @change="handleChange">
           <block v-for="item in 4" :key="item">
             <wd-tab :title="$t('biao-qian-item') + item">
-              <view class="content">{{ $t('nei-rong') }}{{ tab2 + 1 }}</view>
+              <view class="page-tabs__content">{{ $t('nei-rong') }}{{ tab2 + 1 }}</view>
             </wd-tab>
           </block>
         </wd-tabs>
@@ -49,7 +49,7 @@
         <wd-tabs v-model="tab3" @change="handleChange">
           <block v-for="item in 4" :key="item">
             <wd-tab :title="$t('biao-qian-item') + item" :disabled="item === 1">
-              <view class="content">{{ $t('nei-rong') }}{{ tab3 + 1 }}</view>
+              <view class="page-tabs__content">{{ $t('nei-rong') }}{{ tab3 + 1 }}</view>
             </wd-tab>
           </block>
         </wd-tabs>
@@ -63,7 +63,7 @@
           <wd-tabs v-model="tabLineTheme[theme]" :line-theme="theme" @change="handleChange">
             <block v-for="item in 4" :key="item">
               <wd-tab :title="`${theme} ${item}`">
-                <view class="content">{{ $t('nei-rong') }}{{ item }}</view>
+                <view class="page-tabs__content">{{ $t('nei-rong') }}{{ item }}</view>
               </wd-tab>
             </block>
           </wd-tabs>
@@ -76,7 +76,7 @@
         <wd-tabs v-model="tab4" @click="handleClick" @change="handleChange">
           <block v-for="item in 4" :key="item">
             <wd-tab :title="$t('biao-qian-item') + item">
-              <view class="content">{{ $t('nei-rong') }}{{ tab4 + 1 }}</view>
+              <view class="page-tabs__content">{{ $t('nei-rong') }}{{ tab4 + 1 }}</view>
             </wd-tab>
           </block>
         </wd-tabs>
@@ -85,7 +85,7 @@
         <wd-tabs v-model="tab8" animated @change="handleChange">
           <block v-for="item in 4" :key="item">
             <wd-tab :title="$t('biao-qian-item') + item">
-              <view class="content">{{ $t('nei-rong') }}{{ tab8 + 1 }}</view>
+              <view class="page-tabs__content">{{ $t('nei-rong') }}{{ tab8 + 1 }}</view>
             </wd-tab>
           </block>
         </wd-tabs>
@@ -94,7 +94,7 @@
         <wd-tabs v-model="tab5" swipeable animated @change="handleChange">
           <block v-for="item in 4" :key="item">
             <wd-tab :title="$t('biao-qian-item') + item">
-              <view class="content">{{ $t('nei-rong') }}{{ tab5 + 1 }}</view>
+              <view class="page-tabs__content">{{ $t('nei-rong') }}{{ tab5 + 1 }}</view>
             </wd-tab>
           </block>
         </wd-tabs>
@@ -103,7 +103,7 @@
         <wd-tabs v-model="tab6" @change="handleChange">
           <block v-for="item in 7" :key="item">
             <wd-tab :title="$t('biao-qian-item') + item">
-              <view class="content">{{ $t('nei-rong') }}{{ tab6 + 1 }}</view>
+              <view class="page-tabs__content">{{ $t('nei-rong') }}{{ tab6 + 1 }}</view>
             </wd-tab>
           </block>
         </wd-tabs>
@@ -112,7 +112,7 @@
         <wd-tabs v-model="tab9" slidable="always" @change="handleChange">
           <block v-for="item in 5" :key="item">
             <wd-tab :title="$t('chao-da-biao-qian-item') + item">
-              <view class="content">{{ $t('nei-rong') }}{{ tab9 + 1 }}</view>
+              <view class="page-tabs__content">{{ $t('nei-rong') }}{{ tab9 + 1 }}</view>
             </wd-tab>
           </block>
         </wd-tabs>
@@ -121,23 +121,30 @@
         <wd-tabs v-model="tab7" @change="handleChange">
           <block v-for="item in 11" :key="item">
             <wd-tab :title="$t('biao-qian-item') + item">
-              <view class="large">{{ $t('nei-rong') }}{{ tab7 + 1 }}</view>
+              <view class="page-tabs__content page-tabs__content--large">{{ $t('nei-rong') }}{{ tab7 + 1 }}</view>
             </wd-tab>
           </block>
         </wd-tabs>
       </demo-group-item>
       <demo-group-item no-padding :title="$t('zai-dan-chu-kuang-zhong-shi-yong-0')">
-        <view class="section">
+        <view class="page-tabs__section">
           <wd-button @click="handleOpenClick">{{ $t('da-kai-dan-chuang') }}</wd-button>
         </view>
       </demo-group-item>
     </demo-group>
 
-    <wd-popup v-model="showPopup" position="bottom" safe-area-inset-bottom @after-enter="handlePopupShow" closable custom-style="padding: 0 24rpx;">
-      <view class="title">{{ $t('zai-dan-chu-kuang-zhong-shi-yong-0') }}</view>
+    <wd-popup
+      v-model="showPopup"
+      position="bottom"
+      safe-area-inset-bottom
+      @after-enter="handlePopupShow"
+      closable
+      custom-style="padding: 0 var(--wot-padding-loose);"
+    >
+      <view class="page-tabs__title">{{ $t('zai-dan-chu-kuang-zhong-shi-yong-0') }}</view>
       <wd-tabs v-model="tab10" ref="tabsRef">
         <wd-tab v-for="item in tabs" :key="item" :title="item" :name="item">
-          <view class="content">{{ $t('nei-rong') }}{{ tab10 }}</view>
+          <view class="page-tabs__content">{{ $t('nei-rong') }}{{ tab10 }}</view>
         </wd-tab>
       </wd-tabs>
     </wd-popup>
@@ -229,32 +236,40 @@ function handlePopupShow() {
 </script>
 <style lang="scss" scoped>
 .tabs-theme-item {
-  margin-bottom: 20px;
+  margin-bottom: $spacing-super-loose;
 
   &__label {
-    margin-bottom: 10px;
+    margin-bottom: $spacing-main;
     padding-left: 15px;
-    font-size: 14px;
-    color: #666;
+    font-size: $typography-body-size-main;
+    color: $text-auxiliary;
   }
 }
 
-.content {
-  height: 120px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-}
-.large {
-  line-height: 320px;
-  text-align: center;
-}
-.title {
-  display: flex;
-  font-size: 32rpx;
-  align-items: center;
-  justify-content: center;
-  padding: 24rpx 0;
+.page-tabs {
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 120px;
+    text-align: center;
+
+    &--large {
+      line-height: 320px;
+    }
+  }
+
+  &__section {
+    padding: 0 $padding-loose;
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $padding-loose 0;
+    font-size: $typography-body-size-extra-large;
+    color: $text-main;
+  }
 }
 </style>

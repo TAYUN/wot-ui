@@ -4,9 +4,9 @@
     <!-- #ifdef MP-WEIXIN -->
     <wd-privacy-popup></wd-privacy-popup>
     <!-- #endif -->
-    <view class="img-cropper-demo">
+    <view class="page-img-cropper">
       <demo-group :title="$t('zu-jian-lei-xing')">
-        <demo-group-item :title="$t('jiBenYongFa')" style="text-align: center">
+        <demo-group-item :title="$t('jiBenYongFa')" class="page-img-cropper__center">
           <wd-img-cropper
             v-model="croppers[CROPPER_MAIN].show"
             :img-src="croppers[CROPPER_MAIN].imageSrc"
@@ -15,13 +15,13 @@
             @imgloaderror="handleImageLoadError"
             @imgloaded="handleImageLoaded"
           ></wd-img-cropper>
-          <view class="img-cropper-demo__profile img-cropper-demo__profile--main">
+          <view class="page-img-cropper__profile page-img-cropper__profile--main">
             <view
               v-if="!croppers[CROPPER_MAIN].imageResult"
-              class="img-cropper-demo__image-placeholder img-cropper-demo__image-placeholder--circular"
+              class="page-img-cropper__image-placeholder page-img-cropper__image-placeholder--circular"
               @click="chooseCropperImage(CROPPER_MAIN)"
             >
-              <wd-icon name="fill-camera" custom-class="img-cropper-demo__image-icon"></wd-icon>
+              <wd-icon name="fill-camera" custom-class="page-img-cropper__image-icon"></wd-icon>
             </view>
             <wd-img
               v-if="croppers[CROPPER_MAIN].imageResult"
@@ -30,18 +30,18 @@
               height="200px"
               :src="croppers[CROPPER_MAIN].imageResult"
               mode="aspectFit"
-              custom-class="img-cropper-demo__profile-image"
+              custom-class="page-img-cropper__profile-image"
               @click="chooseCropperImage(CROPPER_MAIN)"
             />
-            <view class="img-cropper-demo__image-label">{{ $t('dian-ji-shang-chuan-tou-xiang') }}</view>
+            <view class="page-img-cropper__image-label">{{ $t('dian-ji-shang-chuan-tou-xiang') }}</view>
           </view>
         </demo-group-item>
       </demo-group>
 
       <demo-group :title="$t('zu-jian-pei-zhi')">
-        <demo-group-item :title="$t('zi-ding-yi-cai-jian-bi-li')" style="text-align: center">
-          <view class="img-cropper-demo__grid">
-            <view v-for="(ratio, index) in ['3:2', '16:9', '16:10']" :key="index" class="img-cropper-demo__grid-item">
+        <demo-group-item :title="$t('zi-ding-yi-cai-jian-bi-li')" class="page-img-cropper__center">
+          <view class="page-img-cropper__grid">
+            <view v-for="(ratio, index) in ['3:2', '16:9', '16:10']" :key="index" class="page-img-cropper__grid-item">
               <wd-img-cropper
                 v-model="croppers[CROPPER_RATIO_3_2 + index].show"
                 :img-src="croppers[CROPPER_RATIO_3_2 + index].imageSrc"
@@ -51,10 +51,10 @@
               ></wd-img-cropper>
               <view
                 v-if="!croppers[CROPPER_RATIO_3_2 + index].imageResult"
-                class="img-cropper-demo__image-placeholder img-cropper-demo__image-placeholder--rectangular"
+                class="page-img-cropper__image-placeholder page-img-cropper__image-placeholder--rectangular"
                 @click="chooseCropperImage(CROPPER_RATIO_3_2 + index)"
               >
-                <wd-icon name="fill-camera" custom-class="img-cropper-demo__image-icon"></wd-icon>
+                <wd-icon name="fill-camera" custom-class="page-img-cropper__image-icon"></wd-icon>
               </view>
               <wd-img
                 v-if="croppers[CROPPER_RATIO_3_2 + index].imageResult"
@@ -62,30 +62,30 @@
                 :height="getHeight(ratio)"
                 :src="croppers[CROPPER_RATIO_3_2 + index].imageResult"
                 mode="aspectFit"
-                custom-class="img-cropper-demo__grid-image"
+                custom-class="page-img-cropper__grid-image"
                 @click="chooseCropperImage(CROPPER_RATIO_3_2 + index)"
               />
-              <view class="img-cropper-demo__image-label">{{ ratio }}{{ $t('bi-li-cai-jian') }}</view>
+              <view class="page-img-cropper__image-label">{{ ratio }}{{ $t('bi-li-cai-jian') }}</view>
             </view>
           </view>
         </demo-group-item>
       </demo-group>
 
       <demo-group :title="$t('te-shu-yong-fa')">
-        <demo-group-item :title="$t('cai-jian-hou-shang-chuan')" style="text-align: center">
+        <demo-group-item :title="$t('cai-jian-hou-shang-chuan')" class="page-img-cropper__center">
           <wd-img-cropper
             v-model="croppers[CROPPER_UPLOAD].show"
             :img-src="croppers[CROPPER_UPLOAD].imageSrc"
             @confirm="handleUploadConfirm"
             @cancel="handleCancel"
           ></wd-img-cropper>
-          <view class="img-cropper-demo__profile img-cropper-demo__profile--upload">
+          <view class="page-img-cropper__profile page-img-cropper__profile--upload">
             <view
               v-if="!croppers[CROPPER_UPLOAD].imageResult"
-              class="img-cropper-demo__image-placeholder img-cropper-demo__image-placeholder--circular"
+              class="page-img-cropper__image-placeholder page-img-cropper__image-placeholder--circular"
               @click="chooseCropperImage(CROPPER_UPLOAD)"
             >
-              <wd-icon name="fill-camera" custom-class="img-cropper-demo__image-icon"></wd-icon>
+              <wd-icon name="fill-camera" custom-class="page-img-cropper__image-icon"></wd-icon>
             </view>
             <wd-img
               v-if="croppers[CROPPER_UPLOAD].imageResult"
@@ -94,10 +94,10 @@
               height="200px"
               :src="croppers[CROPPER_UPLOAD].imageResult"
               mode="aspectFit"
-              custom-class="img-cropper-demo__profile-image"
+              custom-class="page-img-cropper__profile-image"
               @click="chooseCropperImage(CROPPER_UPLOAD)"
             />
-            <view class="img-cropper-demo__image-label">{{ $t('dian-ji-shang-chuan-cai-jian-hou-de-tou-xiang') }}</view>
+            <view class="page-img-cropper__image-label">{{ $t('dian-ji-shang-chuan-cai-jian-hou-de-tou-xiang') }}</view>
           </view>
         </demo-group-item>
       </demo-group>
@@ -260,7 +260,11 @@ function getHeight(ratio: string): string {
 </script>
 
 <style lang="scss" scoped>
-.img-cropper-demo {
+.page-img-cropper {
+  &__center {
+    text-align: center;
+  }
+
   &__profile {
     display: flex;
     flex-direction: column;
@@ -286,7 +290,7 @@ function getHeight(ratio: string): string {
 
     // 自定义裁剪比例的网格项样式
     &:nth-child(1) {
-      .img-cropper-demo__image-placeholder--rectangular {
+      .page-img-cropper__image-placeholder--rectangular {
         height: 200px;
       }
     }

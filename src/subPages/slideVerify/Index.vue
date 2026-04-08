@@ -18,7 +18,7 @@
           <wd-slide-verify :text="$t('qing-tuo-dong-hua-kuai')" :success-text="$t('yan-zheng-cheng-gong')" />
         </demo-group-item>
         <demo-group-item :title="$t('zi-ding-yi-yan-se')">
-          <wd-slide-verify background-color="#E8F4FF" active-background-color="#4D94FF" />
+          <wd-slide-verify background-color="var(--wot-primary-1, #E8F4FF)" active-background-color="var(--wot-primary-5, #4D94FF)" />
         </demo-group-item>
         <demo-group-item :title="$t('zi-ding-yi-tu-biao')">
           <wd-slide-verify icon="arrow-right" success-icon="thumb-up-fill" />
@@ -31,7 +31,7 @@
         </demo-group-item>
         <demo-group-item :title="$t('zhong-zhi-fang-fa')">
           <wd-slide-verify ref="slideVerifyRef" @success="handleSuccess" @fail="handleFail" />
-          <wd-button class="reset-button" type="primary" @click="handleReset">{{ $t('zhong-zhi') }}</wd-button>
+          <wd-button class="page-slide-verify__reset-button" type="primary" @click="handleReset">{{ $t('zhong-zhi') }}</wd-button>
         </demo-group-item>
         <demo-group-item :title="$t('cha-cao-yong-fa')">
           <wd-slide-verify>
@@ -42,10 +42,10 @@
               <text>{{ $t('yan-zheng-tong-guo') }}</text>
             </template>
             <template #icon>
-              <view>ICON</view>
+              <view>drag</view>
             </template>
             <template #success-icon>
-              <view class="success-icon-text">OK</view>
+              <view class="page-slide-verify__success-icon-text">OK</view>
             </template>
           </wd-slide-verify>
         </demo-group-item>
@@ -81,12 +81,12 @@ function handleReset() {
 
 <style lang="scss" scoped>
 .page-slide-verify {
-  .reset-button {
-    margin-top: 20px;
+  &__reset-button {
+    margin-top: $spacing-super-loose;
   }
 
-  .success-icon-text {
-    color: red;
+  &__success-icon-text {
+    color: $danger-main;
   }
 }
 </style>

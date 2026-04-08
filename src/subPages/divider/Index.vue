@@ -28,13 +28,13 @@
           </wd-divider>
         </demo-group-item>
         <demo-group-item :title="$t('zi-ding-yi-yan-se')">
-          <wd-divider color="#4D80F0">{{ $t('zi-ding-yi-yan-se-0') }}</wd-divider>
+          <wd-divider color="var(--wot-primary-6, #4D80F0)">{{ $t('zi-ding-yi-yan-se-0') }}</wd-divider>
         </demo-group-item>
       </demo-group>
 
       <demo-group :title="$t('te-shu-yang-shi')">
         <demo-group-item :title="$t('chui-zhi-fen-ge-xian')">
-          <view class="content">
+          <view class="page-divider__content">
             {{ $t('wen-ben') }}
             <wd-divider vertical />
             {{ $t('wen-ben') }}
@@ -42,7 +42,7 @@
             {{ $t('wen-ben') }}
             <wd-divider vertical :hairline="false" />
             {{ $t('wen-ben') }}
-            <wd-divider vertical color="#1989fa" />
+            <wd-divider vertical color="var(--wot-primary-6, #1989fa)" />
             {{ $t('wen-ben') }}
           </view>
         </demo-group-item>
@@ -55,5 +55,9 @@
 .page-divider {
   background: $filled-oppo;
   padding-bottom: $padding-loose;
+
+  &__content {
+    color: $text-main;
+  }
 }
 </style>

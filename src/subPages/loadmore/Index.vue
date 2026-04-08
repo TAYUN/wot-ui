@@ -1,9 +1,9 @@
 <template>
   <page-wraper>
-    <view class="container">
-      <view v-for="index in num" :key="index" class="list-item">
+    <view class="page-loadmore">
+      <view v-for="index in num" :key="index" class="page-loadmore__item">
         <image :src="blackMao" />
-        <view class="right">{{ $t('zhe-shi-yi-tiao-ce-shi-index') + index + 1 }}</view>
+        <view class="page-loadmore__content">{{ $t('zhe-shi-yi-tiao-ce-shi-index') + index + 1 }}</view>
       </view>
       <wd-loadmore :state="state" @reload="loadmore" />
     </view>
@@ -40,34 +40,36 @@ function loadmore() {
 }
 </script>
 <style lang="scss" scoped>
-.list-item {
-  position: relative;
-  display: flex;
-  padding: $n-10 $n-15;
-  background: $base-white;
-  color: $coolgrey-8;
-}
+.page-loadmore {
+  &__item {
+    position: relative;
+    display: flex;
+    padding: $padding-main $padding-extra-loose;
+    color: $text-secondary;
+    background: $filled-oppo;
 
-.list-item:after {
-  position: absolute;
-  display: block;
-  content: '';
-  height: $stroke-main;
-  left: $n-0;
-  width: 100%;
-  bottom: $n-0;
-  background: $neutralgrey-3;
-  transform: scaleY(0.5);
-}
-image {
-  display: block;
-  width: 120px;
-  height: 78px;
-  margin-right: $n-15;
-}
-.right {
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+    &::after {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      display: block;
+      width: 100%;
+      height: $stroke-main;
+      content: '';
+      background: $divider-light;
+      transform: scaleY(0.5);
+    }
+  }
+
+  &__content {
+    flex: 1;
+  }
+
+  image {
+    display: block;
+    width: 120px;
+    height: 78px;
+    margin-right: $padding-extra-loose;
+  }
 }
 </style>

@@ -4,7 +4,7 @@
       <demo-group :title="$t('zu-jian-lei-xing')" transparent>
         <demo-group-item :title="$t('ji-ben-shi-yong')" no-padding>
           <wd-card :title="$t('yue-yang-lou-ji')">
-            <view class="content-text">
+            <view class="page-card__content-text">
               {{
                 $t(
                   'zhi-ruo-chun-he-jing-ming-bo-lan-bu-jing-shang-xia-tian-guang-yi-bi-wan-qing-sha-ou-xiang-ji-jin-lin-you-yong-an-zhi-ting-lan-yu-yu-qing-qing-er-huo-chang-yan-yi-kong-hao-yue-qian-li-fu-guang-yue-jin-jing-ying-chen-bi-yu-ge-hu-da-ci-le-he-ji-deng-si-lou-ye-ze-you-xin-kuang-shen-yi-chong-ru-xie-wang-ba-jiu-lin-feng-qi-xi-yang-yang-zhe-yi'
@@ -129,10 +129,10 @@
         <demo-group-item :title="$t('zi-ding-yi-biao-ti')" no-padding>
           <wd-card type="rectangle">
             <template #title>
-              <view class="custom-title">
+              <view class="page-card__custom-title">
                 <view>{{ $t('xing-qu-ai-hao') }}</view>
-                <view class="custom-title__tip">
-                  <wd-icon name="heart" size="14px" custom-style="vertical-align: bottom; margin-right: 4px;" />
+                <view class="page-card__custom-title-tip">
+                  <wd-icon name="heart" size="14px" custom-class="page-card__title-icon" />
                   {{ $t('kuai-le-yuan-quan') }}
                 </view>
               </view>
@@ -185,10 +185,10 @@
 
           <wd-card type="rectangle">
             <template #title>
-              <view class="custom-title">
+              <view class="page-card__custom-title">
                 <view>{{ $t('geng-duo-dong-tai') }}</view>
-                <view class="custom-title__tip">
-                  <wd-icon name="warning" size="14px" custom-style="vertical-align: bottom; margin-right: 4px;" />
+                <view class="page-card__custom-title-tip">
+                  <wd-icon name="warning" size="14px" custom-class="page-card__title-icon" />
                   {{ $t('mei-ri-geng-xin') }}
                 </view>
               </view>
@@ -222,9 +222,34 @@ import blackMao from '../img/black_mao.png'
 </script>
 
 <style lang="scss" scoped>
-@use '../../uni_modules/wot-ui/styles/variable.scss' as *;
+.page-card {
+  &__content-text {
+    font-size: $typography-body-size-main;
+    color: $text-secondary;
+    line-height: $typography-body-line--height-size-main;
+    text-align: justify;
+  }
 
-// 通用工具类
+  &__custom-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    &-tip {
+      display: flex;
+      align-items: center;
+      font-size: $typography-label-size-main;
+      color: $text-auxiliary;
+    }
+  }
+
+  :deep(.page-card__title-icon) {
+    margin-right: $spacing-super-tight;
+    vertical-align: bottom;
+  }
+}
+
 .footer-group {
   display: flex;
   align-items: center;
@@ -235,14 +260,6 @@ import blackMao from '../img/black_mao.png'
   }
 }
 
-.content-text {
-  font-size: $typography-body-size-main;
-  color: $text-secondary;
-  line-height: $typography-body-line--height-size-main;
-  text-align: justify;
-}
-
-// 个人名片样式
 .user-card {
   display: flex;
   align-items: center;
@@ -272,7 +289,7 @@ import blackMao from '../img/black_mao.png'
   &__desc {
     font-size: $typography-body-size-main;
     color: $text-secondary;
-    line-height: 1.4;
+    line-height: $typography-body-line--height-size-main;
     margin-bottom: $spacing-ultra-tight;
   }
 
@@ -282,7 +299,6 @@ import blackMao from '../img/black_mao.png'
   }
 }
 
-// 复杂卡片（信息卡片）样式
 .info-card {
   display: flex;
   gap: $spacing-loose;
@@ -320,7 +336,7 @@ import blackMao from '../img/black_mao.png'
     font-size: $typography-body-size-main;
     font-weight: $font-weight-medium;
     color: $text-main;
-    line-height: 1.4;
+    line-height: $typography-body-line--height-size-main;
   }
 
   &__meta-row {
@@ -375,7 +391,6 @@ import blackMao from '../img/black_mao.png'
   }
 }
 
-// 大图卡片样式
 .moment-card {
   display: flex;
   gap: $spacing-loose;
@@ -414,22 +429,6 @@ import blackMao from '../img/black_mao.png'
   }
 }
 
-// 自定义标题栏
-.custom-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-
-  &__tip {
-    font-size: $typography-label-size-main;
-    color: $text-auxiliary;
-    display: flex;
-    align-items: center;
-  }
-}
-
-// 列表组样式
 .list-group {
   display: flex;
   flex-direction: column;
@@ -439,10 +438,10 @@ import blackMao from '../img/black_mao.png'
 .list-item {
   display: flex;
   gap: $spacing-loose;
-  align-items: center; // 垂直居中对齐
+  align-items: center;
 
   &__image {
-    width: $n-98; // 加大图片
+    width: $n-98;
     height: $n-98;
     border-radius: $radius-large;
     flex-shrink: 0;
@@ -465,7 +464,7 @@ import blackMao from '../img/black_mao.png'
   &__desc {
     font-size: $typography-body-size-main;
     color: $text-secondary;
-    line-height: 1.4;
+    line-height: $typography-body-line--height-size-main;
   }
 }
 </style>

@@ -18,16 +18,16 @@
     <wd-overlay :show="show" @click="show = false" />
 
     <wd-overlay :show="show1" @click="show1 = false" :lock-scroll="lockScroll">
-      <view class="wrapper">
-        <view class="content" @click.stop="">
-          <view class="lock-scroll-row">
-            <view class="lock-scroll-text">
+      <view class="page-overlay__wrapper">
+        <view class="page-overlay__content" @click.stop="">
+          <view class="page-overlay__lock-scroll-row">
+            <view class="page-overlay__lock-scroll-text">
               {{ $t('shi-fou-suo-ding-bei-jing-gun-dong-suo-ding-shi-meng-ceng-li-de-nei-rong-ye-jiang-wu-fa-gun-dong') }}
             </view>
             <wd-switch v-model="lockScroll" size="22px" />
           </view>
-          <view class="scroll">
-            <view class="block" v-for="i in 10" :key="i" @click.stop="">{{ i }}</view>
+          <view class="page-overlay__scroll">
+            <view class="page-overlay__block" v-for="i in 10" :key="i" @click.stop="">{{ i }}</view>
           </view>
         </view>
       </view>
@@ -42,45 +42,47 @@ const show1 = ref<boolean>(false)
 const lockScroll = ref<boolean>(true)
 </script>
 <style lang="scss" scoped>
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
+.page-overlay {
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
 
-.content {
-  background-color: #fff;
-  border-radius: 12px;
-  padding: 16px;
-}
+  &__content {
+    padding: $padding-extra-loose;
+    border-radius: $radius-extra-large;
+    background-color: $filled-oppo;
+  }
 
-.scroll {
-  margin-top: 12px;
-  height: 50vh;
-  overflow-y: auto;
-  width: 300px;
-}
+  &__scroll {
+    width: 300px;
+    height: 50vh;
+    margin-top: $spacing-loose;
+    overflow-y: auto;
+  }
 
-.lock-scroll-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
+  &__lock-scroll-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-loose;
+  }
 
-.lock-scroll-text {
-  font-size: 14px;
-  line-height: 20px;
-  color: #333;
-}
+  &__lock-scroll-text {
+    color: $text-secondary;
+    font-size: $typography-body-size-main;
+    line-height: $typography-body-line--height-size-large;
+  }
 
-.block {
-  width: 100%;
-  height: 120px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  &__block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 120px;
+  }
 }
 </style>

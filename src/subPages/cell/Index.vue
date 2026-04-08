@@ -72,7 +72,7 @@
             <wd-cell :title="$t('biao-ti-wen-zi-1')" :value="$t('nei-rong')" prefix-icon="settings" />
             <wd-cell :title="$t('biao-ti-wen-zi-2')" :value="$t('nei-rong')">
               <template #prefix>
-                <view class="cell-icon"></view>
+                <view class="page-cell__icon"></view>
               </template>
             </wd-cell>
           </wd-cell-group>
@@ -153,21 +153,21 @@
         <demo-group-item :title="$t('zi-ding-yi-slot')" no-padding>
           <wd-cell-group>
             <wd-cell :title="$t('biao-ti-wen-zi-15')" center>
-              <wd-button custom-class="custom-value" size="small" plain>{{ $t('an-niu-0') }}</wd-button>
+              <wd-button custom-class="page-cell__custom-value" size="small" plain>{{ $t('an-niu-0') }}</wd-button>
             </wd-cell>
             <wd-cell :title="$t('biao-ti-wen-zi-16')" center>
-              <view class="custom-value" style="height: 32px">
+              <view class="page-cell__custom-value page-cell__custom-value--switch">
                 <wd-switch v-model="switchValue" @change="handleSwitchChange" />
               </view>
             </wd-cell>
             <wd-cell :title="$t('biao-ti-wen-zi-17')" is-link to="/pages/index/index">
-              <view class="custom-text">{{ $t('ding-gou') }}</view>
+              <view class="page-cell__custom-text">{{ $t('ding-gou') }}</view>
             </wd-cell>
             <wd-cell>
               <template #title>
-                <view>
-                  <view style="display: inline-block">{{ $t('biao-ti-wen-zi-18') }}</view>
-                  <view class="end-time">{{ $t('25-tian-hou-dao-qi') }}</view>
+                <view class="page-cell__title-group">
+                  <view class="page-cell__title-text">{{ $t('biao-ti-wen-zi-18') }}</view>
+                  <view class="page-cell__end-time">{{ $t('25-tian-hou-dao-qi') }}</view>
                 </view>
               </template>
             </wd-cell>
@@ -203,25 +203,46 @@ function showToast() {
 }
 </script>
 <style lang="scss" scoped>
-.cell-icon {
-  display: block;
-  box-sizing: border-box;
-  width: 16px;
-  height: 16px;
-  margin: 4px 4px 4px 0;
-  background: url('https://img10.360buyimg.com/jmadvertisement/jfs/t1/71075/7/3762/1820/5d1f26d1E0d600b9e/a264c901943080ac.png') no-repeat;
-  background-size: cover;
-}
+.page-cell {
+  &__icon {
+    display: block;
+    box-sizing: border-box;
+    width: $n-16;
+    height: $n-16;
+    margin: $spacing-super-tight $spacing-super-tight $spacing-super-tight 0;
+    background: url('https://img10.360buyimg.com/jmadvertisement/jfs/t1/71075/7/3762/1820/5d1f26d1E0d600b9e/a264c901943080ac.png') no-repeat;
+    background-size: cover;
+  }
 
-.custom-text {
-  color: #f0883a;
-}
-.end-time {
-  display: inline-block;
-  margin-left: 8px;
-  border: 1px solid #faa21e;
-  padding: 0 4px;
-  font-size: 10px;
-  color: #faa21e;
+  &__custom-value {
+    &--switch {
+      display: flex;
+      align-items: center;
+      height: $n-32;
+    }
+  }
+
+  &__custom-text {
+    color: $warning-main;
+  }
+
+  &__title-group {
+    display: flex;
+    align-items: center;
+  }
+
+  &__title-text {
+    display: inline-block;
+  }
+
+  &__end-time {
+    display: inline-block;
+    margin-left: $spacing-tight;
+    padding: 0 $padding-super-tight;
+    border: $stroke-main solid $warning-main;
+    font-size: $typography-label-size-extra-small;
+    line-height: $typography-label-line--height-size-extra-small;
+    color: $warning-main;
+  }
 }
 </style>

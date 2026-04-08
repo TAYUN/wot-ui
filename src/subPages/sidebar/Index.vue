@@ -3,7 +3,7 @@
     <view class="page-sidebar">
       <demo-group :title="$t('zu-jian-lei-xing')">
         <demo-group-item :title="$t('ji-chu-yong-fa-0')">
-          <view class="sidebar-row">
+          <view class="page-sidebar__row">
             <wd-sidebar v-model="active1">
               <wd-sidebar-item :value="0" :label="$t('biao-qian-ming-cheng')" />
               <wd-sidebar-item :value="1" :label="$t('biao-qian-ming-cheng')" />
@@ -15,7 +15,7 @@
 
       <demo-group :title="$t('zu-jian-zhuang-tai')">
         <demo-group-item :title="$t('hui-biao-yu-jin-yong')">
-          <view class="sidebar-grid">
+          <view class="page-sidebar__grid">
             <wd-sidebar v-model="active2">
               <wd-sidebar-item :value="0" :label="$t('biao-qian-ming-cheng')" is-dot />
               <wd-sidebar-item :value="1" :label="$t('biao-qian-ming-cheng')" badge="5" />
@@ -32,17 +32,17 @@
 
       <demo-group :title="$t('te-shu-yang-shi')">
         <demo-group-item :title="$t('mao-dian-yong-fa-shi-li')">
-          <view class="demo-button">
+          <view class="page-sidebar__button">
             <wd-button :round="false" block size="large" @click="handleClick1">{{ $t('mao-dian-yong-fa') }}</wd-button>
           </view>
         </demo-group-item>
         <demo-group-item :title="$t('qie-huan-ye-mian-yong-fa-shi-li')">
-          <view class="demo-button">
+          <view class="page-sidebar__button">
             <wd-button :round="false" block size="large" @click="handleClick2">{{ $t('qie-huan-ye-mian') }}</wd-button>
           </view>
         </demo-group-item>
         <demo-group-item :title="$t('zi-ding-yi-tu-biao-shi-li')">
-          <view class="demo-button">
+          <view class="page-sidebar__button">
             <wd-button :round="false" block size="large" @click="handleClick3">{{ $t('ziDingYiTuBiao') }}</wd-button>
           </view>
         </demo-group-item>
@@ -84,21 +84,21 @@ function handleClick3() {
 </script>
 <style lang="scss" scoped>
 .page-sidebar {
-  .sidebar-row {
+  &__row {
     display: flex;
     justify-content: center;
   }
 
-  .sidebar-grid {
+  &__grid {
     display: flex;
     justify-content: space-around;
-    gap: 16px;
+    gap: $spacing-tight;
   }
-}
 
-.demo-button {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 0 24rpx;
+  &__button {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 $padding-super-loose;
+  }
 }
 </style>

@@ -2,16 +2,16 @@
   <page-wraper>
     <demo-block :title="$t('xiao-yan-shi-ji-zong-he-shi-li')" transparent>
       <wd-form ref="form" :model="model" :schema="activeSchema" validate-trigger="change" :reset-on-change="false" :title-width="120">
-        <wd-cell-group custom-class="group" :title="$t('pei-zhi')">
+        <wd-cell-group custom-class="page-form-demo2__group" :title="$t('pei-zhi')">
           <wd-form-item :title="$t('xiao-yan-yin-qing')" value-align="left">
             <wd-switch v-model="useZodSchema" size="20" active-text="Zod" inactive-text="自定义" />
           </wd-form-item>
           <wd-form-item :title="$t('chu-fa-shuo-ming')" value-align="left">
-            <text class="tip-text">{{ $t('biao-dan-ji-change-zi-duan-fu-gai-blurchangesubmit') }}</text>
+            <text class="page-form-demo2__tip-text">{{ $t('biao-dan-ji-change-zi-duan-fu-gai-blurchangesubmit') }}</text>
           </wd-form-item>
         </wd-cell-group>
 
-        <wd-cell-group custom-class="group" :title="$t('shu-ru-lei-zi-duan')">
+        <wd-cell-group custom-class="page-form-demo2__group" :title="$t('shu-ru-lei-zi-duan')">
           <wd-form-item :title="$t('jinechange')" prop="amount">
             <wd-input-number v-model="model.amount" :min="0" :update-on-init="false" :max="9999" />
           </wd-form-item>
@@ -29,7 +29,7 @@
           </wd-form-item>
         </wd-cell-group>
 
-        <wd-cell-group custom-class="group" :title="$t('picker-zi-duan-change')">
+        <wd-cell-group custom-class="page-form-demo2__group" :title="$t('picker-zi-duan-change')">
           <wd-form-item
             :title="$t('tui-guang-ping-tai')"
             prop="platform"
@@ -64,7 +64,7 @@
           />
         </wd-cell-group>
 
-        <view class="footer">
+        <view class="page-form-demo2__footer">
           <wd-button type="primary" @click="handleSubmit" block>{{ $t('ti-jiao-bing-xiao-yan') }}</wd-button>
         </view>
       </wd-form>
@@ -251,18 +251,18 @@ function handleSubmit() {
 </script>
 
 <style lang="scss" scoped>
-.footer {
-  padding: 16px;
+.page-form-demo2__footer {
+  padding: $padding-main;
 }
 
-.tip-text {
-  color: #666;
-  font-size: 14px;
+.page-form-demo2__tip-text {
+  color: $text-secondary;
+  font-size: $typography-body-size-main;
 }
 
-:deep(.group) {
+:deep(.page-form-demo2__group) {
   &:not(:first-child) {
-    margin-top: 12px;
+    margin-top: $spacing-tight;
   }
 }
 </style>

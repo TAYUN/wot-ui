@@ -17,6 +17,8 @@ $select-picker-text-active-color: var(--wot-select-picker-text-active-color, $pr
 $select-picker-footer-padding: var(--wot-select-picker-footer-padding, $padding-tight $padding-loose) !default;
 // 确认区域上边框颜色
 $select-picker-footer-border-color: var(--wot-select-picker-footer-border-color, $border-light) !default;
+// 选项内边距
+$select-picker-item-padding: var(--wot-select-picker-item-padding, $padding-extra-loose $padding-zero) !default;
 
 @include b(select-picker) {
   @include e(loading) {
@@ -57,6 +59,10 @@ $select-picker-footer-border-color: var(--wot-select-picker-footer-border-color,
   }
   @include e(text-active) {
     color: $select-picker-text-active-color;
+  }
+
+  @include e(checkbox-item,radio-item) {
+    padding: $select-picker-item-padding;
   }
 
   @include edeep(radio-label,checkbox-label) {

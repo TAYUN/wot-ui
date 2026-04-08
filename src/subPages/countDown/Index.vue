@@ -21,11 +21,11 @@
         <demo-group-item :title="$t('ziDingYiYangShi')">
           <wd-count-down :time="time">
             <template #default="{ current }">
-              <span class="custom-count-down">{{ current.hours }}</span>
-              <span class="custom-count-down-colon">:</span>
-              <span class="custom-count-down">{{ current.minutes }}</span>
-              <span class="custom-count-down-colon">:</span>
-              <span class="custom-count-down">{{ current.seconds }}</span>
+              <span class="page-count-down__unit">{{ current.hours }}</span>
+              <span class="page-count-down__colon">:</span>
+              <span class="page-count-down__unit">{{ current.minutes }}</span>
+              <span class="page-count-down__colon">:</span>
+              <span class="page-count-down__unit">{{ current.seconds }}</span>
             </template>
           </wd-count-down>
         </demo-group-item>
@@ -70,19 +70,21 @@ const reset = () => {
 const onFinish = () => showToast(t('dao-ji-shi-jie-shu'))
 </script>
 <style lang="scss" scoped>
-.custom-count-down {
-  display: inline-block;
-  width: 22px;
-  color: #fff;
-  font-size: 12px;
-  text-align: center;
-  background-color: #f0883a;
-  border-radius: 2px;
-}
+.page-count-down {
+  &__unit {
+    display: inline-block;
+    width: $n-22;
+    color: $text-white;
+    font-size: $typography-label-size-main;
+    text-align: center;
+    background-color: $warning-main;
+    border-radius: $radius-small;
+  }
 
-.custom-count-down-colon {
-  display: inline-block;
-  margin: 0 4px;
-  color: #f0883a;
+  &__colon {
+    display: inline-block;
+    margin: 0 $spacing-super-tight;
+    color: $warning-main;
+  }
 }
 </style>

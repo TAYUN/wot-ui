@@ -12,10 +12,10 @@
           <wd-button v-for="item in typeItems" :key="`disabled-${item.type}`" :type="item.type" disabled>{{ $t(item.textKey) }}</wd-button>
         </demo-group-item>
         <demo-group-item :title="$t('jia-zai')">
-          <view class="demo-row">
+          <view class="page-button__row">
             <wd-button v-for="item in typeItems" :key="`loading-${item.type}`" :type="item.type" loading>{{ $t('jia-zai-zhong-0') }}</wd-button>
           </view>
-          <view class="demo-row">
+          <view class="page-button__row">
             <wd-button v-for="item in plainLoadingItems" :key="`loading-plain-${item.type}`" :type="item.type" variant="plain" loading>
               {{ $t('jia-zai-zhong-0') }}
             </wd-button>
@@ -43,24 +43,24 @@
           <wd-button v-for="item in sizeItems" :key="item.size" :size="item.size">{{ item.text }}</wd-button>
         </demo-group-item>
         <demo-group-item :title="$t('xi-bian-kuang-yu-yuan-jiao')">
-          <view class="demo-row">
+          <view class="page-button__row">
             <wd-button v-for="item in typeItems" :key="`hairline-${item.type}`" :type="item.type" variant="plain" hairline>
               {{ $t(item.textKey) }}
             </wd-button>
           </view>
-          <view class="demo-row">
+          <view class="page-button__row">
             <wd-button v-for="item in typeItems" :key="`hairline-round-${item.type}`" :type="item.type" variant="plain" hairline round>
               {{ $t(item.textKey) }}
             </wd-button>
           </view>
         </demo-group-item>
         <demo-group-item :title="$t('yuan-jiao-dui-bi')">
-          <view class="demo-row">
+          <view class="page-button__row">
             <wd-button v-for="item in typeItems" :key="`plain-round-${item.type}`" :type="item.type" variant="plain" round>
               {{ $t(item.textKey) }}
             </wd-button>
           </view>
-          <view class="demo-row">
+          <view class="page-button__row">
             <wd-button v-for="item in typeItems" :key="`dashed-round-${item.type}`" :type="item.type" variant="dashed" round>
               {{ $t(item.textKey) }}
             </wd-button>
@@ -70,7 +70,7 @@
 
       <demo-group :title="$t('te-shu-yang-shi')">
         <demo-group-item :title="$t('customclass-yin-ying')">
-          <wd-button v-for="item in typeItems" :key="`shadow-${item.type}`" :type="item.type" custom-class="custom-shadow">
+          <wd-button v-for="item in typeItems" :key="`shadow-${item.type}`" :type="item.type" custom-class="page-button__shadow">
             {{ $t(item.textKey) }}
           </wd-button>
         </demo-group-item>
@@ -82,13 +82,13 @@
           <wd-button type="success" :text="$t('cheng-gong-an-niu-0')"></wd-button>
         </demo-group-item>
         <demo-group-item :title="$t('chun-tu-biao-an-niu')">
-          <view class="demo-row">
+          <view class="page-button__row">
             <wd-button v-for="item in typeItems" :key="`icon-base-${item.type}`" icon="delete" :type="item.type"></wd-button>
           </view>
-          <view class="demo-row">
+          <view class="page-button__row">
             <wd-button v-for="item in typeItems" :key="`icon-plain-${item.type}`" icon="delete" :type="item.type" variant="plain"></wd-button>
           </view>
-          <view class="demo-row">
+          <view class="page-button__row">
             <wd-button v-for="item in typeItems" :key="`icon-round-${item.type}`" icon="delete" :type="item.type" variant="plain" round></wd-button>
           </view>
         </demo-group-item>
@@ -105,16 +105,16 @@
 
       <demo-group :title="$t('bu-ju-neng-li')">
         <demo-group-item :title="$t('kuai-ji-an-niu')">
-          <wd-button v-for="item in typeItems" :key="`block-${item.type}`" :type="item.type" block size="large" custom-class="button-block">
+          <wd-button v-for="item in typeItems" :key="`block-${item.type}`" :type="item.type" block size="large" custom-class="page-button__block">
             {{ $t(item.textKey) }}
           </wd-button>
         </demo-group-item>
         <demo-group-item :title="$t('kuai-ji-yuan-jiao-zu-he')">
-          <wd-button block size="large" round disabled custom-class="button-block">{{ $t('zhu-yao-an-niu') }}</wd-button>
-          <wd-button block size="large" round custom-class="button-block">{{ $t('zhu-yao-an-niu') }}</wd-button>
-          <wd-button block size="large" round loading custom-class="button-block">{{ $t('zhu-yao-an-niu') }}</wd-button>
-          <wd-button type="info" block round size="large" disabled custom-class="button-block">{{ $t('xin-xi-an-niu') }}</wd-button>
-          <wd-button type="info" block round size="large" custom-class="button-block">{{ $t('xin-xi-an-niu') }}</wd-button>
+          <wd-button block size="large" round disabled custom-class="page-button__block">{{ $t('zhu-yao-an-niu') }}</wd-button>
+          <wd-button block size="large" round custom-class="page-button__block">{{ $t('zhu-yao-an-niu') }}</wd-button>
+          <wd-button block size="large" round loading custom-class="page-button__block">{{ $t('zhu-yao-an-niu') }}</wd-button>
+          <wd-button type="info" block round size="large" disabled custom-class="page-button__block">{{ $t('xin-xi-an-niu') }}</wd-button>
+          <wd-button type="info" block round size="large" custom-class="page-button__block">{{ $t('xin-xi-an-niu') }}</wd-button>
         </demo-group-item>
       </demo-group>
     </view>
@@ -157,22 +157,22 @@ const plainLoadingItems = computed<Array<{ type: ButtonType }>>(() => [
 <style lang="scss">
 .page-button {
   :deep(.demo-group-item__container) {
-    padding-bottom: 4px;
+    padding-bottom: $spacing-super-tight;
   }
 
   .wd-button {
-    margin: 0 10px 10px 0;
+    margin: 0 $spacing-main $spacing-main 0;
   }
 
-  .demo-row {
-    margin-bottom: 12px;
+  &__row {
+    margin-bottom: $spacing-loose;
   }
 
-  :deep(.custom-shadow) {
+  :deep(.page-button__shadow) {
     box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
   }
 
-  .button-block {
+  :deep(.page-button__block) {
     margin-right: 0;
   }
 }

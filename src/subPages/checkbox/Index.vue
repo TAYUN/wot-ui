@@ -91,14 +91,14 @@
 
       <demo-group :title="$t('zu-jian-yang-shi')">
         <demo-group-item :title="$t('xiu-gai-xuan-zhong-yan-se')">
-          <wd-checkbox-group custom-class="page-checkbox__group" v-model="value6" checked-color="#fa4350">
+          <wd-checkbox-group custom-class="page-checkbox__group" v-model="value6" checked-color="var(--wot-danger-main, #fa4350)">
             <wd-checkbox :name="1">{{ $t('duo-xuan-1-7') }}</wd-checkbox>
             <wd-checkbox :name="2">{{ $t('duo-xuan-2-7') }}</wd-checkbox>
           </wd-checkbox-group>
         </demo-group-item>
 
         <demo-group-item :title="$t('xiu-gai-wei-xuan-zhong-yan-se')">
-          <wd-checkbox-group custom-class="page-checkbox__group" v-model="value7" unchecked-color="#fa4350">
+          <wd-checkbox-group custom-class="page-checkbox__group" v-model="value7" unchecked-color="var(--wot-danger-main, #fa4350)">
             <wd-checkbox :name="1">{{ $t('duo-xuan-1-8') }}</wd-checkbox>
             <wd-checkbox :name="2">{{ $t('duo-xuan-2-8') }}</wd-checkbox>
           </wd-checkbox-group>
@@ -109,13 +109,21 @@
             <wd-checkbox :name="1">
               {{ $t('zi-ding-yi-tu-biao') }}
               <template #icon="{ isChecked }">
-                <wd-icon :name="isChecked ? 'star-fill' : 'star'" size="22px" :color="isChecked ? '#fa4350' : '#ccc'" />
+                <wd-icon
+                  :name="isChecked ? 'star-fill' : 'star'"
+                  size="22px"
+                  :color="isChecked ? 'var(--wot-danger-main, #fa4350)' : 'var(--wot-text-placeholder, #ccc)'"
+                />
               </template>
             </wd-checkbox>
             <wd-checkbox :name="2">
               {{ $t('zi-ding-yi-tu-biao') }}
               <template #icon="{ isChecked }">
-                <wd-icon :name="isChecked ? 'star-fill' : 'star'" size="22px" :color="isChecked ? '#fa4350' : '#ccc'" />
+                <wd-icon
+                  :name="isChecked ? 'star-fill' : 'star'"
+                  size="22px"
+                  :color="isChecked ? 'var(--wot-danger-main, #fa4350)' : 'var(--wot-text-placeholder, #ccc)'"
+                />
               </template>
             </wd-checkbox>
           </wd-checkbox-group>
@@ -147,19 +155,24 @@
         </demo-group-item>
 
         <demo-group-item :title="$t('quan-xuan-qie-huan')">
-          <wd-button custom-class="custom-button" size="small" type="info" @click="checkboxGroup?.toggleAll()">
+          <wd-button custom-class="page-checkbox__action" size="small" type="info" @click="checkboxGroup?.toggleAll()">
             {{ $t('quan-bu-qie-huan') }}
           </wd-button>
-          <wd-button custom-class="custom-button" size="small" type="success" @click="checkboxGroup?.toggleAll(true)">
+          <wd-button custom-class="page-checkbox__action" size="small" type="success" @click="checkboxGroup?.toggleAll(true)">
             {{ $t('quan-xuan') }}
           </wd-button>
-          <wd-button custom-class="custom-button" size="small" type="primary" @click="checkboxGroup?.toggleAll(false)">
+          <wd-button custom-class="page-checkbox__action" size="small" type="primary" @click="checkboxGroup?.toggleAll(false)">
             {{ $t('quan-bu-xuan') }}
           </wd-button>
-          <wd-button custom-class="custom-button" size="small" type="warning" @click="checkboxGroup?.toggleAll({ skipDisabled: true })">
+          <wd-button custom-class="page-checkbox__action" size="small" type="warning" @click="checkboxGroup?.toggleAll({ skipDisabled: true })">
             {{ $t('quan-bu-qie-huan-tiao-guo-jin-yong') }}
           </wd-button>
-          <wd-button custom-class="custom-button" size="small" type="danger" @click="checkboxGroup?.toggleAll({ checked: true, skipDisabled: true })">
+          <wd-button
+            custom-class="page-checkbox__action"
+            size="small"
+            type="danger"
+            @click="checkboxGroup?.toggleAll({ checked: true, skipDisabled: true })"
+          >
             {{ $t('quan-bu-xuan-zhong-tiao-guo-jin-yong') }}
           </wd-button>
 
@@ -208,9 +221,9 @@ function toggle(value: number) {
 </script>
 <style lang="scss" scoped>
 .page-checkbox {
-  :deep(.custom-button) {
-    margin-right: 16px;
-    margin-bottom: 16px;
+  :deep(.page-checkbox__action) {
+    margin-right: $spacing-extra-loose;
+    margin-bottom: $spacing-extra-loose;
   }
 
   &__group {

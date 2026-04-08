@@ -7,16 +7,16 @@
     <wd-cascader v-model="model.address" v-model:visible="showAddressPicker" :options="area" @confirm="handleAddressConfirm" />
     <wd-dialog />
     <wd-form ref="form" :model="model" :schema="activeSchema" :title-width="100" :layout="formItemLayout" border asterisk-position="end">
-      <wd-cell-group custom-class="group" :title="$t('bu-ju-qie-huan-shi-li')">
+      <wd-cell-group custom-class="page-form-demo3__group" :title="$t('bu-ju-qie-huan-shi-li')">
         <wd-form-item :title="$t('biao-dan-xiang-bu-ju')" value-align="left">
           <wd-switch size="20" v-model="isVerticalLayout" />
-          <text class="layout-tip">{{ isVerticalLayout ? '上下布局' : '左右布局' }}</text>
+          <text class="page-form-demo3__layout-tip">{{ isVerticalLayout ? '上下布局' : '左右布局' }}</text>
         </wd-form-item>
         <wd-form-item :title="$t('xiao-yan-yin-qing')" value-align="left">
           <wd-switch size="20" v-model="useZodSchema" active-text="Zod" inactive-text="自定义" />
         </wd-form-item>
       </wd-cell-group>
-      <wd-cell-group custom-class="group" :title="$t('ji-chu-xin-xi')">
+      <wd-cell-group custom-class="page-form-demo3__group" :title="$t('ji-chu-xin-xi')">
         <wd-form-item :title="$t('you-hui-quan-ming-cheng')" prop="couponName" required>
           <wd-input
             :maxlength="20"
@@ -47,24 +47,24 @@
         />
         <wd-form-item prop="threshold" :title="$t('quan-mian-e')" required title-width="100px" custom-value-class="cell-left">
           <view style="text-align: left">
-            <view class="inline-txt" style="margin-left: 0">{{ $t('man') }}</view>
+            <view class="page-form-demo3__inline-text page-form-demo3__inline-text--leading">{{ $t('man') }}</view>
             <wd-input
               compact
-              custom-style="display: inline-block; width: 70px; vertical-align: middle"
+              custom-style="display: inline-block; width: var(--wot-n-70); vertical-align: middle"
               :placeholder="$t('qing-shu-ru-jin-e-0')"
               v-model="model.threshold"
             />
-            <view class="inline-txt">{{ $t('jian') }}</view>
+            <view class="page-form-demo3__inline-text">{{ $t('jian') }}</view>
             <wd-input
               compact
-              custom-style="display: inline-block; width: 70px; vertical-align: middle"
+              custom-style="display: inline-block; width: var(--wot-n-70); vertical-align: middle"
               :placeholder="$t('qing-shu-ru-jin-e-0')"
               v-model="model.price"
             />
           </view>
         </wd-form-item>
       </wd-cell-group>
-      <wd-cell-group custom-class="group" :title="$t('shi-jian-he-di-zhi')">
+      <wd-cell-group custom-class="page-form-demo3__group" :title="$t('shi-jian-he-di-zhi')">
         <wd-form-item
           :title="$t('shi-jian')"
           prop="time"
@@ -90,7 +90,7 @@
           @click="showAddressPicker = true"
         />
       </wd-cell-group>
-      <wd-cell-group custom-class="group" :title="$t('qi-ta-xin-xi')">
+      <wd-cell-group custom-class="page-form-demo3__group" :title="$t('qi-ta-xin-xi')">
         <wd-form-item :title="$t('huo-dong-xi-ze')" prop="content">
           <wd-textarea
             type="textarea"
@@ -122,7 +122,7 @@
           <wd-upload :file-list="model.fileList" action="https://69bd04402bc2a25b22ad0a49.mockapi.io/upload" @change="handleFileChange"></wd-upload>
         </wd-form-item>
       </wd-cell-group>
-      <wd-cell-group custom-class="group" :title="$t('zu-he-shi-li')">
+      <wd-cell-group custom-class="page-form-demo3__group" :title="$t('zu-he-shi-li')">
         <wd-form-item :title="$t('tou-fang-you-xian-ji')" prop="priority">
           <wd-radio-group v-model="model.priority" direction="horizontal">
             <wd-radio :value="1">{{ $t('gao') }}</wd-radio>
@@ -147,15 +147,15 @@
           <wd-slide-verify ref="slideVerifyRef" @success="handleVerifySuccess" @fail="handleVerifyFail" />
         </wd-form-item>
       </wd-cell-group>
-      <view class="tip">
+      <view class="page-form-demo3__tip">
         <wd-form-item prop="read" title-width="0px" :border="false">
           <wd-checkbox v-model="model.read">
             {{ $t('yi-yue-du-bing-tong-yi') }}
-            <text style="color: #4d80f0">{{ $t('ba-la-ba-la-ba-la-xie-yi') }}</text>
+            <text class="page-form-demo3__agreement">{{ $t('ba-la-ba-la-ba-la-xie-yi') }}</text>
           </wd-checkbox>
         </wd-form-item>
       </view>
-      <view class="footer">
+      <view class="page-form-demo3__footer">
         <wd-button type="primary" size="large" @click="handleSubmit" block>{{ $t('ti-jiao') }}</wd-button>
       </view>
     </wd-form>
@@ -483,33 +483,46 @@ function handleIconClick() {
 }
 </script>
 <style lang="scss" scoped>
-.inline-txt {
+.page-form-demo3__inline-text {
   display: inline-block;
-  font-size: 14px;
-  margin: 0 8px;
-  color: rgba(0, 0, 0, 0.45);
+  font-size: $typography-body-size-main;
+  margin: 0 $spacing-main;
+  color: $text-secondary;
   vertical-align: middle;
 }
-:deep(.group) {
+
+.page-form-demo3__inline-text--leading {
+  margin-left: 0;
+}
+
+:deep(.page-form-demo3__group) {
   &:not(:first-child) {
-    margin-top: 12px;
+    margin-top: $spacing-tight;
   }
 }
-.tip {
-  margin: 12px 0 12px;
-  color: #999;
-  font-size: 12px;
+
+.page-form-demo3__tip {
+  margin: $spacing-tight 0;
+  color: $text-auxiliary;
+  font-size: $typography-label-size-main;
 }
-.footer {
-  padding: 0 24px 20px;
+
+.page-form-demo3__footer {
+  padding: 0 $padding-super-loose $padding-main;
 }
-.layout-tip {
-  margin-left: 8px;
-  color: #666;
-  font-size: 14px;
+
+.page-form-demo3__layout-tip {
+  margin-left: $spacing-main;
+  color: $text-secondary;
+  font-size: $typography-body-size-main;
 }
+
+.page-form-demo3__agreement {
+  color: $primary-5;
+}
+
 :deep(.label-class) {
-  color: #999 !important;
-  font-size: 12px !important;
+  color: $text-auxiliary !important;
+  font-size: $typography-label-size-main !important;
 }
 </style>

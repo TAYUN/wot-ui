@@ -1,5 +1,5 @@
 <template>
-  <page-wraper>
+  <page-wraper :demo-config="{ transparent: true }">
     <view @click.stop="">
       <wd-dialog></wd-dialog>
     </view>
@@ -15,7 +15,7 @@
 
       <demo-group :title="$t('zu-jian-zhuang-tai')">
         <demo-group-item :title="$t('jinYong')" no-padding>
-          <wd-drop-menu direction="up">
+          <wd-drop-menu>
             <wd-drop-menu-item v-model="value8" disabled :options="option1" @change="handleChange8" />
             <wd-drop-menu-item v-model="value9" :options="option2" @change="handleChange9" />
           </wd-drop-menu>
@@ -31,12 +31,12 @@
       </demo-group>
 
       <demo-group :title="$t('zu-jian-yang-shi')">
-        <demo-group-item :title="$t('zi-ding-yi-cai-dan-xuan-xiang')">
-          <view class="custom-menu">
+        <demo-group-item :title="$t('zi-ding-yi-cai-dan-xuan-xiang')" no-padding>
+          <view class="page-drop-menu__custom-menu">
             <wd-drop-menu custom-style="flex: 1; min-width: 0">
               <wd-drop-menu-item v-model="value4" :options="option1" @change="handleChange4" />
             </wd-drop-menu>
-            <view style="flex: 1">
+            <view class="page-drop-menu__sort-button">
               <wd-sort-button v-model="value5" :title="$t('shang-jia-shi-jian')" @change="handleChange5" />
             </view>
           </view>
@@ -64,7 +64,7 @@
                 <wd-slider v-model="valuetest" ref="slider" />
                 <wd-cell :title="$t('biao-ti-wen-zi-10')" :value="$t('nei-rong')" />
                 <wd-cell :title="$t('biao-ti-wen-zi-10')" :label="$t('miaoShuXinXi-0')" :value="$t('nei-rong')" />
-                <view style="padding: 0 10px 20px; box-sizing: border-box">
+                <view class="page-drop-menu__footer">
                   <wd-button block size="large" @click="confirm">{{ $t('zhu-yao-an-niu') }}</wd-button>
                 </view>
               </view>
@@ -168,16 +168,20 @@ const handleBeforeToggle: DropMenuItemBeforeToggle = ({ status }) => {
 <style lang="scss" scoped>
 .page-drop-menu {
   min-height: 100vh;
-}
 
-.custom-menu {
-  display: flex;
-  background: #fff;
-  text-align: center;
-}
+  &__custom-menu {
+    display: flex;
+    background: $filled-oppo;
+    text-align: center;
+  }
 
-.up-direction-demo {
-  display: flex;
-  align-items: flex-end;
+  &__sort-button {
+    flex: 1;
+  }
+
+  &__footer {
+    box-sizing: border-box;
+    padding: 0 $padding-main $padding-loose;
+  }
 }
 </style>
